@@ -1,9 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 
+import Nav from './components/Nav';
+import Foot from './components/Foot';
+
+
 function App() {
 	return (
 		<div className="App">
+			<Nav />
 			<header className="App-header">
 				<img src={logo} className="App-logo translate-x-90" alt="logo" />
 				<p>
@@ -15,9 +20,10 @@ function App() {
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					Learn React
+					Learn React 안녕하세요
 				</a>
 			</header>
+			<Foot />
 		</div>
 	);
 }
