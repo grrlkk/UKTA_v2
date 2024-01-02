@@ -61,11 +61,11 @@ starlette==0.13.6
     # via fastapi
 toml==0.10.1
     # via black
-typed-ast==1.4.1
+typed-ast
     # via black
 typing-extensions==3.7.4.3
     # via black
-uvicorn[standard]==0.12.2
+uvicorn[standard]
     # via -r .\requirements.in
 watchgod==0.6
     # via uvicorn
