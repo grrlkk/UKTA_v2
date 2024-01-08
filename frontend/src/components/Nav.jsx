@@ -5,7 +5,7 @@ const Nav = () => {
 	return (
 		<nav className="bg-slate-50 fixed w-full bg-opacity-50 backdrop-blur">
 			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-12">
-				<a href='/' className="font-black text-slate-900">
+				<a href='/' className="font-black">
 					KorCAT
 				</a>
 				<div className="ml-10 space-x-4 whitespace-nowrap items-center text-sm">
