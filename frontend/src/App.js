@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
 
@@ -16,11 +17,17 @@ function App() {
 	});
 
 	return (
-		<div className="App text-slate-900 bg-white transition-all ease-in-out">
-			<Nav currentPage={currentPage} />
-			<Home currentPage={currentPage} />
-			<Foot />
-		</div>
+		<Router>
+			<div className="App text-slate-900 bg-white transition-all ease-in-out min-w-24">
+				<Nav currentPage={currentPage} />
+
+				<Routes>
+					<Route path="/" element={<Home />} />
+				</Routes>
+
+				<Foot />
+			</div>
+		</Router>
 	);
 }
 
