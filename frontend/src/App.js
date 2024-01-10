@@ -6,6 +6,8 @@ import './App.css';
 import Nav from './components/Nav';
 import Foot from './components/Foot';
 import Home from './components/Home';
+import AnalyzeMorph from './components/AnalyzeMorph';
+import AnalyzeText from './components/AnalyzeText';
 
 
 function App() {
@@ -22,7 +24,9 @@ function App() {
 				<Nav currentPage={currentPage} />
 
 				<Routes>
-					<Route path="/" element={<Home />} />
+					<Route path="/" element={<Home currentPage={currentPage} />} />
+					<Route path="/morpheme" element={<AnalyzeMorph currentPage={currentPage} />} />
+					<Route path="/text" element={<AnalyzeText currentPage={currentPage} />} />
 				</Routes>
 
 				<Foot />
