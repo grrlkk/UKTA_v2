@@ -58,13 +58,19 @@ def conjuctions(kkma, wordsAfterLemma, words):
 
 
 def process(text):
-    kkma = inference.inf(text)
+    # kkma = inference.inf(text)
 
     result = collections.defaultdict()
 
     # text 전처리
     # 문장 나누기
     sentences = textpreprocess.splitText(text)
+    kkma = []
+    kkma_list = []
+
+    for idx, sentence in enumerate(sentences):
+        kkma_list.append(inference.inf(sentence))
+        kkma += kkma_list[idx]
 
     # 단어 나누기
     words = textpreprocess.splitSen(sentences)
@@ -121,32 +127,32 @@ def process(text):
 
     for idx in range(len(sentences) - 1):
         result["adjacent_sentence_overlap_all_lemmas"] += adjacent_overlap.adjacent_sentence_overlap_all_lemmas(
-            sentences[idx], sentences[idx + 1], kkma
+            kkma_list[idx], kkma_list[idx + 1]
         )
 
         result[
             "adjacent_sentence_overlap_all_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_all_lemmas_normed(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.adjacent_sentence_overlap_all_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
 
         result[
             "binary_adjacent_sentence_overlap_all_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_all_lemmas(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_all_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
     for idx in range(len(sentences) - 2):
         result["adjacent_two_sentence_overlap_all_lemmas"] += adjacent_overlap.adjacent_two_sentence_overlap_all_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "adjacent_two_sentence_overlap_all_lemmas_normed"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_all_lemmas_normed(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "binary_adjacent_two_sentence_overlap_all_lemmas"
         ] += adjacent_overlap.binary_adjacent_two_sentence_overlap_all_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
     # content lemmas
@@ -160,34 +166,34 @@ def process(text):
 
     for idx in range(len(sentences) - 1):
         result["adjacent_sentence_overlap_content_lemmas"] += adjacent_overlap.adjacent_sentence_overlap_content_lemmas(
-            sentences[idx], sentences[idx + 1], kkma
+            kkma_list[idx], kkma_list[idx + 1]
         )
 
         result[
             "adjacent_sentence_overlap_content_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_content_lemmas_normed(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.adjacent_sentence_overlap_content_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
 
         result[
             "binary_adjacent_sentence_overlap_content_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_content_lemmas(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_content_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
     for idx in range(len(sentences) - 2):
         result[
             "adjacent_two_sentence_overlap_content_lemmas"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_content_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "adjacent_two_sentence_overlap_content_lemmas_normed"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_content_lemmas_normed(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "binary_adjacent_two_sentence_overlap_content_lemmas"
         ] += adjacent_overlap.binary_adjacent_two_sentence_overlap_content_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
     # function lemmas
@@ -202,33 +208,33 @@ def process(text):
     for idx in range(len(sentences) - 1):
         result[
             "adjacent_sentence_overlap_function_lemmas"
-        ] += adjacent_overlap.adjacent_sentence_overlap_function_lemmas(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.adjacent_sentence_overlap_function_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
         result[
             "adjacent_sentence_overlap_function_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_function_lemmas_normed(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.adjacent_sentence_overlap_function_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
 
         result[
             "binary_adjacent_sentence_overlap_function_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_function_lemmas(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_function_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
     for idx in range(len(sentences) - 2):
         result[
             "adjacent_two_sentence_overlap_function_lemmas"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_function_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "adjacent_two_sentence_overlap_function_lemmas_normed"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_function_lemmas_normed(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "binary_adjacent_two_sentence_overlap_function_lemmas"
         ] += adjacent_overlap.binary_adjacent_two_sentence_overlap_function_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
     # noun lemmas
@@ -241,34 +247,34 @@ def process(text):
 
     for idx in range(len(sentences) - 1):
         result["adjacent_sentence_overlap_noun_lemmas"] += adjacent_overlap.adjacent_sentence_overlap_noun_lemmas(
-            sentences[idx], sentences[idx + 1], kkma
+            kkma_list[idx], kkma_list[idx + 1]
         )
 
         result[
             "adjacent_sentence_overlap_noun_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_noun_lemmas_normed(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.adjacent_sentence_overlap_noun_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
 
         result[
             "binary_adjacent_sentence_overlap_noun_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_noun_lemmas(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_noun_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
     for idx in range(len(sentences) - 2):
         result[
             "adjacent_two_sentence_overlap_noun_lemmas"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_noun_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "adjacent_two_sentence_overlap_noun_lemmas_normed"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_noun_lemmas_normed(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "binary_adjacent_two_sentence_overlap_noun_lemmas"
         ] += adjacent_overlap.binary_adjacent_two_sentence_overlap_noun_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
     # verb lemmas
@@ -282,34 +288,34 @@ def process(text):
 
     for idx in range(len(sentences) - 1):
         result["adjacent_sentence_overlap_verb_lemmas"] += adjacent_overlap.adjacent_sentence_overlap_verb_lemmas(
-            sentences[idx], sentences[idx + 1], kkma
+            kkma_list[idx], kkma_list[idx + 1]
         )
 
         result[
             "adjacent_sentence_overlap_verb_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_verb_lemmas_normed(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.adjacent_sentence_overlap_verb_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
 
         result[
             "binary_adjacent_sentence_overlap_verb_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_verb_lemmas(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_verb_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
     for idx in range(len(sentences) - 2):
         result[
             "adjacent_two_sentence_overlap_verb_lemmas"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_verb_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "adjacent_two_sentence_overlap_verb_lemmas_normed"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_verb_lemmas_normed(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "binary_adjacent_two_sentence_overlap_verb_lemmas"
         ] += adjacent_overlap.binary_adjacent_two_sentence_overlap_verb_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
     # adjective lemmas
@@ -324,37 +330,33 @@ def process(text):
     for idx in range(len(sentences) - 1):
         result[
             "adjacent_sentence_overlap_adjective_lemmas"
-        ] += adjacent_overlap.adjacent_sentence_overlap_adjective_lemmas(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.adjacent_sentence_overlap_adjective_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
         result[
             "adjacent_sentence_overlap_adjective_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_adjective_lemmas_normed(
-            sentences[idx], sentences[idx + 1], kkma
-        )
+        ] += adjacent_overlap.adjacent_sentence_overlap_adjective_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
 
         result[
             "binary_adjacent_sentence_overlap_adjective_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_adjective_lemmas(
-            sentences[idx], sentences[idx + 1], kkma
-        )
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_adjective_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
     for idx in range(len(sentences) - 2):
         result[
             "adjacent_two_sentence_overlap_adjective_lemmas"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_adjective_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "adjacent_two_sentence_overlap_adjective_lemmas_normed"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_adjective_lemmas_normed(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "binary_adjacent_two_sentence_overlap_adjective_lemmas"
         ] += adjacent_overlap.binary_adjacent_two_sentence_overlap_adjective_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
     # adverb lemmas
@@ -367,34 +369,34 @@ def process(text):
 
     for idx in range(len(sentences) - 1):
         result["adjacent_sentence_overlap_adverb_lemmas"] += adjacent_overlap.adjacent_sentence_overlap_adverb_lemmas(
-            sentences[idx], sentences[idx + 1], kkma
+            kkma_list[idx], kkma_list[idx + 1]
         )
 
         result[
             "adjacent_sentence_overlap_adverb_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_adverb_lemmas_normed(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.adjacent_sentence_overlap_adverb_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
 
         result[
             "binary_adjacent_sentence_overlap_adverb_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_adverb_lemmas(sentences[idx], sentences[idx + 1], kkma)
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_adverb_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
     for idx in range(len(sentences) - 2):
         result[
             "adjacent_two_sentence_overlap_adverb_lemmas"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_adverb_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "adjacent_two_sentence_overlap_adverb_lemmas_normed"
         ] += adjacent_overlap.adjacent_two_sentence_overlap_adverb_lemmas_normed(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
         result[
             "binary_adjacent_two_sentence_overlap_adverb_lemmas"
         ] += adjacent_overlap.binary_adjacent_two_sentence_overlap_adverb_lemmas(
-            sentences[idx], sentences[idx + 1], sentences[idx + 2], kkma
+            kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
 
     print("\nresult:")

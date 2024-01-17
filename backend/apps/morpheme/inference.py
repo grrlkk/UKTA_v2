@@ -21,7 +21,7 @@ def inf(src):
     src = " ".join(src)
     torch.manual_seed(0)
 
-    resume_from = "/home/compu/korcat/backend/apps/files/morpheme/chk/1400.pt"
+    resume_from = "./morpheme/chk/1400.pt"
 
     # 불러오기
     model = build_model(len(DATASET.vocab_src), len(DATASET.vocab_tgt), device=DEVICE, dr_rate=DROPOUT_RATE)
@@ -36,7 +36,7 @@ def inf(src):
     before = result
 
     # 사용자 사전 적용
-    user_dict = pd.read_csv("./user_dic.csv", encoding="utf-8-sig")
+    user_dict = pd.read_csv("./morpheme/user_dic.csv", encoding="utf-8-sig")
     user_dict = user_dict.drop_duplicates(subset="morp")
 
     src_split = src.split(" ")
@@ -62,6 +62,7 @@ def inf(src):
                     morp_list[idx] = replace
         except:
             continue
+
     print(morp_list)
     return morp_list
 

@@ -1,53 +1,79 @@
 import collections
 
-pronounList=['이','그','저','이것','그것','저것','무엇','여기','저기','거기','어디',
-        '저희','본인','그대','귀하','너희','당신','여러분','임자','자기','자네','이런',
-         '그들','그녀','당신','저희','놈','얘','걔','쟤','누구']
+
+pronounList = [
+    "이",
+    "그",
+    "저",
+    "이것",
+    "그것",
+    "저것",
+    "무엇",
+    "여기",
+    "저기",
+    "거기",
+    "어디",
+    "저희",
+    "본인",
+    "그대",
+    "귀하",
+    "너희",
+    "당신",
+    "여러분",
+    "임자",
+    "자기",
+    "자네",
+    "이런",
+    "그들",
+    "그녀",
+    "당신",
+    "저희",
+    "놈",
+    "얘",
+    "걔",
+    "쟤",
+    "누구",
+]
 
 
-#All lemmas
-def adjacent_sentence_overlap_all_lemmas(now,target,kkma):
+# All lemmas
+def adjacent_sentence_overlap_all_lemmas(now, target):
+    lemma = collections.defaultdict()
+    sum = 0
 
-    pos_now = kkma.pos(now)
-    pos_target=kkma.pos(target)
-    lemma=collections.defaultdict()
-    sum=0
-
-    for item in pos_now:
-        lemma[item[1]]=1
+    for item in now:
+        lemma[item[1]] = 1
 
     for item in target:
         try:
-            if lemma[item[1]]==1:
-                lemma[item[1]]+=1
-                sum+=1
+            if lemma[item[1]] == 1:
+                lemma[item[1]] += 1
+                sum += 1
         except:
             continue
 
     return sum
 
-def adjacent_sentence_overlap_all_lemmas_normed(now,target,kkma):
-    pos_now = kkma.pos(now)
-    pos_target=kkma.pos(target)
-    lemma=collections.defaultdict()
 
-    for item in pos_now:
-        lemma[item[1]]=1
+def adjacent_sentence_overlap_all_lemmas_normed(now, target):
+    lemma = collections.defaultdict()
+
+    for item in now:
+        lemma[item[1]] = 1
 
     for item in target:
         try:
-            if lemma[item[1]]==1:
+            if lemma[item[1]] == 1:
                 return 1
         except:
             continue
     return 0
 
-def binary_adjacent_sentence_overlap_all_lemmas(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def binary_adjacent_sentence_overlap_all_lemmas(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         lemma[item[0]] = 1
 
     for item in target:
@@ -58,53 +84,49 @@ def binary_adjacent_sentence_overlap_all_lemmas(now,target,kkma):
             continue
     return 0
 
-def adjacent_two_sentence_overlap_all_lemmas(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_all_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
 
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         lemma[item[1]] = 1
 
     for item in target1:
         try:
             if lemma[item[1]] == 1:
-                lemma[item[1]]+=1
+                lemma[item[1]] += 1
         except:
             continue
 
     for item in target2:
         try:
             if lemma[item[1]] == 2:
-                lemma[item[1]]+=1
+                lemma[item[1]] += 1
                 sum += 1
         except:
             continue
 
     return sum
 
-def adjacent_two_sentence_overlap_all_lemmas_normed(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
-    lemma = collections.defaultdict()
-    flag=False
 
-    for item in pos_now:
+def adjacent_two_sentence_overlap_all_lemmas_normed(now, target1, target2):
+    lemma = collections.defaultdict()
+    flag = False
+
+    for item in now:
         lemma[item[1]] = 1
 
     for item in target1:
         try:
             if lemma[item[1]] == 1:
-                flag=True
+                flag = True
                 break
         except:
             continue
 
-    if flag==False:
+    if flag == False:
         return 0
 
     for item in target2:
@@ -116,14 +138,12 @@ def adjacent_two_sentence_overlap_all_lemmas_normed(now,target1,target2,kkma):
 
     return 0
 
-def binary_adjacent_two_sentence_overlap_all_lemmas(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def binary_adjacent_two_sentence_overlap_all_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         lemma[item[0]] = 1
 
     for item in target1:
@@ -147,35 +167,32 @@ def binary_adjacent_two_sentence_overlap_all_lemmas(now,target1,target2,kkma):
     return 0
 
 
-#content lemmas
-def adjacent_sentence_overlap_content_lemmas(now, target, kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+# content lemmas
+def adjacent_sentence_overlap_content_lemmas(now, target):
     lemma = collections.defaultdict()
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target:
         try:
-            if lemma[item[1]]==1:
-                lemma[item[1]]+=1
-                sum+=1
+            if lemma[item[1]] == 1:
+                lemma[item[1]] += 1
+                sum += 1
         except:
             continue
 
     return sum
 
-def adjacent_sentence_overlap_content_lemmas_normed(now, target, kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def adjacent_sentence_overlap_content_lemmas_normed(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target:
         try:
@@ -185,14 +202,13 @@ def adjacent_sentence_overlap_content_lemmas_normed(now, target, kkma):
             continue
     return 0
 
-def binary_adjacent_sentence_overlap_content_lemmas(now, target, kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def binary_adjacent_sentence_overlap_content_lemmas(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[0]]=1
+            lemma[item[0]] = 1
 
     for item in target:
         try:
@@ -202,17 +218,15 @@ def binary_adjacent_sentence_overlap_content_lemmas(now, target, kkma):
             continue
     return 0
 
-def adjacent_two_sentence_overlap_content_lemmas(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_content_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
 
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -231,16 +245,14 @@ def adjacent_two_sentence_overlap_content_lemmas(now,target1,target2,kkma):
 
     return sum
 
-def adjacent_two_sentence_overlap_content_lemmas_normed(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_content_lemmas_normed(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -262,20 +274,18 @@ def adjacent_two_sentence_overlap_content_lemmas_normed(now,target1,target2,kkma
 
     return 0
 
-def binary_adjacent_two_sentence_overlap_content_lemmas(now,target1, target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def binary_adjacent_two_sentence_overlap_content_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[0]]=1
+            lemma[item[0]] = 1
 
     for item in target1:
         try:
-            if lemma[item[0]]  == 1 and ("NN" in item[1] or "V" in item[1] or "MA" in item[1]):
+            if lemma[item[0]] == 1 and ("NN" in item[1] or "V" in item[1] or "MA" in item[1]):
                 flag = True
                 break
         except:
@@ -294,33 +304,30 @@ def binary_adjacent_two_sentence_overlap_content_lemmas(now,target1, target2,kkm
     return 0
 
 
-#function lemmas
-def adjacent_sentence_overlap_function_lemmas(now, target, kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+# function lemmas
+def adjacent_sentence_overlap_function_lemmas(now, target):
     lemma = collections.defaultdict()
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
             lemma[item[1]] = 1
 
     for item in target:
         try:
             if lemma[item[1]] == 1:
-                lemma[item[1]]+=1
+                lemma[item[1]] += 1
                 sum += 1
         except:
             continue
 
     return sum
 
-def adjacent_sentence_overlap_function_lemmas_normed(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def adjacent_sentence_overlap_function_lemmas_normed(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
             lemma[item[1]] = 1
 
@@ -332,12 +339,11 @@ def adjacent_sentence_overlap_function_lemmas_normed(now,target,kkma):
             continue
     return 0
 
-def binary_adjacent_sentence_overlap_function_lemmas(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def binary_adjacent_sentence_overlap_function_lemmas(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
             lemma[item[0]] = 1
 
@@ -349,17 +355,15 @@ def binary_adjacent_sentence_overlap_function_lemmas(now,target,kkma):
             continue
     return 0
 
-def adjacent_two_sentence_overlap_function_lemmas(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_function_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
 
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -378,16 +382,14 @@ def adjacent_two_sentence_overlap_function_lemmas(now,target1,target2,kkma):
 
     return sum
 
-def adjacent_two_sentence_overlap_function_lemmas_normed(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_function_lemmas_normed(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -409,20 +411,18 @@ def adjacent_two_sentence_overlap_function_lemmas_normed(now,target1,target2,kkm
 
     return 0
 
-def binary_adjacent_two_sentence_overlap_function_lemmas(now,target1, target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def binary_adjacent_two_sentence_overlap_function_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
-            lemma[item[0]]=1
+            lemma[item[0]] = 1
 
     for item in target1:
         try:
-            if lemma[item[0]]  == 1 and ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
+            if lemma[item[0]] == 1 and ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
                 flag = True
                 break
         except:
@@ -441,33 +441,30 @@ def binary_adjacent_two_sentence_overlap_function_lemmas(now,target1, target2,kk
     return 0
 
 
-#noun lemmas
-def adjacent_sentence_overlap_noun_lemmas(now, target, kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+# noun lemmas
+def adjacent_sentence_overlap_noun_lemmas(now, target):
     lemma = collections.defaultdict()
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if "N" in item[1] and item[1] != "ON":
             lemma[item[1]] = 1
 
     for item in target:
         try:
             if lemma[item[1]] == 1:
-                lemma[item[1]]+=1
+                lemma[item[1]] += 1
                 sum += 1
         except:
             continue
 
     return sum
 
-def adjacent_sentence_overlap_noun_lemmas_normed(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def adjacent_sentence_overlap_noun_lemmas_normed(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "N" in item[1] and item[1] != "ON":
             lemma[item[1]] = 1
 
@@ -479,12 +476,11 @@ def adjacent_sentence_overlap_noun_lemmas_normed(now,target,kkma):
             continue
     return 0
 
-def binary_adjacent_sentence_overlap_noun_lemmas(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def binary_adjacent_sentence_overlap_noun_lemmas(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "N" in item[1] and item[1] != "ON":
             lemma[item[0]] = 1
 
@@ -496,17 +492,15 @@ def binary_adjacent_sentence_overlap_noun_lemmas(now,target,kkma):
             continue
     return 0
 
-def adjacent_two_sentence_overlap_noun_lemmas(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_noun_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
 
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if "N" in item[1] and item[1] != "ON":
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -525,16 +519,14 @@ def adjacent_two_sentence_overlap_noun_lemmas(now,target1,target2,kkma):
 
     return sum
 
-def adjacent_two_sentence_overlap_noun_lemmas_normed(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_noun_lemmas_normed(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "N" in item[1] and item[1] != "ON":
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -556,20 +548,18 @@ def adjacent_two_sentence_overlap_noun_lemmas_normed(now,target1,target2,kkma):
 
     return 0
 
-def binary_adjacent_two_sentence_overlap_noun_lemmas(now,target1, target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def binary_adjacent_two_sentence_overlap_noun_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "N" in item[1] and item[1] != "ON":
-            lemma[item[0]]=1
+            lemma[item[0]] = 1
 
     for item in target1:
         try:
-            if lemma[item[0]]  == 1 and ("N" in item[1] and item[1] != "ON"):
+            if lemma[item[0]] == 1 and ("N" in item[1] and item[1] != "ON"):
                 flag = True
                 break
         except:
@@ -580,7 +570,7 @@ def binary_adjacent_two_sentence_overlap_noun_lemmas(now,target1, target2,kkma):
 
     for item in target2:
         try:
-            if lemma[item[0]]  == 1 and ("N" in item[1] and item[1] != "ON"):
+            if lemma[item[0]] == 1 and ("N" in item[1] and item[1] != "ON"):
                 return 1
         except:
             continue
@@ -588,33 +578,30 @@ def binary_adjacent_two_sentence_overlap_noun_lemmas(now,target1, target2,kkma):
     return 0
 
 
-#verb lemmas
-def adjacent_sentence_overlap_verb_lemmas(now, target, kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+# verb lemmas
+def adjacent_sentence_overlap_verb_lemmas(now, target):
     lemma = collections.defaultdict()
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
             lemma[item[1]] = 1
 
     for item in target:
         try:
             if lemma[item[1]] == 1:
-                lemma[item[1]]+=1
+                lemma[item[1]] += 1
                 sum += 1
         except:
             continue
 
     return sum
 
-def adjacent_sentence_overlap_verb_lemmas_normed(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def adjacent_sentence_overlap_verb_lemmas_normed(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
             lemma[item[1]] = 1
 
@@ -626,12 +613,11 @@ def adjacent_sentence_overlap_verb_lemmas_normed(now,target,kkma):
             continue
     return 0
 
-def binary_adjacent_sentence_overlap_verb_lemmas(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def binary_adjacent_sentence_overlap_verb_lemmas(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
             lemma[item[0]] = 1
 
@@ -643,17 +629,15 @@ def binary_adjacent_sentence_overlap_verb_lemmas(now,target,kkma):
             continue
     return 0
 
-def adjacent_two_sentence_overlap_verb_lemmas(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_verb_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
 
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -672,16 +656,14 @@ def adjacent_two_sentence_overlap_verb_lemmas(now,target1,target2,kkma):
 
     return sum
 
-def adjacent_two_sentence_overlap_verb_lemmas_normed(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_verb_lemmas_normed(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -703,20 +685,18 @@ def adjacent_two_sentence_overlap_verb_lemmas_normed(now,target1,target2,kkma):
 
     return 0
 
-def binary_adjacent_two_sentence_overlap_verb_lemmas(now,target1, target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def binary_adjacent_two_sentence_overlap_verb_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
-            lemma[item[0]]=1
+            lemma[item[0]] = 1
 
     for item in target1:
         try:
-            if lemma[item[0]]  == 1 and ("V" in item[1] and (item[1] != "XPV" or item[1] != "XSV")):
+            if lemma[item[0]] == 1 and ("V" in item[1] and (item[1] != "XPV" or item[1] != "XSV")):
                 flag = True
                 break
         except:
@@ -727,7 +707,7 @@ def binary_adjacent_two_sentence_overlap_verb_lemmas(now,target1, target2,kkma):
 
     for item in target2:
         try:
-            if lemma[item[0]]  == 1 and ("V" in item[1] and (item[1] != "XPV" or item[1] != "XSV")):
+            if lemma[item[0]] == 1 and ("V" in item[1] and (item[1] != "XPV" or item[1] != "XSV")):
                 return 1
         except:
             continue
@@ -735,33 +715,30 @@ def binary_adjacent_two_sentence_overlap_verb_lemmas(now,target1, target2,kkma):
     return 0
 
 
-#adjective lemmas
-def adjacent_sentence_overlap_adjective_lemmas(now, target, kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+# adjective lemmas
+def adjacent_sentence_overlap_adjective_lemmas(now, target):
     lemma = collections.defaultdict()
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if "VXA" in item[1] or "VA" in item[1]:
             lemma[item[1]] = 1
 
     for item in target:
         try:
             if lemma[item[1]] == 1:
-                lemma[item[1]]+=1
+                lemma[item[1]] += 1
                 sum += 1
         except:
             continue
 
     return sum
 
-def adjacent_sentence_overlap_adjective_lemmas_normed(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def adjacent_sentence_overlap_adjective_lemmas_normed(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "VXA" in item[1] or "VA" in item[1]:
             lemma[item[1]] = 1
 
@@ -773,12 +750,11 @@ def adjacent_sentence_overlap_adjective_lemmas_normed(now,target,kkma):
             continue
     return 0
 
-def binary_adjacent_sentence_overlap_adjective_lemmas(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def binary_adjacent_sentence_overlap_adjective_lemmas(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "VXA" in item[1] or "VA" in item[1]:
             lemma[item[0]] = 1
 
@@ -790,17 +766,15 @@ def binary_adjacent_sentence_overlap_adjective_lemmas(now,target,kkma):
             continue
     return 0
 
-def adjacent_two_sentence_overlap_adjective_lemmas(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_adjective_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
 
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if "VXA" in item[1] or "VA" in item[1]:
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -819,16 +793,14 @@ def adjacent_two_sentence_overlap_adjective_lemmas(now,target1,target2,kkma):
 
     return sum
 
-def adjacent_two_sentence_overlap_adjective_lemmas_normed(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_adjective_lemmas_normed(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "VXA" in item[1] or "VA" in item[1]:
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -850,20 +822,18 @@ def adjacent_two_sentence_overlap_adjective_lemmas_normed(now,target1,target2,kk
 
     return 0
 
-def binary_adjacent_two_sentence_overlap_adjective_lemmas(now,target1, target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def binary_adjacent_two_sentence_overlap_adjective_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "VXA" in item[1] or "VA" in item[1]:
-            lemma[item[0]]=1
+            lemma[item[0]] = 1
 
     for item in target1:
         try:
-            if lemma[item[0]]  == 1 and ("VXA" in item[1] or "VA" in item[1]):
+            if lemma[item[0]] == 1 and ("VXA" in item[1] or "VA" in item[1]):
                 flag = True
                 break
         except:
@@ -874,7 +844,7 @@ def binary_adjacent_two_sentence_overlap_adjective_lemmas(now,target1, target2,k
 
     for item in target2:
         try:
-            if lemma[item[0]]  == 1 and ("VXA" in item[1] or "VA" in item[1]):
+            if lemma[item[0]] == 1 and ("VXA" in item[1] or "VA" in item[1]):
                 return 1
         except:
             continue
@@ -882,33 +852,30 @@ def binary_adjacent_two_sentence_overlap_adjective_lemmas(now,target1, target2,k
     return 0
 
 
-#adverb lemmas
-def adjacent_sentence_overlap_adverb_lemmas(now, target, kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+# adverb lemmas
+def adjacent_sentence_overlap_adverb_lemmas(now, target):
     lemma = collections.defaultdict()
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if "MAG" in item[1] or "MAJ" in item[1]:
             lemma[item[1]] = 1
 
     for item in target:
         try:
             if lemma[item[1]] == 1:
-                lemma[item[1]]+=1
+                lemma[item[1]] += 1
                 sum += 1
         except:
             continue
 
     return sum
 
-def adjacent_sentence_overlap_adverb_lemmas_normed(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def adjacent_sentence_overlap_adverb_lemmas_normed(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "MAG" in item[1] or "MAJ" in item[1]:
             lemma[item[1]] = 1
 
@@ -920,12 +887,11 @@ def adjacent_sentence_overlap_adverb_lemmas_normed(now,target,kkma):
             continue
     return 0
 
-def binary_adjacent_sentence_overlap_adverb_lemmas(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def binary_adjacent_sentence_overlap_adverb_lemmas(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "MAG" in item[1] or "MAJ" in item[1]:
             lemma[item[0]] = 1
 
@@ -937,17 +903,15 @@ def binary_adjacent_sentence_overlap_adverb_lemmas(now,target,kkma):
             continue
     return 0
 
-def adjacent_two_sentence_overlap_adverb_lemmas(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_adverb_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
 
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -966,16 +930,14 @@ def adjacent_two_sentence_overlap_adverb_lemmas(now,target1,target2,kkma):
 
     return sum
 
-def adjacent_two_sentence_overlap_adverb_lemmas_normed(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_adverb_lemmas_normed(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -997,20 +959,18 @@ def adjacent_two_sentence_overlap_adverb_lemmas_normed(now,target1,target2,kkma)
 
     return 0
 
-def binary_adjacent_two_sentence_overlap_adverb_lemmas(now,target1, target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def binary_adjacent_two_sentence_overlap_adverb_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[0]]=1
+            lemma[item[0]] = 1
 
     for item in target1:
         try:
-            if lemma[item[0]]  == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
+            if lemma[item[0]] == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
                 flag = True
                 break
         except:
@@ -1021,27 +981,24 @@ def binary_adjacent_two_sentence_overlap_adverb_lemmas(now,target1, target2,kkma
 
     for item in target2:
         try:
-            if lemma[item[0]]  == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
+            if lemma[item[0]] == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
                 return 1
         except:
             continue
 
     return 0
 
-#대명사는 아직 미구현~
-#pronoun lemmas
-def adjacent_sentence_overlap_pronoun_lemmas(now, target, kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+# 대명사는 아직 미구현~
+# pronoun lemmas
+def adjacent_sentence_overlap_pronoun_lemmas(now, target):
     lemma = collections.defaultdict()
     sum = 0
 
     oneLetterPronounFlag = False
 
     for pron in pronounList:
-
         for i, word in enumerate(lemma):
-
             # 이 책, 이 사람, 저 때 등 이,그,저 + @인 경우
             if oneLetterPronounFlag == True:
                 oneLetterPronounFlag = False
@@ -1050,22 +1007,21 @@ def adjacent_sentence_overlap_pronoun_lemmas(now, target, kkma):
                 continue
 
             # 대명사를 내포하는지 체크 또한 접속사일 경우 제외
-            if word[0:len(pron)] == pron:
+            if word[0 : len(pron)] == pron:
                 type[word] = type[word] + 1
                 sum += 1
 
             # 단 '이', '그', '저'는 한글자로만 사용되므로 예외
-            elif (pron == '이' and word == '이') or (pron == '그' and word == '그') or (pron == '저' and word == '저'):
+            elif (pron == "이" and word == "이") or (pron == "그" and word == "그") or (pron == "저" and word == "저"):
                 oneLetterPronounFlag = True
 
     return sum
 
-def adjacent_sentence_overlap_pronoun_lemmas_normed(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def adjacent_sentence_overlap_pronoun_lemmas_normed(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "MAG" in item[1] or "MAJ" in item[1]:
             lemma[item[1]] = 1
 
@@ -1077,12 +1033,11 @@ def adjacent_sentence_overlap_pronoun_lemmas_normed(now,target,kkma):
             continue
     return 0
 
-def binary_adjacent_sentence_overlap_pronoun_lemmas(now,target,kkma):
-    pos_now = kkma.pos(now)
-    target = kkma.pos(target)
+
+def binary_adjacent_sentence_overlap_pronoun_lemmas(now, target):
     lemma = collections.defaultdict()
 
-    for item in pos_now:
+    for item in now:
         if "MAG" in item[1] or "MAJ" in item[1]:
             lemma[item[0]] = 1
 
@@ -1094,17 +1049,15 @@ def binary_adjacent_sentence_overlap_pronoun_lemmas(now,target,kkma):
             continue
     return 0
 
-def adjacent_two_sentence_overlap_pronoun_lemmas(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_pronoun_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
 
     sum = 0
 
-    for item in pos_now:
+    for item in now:
         if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -1123,16 +1076,14 @@ def adjacent_two_sentence_overlap_pronoun_lemmas(now,target1,target2,kkma):
 
     return sum
 
-def adjacent_two_sentence_overlap_pronoun_lemmas_normed(now,target1,target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def adjacent_two_sentence_overlap_pronoun_lemmas_normed(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[1]]=1
+            lemma[item[1]] = 1
 
     for item in target1:
         try:
@@ -1154,20 +1105,18 @@ def adjacent_two_sentence_overlap_pronoun_lemmas_normed(now,target1,target2,kkma
 
     return 0
 
-def binary_adjacent_two_sentence_overlap_pronoun_lemmas(now,target1, target2,kkma):
-    pos_now = kkma.pos(now)
-    target1 = kkma.pos(target1)
-    target2 = kkma.pos(target2)
+
+def binary_adjacent_two_sentence_overlap_pronoun_lemmas(now, target1, target2):
     lemma = collections.defaultdict()
     flag = False
 
-    for item in pos_now:
+    for item in now:
         if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[0]]=1
+            lemma[item[0]] = 1
 
     for item in target1:
         try:
-            if lemma[item[0]]  == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
+            if lemma[item[0]] == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
                 flag = True
                 break
         except:
@@ -1178,10 +1127,12 @@ def binary_adjacent_two_sentence_overlap_pronoun_lemmas(now,target1, target2,kkm
 
     for item in target2:
         try:
-            if lemma[item[0]]  == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
+            if lemma[item[0]] == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
                 return 1
         except:
             continue
 
     return 0
-#noun&pronoun lemmas
+
+
+# noun&pronoun lemmas
