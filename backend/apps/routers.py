@@ -7,8 +7,8 @@ from bson import ObjectId
 from fastapi import APIRouter, File, HTTPException, Request, UploadFile, status
 from fastapi.responses import JSONResponse
 
-from .textpreprocessing.process import process
-from .morpheme.inference import inference
+from .cohesion.process import process
+from .morpheme.inference import inf
 
 pydantic.json.ENCODERS_BY_TYPE[ObjectId] = str
 router = APIRouter()
@@ -56,7 +56,7 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
         print(contents.decode('UTF8'))
 
 		# process the uploaded text
-        results = inference(contents.decode('UTF8'))
+        results = inf(contents.decode('UTF8'))
 
 		# each object being uploaded to MONGODB
         upload = {
