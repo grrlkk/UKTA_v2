@@ -16,7 +16,7 @@ function App() {
 	useEffect(() => {
 		setCurrentpage(window.location.pathname);
 		console.log(currentPage);
-	});
+	}, [currentPage]);
 
 	return (
 		<Router>

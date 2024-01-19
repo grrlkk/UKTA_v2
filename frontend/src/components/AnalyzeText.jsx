@@ -31,7 +31,7 @@ const AnalyzeText = ({ currentPage }) => {
 				</div>
 
 				<div className='flex justify-end gap-2 text-sm'>
-					<input type="file"
+					<input type="file" accept=".txt" onChange={handleFileInputChange}
 						className="
 							file:mr-4 file:py-2 file:px-4
 							file:rounded-full file:border-0
