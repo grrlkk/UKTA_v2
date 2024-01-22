@@ -9,9 +9,9 @@ const Nav = ({ currentPage }) => {
 					KorCAT
 				</a>
 
-				<div className="ml-10 space-x-4 whitespace-nowrap items-center text-sm">
-					<a href="/morpheme" className={`${currentPage === "/morpheme" ? "text-slate-600" : "text-slate-300"} hover:text-slate-500 px-3 py-2`}>형태소</a>
-					<a href="/text" className={`${currentPage === "/text" ? "text-slate-600" : "text-slate-300"} hover:text-slate-500 px-3 py-2`}>자질</a>
+				<div className="whitespace-nowrap flex gap-2 items-center text-sm">
+					<a href="/morpheme" className={`${currentPage === "/morpheme" ? "text-slate-600" : "text-slate-300"} hover:text-slate-500 px-3`}>형태소</a>
+					<a href="/cohesion" className={`${currentPage === "/cohesion" ? "text-slate-600" : "text-slate-300"} hover:text-slate-500 px-3`}>자질</a>
 				</div>
 			</div>
 		</nav>
