@@ -67,7 +67,7 @@ function App() {
 								"
 							/>
 
-							<button className={`flex-shrink-0 px-4 py-2 flex gap-2 bg-red-400 text-white rounded-full hover:bg-red-600 group`} onClick={handleClearInput}>
+							<button className={`flex-shrink-0 px-4 py-2 flex gap-2 bg-red-400 text-white rounded-full hover:bg-red-500 group`} onClick={handleClearInput}>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 transition-all ease-in-out group-hover:rotate-90">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
 								</svg>
