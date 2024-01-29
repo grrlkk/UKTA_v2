@@ -14,3 +14,16 @@
 ::-webkit-scrollbar-thumb:hover {
 	background: #475569;
 }
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.fade-in {
+	animation: fadeIn 200ms ease-in;
+}

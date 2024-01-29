@@ -1,0 +1,16 @@
+import React from 'react';
+
+
+const ResultsMor = () => {
+	return (
+		<div className='grid grid-cols-1 gap-4 fade-in'>
+			<h2 className="text-3xl font-bold py-2">Morpheme Results</h2>
+
+			<div className='p-2 border border-gray-300 rounded overflow-auto w-full'>
+				result 1
+			</div>
+		</div>
+	);
+};
+
+export default ResultsMor;
