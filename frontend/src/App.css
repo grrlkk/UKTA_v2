@@ -1,0 +1,29 @@
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+::-webkit-scrollbar-track {
+	background: #00000000;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #64748b;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #475569;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.fade-in {
+	animation: fadeIn 200ms ease-in;
+}
