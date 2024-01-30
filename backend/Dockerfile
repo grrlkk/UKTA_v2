@@ -1,17 +1,26 @@
-# Base image for the backend
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
+# Use the Anaconda base image
+FROM continuumio/anaconda3
 
-# Set the working directory
+# Set the working directory in the Docker image
 WORKDIR /app
 
-# Copy the backend code to the container
+# Copy the Conda environment file
+COPY environment.yml /app/environment.yml
+
+# Create the Conda environment
+RUN conda env create -f /app/environment.yml
+
+# Make RUN commands use the new environment
+SHELL ["conda", "run", "-n", "korcat", "/bin/bash", "-c"]
+
+# Install FastAPI, Uvicorn, and Gunicorn
+RUN pip install fastapi uvicorn gunicorn
+
+# Copy the FastAPI app code to the container
 COPY . /app
 
-# Install the required Python packages
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Expose the backend port
+# Expose the port the app runs on
 EXPOSE 8000
 
-# Start the backend server
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# The command to start the app using Gunicorn with Uvicorn workers
+CMD ["conda", "run", "-n", "korcat", "gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-w", "4", "-b", "0.0.0.0:8000", "main:app"]
