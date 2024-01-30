@@ -1,5 +1,5 @@
 import collections
-from morpheme import inference
+from apps.morpheme import inference
 import pandas as pd
 from keybert import KeyBERT
 from transformers import BertModel

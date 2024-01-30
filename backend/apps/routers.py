@@ -7,15 +7,16 @@ from bson import ObjectId
 from fastapi import APIRouter, File, HTTPException, Request, UploadFile, status
 from fastapi.responses import JSONResponse
 
-from .cohesion.process import process
-from .morpheme.inference import inf
+from apps.cohesion.process import process
+from apps.morpheme.inference import inf
+import json
 
-pydantic.json.ENCODERS_BY_TYPE[ObjectId] = str
+# pydantic.json.ENCODERS_BY_TYPE[ObjectId] = str
 router = APIRouter()
 
 
 # POST: upload multiple .txt files =============================
-@router.post("/korcat")
+@router.post("/cohesion")
 async def upload_files(request: Request, files: List[UploadFile] = File(...)):
     cnt = 100
 
@@ -38,8 +39,8 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
         }
         cnt += 1
 
-        new_file = await request.app.mongodb["korcat"].insert_one(upload)
-        created_file = await request.app.mongodb["korcat"].find_one({"_id": new_file.inserted_id})
+        new_file = await request.app.mongodb["cohesion"].insert_one(upload)
+        created_file = await request.app.mongodb["cohesion"].find_one({"_id": new_file.inserted_id})
 
     return {"filenames": [file.filename for file in files]}
 
@@ -74,7 +75,7 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 
 
 # GET: list all files; list file by ID =========================
-@router.get("/korcat", response_description="List all files")
+@router.get("/cohesion", response_description="List all files")
 async def list_files(request: Request):
     files = []
 
@@ -92,9 +93,9 @@ async def list_files(request: Request):
     return files
 
 
-@router.get("/korcat/{id}", response_description="Get a single file")
+@router.get("/cohesion/{id}", response_description="Get a single file")
 async def show_file(id: str, request: Request):
-    if (file := await request.app.mongodb["korcat"].find_one({"_id": id})) is not None:
+    if (file := await request.app.mongodb["cohesion"].find_one({"_id": id})) is not None:
         return file
 
     raise HTTPException(status_code=404, detail=f"File {id} not found")
@@ -109,9 +110,9 @@ async def show_file(id: str, request: Request):
 
 
 # delete file by ID ============================================
-@router.delete("/korcat/{id}", response_description="Delete file")
+@router.delete("/cohesion/{id}", response_description="Delete file")
 async def delete_file(id: str, request: Request):
-    delete_result = await request.app.mongodb["korcat"].delete_one({"_id": id})
+    delete_result = await request.app.mongodb["cohesion"].delete_one({"_id": id})
 
     if delete_result.deleted_count == 1:
         return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)

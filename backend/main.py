@@ -10,7 +10,7 @@ app = FastAPI()
 
 # include local origins including react ========================
 origins = [
-    "http://165.246.44.238:3000",  # Add your frontend URL here
+    "http://165.246.44.241:3000",  # Add your frontend URL here
     "http://localhost",
     "http://localhost:3000",
     "http://localhost:8000",

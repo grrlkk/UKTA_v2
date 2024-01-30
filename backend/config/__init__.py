@@ -1,4 +1,4 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 
 class CommonSettings(BaseSettings):
@@ -12,7 +12,7 @@ class ServerSettings(BaseSettings):
 
 
 class DatabaseSettings(BaseSettings):
-    DB_URL: str="mongodb+srv://admin:devil286@korcat-web-cluster.nv1kxic.mongodb.net/?retryWrites=true&w=majority"
+    DB_URL: str = "mongodb://localhost:27017"
     DB_NAME: str="KorCAT-web"
 
 

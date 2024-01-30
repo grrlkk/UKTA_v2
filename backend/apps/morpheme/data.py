@@ -5,7 +5,7 @@ from torchtext.vocab import build_vocab_from_iterator
 import torchtext.transforms as T
 from konlpy.tag import Mecab
 
-from morpheme.utils import save_pkl, load_pkl
+from apps.morpheme.utils import save_pkl, load_pkl
 
 
 class Multi30k:
@@ -42,7 +42,7 @@ class Multi30k:
         self.transform_tgt = None
         self.build_transform()
 
-    def build_dataset(self, raw_dir="raw", cache_dir="./.data"):
+    def build_dataset(self, raw_dir="raw", cache_dir="./apps/morpheme/.data"):
         cache_dir = os.path.join(cache_dir, self.dataset_name)
         raw_dir = os.path.join(cache_dir, raw_dir)
         os.makedirs(raw_dir, exist_ok=True)

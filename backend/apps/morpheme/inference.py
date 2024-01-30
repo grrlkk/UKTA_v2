@@ -6,10 +6,10 @@ import logging
 import torch
 import argparse
 from torch import nn, optim
-from .config import *
-from .models.build_model import build_model
-from .data import Multi30k
-from .utils import get_bleu_score, greedy_decode
+from apps.morpheme.config import *
+from apps.morpheme.models.build_model import build_model
+from apps.morpheme.data import Multi30k
+from apps.morpheme.utils import get_bleu_score, greedy_decode
 from konlpy.tag import Mecab
 
 mecab = Mecab()
