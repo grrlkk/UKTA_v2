@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
 
@@ -13,7 +13,6 @@ function App() {
 	const [currentPage, setCurrentpage] = useState(window.location.pathname);
 	const [inputValue, setInputValue] = useState(localStorage.getItem('inputValue') || '');
 	const [selectedFile, setSelectedFile] = useState(null);
-	const [results, setResults] = useState(null);
 
 	const handleAnalysis = (type) => {
 		if (currentPage === type) {
@@ -101,7 +100,7 @@ function App() {
 						<Route path='/cohesion' element={<ResultsCoh />} />
 					</Routes>
 
-					<hr className={`${currentPage === '/' ? "hidden" : "block"}`}/>
+					<hr className={`${currentPage === '/' ? "hidden" : "block"}`} />
 					<div className={`${currentPage === '/' ? "my-28" : "hidden"}`}></div>
 
 				</div>
