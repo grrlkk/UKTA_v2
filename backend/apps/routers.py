@@ -79,7 +79,7 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 async def list_files(request: Request):
     files = []
 
-    for doc in await request.app.mongodb["korcat"].find().to_list(length=100):
+    for doc in await request.app.mongodb["cohesion"].find().to_list(length=100):
         files.append(doc)
     return files
 

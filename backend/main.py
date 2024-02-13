@@ -28,17 +28,17 @@ app.add_middleware(
 # mongodb client startup & connect with DB server ==============
 @app.on_event("startup")
 async def startup_db_client():
-    app.mongodb_client = AsyncIOMotorClient(settings.DB_URL)
-    app.mongodb = app.mongodb_client[settings.DB_NAME]
+	app.mongodb_client = AsyncIOMotorClient(settings.DB_URL)
+	app.mongodb = app.mongodb_client[settings.DB_NAME]
 
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
-    app.mongodb_client.close()
+	app.mongodb_client.close()
 
 
 # include file routers & run ===================================
-app.include_router(router, tags=["files"], prefix="/file")
+app.include_router(router, tags=["files"], prefix="/korcat")
 
 
 if __name__ == "__main__":
