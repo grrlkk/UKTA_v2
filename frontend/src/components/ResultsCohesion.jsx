@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import dummy from '../dummy';
 
 
 const ResultsCoh = () => {
-	const [cohesionResult, setCohesionResult] = useState('');
+	const [cohesionResult, setCohesionResult] = useState([]);
+
+	// useEffect(() => {
+	// 	fetch('http://localhost:8000/korcat/cohesion')
+	// 		.then(response => response.text())
+	// 		.then(data => setCohesionResult(data))
+	// 		.catch(error => console.error(error));
+	// }, []);
 
 	useEffect(() => {
-		fetch('http://localhost:8000/korcat/cohesion')
-			.then(response => response.text())
-			.then(data => setCohesionResult(data))
-			.catch(error => console.error(error));
+		setCohesionResult(dummy.cohes);
 	}, []);
 
 	return (
