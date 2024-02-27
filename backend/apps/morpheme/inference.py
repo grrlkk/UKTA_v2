@@ -40,6 +40,9 @@ def inf(src):
     user_dict = user_dict.drop_duplicates(subset="morp")
 
     src_split = src.split(" ")
+    
+    print(result)
+    print(src_split)
 
     t = before.split(" ")
     morp_list = list()
@@ -53,9 +56,12 @@ def inf(src):
         except:
             ConnectionRefusedError
 
-    for idx, item in enumerate(morp_list):
+    print(morp_list)
+
+    for idx, item in enumerate(src_split):
         try:
             if src_split[idx].strip() not in item:
+                print(src_split[idx])
                 filtered_user_dict = user_dict[user_dict["morp"].str.strip() == src_split[idx].strip()]
                 if not filtered_user_dict.empty:
                     replace = (filtered_user_dict.iloc[0]["morp"], filtered_user_dict.iloc[0]["label"])
@@ -64,6 +70,7 @@ def inf(src):
             continue
 
     print(morp_list)
+
     return morp_list
 
 

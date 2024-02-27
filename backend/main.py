@@ -5,12 +5,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 
-app = FastAPI()
+app = FastAPI(root_path="/api")
 
 
 # include local origins including react ========================
 origins = [
-    "http://165.246.44.241:3000",  # Add your frontend URL here
+    "http://165.246.44.231:3000",  # Add your frontend URL here
+    "http://165.246.44.231:3030",
     "http://localhost",
     "http://localhost:3000",
     "http://localhost:8000",
@@ -18,7 +19,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[origins],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

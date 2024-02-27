@@ -7,9 +7,9 @@ import parser
 import argparse
 from torch import nn, optim
 from config import *
-from models.build_model import build_model
-from data import Multi30k
-from utils import get_bleu_score, greedy_decode
+from apps.morpheme.models.build_model import build_model
+from apps.morpheme.data import Multi30k
+from apps.morpheme.utils import get_bleu_score, greedy_decode
 
 
 DATASET = Multi30k()

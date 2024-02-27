@@ -1,0 +1,12 @@
+nohup: ignoring input
+[2024-02-26 12:38:06 +0000] [1056591] [INFO] Starting gunicorn 21.2.0
+[2024-02-26 12:38:06 +0000] [1056591] [INFO] Listening at: http://0.0.0.0:8000 (1056591)
+[2024-02-26 12:38:06 +0000] [1056591] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2024-02-26 12:38:06 +0000] [1056593] [INFO] Booting worker with pid: 1056593
+[2024-02-26 12:38:06 +0000] [1056594] [INFO] Booting worker with pid: 1056594
+[2024-02-26 12:38:36 +0000] [1056594] [INFO] Started server process [1056594]
+[2024-02-26 12:38:36 +0000] [1056594] [INFO] Waiting for application startup.
+[2024-02-26 12:38:36 +0000] [1056594] [INFO] Application startup complete.
+[2024-02-26 12:38:36 +0000] [1056593] [INFO] Started server process [1056593]
+[2024-02-26 12:38:36 +0000] [1056593] [INFO] Waiting for application startup.
+[2024-02-26 12:38:36 +0000] [1056593] [INFO] Application startup complete.

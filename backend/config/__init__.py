@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 
 class CommonSettings(BaseSettings):
-    APP_NAME: str = "KorCAT-web"
+    APP_NAME: str = "U-KTA-web"
     DEBUG_MODE: bool = False
 
 
