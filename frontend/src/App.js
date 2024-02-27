@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import './App.css';
 import 'react-tooltip/dist/react-tooltip.css'
@@ -9,22 +9,42 @@ import Nav from './components/Nav';
 import Foot from './components/Foot';
 import ResultsCoh from './components/ResultsCohesion';
 import ResultsMor from './components/ResultsMorpheme';
+import Loading from './components/Loading';
+import Dummy from './components/Dummy';
 
 
 function App() {
 	const [inputValue, setInputValue] = useState(localStorage.getItem('inputValue') || '');
+	const [uploadInProgress, setUploadInProgress] = useState(false);
 	const [selectedFile, setSelectedFile] = useState(null);
 	const currentPage = useLocation();
+	const navigate = useNavigate();
 
-	const handleAnalysis = (type) => {
-		if (currentPage === type) {
-			// Page is already loaded, no action needed
-		} else {
+	const handleAnalysis = async (type) => {
+		setUploadInProgress(true);
+		const formData = new FormData();
+		formData.append("files", new Blob([inputValue], { type: "text/plain" }), "test.txt");
+
+		try {
+			const response = await fetch(`http://165.246.44.231:3000/api/korcat/${type}`, {
+				method: 'POST',
+				body: formData,
+			});
+
+			const data = await response.json();
+			console.log(data);
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setUploadInProgress(false);
+			handleClearInput();
+			navigate(`/${type}`);
 		}
-	};
+	}
 
 	const handleInputChange = (e) => {
 		setInputValue(e.target.value);
+		localStorage.setItem('inputValue', e.target.value);
 	};
 
 	const handleFileInputChange = (e) => {
@@ -35,18 +55,16 @@ function App() {
 		reader.onload = (event) => {
 			const fileContent = event.target.result;
 			setInputValue(fileContent);
+			localStorage.setItem('inputValue', e.target.value);
 		};
 		reader.readAsText(file);
 	};
 
 	const handleClearInput = () => {
 		setInputValue('');
+		localStorage.setItem('inputValue', '');
 		setSelectedFile(null);
 	};
-
-	useEffect(() => {
-		console.log(currentPage);
-	}, [currentPage]);
 
 	useEffect(() => {
 		localStorage.setItem('inputValue', inputValue);
@@ -88,15 +106,33 @@ function App() {
 						placeholder="Enter text"
 					></textarea>
 
-					<div className='flex justify-end text-center gap-2 text-sm whitespace-nowrap'>
-						<Link to='/morpheme' className={`grow sm:grow-0 px-4 py-2 bg-slate-500 text-white rounded-full hover:bg-slate-600`} onClick={() => handleAnalysis('/morpheme')}>
-							Morpheme
-						</Link>
+					{uploadInProgress ?
+						<div className='flex justify-end text-center gap-2 text-sm whitespace-nowrap'>
+							<button className='px-4 py-2 flex gap-1 bg-slate-500 text-white rounded-full cursor-not-allowed'>
+								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 animate-spin">
+									<path strokeLinecap="round" strokeLinejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 0 1-1.161.886l-.143.048a1.107 1.107 0 0 0-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 0 1-1.652.928l-.679-.906a1.125 1.125 0 0 0-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 0 0-8.862 12.872M12.75 3.031a9 9 0 0 1 6.69 14.036m0 0-.177-.529A2.25 2.25 0 0 0 17.128 15H16.5l-.324-.324a1.453 1.453 0 0 0-2.328.377l-.036.073a1.586 1.586 0 0 1-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 0 1-5.276 3.67m0 0a9 9 0 0 1-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+								</svg>
+								Analyzing
+							</button>
+						</div> :
+						inputValue === '' ?
+							<div className='flex justify-end text-center gap-2 text-sm whitespace-nowrap'>
+								<button className='px-4 py-2 flex gap-1 bg-slate-500 text-white rounded-full cursor-not-allowed'>
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 animate-pulse">
+										<path strokeLinecap="round" strokeLinejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 0 1-1.161.886l-.143.048a1.107 1.107 0 0 0-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 0 1-1.652.928l-.679-.906a1.125 1.125 0 0 0-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 0 0-8.862 12.872M12.75 3.031a9 9 0 0 1 6.69 14.036m0 0-.177-.529A2.25 2.25 0 0 0 17.128 15H16.5l-.324-.324a1.453 1.453 0 0 0-2.328.377l-.036.073a1.586 1.586 0 0 1-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 0 1-5.276 3.67m0 0a9 9 0 0 1-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+									</svg>
+									Input text or upload file to start
+								</button>
+							</div> :
+							<div className='flex justify-end text-center gap-2 text-sm whitespace-nowrap'>
+								<Link to='/loading' className={`grow sm:grow-0 px-4 py-2 bg-slate-500 text-white rounded-full hover:bg-slate-600`} onClick={() => handleAnalysis('morpheme')}>
+									Morpheme
+								</Link>
 
-						<Link to='/cohesion' className={`grow sm:grow-0 px-4 py-2 bg-slate-500 text-white rounded-full hover:bg-slate-600`} onClick={() => handleAnalysis('/cohesion')}>
-							Cohesion
-						</Link>
-					</div>
+								<Link to='/loading' className={`grow sm:grow-0 px-4 py-2 bg-slate-500 text-white rounded-full hover:bg-slate-600`} onClick={() => handleAnalysis('cohesion')}>
+									Cohesion
+								</Link>
+							</div>}
 				</div>
 
 				<hr />
@@ -104,10 +140,9 @@ function App() {
 				<Routes>
 					<Route path='/morpheme' element={<ResultsMor />} />
 					<Route path='/cohesion' element={<ResultsCoh />} />
+					<Route path='/loading' element={<Loading />} />
+					<Route path='*' element={<Dummy />} />
 				</Routes>
-
-				<hr className={`${currentPage.pathname === '/' ? "hidden" : "block"}`} />
-				<div className={`${currentPage.pathname === '/' ? "my-28" : "hidden"}`}></div>
 
 			</div>
 
