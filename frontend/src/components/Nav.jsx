@@ -7,7 +7,7 @@ const Nav = ({ currentPage }) => {
 		<nav className="bg-slate-50 fixed w-full bg-opacity-50 backdrop-blur z-50">
 			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-12">
 				<Link to='/' className="font-black">
-					U-TKA
+					U-KTA
 				</Link>
 
 				<div className="whitespace-nowrap flex gap-2 items-center text-sm">

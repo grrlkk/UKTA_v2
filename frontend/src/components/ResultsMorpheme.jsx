@@ -56,21 +56,18 @@ const ResultsMor = () => {
 	const [morphemeResult, setMorphemeResult] = useState([]);
 	const [selectedFile, setSelectedFile] = useState(-1);
 
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		try {
-	// 			const response = await fetch('http://localhost:8000/korcat/morpheme');
-	// 			const data = await response.json();
-	// 			setMorphemeResult(data);
-	// 		} catch (error) {
-	// 			console.error(error);
-	// 		}
-	// 	};
-	// 	fetchData();
-	// }, []);
-
 	useEffect(() => {
-		setMorphemeResult(dummy_morph);
+		const fetchData = async () => {
+			try {
+				const response = await fetch('http://165.246.44.231:3000/api/korcat/morpheme');
+				const data = await response.json();
+				setMorphemeResult(data);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		fetchData();
+		console.log(morphemeResult);
 	}, []);
 
 	const handleFileDownload = () => {

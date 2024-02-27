@@ -73,15 +73,19 @@ const ResultsCoh = () => {
 	const [cohesionResult, setCohesionResult] = useState([]);
 	const [selectedFile, setSelectedFile] = useState(-1);
 
-	// useEffect(() => {
-	// 	fetch('http://localhost:8000/korcat/cohesion')
-	// 		.then(response => response.text())
-	// 		.then(data => setCohesionResult(data))
-	// 		.catch(error => console.error(error));
-	// }, []);
-
 	useEffect(() => {
-		setCohesionResult(dummy_cohes);
+		const fetchData = async () => {
+			try {
+				const response = await fetch('http://165.246.44.231:3000/api/korcat/cohesion');
+				const data = await response.json();
+				setCohesionResult(data);
+				console.log(data);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		fetchData();
+		console.log(cohesionResult);
 	}, []);
 
 	const handleFileDownload = () => {
@@ -104,34 +108,32 @@ const ResultsCoh = () => {
 					<div className='grid grid-cols-1 gap-4'>
 						<h3 className='text-xl font-bold'>{item.filename}</h3>
 						<p>{item.contents}</p>
-						<div className=''>{item.results.map((result, index) => (
-							<div key={index} className={`${selectedFile === index ? 'h-96 overflow-scroll' : 'h-0 overflow-hidden'} transition-all ease-in-out pr-2`}>
-								<table className='w-full'>
-									<thead>
-										<tr className='text-left border-b'>
-											<th className='p-1'></th>
-											<th className='p-1'>Property</th>
-											<th className='p-1'>Value</th>
+						<div key={index} className={`${selectedFile === index ? 'h-96 overflow-scroll' : 'h-0 overflow-hidden'} transition-all ease-in-out pr-2`}>
+							<table className='w-full'>
+								<thead>
+									<tr className='text-left border-b'>
+										<th className='p-1'></th>
+										<th className='p-1'>Property</th>
+										<th className='p-1'>Value</th>
+									</tr>
+								</thead>
+								<tbody>
+									{Object.entries(item.results).map(([key, value]) => (
+										<tr key={key} className='border-b'>
+											<td className='p-1'>
+												<input type="checkbox" id={key} name={key} value={key} />
+											</td>
+											<td className='p-1'>
+												<label htmlFor={key}>{key}</label>
+											</td>
+											<td className='p-1'>
+												{value}
+											</td>
 										</tr>
-									</thead>
-									<tbody>
-										{Object.entries(result).map(([key, value]) => (
-											<tr key={key} className='border-b'>
-												<td className='p-1'>
-													<input type="checkbox" id={key} name={key} value={key} />
-												</td>
-												<td className='p-1'>
-													<label htmlFor={key}>{key}</label>
-												</td>
-												<td className='p-1'>
-													{value}
-												</td>
-											</tr>
-										))}
-									</tbody>
-								</table>
-							</div>
-						))}</div>
+									))}
+								</tbody>
+							</table>
+						</div>
 					</div>
 
 					<div className='absolute top-2 right-2 flex gap-2 text-sm'>
