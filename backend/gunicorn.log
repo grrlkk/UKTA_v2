@@ -10,3 +10,84 @@ nohup: ignoring input
 [2024-02-26 12:38:36 +0000] [1056593] [INFO] Started server process [1056593]
 [2024-02-26 12:38:36 +0000] [1056593] [INFO] Waiting for application startup.
 [2024-02-26 12:38:36 +0000] [1056593] [INFO] Application startup complete.
+/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/torch/_jit_internal.py:1355: UserWarning: The inner type of a container is lost when calling torch.jit.isinstance in eager mode. For example, List[int] would become list and therefore falsely return True for List[float] or List[str].
+  warnings.warn(
+[2024-02-27 06:10:34 +0000] [1056591] [CRITICAL] WORKER TIMEOUT (pid:1056593)
+[2024-02-27 06:10:34 +0000] [1056591] [ERROR] Worker (pid:1056593) was sent code 134!
+[2024-02-27 06:10:34 +0000] [1085578] [INFO] Booting worker with pid: 1085578
+[2024-02-27 06:11:04 +0000] [1085578] [INFO] Started server process [1085578]
+[2024-02-27 06:11:04 +0000] [1085578] [INFO] Waiting for application startup.
+[2024-02-27 06:11:04 +0000] [1085578] [INFO] Application startup complete.
+/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/torch/_jit_internal.py:1355: UserWarning: The inner type of a container is lost when calling torch.jit.isinstance in eager mode. For example, List[int] would become list and therefore falsely return True for List[float] or List[str].
+  warnings.warn(
+/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/torch/_jit_internal.py:1355: UserWarning: The inner type of a container is lost when calling torch.jit.isinstance in eager mode. For example, List[int] would become list and therefore falsely return True for List[float] or List[str].
+  warnings.warn(
+/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/torch/_jit_internal.py:1355: UserWarning: The inner type of a container is lost when calling torch.jit.isinstance in eager mode. For example, List[int] would become list and therefore falsely return True for List[float] or List[str].
+  warnings.warn(
+/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/torch/_jit_internal.py:1355: UserWarning: The inner type of a container is lost when calling torch.jit.isinstance in eager mode. For example, List[int] would become list and therefore falsely return True for List[float] or List[str].
+  warnings.warn(
+test.txt
+저기요, 안녕하세요. 나는 너의 라이벌이랍니다. 
+ 거기 / NP 요 / JX , /SP  / NNG ./SF 나 / NP 는 / JX 너 / NP 의 / JKG 라이벌 / NNG 이 / VCP ㅂ니다 / EF ./SF 
+['저기', '요', ',', '안녕', '하', '세요', '.', '나', '는', '너', '의', '라이벌', '이', '랍니다', '.']
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG'), ('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG'), ('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+test.txt
+저기요, 안녕하세요. 나는 너의 라이벌이랍니다. 
+ 거기 / NP 요 / JX , /SP  / NNG ./SF 나 / NP 는 / JX 너 / NP 의 / JKG 라이벌 / NNG 이 / VCP ㅂ니다 / EF ./SF 
+['저기', '요', ',', '안녕', '하', '세요', '.', '나', '는', '너', '의', '라이벌', '이', '랍니다', '.']
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG'), ('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG'), ('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+test.txt
+저기요, 안녕하세요. 나는 너의 라이벌이랍니다. 
+ 거기 / NP 요 / JX , /SP  / NNG 
+['저기', '요', ',', '안녕', '하', '세요']
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG')]
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG')]
+ 나 / NP 는 / JX 너 / NP 의 / JKG 라이벌 / NNG 이 / VCP ㅂ니다 / EF 
+['나', '는', '너', '의', '라이벌', '이', '랍니다']
+[('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+ 
+['']
+[]
+[]
+
+result:
+defaultdict(None, {'lemmaCnt': 6, 'average_sentence_similarity': 0.37397661805152893, 'topic_consistency': 0.7154, 'conjuctions': 0, 'lemmattr': 1.0, 'lemmaMattr': -1, 'lexicalDensityTokens': 0.03, 'lexicalDensityTypes': 0.005, 'contentTtr': 0.16666666666666666, 'functionTtr': 0.16666666666666666, 'nounTtr': 0.16666666666666666, 'verbTtr': 0.16666666666666666, 'adjTtr': 0, 'advTtr': 0, 'bigramLemmaTtr': 1.0, 'trigramLemmaTtr': 1.0, 'adjacent_sentence_overlap_all_lemmas': 3, 'adjacent_sentence_overlap_all_lemmas_normed': 1, 'binary_adjacent_sentence_overlap_all_lemmas': 0, 'adjacent_two_sentence_overlap_all_lemmas': 0, 'adjacent_two_sentence_overlap_all_lemmas_normed': 0, 'binary_adjacent_two_sentence_overlap_all_lemmas': 0, 'adjacent_sentence_overlap_content_lemmas': 1, 'adjacent_sentence_overlap_content_lemmas_normed': 1, 'binary_adjacent_sentence_overlap_content_lemmas': 0, 'adjacent_two_sentence_overlap_content_lemmas': 0, 'adjacent_two_sentence_overlap_content_lemmas_normed': 0, 'binary_adjacent_two_sentence_overlap_content_lemmas': 0, 'adjacent_sentence_overlap_function_lemmas': 1, 'adjacent_sentence_overlap_function_lemmas_normed': 1, 'binary_adjacent_sentence_overlap_function_lemmas': 0, 'adjacent_two_sentence_overlap_function_lemmas': 0, 'adjacent_two_sentence_overlap_function_lemmas_normed': 0, 'binary_adjacent_two_sentence_overlap_function_lemmas': 0, 'adjacent_sentence_overlap_noun_lemmas': 2, 'adjacent_sentence_overlap_noun_lemmas_normed': 1, 'binary_adjacent_sentence_overlap_noun_lemmas': 0, 'adjacent_two_sentence_overlap_noun_lemmas': 0, 'adjacent_two_sentence_overlap_noun_lemmas_normed': 0, 'binary_adjacent_two_sentence_overlap_noun_lemmas': 0, 'adjacent_sentence_overlap_verb_lemmas': 0, 'adjacent_sentence_overlap_verb_lemmas_normed': 0, 'binary_adjacent_sentence_overlap_verb_lemmas': 0, 'adjacent_two_sentence_overlap_verb_lemmas': 0, 'adjacent_two_sentence_overlap_verb_lemmas_normed': 0, 'binary_adjacent_two_sentence_overlap_verb_lemmas': 0, 'adjacent_sentence_overlap_adjective_lemmas': 0, 'adjacent_sentence_overlap_adjective_lemmas_normed': 0, 'binary_adjacent_sentence_overlap_adjective_lemmas': 0, 'adjacent_two_sentence_overlap_adjective_lemmas': 0, 'adjacent_two_sentence_overlap_adjective_lemmas_normed': 0, 'binary_adjacent_two_sentence_overlap_adjective_lemmas': 0, 'adjacent_sentence_overlap_adverb_lemmas': 0, 'adjacent_sentence_overlap_adverb_lemmas_normed': 0, 'binary_adjacent_sentence_overlap_adverb_lemmas': 0, 'adjacent_two_sentence_overlap_adverb_lemmas': 0, 'adjacent_two_sentence_overlap_adverb_lemmas_normed': 0, 'binary_adjacent_two_sentence_overlap_adverb_lemmas': 0})
+test.txt
+
+ 
+['']
+[]
+[]
+test.txt
+저기요, 안녕하세요. 나는 너의 라이벌이랍니다. 
+ 거기 / NP 요 / JX , /SP  / NNG ./SF 나 / NP 는 / JX 너 / NP 의 / JKG 라이벌 / NNG 이 / VCP ㅂ니다 / EF ./SF 
+['저기', '요', ',', '안녕', '하', '세요', '.', '나', '는', '너', '의', '라이벌', '이', '랍니다', '.']
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG'), ('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG'), ('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+test.txt
+저기요, 안녕하세요. 나는 너의 라이벌이랍니다. 
+ 거기 / NP 요 / JX , /SP  / NNG ./SF 나 / NP 는 / JX 너 / NP 의 / JKG 라이벌 / NNG 이 / VCP ㅂ니다 / EF ./SF 
+['저기', '요', ',', '안녕', '하', '세요', '.', '나', '는', '너', '의', '라이벌', '이', '랍니다', '.']
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG'), ('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG'), ('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+test.txt
+저기요, 안녕하세요. 나는 너의 라이벌이랍니다. 
+ 거기 / NP 요 / JX , /SP  / NNG 
+['저기', '요', ',', '안녕', '하', '세요']
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG')]
+[('거기', 'NP'), ('요', 'JX'), ('', 'NNG')]
+ 나 / NP 는 / JX 너 / NP 의 / JKG 라이벌 / NNG 이 / VCP ㅂ니다 / EF 
+['나', '는', '너', '의', '라이벌', '이', '랍니다']
+[('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('나', 'NP'), ('는', 'JX'), ('너', 'NP'), ('의', 'JKG'), ('라이벌', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+ 
+['']
+[]
+[]
+
+result:
+/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/torch/_jit_internal.py:1355: UserWarning: The inner type of a container is lost when calling torch.jit.isinstance in eager mode. For example, List[int] would become list and therefore falsely return True for List[float] or List[str].
+  warnings.warn(
