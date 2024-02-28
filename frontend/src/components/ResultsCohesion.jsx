@@ -89,7 +89,7 @@ const ResultsCoh = () => {
 
 	return (
 		<div className='grid grid-cols-1 gap-4 fade-in'>
-			<h2 className="text-3xl font-bold py-2">Cohesion Results</h2>
+			<h2 className="text-3xl font-bold py-2">응집도 분석 결과</h2>
 
 			{cohesionResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (
 				<div key={index} className={`p-4 border border-gray-300 rounded-lg overflow-auto w-full relative transition-all ${selectedFile === index ? 'bg-slate-100' : 'bg-slate-50'}`}>
