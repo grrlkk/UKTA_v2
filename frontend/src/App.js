@@ -23,7 +23,7 @@ function App() {
 	const handleAnalysis = async (type) => {
 		setUploadInProgress(true);
 		const formData = new FormData();
-		formData.append("files", new Blob([inputValue], { type: "text/plain" }), "test.txt");
+		formData.append("files", new Blob([inputValue], { type: "text/plain" }), inputValue.slice(0, inputValue.length / 3) + "...");
 
 		try {
 			const response = await fetch(`http://165.246.44.231:3000/api/korcat/${type}`, {
@@ -101,7 +101,7 @@ function App() {
 					<textarea
 						value={inputValue}
 						onChange={handleInputChange}
-						className={`p-2 border border-gray-300 rounded-lg overflow-auto h-[4em] focus:h-32 transition-all ease-in-out w-full`}
+						className={`p-2 border border-gray-300 rounded-lg overflow-auto transition-all ease-in-out w-full ${inputValue.length === 0 ? ' h-[4em] focus:h-32' : 'h-32'}`}
 						placeholder="Enter text"
 					></textarea>
 

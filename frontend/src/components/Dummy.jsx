@@ -6,7 +6,7 @@ const Dummy = () => {
 	return (
 		<div className="mb-32 fade-in">
 			<h2 className="text-3xl font-bold py-2">
-				한국어를 입력하고 분석하세요
+				한국어 분석
 			</h2>
 
 			<div className={``}>
