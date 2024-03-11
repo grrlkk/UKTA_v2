@@ -26,7 +26,7 @@ function App() {
 		formData.append("files", new Blob([inputValue], { type: "text/plain" }), inputValue.slice(0, inputValue.length / 3) + "...");
 
 		try {
-			const response = await fetch(`http://165.246.44.231:3000/api/korcat/${type}`, {
+			const response = await fetch(`https://ukta.inha.ac.kr/api/korcat/${type}`, {
 				method: 'POST',
 				body: formData,
 			});

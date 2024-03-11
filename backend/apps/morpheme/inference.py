@@ -20,6 +20,8 @@ def inf(src):
     src = mecab.morphs(src)
     src = " ".join(src)
     torch.manual_seed(0)
+    
+    print(mecab.pos(src))
 
     resume_from = "./apps/morpheme/chk/1400.pt"
 

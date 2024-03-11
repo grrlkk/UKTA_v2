@@ -10,7 +10,7 @@ const ResultsCoh = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch('http://165.246.44.231:8000/korcat/cohesion');
+				const response = await fetch('https://ukta.inha.ac.kr/api/korcat/cohesion');
 				const data = await response.json();
 				setCohesionResult(data);
 				console.log(data);

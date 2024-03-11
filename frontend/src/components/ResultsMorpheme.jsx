@@ -10,7 +10,7 @@ const ResultsMor = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch('http://165.246.44.231:8000/korcat/morpheme');
+				const response = await fetch('https://ukta.inha.ac.kr/api/korcat/morpheme');
 				const data = await response.json();
 				setMorphemeResult(data);
 			} catch (error) {
