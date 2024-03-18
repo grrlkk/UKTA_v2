@@ -4,6 +4,12 @@ services:
     db:
         image: mongo:latest
         ports:
-            - 27017:27017
+            - 3633:27017
+        restart: unless-stopped
         volumes:
             - ./database:/data/db
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: kdd
+            MONGO_INITDB_ROOT_PASSWORD: kddnumber1
+            MONGO_INITDB_DATABASE: ukta
+        tty: true

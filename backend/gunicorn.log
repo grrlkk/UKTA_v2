@@ -1,82 +1,12 @@
 nohup: ignoring input
-[2024-03-04 16:21:03 +0000] [61969] [INFO] Starting gunicorn 21.2.0
-[2024-03-04 16:21:03 +0000] [61969] [INFO] Listening at: http://0.0.0.0:8000 (61969)
-[2024-03-04 16:21:03 +0000] [61969] [INFO] Using worker: uvicorn.workers.UvicornWorker
-[2024-03-04 16:21:03 +0000] [61971] [INFO] Booting worker with pid: 61971
-[2024-03-04 16:21:03 +0000] [61972] [INFO] Booting worker with pid: 61972
-[2024-03-04 16:21:32 +0000] [61971] [INFO] Started server process [61971]
-[2024-03-04 16:21:32 +0000] [61971] [INFO] Waiting for application startup.
-[2024-03-04 16:21:32 +0000] [61971] [INFO] Application startup complete.
-[2024-03-04 16:21:32 +0000] [61972] [INFO] Started server process [61972]
-[2024-03-04 16:21:32 +0000] [61972] [INFO] Waiting for application startup.
-[2024-03-04 16:21:32 +0000] [61972] [INFO] Application startup complete.
-[2024-03-04 22:09:40 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:26:43 +0000] [61971] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:47:28 +0000] [61971] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:26 +0000] [61971] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:26 +0000] [61971] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:40 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:40 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:40 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:40 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:40 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:40 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:52:40 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61971] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61971] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 00:56:26 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 11:08:28 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 11:33:44 +0000] [61971] [WARNING] Invalid HTTP request received.
-[2024-03-05 11:33:45 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 11:33:46 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 13:08:00 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 20:43:56 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-05 21:07:55 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-06 04:18:25 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-06 04:21:03 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-06 09:54:17 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-06 14:31:40 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 03:48:38 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 03:48:39 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 03:48:39 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 03:48:40 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 03:48:40 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 03:48:41 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 03:48:41 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 12:39:48 +0000] [61971] [WARNING] Invalid HTTP request received.
-[2024-03-07 12:39:49 +0000] [61971] [WARNING] Invalid HTTP request received.
-[2024-03-07 12:39:49 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 12:39:50 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 12:39:50 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 12:39:51 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 12:39:51 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 12:39:52 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-07 18:05:53 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-08 03:08:41 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-08 11:08:34 +0000] [61971] [WARNING] Invalid HTTP request received.
-[2024-03-09 04:06:01 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-09 22:09:46 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-09 23:42:28 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-10 11:22:30 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-10 11:22:30 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-10 11:22:31 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-10 14:07:32 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-10 23:53:46 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-10 23:53:46 +0000] [61972] [WARNING] Invalid HTTP request received.
-[2024-03-11 05:36:32 +0000] [61971] [WARNING] Invalid HTTP request received.
+[2024-03-17 05:42:19 +0000] [619666] [INFO] Starting gunicorn 21.2.0
+[2024-03-17 05:42:19 +0000] [619666] [INFO] Listening at: http://0.0.0.0:8000 (619666)
+[2024-03-17 05:42:19 +0000] [619666] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2024-03-17 05:42:19 +0000] [619668] [INFO] Booting worker with pid: 619668
+[2024-03-17 05:42:19 +0000] [619669] [INFO] Booting worker with pid: 619669
+[2024-03-17 05:42:49 +0000] [619669] [INFO] Started server process [619669]
+[2024-03-17 05:42:49 +0000] [619669] [INFO] Waiting for application startup.
+[2024-03-17 05:42:49 +0000] [619669] [INFO] Application startup complete.
+[2024-03-17 05:42:49 +0000] [619668] [INFO] Started server process [619668]
+[2024-03-17 05:42:49 +0000] [619668] [INFO] Waiting for application startup.
+[2024-03-17 05:42:49 +0000] [619668] [INFO] Application startup complete.

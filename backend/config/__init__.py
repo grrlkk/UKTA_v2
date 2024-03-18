@@ -12,8 +12,8 @@ class ServerSettings(BaseSettings):
 
 
 class DatabaseSettings(BaseSettings):
-    DB_URL: str = "mongodb://localhost:27017"
-    DB_NAME: str="KorCAT-web"
+    DB_URL: str = "mongodb://kdd:kddnumber1@localhost:3633"
+    DB_NAME: str="ukta"
 
 
 class Settings(CommonSettings, ServerSettings, DatabaseSettings):
