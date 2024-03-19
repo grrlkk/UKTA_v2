@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 const Foot = () => {
@@ -24,7 +25,10 @@ const Foot = () => {
 					{logoText}
 				</pre>
 
-				<p className='text-xs'>KDD Lab @ INHA Univ.</p>
+				<div>
+					<Link to='/tagging' className='text-xs hover:underline'>품사 태깅표</Link> 
+					<p className='text-xs'>2024 KDD Lab @ INHA Univ.</p>
+				</div>
 			</div>
 		</footer>
 	);
