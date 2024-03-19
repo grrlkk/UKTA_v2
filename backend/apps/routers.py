@@ -21,22 +21,22 @@ morph = mecab()
 async def upload_files(request: Request, files: List[UploadFile] = File(...)):
     cnt = 100
 
-    # make object for each file uploaded 
+    # make object for each file uploaded
     for file in files:
         contents = await file.read()
 
         print(file.filename)
-        print(contents.decode('UTF8'))
+        print(contents.decode("UTF8"))
 
-		# process the uploaded text
-        results = process(contents.decode('UTF8'))
+        # process the uploaded text
+        results = process(contents.decode("UTF8"))
 
-		# each object being uploaded to MONGODB
+        # each object being uploaded to MONGODB
         upload = {
             "_id": datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S") + "-C" + str(cnt),
             "filename": file.filename,
             "contents": contents,
-            "results": results
+            "results": results,
         }
         cnt += 1
 
@@ -50,24 +50,35 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 async def upload_files(request: Request, files: List[UploadFile] = File(...)):
     cnt = 100
 
-    # make object for each file uploaded 
+    # make object for each file uploaded
     for file in files:
         contents = await file.read()
 
         print(file.filename)
-        print(contents.decode('UTF8'))
+        print(contents.decode("UTF8"))
 
-		# process the uploaded text
-        results = morph.pos(contents.decode('UTF8'))
-        results_full = morph.parse(contents.decode('UTF8'))
+        # process the uploaded text
+        temp = morph.pos(contents.decode("UTF8"))
+        temp_full = morph.parse(contents.decode("UTF8"))
 
-		# each object being uploaded to MONGODB
+        results = []
+        results_full = []
+
+        bef = 0
+
+        for index in range(len(temp)):
+            if temp[index][1] == "SF":
+                results.append(temp[bef:index + 1])
+                results_full.append(temp_full[bef:index + 1])
+                bef = index + 1
+
+        # each object being uploaded to MONGODB
         upload = {
             "_id": datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S") + "-M" + str(cnt),
             "filename": file.filename,
             "contents": contents,
-            "results": results, 
-            "results_full": results_full
+            "results": results,
+            "results_full": results_full,
         }
         cnt += 1
 
