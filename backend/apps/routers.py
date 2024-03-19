@@ -8,11 +8,12 @@ from fastapi import APIRouter, File, HTTPException, Request, UploadFile, status
 from fastapi.responses import JSONResponse
 
 from apps.cohesion.process import process
-from apps.morpheme.inference import inf
+from apps.morph.morph import mecab
 import json
 
 # pydantic.json.ENCODERS_BY_TYPE[ObjectId] = str
 router = APIRouter()
+morph = mecab()
 
 
 # POST: upload multiple .txt files =============================
@@ -57,14 +58,16 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
         print(contents.decode('UTF8'))
 
 		# process the uploaded text
-        results = inf(contents.decode('UTF8'))
+        results = morph.pos(contents.decode('UTF8'))
+        results_full = morph.parse(contents.decode('UTF8'))
 
 		# each object being uploaded to MONGODB
         upload = {
             "_id": datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S") + "-M" + str(cnt),
             "filename": file.filename,
             "contents": contents,
-            "results": results
+            "results": results, 
+            "results_full": results_full
         }
         cnt += 1
 

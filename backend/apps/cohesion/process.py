@@ -1,5 +1,5 @@
 import collections
-from apps.morpheme import inference
+from apps.morph.morph import mecab
 import pandas as pd
 from keybert import KeyBERT
 from transformers import BertModel
@@ -59,6 +59,7 @@ def conjuctions(kkma, wordsAfterLemma, words):
 
 def process(text):
     # kkma = inference.inf(text)
+    morph = mecab()
 
     result = collections.defaultdict()
 
@@ -69,7 +70,8 @@ def process(text):
     kkma_list = []
 
     for idx, sentence in enumerate(sentences):
-        kkma_list.append(inference.inf(sentence))
+        inf = morph.pos(sentence)
+        kkma_list.append(inf)
         kkma += kkma_list[idx]
 
     # 단어 나누기
