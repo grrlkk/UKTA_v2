@@ -74,7 +74,7 @@ function App() {
 		<div className="App text-slate-900 bg-white transition-all ease-in-out min-w-[320px]">
 			<Nav currentPage={currentPage.pathname} />
 
-			<div className="items-start pt-24 grid grid-cols-1 gap-32 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div className="items-start pt-32 grid grid-cols-1 gap-32 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className='grid grid-cols-1 gap-4 '>
 					<h2 className="text-3xl font-bold py-2">한국어 입력</h2>
 

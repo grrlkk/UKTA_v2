@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
 const Nav = ({ currentPage }) => {
+	const [scrollDown, setScrollDown] = useState(0);
+	useEffect(() => {
+		const handleScroll = () => {
+			setScrollDown(window.scrollY);
+		};
+
+		window.addEventListener('scroll', handleScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, [scrollDown]);
+
 	return (
 		<nav className="bg-slate-50 fixed w-full bg-opacity-50 backdrop-blur z-50">
-			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-12">
+			<div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
 				<Link to='/' className="">
-					<img src={`${process.env.PUBLIC_URL}/kdd_logo_p.png`} alt="logo" className="h-12" />
+					<img src={`${process.env.PUBLIC_URL}/kdd_logo_p.png`} alt="logo" className="h-16" />
 				</Link>
 
 				<div className="whitespace-nowrap flex gap-2 items-center text-sm">

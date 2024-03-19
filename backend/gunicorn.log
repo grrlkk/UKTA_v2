@@ -10,3 +10,52 @@ nohup: ignoring input
 [2024-03-17 05:42:49 +0000] [619668] [INFO] Started server process [619668]
 [2024-03-17 05:42:49 +0000] [619668] [INFO] Waiting for application startup.
 [2024-03-17 05:42:49 +0000] [619668] [INFO] Application startup complete.
+안녕하세요. 인하대학교 서영덕 입니다. 저는...
+안녕하세요. 인하대학교 서영덕 입니다. 저는 컴퓨터공학과 교수입니다. 그리고 데이터 마이닝, 추천 시스템 등을 전공하고 있습니다.
+[('안녕', 'NNG'), ('하', 'XSV'), ('세요', 'EP+EF')]
+ ! /SF 하 / VV 시 / EP 어요 / EF 
+['안녕', '하', '세요']
+[('하', 'VV'), ('시', 'EP'), ('어요', 'EF')]
+[('하', 'VV'), ('시', 'EP'), ('어요', 'EF')]
+[('인하', 'NNG'), ('대학교', 'NNG'), ('서영덕', 'NNP'), ('입니다', 'VCP+EC')]
+ 인하 / NNG 대 / XPN  / NNG 이 / VCP ㅂ니다 / EF 
+['인하', '대학교', '서영덕', '입니다']
+[('인하', 'NNG'), ('대', 'XPN'), ('', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('인하', 'NNG'), ('대', 'XPN'), ('', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('저', 'NP'), ('는', 'JX'), ('컴퓨터', 'NNG'), ('공학', 'NNG'), ('과', 'JC'), ('교수', 'NNG'), ('입니다', 'VCP+EC')]
+ 저 / NP 는 / JX 컴퓨터 / NNG 공학 / NNG 과 / JC 교수 / NNG 이 / VCP ㅂ니다 / EF 
+['저', '는', '컴퓨터', '공학', '과', '교수', '입니다']
+[('저', 'NP'), ('는', 'JX'), ('컴퓨터', 'NNG'), ('공학', 'NNG'), ('과', 'JC'), ('교수', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('저', 'NP'), ('는', 'JX'), ('컴퓨터', 'NNG'), ('공학', 'NNG'), ('과', 'JC'), ('교수', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('그리고', 'MAJ'), ('데이터', 'NNG'), ('마이닝', 'NNP'), (',', 'SC'), ('추천', 'NNG'), ('시스템', 'NNG'), ('등', 'NNB'), ('을', 'JKO'), ('전공', 'NNG'), ('하', 'XSV'), ('고', 'EC'), ('있', 'VX'), ('습니다', 'EF'), ('.', 'SF')]
+ 그리고 / MAJ 데이터 / NNG 이 / VCP ㄹ/ETM , /SP 추천 / NNG 시스템 / NNG 등 / NNB 을 / JKO 전공 / NNG 하 / XSV 고 / EC 있 / VX 습니다 / EF ./SF 
+['그리고', '데이터', '마이닝', ',', '추천', '시스템', '등', '을', '전공', '하', '고', '있', '습니다', '.']
+[('그리고', 'MAJ'), ('데이터', 'NNG'), ('이', 'VCP'), ('추천', 'NNG'), ('시스템', 'NNG'), ('등', 'NNB'), ('을', 'JKO'), ('전공', 'NNG'), ('하', 'XSV'), ('고', 'EC'), ('있', 'VX'), ('습니다', 'EF')]
+[('그리고', 'MAJ'), ('데이터', 'NNG'), ('이', 'VCP'), ('추천', 'NNG'), ('시스템', 'NNG'), ('등', 'NNB'), ('을', 'JKO'), ('전공', 'NNG'), ('하', 'XSV'), ('고', 'EC'), ('있', 'VX'), ('습니다', 'EF')]
+
+result:
+defaultdict(None, {'lemmaCnt': 15, 'average_sentence_similarity': 0.360682874917984, 'topic_consistency': 0.5613, 'conjuctions': 0, 'lemmattr': 1.0, 'lemmaMattr': -1, 'lexicalDensityTokens': 0.021683673469387755, 'lexicalDensityTypes': 0.0011904761904761906, 'contentTtr': 0.054901960784313725, 'functionTtr': 0.06, 'nounTtr': 0.06666666666666667, 'verbTtr': 0.03333333333333333, 'adjTtr': 0, 'advTtr': 0.06666666666666667, 'bigramLemmaTtr': 1.0, 'trigramLemmaTtr': 1.0, 'adjacent_sentence_overlap_all_lemmas': 7, 'adjacent_sentence_overlap_all_lemmas_normed': 3, 'binary_adjacent_sentence_overlap_all_lemmas': 2, 'adjacent_two_sentence_overlap_all_lemmas': 4, 'adjacent_two_sentence_overlap_all_lemmas_normed': 2, 'binary_adjacent_two_sentence_overlap_all_lemmas': 1, 'adjacent_sentence_overlap_content_lemmas': 4, 'adjacent_sentence_overlap_content_lemmas_normed': 2, 'binary_adjacent_sentence_overlap_content_lemmas': 2, 'adjacent_two_sentence_overlap_content_lemmas': 2, 'adjacent_two_sentence_overlap_content_lemmas_normed': 1, 'binary_adjacent_two_sentence_overlap_content_lemmas': 1, 'adjacent_sentence_overlap_function_lemmas': 3, 'adjacent_sentence_overlap_function_lemmas_normed': 3, 'binary_adjacent_sentence_overlap_function_lemmas': 1, 'adjacent_two_sentence_overlap_function_lemmas': 2, 'adjacent_two_sentence_overlap_function_lemmas_normed': 2, 'binary_adjacent_two_sentence_overlap_function_lemmas': 0, 'adjacent_sentence_overlap_noun_lemmas': 2, 'adjacent_sentence_overlap_noun_lemmas_normed': 2, 'binary_adjacent_sentence_overlap_noun_lemmas': 0, 'adjacent_two_sentence_overlap_noun_lemmas': 1, 'adjacent_two_sentence_overlap_noun_lemmas_normed': 1, 'binary_adjacent_two_sentence_overlap_noun_lemmas': 0, 'adjacent_sentence_overlap_verb_lemmas': 2, 'adjacent_sentence_overlap_verb_lemmas_normed': 2, 'binary_adjacent_sentence_overlap_verb_lemmas': 2, 'adjacent_two_sentence_overlap_verb_lemmas': 1, 'adjacent_two_sentence_overlap_verb_lemmas_normed': 1, 'binary_adjacent_two_sentence_overlap_verb_lemmas': 1, 'adjacent_sentence_overlap_adjective_lemmas': 0, 'adjacent_sentence_overlap_adjective_lemmas_normed': 0, 'binary_adjacent_sentence_overlap_adjective_lemmas': 0, 'adjacent_two_sentence_overlap_adjective_lemmas': 0, 'adjacent_two_sentence_overlap_adjective_lemmas_normed': 0, 'binary_adjacent_two_sentence_overlap_adjective_lemmas': 0, 'adjacent_sentence_overlap_adverb_lemmas': 0, 'adjacent_sentence_overlap_adverb_lemmas_normed': 0, 'binary_adjacent_sentence_overlap_adverb_lemmas': 0, 'adjacent_two_sentence_overlap_adverb_lemmas': 0, 'adjacent_two_sentence_overlap_adverb_lemmas_normed': 0, 'binary_adjacent_two_sentence_overlap_adverb_lemmas': 0})
+안녕하세요. 인하대학교 서영덕 입니다. 저는...
+안녕하세요. 인하대학교 서영덕 입니다. 저는 컴퓨터공학과 교수입니다. 그리고 데이터 마이닝, 추천 시스템 등을 전공하고 있습니다.
+[('안녕', 'NNG'), ('하', 'XSV'), ('세요', 'EP+EF')]
+ ! /SF 하 / VV 시 / EP 어요 / EF 
+['안녕', '하', '세요']
+[('하', 'VV'), ('시', 'EP'), ('어요', 'EF')]
+[('하', 'VV'), ('시', 'EP'), ('어요', 'EF')]
+[('인하', 'NNG'), ('대학교', 'NNG'), ('서영덕', 'NNP'), ('입니다', 'VCP+EC')]
+ 인하 / NNG 대 / XPN  / NNG 이 / VCP ㅂ니다 / EF 
+['인하', '대학교', '서영덕', '입니다']
+[('인하', 'NNG'), ('대', 'XPN'), ('', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('인하', 'NNG'), ('대', 'XPN'), ('', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('저', 'NP'), ('는', 'JX'), ('컴퓨터', 'NNG'), ('공학', 'NNG'), ('과', 'JC'), ('교수', 'NNG'), ('입니다', 'VCP+EC')]
+ 저 / NP 는 / JX 컴퓨터 / NNG 공학 / NNG 과 / JC 교수 / NNG 이 / VCP ㅂ니다 / EF 
+['저', '는', '컴퓨터', '공학', '과', '교수', '입니다']
+[('저', 'NP'), ('는', 'JX'), ('컴퓨터', 'NNG'), ('공학', 'NNG'), ('과', 'JC'), ('교수', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('저', 'NP'), ('는', 'JX'), ('컴퓨터', 'NNG'), ('공학', 'NNG'), ('과', 'JC'), ('교수', 'NNG'), ('이', 'VCP'), ('ㅂ니다', 'EF')]
+[('그리고', 'MAJ'), ('데이터', 'NNG'), ('마이닝', 'NNP'), (',', 'SC'), ('추천', 'NNG'), ('시스템', 'NNG'), ('등', 'NNB'), ('을', 'JKO'), ('전공', 'NNG'), ('하', 'XSV'), ('고', 'EC'), ('있', 'VX'), ('습니다', 'EF'), ('.', 'SF')]
+ 그리고 / MAJ 데이터 / NNG 이 / VCP ㄹ/ETM , /SP 추천 / NNG 시스템 / NNG 등 / NNB 을 / JKO 전공 / NNG 하 / XSV 고 / EC 있 / VX 습니다 / EF ./SF 
+['그리고', '데이터', '마이닝', ',', '추천', '시스템', '등', '을', '전공', '하', '고', '있', '습니다', '.']
+[('그리고', 'MAJ'), ('데이터', 'NNG'), ('이', 'VCP'), ('추천', 'NNG'), ('시스템', 'NNG'), ('등', 'NNB'), ('을', 'JKO'), ('전공', 'NNG'), ('하', 'XSV'), ('고', 'EC'), ('있', 'VX'), ('습니다', 'EF')]
+[('그리고', 'MAJ'), ('데이터', 'NNG'), ('이', 'VCP'), ('추천', 'NNG'), ('시스템', 'NNG'), ('등', 'NNB'), ('을', 'JKO'), ('전공', 'NNG'), ('하', 'XSV'), ('고', 'EC'), ('있', 'VX'), ('습니다', 'EF')]
+
+result:
