@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Pagination from './Pagination';
 
+import ResultHeader from './ResultHeader';
+
 
 const ResultsCoh = () => {
 	const [cohesionResult, setCohesionResult] = useState([]);
@@ -89,18 +91,19 @@ const ResultsCoh = () => {
 
 
 	return (
-		<div className='grid grid-cols-1 gap-4 fade-in'>
+		<div className='grid grid-cols-1 gap-4'>
 			<h2 className="text-3xl font-bold py-2">응집도 분석 결과</h2>
 			<Pagination componentArray=
 				{cohesionResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (
 					<div key={index} className={`p-4 border border-gray-300 rounded-lg overflow-auto w-full relative transition-all ${selectedFile === index ? 'bg-slate-100' : 'bg-slate-50'}`}>
 						<div className='grid grid-cols-1'>
 							<div className='grid grid-cols-1 gap-4' onClick={handleSelectFile(index)}>
-								<h3 className='text-xl font-bold'>{item.filename}</h3>
-								<p>{item.contents}</p>
+								<ResultHeader title={item.filename} content={item.contents} />
 							</div>
 
 							<div key={index} className={`${selectedFile === index ? 'h-96 mt-4 overflow-scroll' : 'h-0 overflow-hidden'} transition-all ease-in-out pr-2`}>
+								<hr className='mb-6' />
+
 								<table className='w-full'>
 									<thead>
 										<tr className='text-left border-b'>
@@ -130,7 +133,7 @@ const ResultsCoh = () => {
 							</div>
 						</div>
 
-						<div className='absolute top-3 right-2 flex gap-2 text-sm'>
+						<div className={`absolute top-3 right-2 flex gap-2 text-sm pl-4`}>
 							<div className='flex'>
 								<button className={`grow sm:grow-0 px-4 py-2 pr-2 bg-slate-500 text-white rounded-full rounded-r-none hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item)}>
 									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">

@@ -10,7 +10,7 @@ const Pagination = ({ componentArray }) => {
 	const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 	return (
-		<div className='grid grid-cols-1 gap-2'>
+		<div className='grid grid-cols-1 gap-3'>
 			<div className='flex gap-2 justify-end mb-4'>
 				{componentArray.length > itemsPerPage &&
 					Array.from({ length: Math.ceil(componentArray.length / itemsPerPage) }, (_, index) => (
