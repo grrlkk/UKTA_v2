@@ -10,11 +10,12 @@ import Foot from './components/Foot';
 import ResultsCoh from './components/ResultsCohesion';
 import ResultsMor from './components/ResultsMorpheme';
 import Loading from './components/Loading';
+import TagInfo from './components/TagInfo';
 import Dummy from './components/Dummy';
 
 
 function App() {
-	const [inputValue, setInputValue] = useState(localStorage.getItem('inputValue') || '');
+	const [inputValue, setInputValue] = useState('');
 	const [uploadInProgress, setUploadInProgress] = useState(false);
 	const [selectedFile, setSelectedFile] = useState(null);
 	const currentPage = useLocation();
@@ -23,7 +24,7 @@ function App() {
 	const handleAnalysis = async (type) => {
 		setUploadInProgress(true);
 		const formData = new FormData();
-		formData.append("files", new Blob([inputValue], { type: "text/plain" }), inputValue.slice(0, inputValue.length / 3) + "...");
+		formData.append("files", new Blob([inputValue], { type: "text/plain" }), inputValue.split(" ")[0] + "...");
 
 		try {
 			const response = await fetch(`https://ukta.inha.ac.kr/api/korcat/${type}`, {
@@ -44,7 +45,6 @@ function App() {
 
 	const handleInputChange = (e) => {
 		setInputValue(e.target.value);
-		localStorage.setItem('inputValue', e.target.value);
 	};
 
 	const handleFileInputChange = (e) => {
@@ -55,20 +55,15 @@ function App() {
 		reader.onload = (event) => {
 			const fileContent = event.target.result;
 			setInputValue(fileContent);
-			localStorage.setItem('inputValue', e.target.value);
 		};
 		reader.readAsText(file);
 	};
 
 	const handleClearInput = () => {
 		setInputValue('');
-		localStorage.setItem('inputValue', '');
 		setSelectedFile(null);
+		document.getElementById('fileInput').value = '';
 	};
-
-	useEffect(() => {
-		localStorage.setItem('inputValue', inputValue);
-	}, [inputValue]);
 
 	return (
 		<div className="App text-slate-900 bg-white transition-all ease-in-out min-w-[320px]">
@@ -79,14 +74,14 @@ function App() {
 					<h2 className="text-3xl font-bold py-2">한국어 입력</h2>
 
 					<div className='flex justify-end gap-2 text-sm shrink'>
-						<input type="file" accept=".txt" onChange={handleFileInputChange}
+						<input type="file" id="fileInput" accept=".txt" onChange={handleFileInputChange}
 							className="
-									file:mr-4 file:py-2 file:px-4
-									file:rounded-full file:border-0
-									file:bg-slate-500 file:text-white
-									hover:file:bg-slate-600 hover:file:text-white
-									file:cursor-pointer
-									bg-slate-100 hover:bg-slate-200 rounded-full grow sm:grow-0 shrink transition-all ease-in-out w-1/3
+								file:mr-4 file:py-2 file:px-4
+								file:rounded-full file:border-0
+								file:bg-slate-500 file:text-white
+								hover:file:bg-slate-600 hover:file:text-white
+								file:cursor-pointer
+								bg-slate-100 hover:bg-slate-200 rounded-full grow sm:grow-0 shrink transition-all ease-in-out w-1/3
 								"
 						/>
 
@@ -137,6 +132,7 @@ function App() {
 				<Routes>
 					<Route path='/morpheme' element={<ResultsMor />} />
 					<Route path='/cohesion' element={<ResultsCoh />} />
+					<Route path='/tagging' element={<TagInfo />} />
 					<Route path='/loading' element={<Loading />} />
 					<Route path='*' element={<Dummy />} />
 				</Routes>
