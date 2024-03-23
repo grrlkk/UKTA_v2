@@ -11,15 +11,6 @@ const Loading = () => {
 				</svg>
 				분석중...
 			</h2>
-			<div className={``}>
-				이전 분석 결과 보기
-				<div className={``}>
-					<ul className='list-disc list-inside p-2'>
-						<li><Link to="/morpheme" className={`hover:text-slate-500`}>형태소</Link></li>
-						<li><Link to="/cohesion" className={`hover:text-slate-500`}>자질</Link></li>
-					</ul>
-				</div>
-			</div>
 		</div>
 	);
 };

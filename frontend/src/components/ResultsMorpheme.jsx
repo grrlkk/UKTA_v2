@@ -47,10 +47,10 @@ const ResultsMor = () => {
 
 			<Pagination componentArray=
 				{morphemeResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (
-					<div key={index} className={`p-4 h-fit border border-gray-300 rounded-lg overflow-auto w-full relative transition-all ${selectedFile === index ? 'bg-slate-100' : 'bg-slate-50'}`}>
+					<div key={index} className={`p-4 h-fit border border-gray-300 rounded-lg overflow-auto w-full shadow relative transition-all ${selectedFile === index ? 'bg-slate-100' : 'bg-slate-50'}`}>
 						<div className={`grid grid-cols-1 gap-3`}>
 							<div className='grid grid-cols-1 gap-4' onClick={handleSelectFile(index)}>
-								<ResultHeader title={item.filename} content={item.contents} trunc={true} />
+								<ResultHeader title={item.filename} content={item.contents} trunc={selectedFile != index} />
 							</div>
 
 							<div className={`overflow-y-hidden transition-all ease-in-out grid grid-cols-1 gap-2 ${selectedFile === index ? "mt-4" : "h-0 overflow-hidden"}`}>
