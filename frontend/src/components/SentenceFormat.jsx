@@ -5,20 +5,16 @@ import Tags from "./Tags";
 
 const HilightText = ({ range, content }) => {
 	return (
-		<>
-			{range.length === 0 ? <>{content}</> :
-				<div>
-					<span>{content.substring(0, range[0])}</span>
-					<span className="bg-slate-300 font-bold">{content.substring(range[0], range[1])}</span>
-					<span>{content.substring(range[1], content.length)}</span>
-				</div>
-			}
-		</>
+		<div className=" leading-snug">
+			<span>{content.substring(0, range[0])}</span>
+			<span className="bg-slate-300 font-bold">{content.substring(range[0], range[1])}</span>
+			<span>{content.substring(range[1], content.length)}</span>
+		</div>
 	);
 }
 
 const Sentence = ({ result, content }) => {
-	const [range, setRange] = useState([]);
+	const [range, setRange] = useState([0, 0]);
 
 	const handleMouseEnter = (range) => {
 		setRange(range);
@@ -38,7 +34,7 @@ const Sentence = ({ result, content }) => {
 									id={`${morph[1]}`}
 									className={`group hover:bg-slate-200 relative text-sm font-bold flex-col whitespace-nowrap p-2 border-x-2 mb-2`}
 									onMouseEnter={() => handleMouseEnter(morph[0])}
-									onMouseLeave={() => setRange([])}
+									onMouseLeave={() => setRange([0, 0])}
 								>
 									{morph[2][7] != null ? (
 										<div className='flex gap-3'>

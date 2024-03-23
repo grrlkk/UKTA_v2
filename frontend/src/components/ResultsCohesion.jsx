@@ -98,7 +98,7 @@ const ResultsCoh = () => {
 					<div key={index} className={`p-4 border border-gray-300 rounded-lg overflow-auto w-full relative transition-all ${selectedFile === index ? 'bg-slate-100' : 'bg-slate-50'}`}>
 						<div className='grid grid-cols-1'>
 							<div className='grid grid-cols-1 gap-4' onClick={handleSelectFile(index)}>
-								<ResultHeader title={item.filename} content={item.contents} />
+								<ResultHeader title={item.filename} content={item.contents} trunc={selectedFile != index} />
 							</div>
 
 							<div key={index} className={`${selectedFile === index ? 'h-96 mt-4 overflow-scroll' : 'h-0 overflow-hidden'} transition-all ease-in-out pr-2`}>
