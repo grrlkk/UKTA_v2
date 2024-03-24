@@ -20,7 +20,7 @@ const Sentence = ({ result, content }) => {
 	}
 
 	return (
-		<div className='grid grid-cols-1 gap-4	'>
+		<div className='grid grid-cols-1 gap-4'>
 			{result.map((sentence, index) => {
 				return (
 					<div key={index} className="flex flex-col gap-2">
@@ -29,7 +29,7 @@ const Sentence = ({ result, content }) => {
 							<HilightText range={range} offset={sentence[0][0][0]} content={content.substring(sentence[0][0][0], sentence[sentence.length - 1][0][1])} />
 						</div>
 
-						<div className="p-2 bg-slate-200 rounded-lg">
+						<div className="p-2 bg-slate-200 rounded-lg border-[1px] border-gray-300">
 							<div className='flex overflow-x-auto divide-x-2 divide-slate-300'>
 								{sentence.map((morph, index) => {
 									return (

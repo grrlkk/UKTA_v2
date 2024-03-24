@@ -17,23 +17,36 @@ const Nav = ({ currentPage }) => {
 	}, [scrollDown]);
 
 	return (
-		<nav className="bg-slate-50 fixed w-full bg-opacity-50 backdrop-blur z-50 border-b-slate-200 border-b-2 shadow-sm">
+		<nav className="bg-slate-50 fixed w-full bg-opacity-50 backdrop-blur z-50 border-b-slate-100 border-b-[1px] shadow-sm">
 			<div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-				<Link to='/' className="flex gap-2 items-center">
-					<img src={`${process.env.PUBLIC_URL}/kdd_logo_c.png`} alt="logo" className="h-16 py-2" />
-					<p className="text-xl font-black text-slate-600">U-KTA</p>
+				<Link to='/' className="flex gap-2 items-center group">
+					<img src={`${process.env.PUBLIC_URL}/kdd_logo_c.png`} alt="logo" className="h-16 py-2 group-hover:scale-110 transition-all ease-in-out" />
+					<p className="text-lg font-black text-slate-600 group-hover:text-slate-900">U-KTA</p>
 				</Link>
 
-				<div className="whitespace-nowrap flex h-full items-end gap-2 text-sm">
+				<div className="whitespace-nowrap items-end flex text-sm *:px-2 divide-x-2">
 					<Link to="/morpheme"
 						className={`
-							${currentPage === "/morpheme" ? "text-slate-800 bg-slate-200 rounded-t-2xl" : "text-slate-500"} 
-							hover:font-bold px-4 pt-2 pb-1 transition-all ease-in-out`
+							${currentPage === "/morpheme" ?
+								"font-bold text-slate-700 hover:text-slate-900" :
+								"text-slate-400 hover:text-slate-700"
+							} 
+							transition-all ease-in-out`
 						}
 					>
 						형태소
 					</Link>
-					<Link to="/cohesion" className={`${currentPage === "/cohesion" ? "text-slate-800 bg-slate-200 rounded-t-2xl" : "text-slate-500"} hover:font-bold px-4 pt-2 pb-1 transition-all ease-in-out`}>자질</Link>
+					<Link to="/cohesion"
+						className={`
+							${currentPage === "/cohesion" ?
+								"font-bold text-slate-700 hover:text-slate-900" :
+								"text-slate-400 hover:text-slate-700"
+							} 
+							transition-all ease-in-out`
+						}
+					>
+						자질
+					</Link>
 				</div>
 			</div>
 		</nav>

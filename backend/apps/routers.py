@@ -1,15 +1,14 @@
 import datetime
+import json
 import os
 from typing import List
 
 import pydantic
+from apps.cohesion.process import process
+from apps.morph.morph import mecab
 from bson import ObjectId
 from fastapi import APIRouter, File, HTTPException, Request, UploadFile, status
 from fastapi.responses import JSONResponse
-
-from apps.cohesion.process import process
-from apps.morph.morph import mecab
-import json
 
 # pydantic.json.ENCODERS_BY_TYPE[ObjectId] = str
 router = APIRouter()
@@ -68,8 +67,8 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 
         for index in range(len(temp)):
             if temp[index][1] == "SF":
-                results.append(temp[bef:index + 1])
-                results_full.append(temp_full[bef:index + 1])
+                results.append(temp[bef : index + 1])
+                results_full.append(temp_full[bef : index + 1])
                 bef = index + 1
 
         # each object being uploaded to MONGODB
@@ -129,7 +128,7 @@ async def delete_file(id: str, request: Request):
     delete_result = await request.app.mongodb["cohesion"].delete_one({"_id": id})
 
     if delete_result.deleted_count == 1:
-        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
+        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT, content={"message": "File deleted successfully"})
 
     raise HTTPException(status_code=404, detail=f"Task {id} not found")
 
@@ -140,6 +139,6 @@ async def delete_file(id: str, request: Request):
     delete_result = await request.app.mongodb["morpheme"].delete_one({"_id": id})
 
     if delete_result.deleted_count == 1:
-        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
+        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT, content={"message": "File deleted successfully"})
 
     raise HTTPException(status_code=404, detail=f"Task {id} not found")
