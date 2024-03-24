@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Dummy = () => {
 	return (
 		<div className="mb-32 fade-in grid grid-cols-1 gap-4">
-			<h2 className="text-3xl font-bold py-2">
+			<h2 className="text-2xl font-bold py-2">
 				한국어 분석
 			</h2>
 

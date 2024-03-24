@@ -7,6 +7,7 @@ import ResultHeader from './ResultHeader';
 const ResultsCoh = () => {
 	const [cohesionResult, setCohesionResult] = useState([]);
 	const [selectedFile, setSelectedFile] = useState(0);
+	const [selectedAll, setSelectedAll] = useState(false);
 	const [selectedProperty, setSelectedProperty] = useState([]);
 
 	useEffect(() => {
@@ -22,10 +23,10 @@ const ResultsCoh = () => {
 		fetchData();
 	}, []);
 
-	const handleFileDownload = (item, index, type) => {
+	const handleFileDownload = (item, type) => {
 		if (type === 'csv') {
 			console.log('csv');
-			const csvData = selectedProperty[index].map(p => p.split('\t').join(',')).join('\n');
+			const csvData = selectedProperty.map(p => p.split('\t').join(',')).join('\n');
 			const blob = new Blob([csvData], { type: 'text/csv' });
 			const url = URL.createObjectURL(blob);
 			const link = document.createElement('a');
@@ -49,6 +50,7 @@ const ResultsCoh = () => {
 		return () => {
 			console.log(index);
 			setSelectedProperty([])
+			setSelectedAll(false);
 			selectedFile === index ? setSelectedFile(-1) : setSelectedFile(index);
 		}
 	}
@@ -66,11 +68,13 @@ const ResultsCoh = () => {
 		return () => {
 			if (selectedProperty.length === Object.entries(results).length) {
 				setSelectedProperty([]);
+				setSelectedAll(false);
 			} else {
 				setSelectedProperty(prevSelectedProperty => {
 					const updatedProperty = Object.entries(results).map(([key, value]) => key + '\t' + value);
 					return updatedProperty;
 				});
+				setSelectedAll(true);
 			}
 		};
 	};
@@ -98,7 +102,7 @@ const ResultsCoh = () => {
 
 	return (
 		<div className='grid grid-cols-1 gap-4'>
-			<h2 className="text-3xl font-bold py-2">응집도 분석 결과</h2>
+			<h2 className="text-2xl font-bold py-2">응집도 분석 결과</h2>
 			<Pagination componentArray=
 				{cohesionResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (
 					<div key={index} className={`p-4 border-[1px] border-gray-300 rounded-lg overflow-hidden w-full shadow relative transition-all ${selectedFile === index ? 'bg-slate-100' : 'bg-slate-50 hover:bg-slate-100'}`}>
@@ -116,10 +120,10 @@ const ResultsCoh = () => {
 											<thead className='w-full'>
 												<tr className='text-left'>
 													<th className='p-1 w-12'>
-														<input type="checkbox" className='w-full accent-slate-600' onChange={handleSelectAll(item.results, index)} />
+														<input type="checkbox" className='w-full accent-slate-600' checked={selectedAll} onChange={handleSelectAll(item.results, index)} />
 													</th>
-													<th className='p-1'>Property ({selectedProperty.length})</th>
-													<th className='p-1 pr-4 w-32 text-right'>Value</th>
+													<th className='p-1'>자질 ({selectedProperty.length})</th>
+													<th className='p-1 pr-4 w-32 text-right'>값</th>
 												</tr>
 											</thead>
 										</table>
@@ -138,7 +142,7 @@ const ResultsCoh = () => {
 														<td className='p-1 break-all'>
 															{key}
 														</td>
-														<td className='p-1 pr-4 w-32 text-right font-mono'>
+														<td className='p-1 pr-4 w-32 text-right font-mono italic'>
 															{value.toFixed(5)}
 														</td>
 													</tr>
@@ -158,7 +162,7 @@ const ResultsCoh = () => {
 									</svg>
 									json
 								</button>
-								<button className={`grow sm:grow-0 pr-4 py-2 pl-2 bg-slate-500 border-[1px] border-gray-300 text-white rounded-lg rounded-l-none hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item, index, "csv")}>
+								<button className={`grow sm:grow-0 pr-4 py-2 pl-2 bg-slate-500 border-[1px] border-gray-300 text-white rounded-lg rounded-l-none hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item, "csv")}>
 									csv
 								</button>
 							</div>

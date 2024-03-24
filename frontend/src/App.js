@@ -64,11 +64,12 @@ const TextInput = () => {
 
 	return (
 		<div className='grid grid-cols-1 gap-4'>
-			<h2 className="text-3xl font-bold py-2">한국어 입력</h2>
+			<h2 className="text-2xl font-bold py-2">한국어 입력</h2>
 
 			<div className='grid grid-cols-1 gap-4 p-3 border-[1px] border-gray-300 rounded-lg bg-slate-100 shadow'>
 				<div className='flex justify-between gap-2 text-sm shrink'>
-					<input type="file" id="fileInput" accept=".txt" onChange={() => handleFileInputChange()}
+					<input
+						type="file" id="fileInput" accept=".txt" onChange={() => handleFileInputChange()}
 						className="
 									file:mr-4 file:py-2 file:px-4
 									file:rounded-lg file:border-0 border-[1px] border-gray-300
@@ -88,7 +89,7 @@ const TextInput = () => {
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 transition-all ease-in-out group-hover:rotate-90">
 							<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
 						</svg>
-						Clear
+						초기화
 					</button>
 				</div>
 
