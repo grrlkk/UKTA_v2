@@ -114,8 +114,8 @@ const ResultsCoh = () => {
 							<div key={index} className={`${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out pr-2`}>
 								<hr className='mb-6' />
 
-								<div className='bg-slate-200 rounded-lg border-[1px] border-gray-300 p-4'>
-									<div className='pr-[6px] border-b-[1px] border-b-slate-300'>
+								<div className='bg-slate-200 rounded-lg border-[1px] border-gray-300 p-2'>
+									<div className='pr-[6px] border-b-[1px] border-b-slate-300 shadow-sm'>
 										<table className='w-full'>
 											<thead className='w-full'>
 												<tr className='text-left'>
@@ -128,15 +128,16 @@ const ResultsCoh = () => {
 											</thead>
 										</table>
 									</div>
+
 									<div className='w-full overflow-y-scroll h-96'>
 										<table className='w-full table-fixed'>
 											<tbody className='w-full'>
 												{Object.entries(item.results).map(([key, value]) => (
 													<tr key={key} className='border-b-[1px] border-dotted border-b-slate-300 hover:bg-slate-300' onClick={handleSelectProperty(key + '\t' + value, index)}>
 														<td className='p-1 w-12'>
-															<input 
+															<input
 																className='w-full accent-slate-600'
-																type="checkbox" id={key} name={key} value={key} checked={selectedProperty.includes(key + '\t' + value)} onChange={() => { }} 
+																type="checkbox" id={key} name={key} value={key} checked={selectedProperty.includes(key + '\t' + value)} onChange={() => { }}
 															/>
 														</td>
 														<td className='p-1 break-all'>
