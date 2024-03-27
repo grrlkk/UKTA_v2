@@ -114,16 +114,16 @@ const ResultsCoh = () => {
 							<div key={index} className={`${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out pr-2`}>
 								<hr className='mb-6' />
 
-								<div className='bg-slate-200 rounded-lg border-[1px] border-gray-300 p-2'>
-									<div className='pr-[6px] border-b-[1px] border-b-slate-300 shadow-sm'>
+								<div className='bg-slate-200 rounded-lg border-[1px] border-gray-300 p-2 text-sm'>
+									<div className='pr-[6px] border-b-[1px] shadow-sm bg-slate-300 rounded-t-lg border-slate-400 py-1'>
 										<table className='w-full'>
 											<thead className='w-full'>
 												<tr className='text-left'>
-													<th className='p-1 w-12'>
-														<input type="checkbox" className='w-full accent-slate-600' checked={selectedAll} onChange={handleSelectAll(item.results, index)} />
+													<th className='px-1 w-12'>
+														<input type="checkbox" className='w-full accent-slate-600 align-middle' checked={selectedAll} onChange={handleSelectAll(item.results, index)} />
 													</th>
-													<th className='p-1'>자질 ({selectedProperty.length})</th>
-													<th className='p-1 pr-4 w-32 text-right'>값</th>
+													<th className='px-1'>자질 ({selectedProperty.length})</th>
+													<th className='px-1 pr-4 w-32 text-right'>값</th>
 												</tr>
 											</thead>
 										</table>
@@ -136,7 +136,7 @@ const ResultsCoh = () => {
 													<tr key={key} className='border-b-[1px] border-dotted border-b-slate-300 hover:bg-slate-300' onClick={handleSelectProperty(key + '\t' + value, index)}>
 														<td className='p-1 w-12'>
 															<input
-																className='w-full accent-slate-600'
+																className='w-full accent-slate-600 align-middle'
 																type="checkbox" id={key} name={key} value={key} checked={selectedProperty.includes(key + '\t' + value)} onChange={() => { }}
 															/>
 														</td>

@@ -74,7 +74,6 @@ const ResultsMor = () => {
 
 							<div className={`overflow-y-hidden transition-all ease-in-out grid grid-cols-1 ${selectedFile === index ? "mt-4" : "h-0 overflow-hidden"}`}>
 								<hr className='mb-6' />
-
 								<Sentence result={item.results_full} content={item.contents} />
 							</div>
 						</div>

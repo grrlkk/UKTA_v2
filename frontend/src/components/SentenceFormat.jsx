@@ -135,14 +135,14 @@ const Sentence = ({ result, content }) => {
 							</div>
 
 							<div className={`text-left overflow-hidden transition-all ease-in-out text-sm ${tableHidden[index] ? "h-0 pt-0" : "h-fit pt-1"}`}>
-								<div className="w-full overflow-y-scroll shadow-sm">
+								<div className="w-full py-1 overflow-y-scroll shadow-sm bg-slate-300 rounded-t-lg border-b-[1px] border-slate-400">
 									<table className="table-auto w-full">
-										<thead className="border-b-[1px] border-slate-300">
+										<thead className="">
 											<tr className="">
-												<th className="px-3 py-1 text-right w-1/12">순서</th>
-												<th colSpan={2} className="px-3 py-1">품사</th>
-												<th className="px-3 py-1 w-1/6">태그</th>
-												<th className="px-3 py-1 w-1/3">태그 설명</th>
+												<th className="px-3 text-right w-1/12">순서</th>
+												<th colSpan={2} className="px-3">품사</th>
+												<th className="px-3 w-1/6">태그</th>
+												<th className="px-3 w-1/3">태그 설명</th>
 											</tr>
 										</thead>
 									</table>
