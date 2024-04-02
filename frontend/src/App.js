@@ -66,13 +66,13 @@ const TextInput = () => {
 		<div className='grid grid-cols-1 gap-4'>
 			<h2 className="text-2xl font-bold py-2">한국어 입력</h2>
 
-			<div className='grid grid-cols-1 gap-4 p-3 border-[1px] border-gray-300 rounded-lg bg-slate-100 shadow'>
+			<div className='grid grid-cols-1 gap-4 p-3 rounded-lg bg-slate-100 shadow'>
 				<div className='flex justify-between gap-2 text-sm shrink'>
 					<input
-						type="file" id="fileInput" accept=".txt" onChange={() => handleFileInputChange()}
+						type="file" id="fileInput" accept=".txt" onChange={handleFileInputChange}
 						className="
 									file:mr-4 file:py-2 file:px-4
-									file:rounded-lg file:border-0 border-[1px] border-gray-300
+									file:rounded-lg file:border-0 
 									file:bg-slate-500 file:text-white
 									hover:file:bg-slate-600 hover:file:text-white
 									file:cursor-pointer
@@ -82,7 +82,7 @@ const TextInput = () => {
 					/>
 
 					<button
-						className={`flex-shrink-0 p-2 pr-4 flex gap-2 bg-red-400 text-white rounded-lg hover:bg-red-500 border-[1px] border-gray-300 group`}
+						className={`flex-shrink-0 p-2 pr-4 flex gap-2 bg-red-400 text-white rounded-lg hover:bg-red-500 group`}
 						onClick={() => handleClearInput()}
 						disabled={uploadInProgress}
 					>
@@ -93,7 +93,7 @@ const TextInput = () => {
 					</button>
 				</div>
 
-				<div className='rounded-lg border-gray-300 border-[1px] bg-white has-[:focus]:ring-2 has-[:focus]:ring-slate-500'>
+				<div className='rounded-lg bg-white has-[:focus]:ring-2 has-[:focus]:ring-slate-500'>
 					<textarea
 						value={inputValue}
 						onChange={handleInputChange}
@@ -124,11 +124,11 @@ const TextInput = () => {
 							한국어 입력 후 분석하기
 						</button> :
 						<>
-							<Link to='/loading' className={`grow sm:grow-0 px-4 py-2 border-[1px] border-gray-300 bg-slate-500 text-white rounded-lg hover:bg-slate-600 shadow`} onClick={() => handleAnalysis('morpheme')}>
+							<Link to='/loading' className={`grow sm:grow-0 px-4 py-2 bg-slate-500 text-white rounded-lg hover:bg-slate-600 shadow`} onClick={() => handleAnalysis('morpheme')}>
 								형태소 분석
 							</Link>
 
-							<Link to='/loading' className={`grow sm:grow-0 px-4 py-2 border-[1px] border-gray-300 bg-slate-500 text-white rounded-lg hover:bg-slate-600 shadow`} onClick={() => handleAnalysis('cohesion')}>
+							<Link to='/loading' className={`grow sm:grow-0 px-4 py-2 bg-slate-500 text-white rounded-lg hover:bg-slate-600 shadow`} onClick={() => handleAnalysis('cohesion')}>
 								응집도 분석
 							</Link>
 						</>}

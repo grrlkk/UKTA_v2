@@ -21,7 +21,7 @@ const HilightText = ({ range, offset, content, color }) => {
 const ToggleTable = ({ tableHidden, setTableHidden, index }) => {
 	return (
 		<button
-			className="text-sm font-bold text-slate-500 hover:text-slate-600 flex bg-slate-300 rounded-full border-[1px] border-gray-300"
+			className="text-slate-500 hover:text-slate-600 flex bg-slate-200 rounded-full border-[1px] border-gray-300"
 			onClick={() => setTableHidden(tableHidden.map((item, i) => i === index ? !item : item))}
 		>
 			<div className={`px-2 rounded-full ${tableHidden[index] ? "bg-slate-500 hover:bg-slate-600 text-slate-100" : ""}`}>
@@ -52,25 +52,25 @@ const Sentence = ({ result, content }) => {
 				return (
 					<div key={index} className="flex flex-col gap-2">
 						<div className="flex gap-2">
-							<div className="font-bold">{index + 1}.</div>
+							<div className="">{index + 1}.</div>
 							<HilightText range={range} offset={sentence[0][0][0]} content={content.substring(sentence[0][0][0], sentence[sentence.length - 1][0][1])} color={hoverColor} />
 						</div>
 
-						<div className="p-2 flex flex-col gap-1 bg-slate-200 rounded-lg border-[1px] border-gray-300">
-							<div className="flex gap-2 w-full items-center">
+						<div className="flex flex-col bg-slate-300 rounded-lg overflow-hidden font-semibold">
+							<div className="flex gap-2 m-2 mb-0 items-center">
 								<ToggleTable tableHidden={tableHidden} setTableHidden={setTableHidden} index={index} />
-								<hr className="grow border-slate-300" />
+								<hr className="grow border-slate-200" />
 							</div>
 
-							<div className={`flex overflow-x-auto divide-x-[1px] divide-slate-300 ${tableHidden[index] ? "h-fit pt-1" : "h-0 pt-0"}`}>
+							<div className={`flex overflow-x-auto divide-x-[1px] bg-slate-200 divide-slate-300 ${tableHidden[index] ? "h-fit mt-2 border-t-[1px] border-slate-400" : "h-0 pt-0 m-0"}`}>
 								{sentence.map((morph, index) => {
 									return (
-										<>
+										<div key={index}>
 											{morph[2][7] != null ? (
 												<div
 													key={index + morph[1]}
 													id={`${morph[1]}`}
-													className={`group hover:bg-slate-300 relative text-sm font-bold flex-col whitespace-nowrap`}
+													className={`group hover:bg-slate-300 relative text-sm flex-col whitespace-nowrap`}
 												>
 													<div className="flex">
 														{String(morph[2][7]).split("+").map((mmorph, index) => {
@@ -101,8 +101,7 @@ const Sentence = ({ result, content }) => {
 															);
 														})}
 													</div>
-												</div>
-											) : (
+												</div>) : (
 												<div
 													onMouseEnter={() => {
 														handleMouseEnter(morph[0]);
@@ -114,7 +113,7 @@ const Sentence = ({ result, content }) => {
 													}}
 													key={index + morph[1]}
 													id={`${morph[1]}`}
-													className={`group hover:bg-slate-300 relative text-sm font-bold flex-col whitespace-nowrap p-2`}
+													className={`group hover:bg-slate-300 relative text-sm flex-col whitespace-nowrap p-2`}
 												>
 													<div className='flex justify-center'>
 														{morph[1]}
@@ -129,7 +128,7 @@ const Sentence = ({ result, content }) => {
 													</div>
 												</div>
 											)}
-										</>
+										</div>
 									);
 								})}
 							</div>
@@ -148,7 +147,7 @@ const Sentence = ({ result, content }) => {
 									</table>
 								</div>
 
-								<div className="overflow-x-hidden overflow-y-scroll max-h-96 w-full font-semibold">
+								<div className="overflow-x-hidden overflow-y-scroll max-h-96 w-full bg-slate-200">
 									<table className="table-auto w-full">
 										{sentence.map((morph, index) => {
 											return (

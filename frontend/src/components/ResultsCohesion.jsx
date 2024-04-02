@@ -102,19 +102,20 @@ const ResultsCoh = () => {
 
 	return (
 		<div className='grid grid-cols-1 gap-4'>
-			<h2 className="text-2xl font-bold py-2">응집도 분석 결과</h2>
+			<h2 className="text-2xl font-bold py-2">자질 분석 결과</h2>
+
 			<Pagination componentArray=
 				{cohesionResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (
-					<div key={index} className={`p-4 border-[1px] border-gray-300 rounded-lg overflow-hidden w-full shadow relative transition-all ${selectedFile === index ? 'bg-slate-100' : 'bg-slate-50 hover:bg-slate-100'}`}>
+					<div key={index} className={`p-4 rounded-lg overflow-hidden w-full shadow relative transition-all ${selectedFile === index ? 'bg-slate-100' : 'bg-slate-50 hover:bg-slate-100'}`}>
 						<div className='grid grid-cols-1'>
 							<div className='grid grid-cols-1 gap-4' onClick={handleSelectFile(index)}>
 								<ResultHeader title={item.filename} content={item.contents} trunc={selectedFile !== index} />
 							</div>
 
-							<div key={index} className={`${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out pr-2`}>
+							<div key={index} className={`${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out pr-2 font-semibold`}>
 								<hr className='mb-6' />
 
-								<div className='bg-slate-200 rounded-lg border-[1px] border-gray-300 p-2 text-sm'>
+								<div className='bg-slate-200 rounded-lg text-sm overflow-hidden'>
 									<div className='pr-[6px] border-b-[1px] shadow-sm bg-slate-300 rounded-t-lg border-slate-400 py-1'>
 										<table className='w-full'>
 											<thead className='w-full'>
@@ -122,6 +123,7 @@ const ResultsCoh = () => {
 													<th className='px-1 w-12'>
 														<input type="checkbox" className='w-full accent-slate-600 align-middle' checked={selectedAll} onChange={handleSelectAll(item.results, index)} />
 													</th>
+													<th className='px-1 w-1/12'>순서</th>
 													<th className='px-1'>자질 ({selectedProperty.length})</th>
 													<th className='px-1 pr-4 w-32 text-right'>값</th>
 												</tr>
@@ -140,6 +142,9 @@ const ResultsCoh = () => {
 																type="checkbox" id={key} name={key} value={key} checked={selectedProperty.includes(key + '\t' + value)} onChange={() => { }}
 															/>
 														</td>
+														<td className='p-1 w-1/12 font-mono italic'>
+															{Object.keys(item.results).indexOf(key) + 1}
+														</td>
 														<td className='p-1 break-all'>
 															{key}
 														</td>
@@ -156,19 +161,19 @@ const ResultsCoh = () => {
 						</div>
 
 						<div className={`absolute top-3 right-3 flex gap-2 text-sm pl-4`}>
-							<div className='flex *:first:border-r-0'>
-								<button className={`grow sm:grow-0 p-2 bg-slate-500 border-[1px] border-gray-300 text-white rounded-lg rounded-r-none hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item)}>
+							<div className='flex'>
+								<button className={`grow sm:grow-0 p-2 bg-slate-500 text-white rounded-lg rounded-r-none hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item)}>
 									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
 										<path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
 									</svg>
 									json
 								</button>
-								<button className={`grow sm:grow-0 pr-4 py-2 pl-2 bg-slate-500 border-[1px] border-gray-300 text-white rounded-lg rounded-l-none hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item, "csv")}>
+								<button className={`grow sm:grow-0 pr-4 py-2 pl-2 bg-slate-500 text-white rounded-lg rounded-l-none hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item, "csv")}>
 									csv
 								</button>
 							</div>
 
-							<button className={`grow sm:grow-0 p-2 bg-red-400 text-white border-[1px] border-gray-300 rounded-lg hover:bg-red-500 flex flex-nowrap gap-2 group`} onClick={() => handleDelete(index)}>
+							<button className={`grow sm:grow-0 p-2 bg-red-400 text-white rounded-lg hover:bg-red-500 flex flex-nowrap gap-2 group`} onClick={() => handleDelete(index)}>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 group-hover:rotate-90 transition-all ease-in-out">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
 								</svg>

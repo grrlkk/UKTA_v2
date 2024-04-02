@@ -15,7 +15,7 @@ const TagInfo = () => {
 		<div className='grid grid-cols-1 gap-4'>
 			<h2 className="text-2xl font-bold py-2">품사 태깅표</h2>
 
-			<div className="p-4 border border-gray-300 rounded-lg w-full bg-slate-100 shadow">
+			<div className="p-4 rounded-lg w-full bg-slate-100 shadow">
 				<table className="text-left w-full">
 					<thead className="border-b-[1px] border-slate-300">
 						<tr>
