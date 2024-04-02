@@ -3,7 +3,7 @@
 	"name": "U-KTA",
 	"icons": [
 		{
-			"src": "kdd_logo_c.png",
+			"src": "kdd_logo.png",
 			"type": "image/png",
 			"sizes": "512x512"
 		}

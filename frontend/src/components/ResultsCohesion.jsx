@@ -25,13 +25,31 @@ const ResultsCoh = () => {
 
 	const handleFileDownload = (item, type) => {
 		if (type === 'csv') {
-			console.log('csv');
+			if (selectedProperty.length === 0) {
+				alert('선택된 자질이 없습니다.');
+				return;
+			}
+
 			const csvData = selectedProperty.map(p => p.split('\t').join(',')).join('\n');
 			const blob = new Blob([csvData], { type: 'text/csv' });
 			const url = URL.createObjectURL(blob);
 			const link = document.createElement('a');
 			link.href = url;
 			link.download = `${item._id}_cohesion.csv`;
+			link.click();
+			link.remove();
+		} else if (type === 'txt') {
+			if (selectedProperty.length === 0) {
+				alert('선택된 자질이 없습니다.');
+				return;
+			}
+
+			const csvData = selectedProperty.map(p => p.split('\t').join(',')).join('\n');
+			const blob = new Blob([csvData], { type: 'text/plain' });
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = `${item._id}_cohesion.txt`;
 			link.click();
 			link.remove();
 		} else {
@@ -106,7 +124,7 @@ const ResultsCoh = () => {
 
 			<Pagination componentArray=
 				{cohesionResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (
-					<div key={index} className={`p-4 rounded-lg overflow-hidden w-full shadow relative transition-all ${selectedFile === index ? 'bg-slate-100' : 'bg-slate-50 hover:bg-slate-100'}`}>
+					<div key={index} className={`p-4 rounded-xl overflow-hidden w-full shadow relative transition-all ${selectedFile === index ? 'bg-slate-100' : 'bg-slate-50 hover:bg-slate-100'}`}>
 						<div className='grid grid-cols-1'>
 							<div className='grid grid-cols-1 gap-4' onClick={handleSelectFile(index)}>
 								<ResultHeader title={item.filename} content={item.contents} trunc={selectedFile !== index} />
@@ -115,8 +133,8 @@ const ResultsCoh = () => {
 							<div key={index} className={`${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out pr-2 font-semibold`}>
 								<hr className='mb-6' />
 
-								<div className='bg-slate-200 rounded-lg text-sm overflow-hidden'>
-									<div className='pr-[6px] border-b-[1px] shadow-sm bg-slate-300 rounded-t-lg border-slate-400 py-1'>
+								<div className='bg-slate-200 rounded-xl text-sm overflow-hidden'>
+									<div className='pr-[6px] border-b-[1px] shadow-sm bg-slate-300 rounded-t-lg border-slate-400 py-2'>
 										<table className='w-full'>
 											<thead className='w-full'>
 												<tr className='text-left'>
@@ -161,19 +179,22 @@ const ResultsCoh = () => {
 						</div>
 
 						<div className={`absolute top-3 right-3 flex gap-2 text-sm pl-4`}>
-							<div className='flex'>
-								<button className={`grow sm:grow-0 p-2 bg-slate-500 text-white rounded-lg rounded-r-none hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item)}>
+							<div className='flex divide-x-[1px]'>
+								<button className={`grow sm:grow-0 p-2 bg-slate-500 text-white rounded-xl rounded-r-none hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item)}>
 									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
 										<path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
 									</svg>
 									json
 								</button>
-								<button className={`grow sm:grow-0 pr-4 py-2 pl-2 bg-slate-500 text-white rounded-lg rounded-l-none hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item, "csv")}>
+								<button className={`grow sm:grow-0 py-2 px-2 bg-slate-500 text-white hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item, "txt")}>
+									txt
+								</button>
+								<button className={`grow sm:grow-0 pr-4 py-2 pl-2 bg-slate-500 text-white rounded-xl rounded-l-none hover:bg-slate-600 flex flex-nowrap gap-2`} onClick={() => handleFileDownload(item, "csv")}>
 									csv
 								</button>
 							</div>
 
-							<button className={`grow sm:grow-0 p-2 bg-red-400 text-white rounded-lg hover:bg-red-500 flex flex-nowrap gap-2 group`} onClick={() => handleDelete(index)}>
+							<button className={`grow sm:grow-0 p-2 bg-red-400 text-white rounded-xl hover:bg-red-500 flex flex-nowrap gap-2 group`} onClick={() => handleDelete(index)}>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 group-hover:rotate-90 transition-all ease-in-out">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
 								</svg>
