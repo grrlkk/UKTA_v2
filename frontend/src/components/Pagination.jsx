@@ -23,9 +23,9 @@ const Pagination = ({ componentArray }) => {
 						<button
 							className={`
 								${index === currentPage - 1 ?
-									'bg-slate-500 text-slate-100' :
-									'bg-transparent text-black hover:bg-slate-600 hover:text-slate-100'}
-								px-4 py-2 rounded-full flex flex-nowrap gap-2
+									'font-bold' :
+									'bg-transparent'}
+								btn-primary p-2 rounded-full
 							`}
 							key={index}
 							onClick={() => paginate(index + 1)}

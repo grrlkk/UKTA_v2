@@ -2,7 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-*,
+
+html,
 body {
 	font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
+}
+
+@layer components {
+	.btn-primary {
+		@apply px-3 py-2 rounded-xl bg-slate-500 hover:bg-slate-600 dark:bg-slate-700 text-slate-50 shadow;
+	}
+
+	.btn-red {
+		@apply px-3 py-2 rounded-xl bg-red-400 hover:bg-red-600 dark:bg-red-700 text-red-50 shadow;
+	}
+
+	hr {
+		@apply border-t border-slate-300 dark:border-slate-700;
+	}
+
+	.table-header {
+		@apply shadow-sm bg-slate-300 dark:bg-slate-900 rounded-t-xl border-b-[1px] border-slate-400 dark:border-slate-700;
+	}
+
+	.table-contents {
+		@apply bg-slate-200 dark:bg-slate-950;
+	}
+
+	tbody>tr {
+		@apply border-slate-300 hover:bg-slate-300 dark:border-slate-700 dark:hover:bg-slate-700 border-b-[1px] border-dotted;
+	}
 }

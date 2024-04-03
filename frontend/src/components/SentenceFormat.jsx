@@ -21,15 +21,15 @@ const HilightText = ({ range, offset, content, color }) => {
 const ToggleTable = ({ tableHidden, setTableHidden, index }) => {
 	return (
 		<button
-			className="text-slate-500 hover:text-slate-600 flex bg-slate-200 rounded-full border-[1px] border-gray-300"
+			className="btn-primary rounded-full flex gap-1 p-1 items-center"
 			onClick={() => setTableHidden(tableHidden.map((item, i) => i === index ? !item : item))}
 		>
-			<div className={`px-2 rounded-full ${tableHidden[index] ? "bg-slate-500 hover:bg-slate-600 text-slate-100" : ""}`}>
+			<div className={`px-2 rounded-full ${tableHidden[index] ? "bg-slate-300 hover:bg-slate-500 text-slate-800" : ""}`}>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
 					<path strokeLinecap="round" strokeLinejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125Z" />
 				</svg>
 			</div>
-			<div className={`px-2 rounded-full ${!tableHidden[index] ? "bg-slate-500 hover:bg-slate-600 text-slate-100" : ""}`}>
+			<div className={`px-2 rounded-full ${!tableHidden[index] ? "bg-slate-300 hover:bg-slate-500 text-slate-800" : ""}`}>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
 					<path strokeLinecap="round" strokeLinejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
 				</svg>
@@ -56,13 +56,20 @@ const Sentence = ({ result, content }) => {
 							<HilightText range={range} offset={sentence[0][0][0]} content={content.substring(sentence[0][0][0], sentence[sentence.length - 1][0][1])} color={hoverColor} />
 						</div>
 
-						<div className="flex flex-col bg-slate-300 rounded-lg overflow-hidden font-semibold">
+						<div className="flex flex-col bg-slate-300 dark:bg-slate-900 rounded-xl overflow-hidden font-semibold">
 							<div className="flex gap-2 m-2 mb-0 items-center">
 								<ToggleTable tableHidden={tableHidden} setTableHidden={setTableHidden} index={index} />
-								<hr className="grow border-slate-200" />
+								<hr className="grow" />
 							</div>
 
-							<div className={`flex overflow-x-auto divide-x-[1px] bg-slate-200 divide-slate-300 ${tableHidden[index] ? "h-fit mt-2 border-t-[1px] border-slate-400" : "h-0 pt-0 m-0"}`}>
+							<div
+								className={`
+									flex overflow-x-auto 
+									bg-slate-200 dark:bg-slate-950 
+									divide-x-[1px] divide-slate-300 dark:divide-slate-600 
+									${tableHidden[index] ? "h-fit mt-2" : "h-0 pt-0 m-0"}
+								`}
+							>
 								{sentence.map((morph, index) => {
 									return (
 										<div key={index}>
@@ -70,7 +77,7 @@ const Sentence = ({ result, content }) => {
 												<div
 													key={index + morph[1]}
 													id={`${morph[1]}`}
-													className={`group hover:bg-slate-300 relative text-sm flex-col whitespace-nowrap`}
+													className={`group hover:bg-slate-300 dark:hover:bg-slate-700 relative text-sm flex-col whitespace-nowrap`}
 												>
 													<div className="flex">
 														{String(morph[2][7]).split("+").map((mmorph, index) => {
@@ -113,7 +120,7 @@ const Sentence = ({ result, content }) => {
 													}}
 													key={index + morph[1]}
 													id={`${morph[1]}`}
-													className={`group hover:bg-slate-300 relative text-sm flex-col whitespace-nowrap p-2`}
+													className={`group hover:bg-slate-300 dark:hover:bg-slate-700 relative text-sm flex-col whitespace-nowrap p-2`}
 												>
 													<div className='flex justify-center'>
 														{morph[1]}
@@ -134,11 +141,11 @@ const Sentence = ({ result, content }) => {
 							</div>
 
 							<div className={`text-left overflow-hidden transition-all ease-in-out text-sm ${tableHidden[index] ? "h-0 pt-0" : "h-fit pt-1"}`}>
-								<div className="w-full py-1 overflow-y-scroll shadow-sm bg-slate-300 rounded-t-lg border-b-[1px] border-slate-400">
+								<div className="table-header w-full py-1 overflow-y-scroll">
 									<table className="table-auto w-full">
 										<thead className="">
 											<tr className="">
-												<th className="px-3 text-right w-1/12">순서</th>
+												<th className="px-3 text-right w-1/12">n.</th>
 												<th colSpan={2} className="px-3">품사</th>
 												<th className="px-3 w-1/6">태그</th>
 												<th className="px-3 w-1/3">태그 설명</th>
@@ -147,7 +154,7 @@ const Sentence = ({ result, content }) => {
 									</table>
 								</div>
 
-								<div className="overflow-x-hidden overflow-y-scroll max-h-96 w-full bg-slate-200">
+								<div className="table-contents overflow-x-hidden overflow-y-scroll max-h-96 w-full">
 									<table className="table-auto w-full">
 										{sentence.map((morph, index) => {
 											return (
@@ -165,7 +172,7 @@ const Sentence = ({ result, content }) => {
 																			setRange([0, 0]);
 																			setHoverColor('');
 																		}}
-																		key={index_} className={`border-b-[1px] border-dotted border-slate-300 hover:bg-slate-300`}>
+																		key={index_} className={``}>
 																		{index_ === 0 ?
 																			<>
 																				<td rowSpan={String(morph[2][7]).split("+").length} className="px-3 py-1 font-mono italic text-right w-1/12">
@@ -202,7 +209,7 @@ const Sentence = ({ result, content }) => {
 																setRange([0, 0]);
 																setHoverColor('');
 															}}
-															key={index} className="border-b-[1px] border-dotted border-slate-300 hover:bg-slate-300">
+															key={index} className="">
 															<td className="px-3 py-1 font-mono text-right w-1/12 italic">{index + 1}</td>
 															<td colSpan={2} className="px-3 py-1 font-mono">{morph[1]}</td>
 															<td
