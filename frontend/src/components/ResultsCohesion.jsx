@@ -10,16 +10,17 @@ const ResultsCoh = () => {
 	const [selectedAll, setSelectedAll] = useState(false);
 	const [selectedProperty, setSelectedProperty] = useState([]);
 
+	const fetchData = async () => {
+		try {
+			const response = await fetch('https://ukta.inha.ac.kr/api/korcat/cohesion');
+			const data = await response.json();
+			setCohesionResult(data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await fetch('https://ukta.inha.ac.kr/api/korcat/cohesion');
-				const data = await response.json();
-				setCohesionResult(data);
-			} catch (error) {
-				console.error(error);
-			}
-		};
 		fetchData();
 	}, []);
 
@@ -122,8 +123,9 @@ const ResultsCoh = () => {
 			console.error(error);
 		} finally {
 			console.log('deleted', id);
-			const newCohesionResult = cohesionResult.filter((item, i) => i !== index);
-			setCohesionResult(newCohesionResult);
+			setCohesionResult([]);
+			fetchData();
+			setSelectedFile(0);
 		}
 	};
 

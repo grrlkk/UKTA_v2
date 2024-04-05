@@ -6,7 +6,9 @@ const TextInput = () => {
 	const [inputValue, setInputValue] = useState('');
 	const [uploadInProgress, setUploadInProgress] = useState(false);
 	const [selectedFile, setSelectedFile] = useState(null);
+
 	const navigate = useNavigate();
+	const contentarea = document.getElementById('content_area_start');
 
 	const handleAnalysis = async (type) => {
 		setUploadInProgress(true);
@@ -26,6 +28,8 @@ const TextInput = () => {
 			setUploadInProgress(false);
 			handleClearInput();
 			navigate(`/${type}`);
+
+			contentarea.scrollIntoView({ behavior: 'smooth', block: 'start'});
 		}
 	}
 

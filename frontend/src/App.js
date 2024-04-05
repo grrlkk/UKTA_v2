@@ -30,7 +30,7 @@ function App() {
 
 					<TextInput />
 
-					<hr />
+					<hr id="content_area_start" />
 
 					<Routes>
 						<Route path='/morpheme' element={<ResultsMor />} />

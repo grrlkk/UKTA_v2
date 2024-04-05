@@ -1,6 +1,3 @@
-import React from "react";
-
-
 const Tags = [
 	{ tag: "NNG", desc: "일반 명사", color: "#804040" },
 	{ tag: "NNP", desc: "고유 명사", color: "#804740" },

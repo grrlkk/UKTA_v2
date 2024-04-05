@@ -9,16 +9,17 @@ const ResultsMor = () => {
 	const [morphemeResult, setMorphemeResult] = useState([]);
 	const [selectedFile, setSelectedFile] = useState(0);
 
+	const fetchData = async () => {
+		try {
+			const response = await fetch('https://ukta.inha.ac.kr/api/korcat/morpheme');
+			const data = await response.json();
+			setMorphemeResult(data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await fetch('https://ukta.inha.ac.kr/api/korcat/morpheme');
-				const data = await response.json();
-				setMorphemeResult(data);
-			} catch (error) {
-				console.error(error);
-			}
-		};
 		fetchData();
 	}, []);
 
@@ -80,8 +81,9 @@ const ResultsMor = () => {
 			console.error(error);
 		} finally {
 			console.log('deleted', id);
-			const newMorphemeResult = morphemeResult.filter((item, i) => i !== index);
-			setMorphemeResult(newMorphemeResult);
+			setMorphemeResult([]);
+			fetchData();
+			setSelectedFile(0);
 		}
 	}
 
