@@ -38,6 +38,24 @@ const ToggleTable = ({ tableHidden, setTableHidden, index }) => {
 	);
 }
 
+const MorphDesc = ({ kr, tag, desc, index }) => {
+	return (
+		<>
+			<div className='flex justify-center'>
+				{kr}
+			</div>
+			<div className='flex flex-col justify-center group-hover:gap-1 text-xs gap-1' style={{ "color": Tags.find(t => t.tag === tag)?.color }}>
+				<span key={index} className='flex justify-center'>
+					{tag}
+				</span>
+				<span className='flex justify-center'>
+					{desc}
+				</span>
+			</div>
+		</>
+	);
+}
+
 const Sentence = ({ result, content }) => {
 	const [range, setRange] = useState([0, 0]);
 	const [hoverColor, setHoverColor] = useState('');
@@ -77,37 +95,25 @@ const Sentence = ({ result, content }) => {
 												<div
 													key={index + morph[1]}
 													id={`${morph[1]}`}
-													className={`group hover:bg-slate-300 dark:hover:bg-slate-700 relative text-sm flex-col whitespace-nowrap`}
+													className={`group hover:bg-slate-300 dark:hover:bg-slate-700 relative text-sm flex whitespace-nowrap`}
 												>
-													<div className="flex">
-														{String(morph[2][7]).split("+").map((mmorph, index) => {
-															return (
-																<div
-																	onMouseEnter={() => {
-																		handleMouseEnter(morph[0]);
-																		setHoverColor(Tags.find(tag => tag.tag === mmorph.split("/")[1])?.color);
-																	}}
-																	onMouseLeave={() => {
-																		setRange([0, 0]);
-																		setHoverColor('');
-																	}}
-																	className='p-2' key={mmorph}
-																>
-																	<div className='flex justify-center'>
-																		{mmorph.split("/")[0]}
-																	</div>
-																	<div className='flex flex-col justify-center group-hover:gap-1 text-xs gap-1' style={{ "color": Tags.find(tag => tag.tag === mmorph.split("/")[1])?.color }}>
-																		<span key={index} className='flex justify-center'>
-																			{mmorph.split("/")[1]}
-																		</span>
-																		<span className='flex justify-center'>
-																			{Tags.find(tag => tag.tag === mmorph.split("/")[1])?.desc}
-																		</span>
-																	</div>
-																</div>
-															);
-														})}
-													</div>
+													{String(morph[2][7]).split("+").map((mmorph, index) => {
+														return (
+															<div
+																onMouseEnter={() => {
+																	handleMouseEnter(morph[0]);
+																	setHoverColor(Tags.find(tag => tag.tag === mmorph.split("/")[1])?.color);
+																}}
+																onMouseLeave={() => {
+																	setRange([0, 0]);
+																	setHoverColor('');
+																}}
+																className='p-2 flex flex-col gap-4' key={mmorph}
+															>
+																<MorphDesc kr={mmorph.split("/")[0]} tag={mmorph.split("/")[1]} desc={Tags.find(tag => tag.tag === mmorph.split("/")[1])?.desc} index={index} />
+															</div>
+														);
+													})}
 												</div>) : (
 												<div
 													onMouseEnter={() => {
@@ -120,19 +126,9 @@ const Sentence = ({ result, content }) => {
 													}}
 													key={index + morph[1]}
 													id={`${morph[1]}`}
-													className={`group hover:bg-slate-300 dark:hover:bg-slate-700 relative text-sm flex-col whitespace-nowrap p-2`}
+													className={`group hover:bg-slate-300 dark:hover:bg-slate-700 relative text-sm flex flex-col gap-4 whitespace-nowrap p-2`}
 												>
-													<div className='flex justify-center'>
-														{morph[1]}
-													</div>
-													<div className='flex flex-col justify-center group-hover:gap-1 text-xs gap-1' style={{ "color": Tags.find(tag => tag.tag === morph[2][0])?.color }}>
-														<span className='flex justify-center'>
-															{morph[2][0]}
-														</span>
-														<span className='flex justify-center'>
-															{Tags.find(tag => tag.tag === morph[2][0])?.desc}
-														</span>
-													</div>
+													<MorphDesc kr={morph[1]} tag={morph[2][0]} desc={Tags.find(tag => tag.tag === morph[2][0])?.desc} index={index} />
 												</div>
 											)}
 										</div>
