@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import './App.css';
@@ -26,6 +26,8 @@ function App() {
 				<Nav currentPage={currentPage.pathname} />
 
 				<div className="items-start pt-32 grid grid-cols-1 gap-32 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className='fixed top-0'></div>
+
 					<TextInput />
 
 					<hr />
@@ -37,6 +39,8 @@ function App() {
 						<Route path='/loading' element={<Loading />} />
 						<Route path='*' element={<Dummy />} />
 					</Routes>
+
+					<div className='fixed bottom-0'></div>
 				</div>
 
 				<Foot darkMode={darkMode} setDarkMode={setDarkMode} />
