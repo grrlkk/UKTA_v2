@@ -22,6 +22,16 @@ const ResultsMor = () => {
 		fetchData();
 	}, []);
 
+	useEffect(() => {
+		const element = document.getElementById('mor_' + selectedFile);
+		if (element) {
+			let position = element.getBoundingClientRect().top;
+			console.log(position);
+			window.scrollTo({ top: position + window.scrollY - 100, behavior: 'smooth' });
+		}
+
+	}, [selectedFile]);
+
 	const handleFileDownload = (item, type) => {
 		if (type === 'txt') {
 			console.log(item.results);
@@ -81,7 +91,7 @@ const ResultsMor = () => {
 
 			<Pagination componentArray=
 				{morphemeResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (
-					<div key={index} className={`p-4 h-fit rounded-xl overflow-auto w-full shadow relative transition-all ${selectedFile === index ? 'bg-slate-100 dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800'}`}>
+					<div id={"mor_" + index} key={index} className={`p-4 h-fit rounded-xl overflow-auto w-full shadow relative transition-all ${selectedFile === index ? 'bg-slate-100 dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800'}`}>
 						<div className={`grid grid-cols-1`}>
 							<div className='grid grid-cols-1 gap-8' onClick={handleSelectFile(index)}>
 								<ResultHeader title={item.filename} content={item.contents} trunc={selectedFile !== index} />
