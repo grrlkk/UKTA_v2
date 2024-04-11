@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Pagination from './Pagination';
+import { motion } from 'framer-motion';
 
 import ResultHeader from './ResultHeader';
 import Sentence from './SentenceFormat';
@@ -25,6 +26,7 @@ const ResultsMor = () => {
 
 	useEffect(() => {
 		const element = document.getElementById('mor_' + selectedFile);
+
 		if (element) {
 			let position = element.getBoundingClientRect().top;
 			console.log(position);
@@ -83,20 +85,35 @@ const ResultsMor = () => {
 			console.log('deleted', id);
 			setMorphemeResult([]);
 			fetchData();
-			setSelectedFile(0);
+
+			if (morphemeResult.length > 0) {
+				setSelectedFile(0);
+			}
 		}
 	}
 
 	return (
-		<div className='grid grid-cols-1 gap-4'>
+		<motion.div
+			initial={{ opacity: 0, x: 100 }}
+			animate={{ opacity: 1, x: 0 }}
+			exit={{ opacity: 0, x: -100 }}
+			transition={{ duration: 0.1 }}
+			className='grid grid-cols-1 gap-4'
+		>
 			<h2 className="text-2xl font-bold py-2">형태소 분석 결과</h2>
 
 			<Pagination componentArray=
 				{morphemeResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (
-					<div id={"mor_" + index} key={index} className={`p-4 h-fit rounded-xl overflow-auto w-full shadow relative transition-all ${selectedFile === index ? 'bg-slate-100 dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800'}`}>
+					<div
+						id={"mor_" + index}
+						key={index}
+						className={`
+							p-4 h-fit rounded-3xl overflow-auto w-full shadow relative transition-all 
+							${selectedFile === index ? 'bg-slate-100 dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+					>
 						<div className={`grid grid-cols-1`}>
 							<div className='grid grid-cols-1 gap-8' onClick={handleSelectFile(index)}>
-								<ResultHeader title={item.filename} content={item.contents} trunc={selectedFile !== index} />
+								<ResultHeader title={item.filename} content={item.contents} trunc={selectedFile !== index} date={item.upload_date} procTime={item.process_time} />
 							</div>
 
 							<div className={`overflow-y-hidden transition-all ease-in-out grid grid-cols-1 ${selectedFile === index ? "mt-4" : "h-0 overflow-hidden"}`}>
@@ -106,7 +123,7 @@ const ResultsMor = () => {
 							</div>
 						</div>
 
-						<div className='absolute top-3 right-3 flex gap-2 text-sm '>
+						<div className='absolute top-4 right-4 flex gap-2 text-sm '>
 							<div className='flex'>
 								<button className={`btn-primary grow sm:grow-0 rounded-r-none flex flex-nowrap gap-1`} onClick={() => handleFileDownload(item)}>
 									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -127,7 +144,7 @@ const ResultsMor = () => {
 						</div>
 					</div>
 				))} />
-		</div>
+		</motion.div>
 	);
 };
 

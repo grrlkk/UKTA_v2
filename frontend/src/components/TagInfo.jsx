@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 import Tags from "./Tags";
 
@@ -12,7 +13,13 @@ const TagInfo = () => {
 	}, []);
 
 	return (
-		<div className='grid grid-cols-1 gap-4'>
+		<motion.div
+			initial={{ opacity: 0, x: 100 }}
+			animate={{ opacity: 1, x: 0 }}
+			exit={{ opacity: 0, x: -100 }}
+			transition={{ duration: 0.1 }}
+			className='grid grid-cols-1 gap-4'
+		>
 			<h2 className="text-2xl font-bold py-2">품사 태깅표</h2>
 
 			<div className="rounded-xl w-full shadow overflow-hidden text-center">
@@ -43,7 +50,7 @@ const TagInfo = () => {
 					</tbody>
 				</table>
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 

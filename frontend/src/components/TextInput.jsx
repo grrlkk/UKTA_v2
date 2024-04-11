@@ -8,10 +8,10 @@ const TextInput = () => {
 	const [selectedFile, setSelectedFile] = useState(null);
 
 	const navigate = useNavigate();
-	const contentarea = document.getElementById('content_area_start');
 
 	const handleAnalysis = async (type) => {
 		setUploadInProgress(true);
+		await new Promise(resolve => setTimeout(resolve, 1000));
 		const formData = new FormData();
 		formData.append("files", new Blob([inputValue], { type: "text/plain" }), inputValue.split(" ")[0] + "...");
 
@@ -28,8 +28,6 @@ const TextInput = () => {
 			setUploadInProgress(false);
 			handleClearInput();
 			navigate(`/${type}`);
-
-			contentarea.scrollIntoView({ behavior: 'smooth', block: 'start'});
 		}
 	}
 
@@ -59,7 +57,7 @@ const TextInput = () => {
 		<div className='grid grid-cols-1 gap-4'>
 			<h2 className="text-2xl font-bold py-2">한국어 입력</h2>
 
-			<div className='grid grid-cols-1 gap-4 p-3 rounded-xl bg-slate-100 dark:bg-slate-900 shadow'>
+			<div className='grid grid-cols-1 gap-4 p-3 rounded-3xl bg-slate-100 dark:bg-slate-900 shadow'>
 				<div className='flex justify-between gap-2 text-sm shrink'>
 					<input
 						type="file" id="fileInput" accept=".txt" onChange={handleFileInputChange}
@@ -117,12 +115,11 @@ const TextInput = () => {
 							한국어 입력 후 분석하기
 						</button> :
 						<>
+							<Link to='/loading' className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('cohesion')}>
+								자질 분석
+							</Link>
 							<Link to='/loading' className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('morpheme')}>
 								형태소 분석
-							</Link>
-
-							<Link to='/loading' className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('cohesion')}>
-								응집도 분석
 							</Link>
 						</>}
 			</div>

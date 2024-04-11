@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion';
 import React, { useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
@@ -25,20 +26,24 @@ function App() {
 			<div className="text-slate-900 dark:text-slate-50 bg-slate-50 dark:bg-slate-950 transition-all ease-in-out min-w-[320px]">
 				<Nav currentPage={currentPage.pathname} />
 
-				<div className="items-start pt-32 grid grid-cols-1 gap-32 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div className="items-start pt-32 grid grid-cols-1 gap-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className='fixed top-0'></div>
 
 					<TextInput />
 
 					<hr id="content_area_start" />
 
-					<Routes>
-						<Route path='/morpheme' element={<ResultsMor />} />
-						<Route path='/cohesion' element={<ResultsCoh />} />
-						<Route path='/tagging' element={<TagInfo />} />
-						<Route path='/loading' element={<Loading />} />
-						<Route path='*' element={<Dummy />} />
-					</Routes>
+					<div className='min-h-80'>
+						<AnimatePresence mode='wait'>
+							<Routes location={currentPage} key={currentPage.pathname}>
+								<Route path='/morpheme' element={<ResultsMor />} />
+								<Route path='/cohesion' element={<ResultsCoh />} />
+								<Route path='/tagging' element={<TagInfo />} />
+								<Route path='/loading' element={<Loading />} />
+								<Route path='*' element={<Dummy />} />
+							</Routes>
+						</AnimatePresence>
+					</div>
 
 					<div className='fixed bottom-0'></div>
 				</div>
