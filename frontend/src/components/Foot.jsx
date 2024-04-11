@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Foot = ({ darkMode, setDarkMode }) => {
 	return (
 		<footer
-			className="mt-64 pt-32 pb-16 text-slate-500 text-xs bg-slate-100 dark:bg-slate-900"
+			className="mt-64 pt-32 pb-16 text-slate-500 text-xs bg-slate-50 dark:bg-slate-950"
 		>
 			<div className="max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto flex flex-col lg:items-end lg:flex-row justify-between gap-16">
 				<div className='flex flex-col justify-between lg:justify-start items-center lg:items-start gap-4 w-full'>

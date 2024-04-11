@@ -23,7 +23,15 @@ function App() {
 
 	return (
 		<div className={`App ${darkMode ? 'dark' : ''}`}>
-			<div className="text-slate-900 dark:text-slate-50 bg-slate-50 dark:bg-slate-950 transition-all ease-in-out min-w-[320px]">
+			<div
+				className='fixed top-0 h-full w-full z-0 
+					bg-gradient-to-b from-slate-50 dark:from-slate-950 dark:via-black via-white to-slate-50 dark:to-slate-950
+				'
+			>
+				asdfasdf
+			</div>
+
+			<div className="relative text-slate-900 dark:text-slate-50 transition-all ease-in-out min-w-[320px]">
 				<Nav currentPage={currentPage.pathname} />
 
 				<div className="items-start pt-32 grid grid-cols-1 gap-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
