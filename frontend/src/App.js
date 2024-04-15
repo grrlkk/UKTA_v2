@@ -22,7 +22,7 @@ function App() {
 	});
 
 	return (
-		<div className={`App ${darkMode ? 'dark' : ''}`}>
+		<div className={`App ${darkMode ? 'dark' : ''} overflow-x-hidden`}>
 			<div
 				className='fixed top-0 h-full w-full z-0 
 					bg-gradient-to-b from-slate-50 dark:from-slate-950 dark:via-black via-white to-slate-50 dark:to-slate-950

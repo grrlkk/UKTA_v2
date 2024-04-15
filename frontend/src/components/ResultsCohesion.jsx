@@ -29,7 +29,6 @@ const ResultsCoh = () => {
 		const element = document.getElementById('coh_' + selectedFile);
 		if (element) {
 			let position = element.getBoundingClientRect().top;
-			console.log(position);
 			window.scrollTo({ top: position + window.scrollY - 100, behavior: 'smooth' });
 		}
 
@@ -78,7 +77,6 @@ const ResultsCoh = () => {
 
 	const handleSelectFile = (index) => {
 		return () => {
-			console.log(index);
 			setSelectedProperty([])
 			setSelectedAll(false);
 			selectedFile === index ? setSelectedFile(-1) : setSelectedFile(index);
@@ -87,10 +85,8 @@ const ResultsCoh = () => {
 
 	const handleSelectProperty = (property) => {
 		return () => {
-			console.log(property);
 			const updatedProperty = selectedProperty?.includes(property) ? selectedProperty.filter(p => p !== property) : [...selectedProperty, property];
 			setSelectedProperty(updatedProperty);
-			console.log(updatedProperty);
 		};
 	};
 
@@ -123,7 +119,6 @@ const ResultsCoh = () => {
 		} catch (error) {
 			console.error(error);
 		} finally {
-			console.log('deleted', id);
 			setCohesionResult([]);
 			fetchData();
 

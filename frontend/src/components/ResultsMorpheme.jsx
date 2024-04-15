@@ -29,7 +29,6 @@ const ResultsMor = () => {
 
 		if (element) {
 			let position = element.getBoundingClientRect().top;
-			console.log(position);
 			window.scrollTo({ top: position + window.scrollY - 100, behavior: 'smooth' });
 		}
 
@@ -37,7 +36,6 @@ const ResultsMor = () => {
 
 	const handleFileDownload = (item, type) => {
 		if (type === 'txt') {
-			console.log(item.results);
 			let results = item.results;
 			for (let i = 0; i < results.length; i++) {
 				results[i] = results[i].join('\n');
@@ -63,7 +61,6 @@ const ResultsMor = () => {
 
 	const handleSelectFile = (index) => {
 		return () => {
-			console.log(index);
 			selectedFile === index ? setSelectedFile(-1) : setSelectedFile(index);
 		}
 	}
@@ -82,7 +79,6 @@ const ResultsMor = () => {
 		} catch (error) {
 			console.error(error);
 		} finally {
-			console.log('deleted', id);
 			setMorphemeResult([]);
 			fetchData();
 
