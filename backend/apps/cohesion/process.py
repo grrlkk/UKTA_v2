@@ -378,7 +378,7 @@ def processAdjacency(kkma_list):
     return result
 
 
-def process(text, targets=["ttr", "similarity", "adjacency", "list"]):
+def process(text, targets=["ttr", "similarity", "adjacency", "basic"]):
     # kkma = inference.inf(text)
     morph = mecab()
 
@@ -400,19 +400,21 @@ def process(text, targets=["ttr", "similarity", "adjacency", "list"]):
     with ThreadPoolExecutor(max_workers=2) as executor:
         if "ttr" in targets:
             threadTTR = executor.submit(processTTR, kkma, words)
-            result.update(threadTTR.result())
+            result["ttr"] = threadTTR.result()
 
         if "similarity" in targets:
             threadSimilarity = executor.submit(processSimilarity, text)
-            result.update(threadSimilarity.result())
+            result["similarity"] = threadSimilarity.result()
 
         if "adjacency" in targets:
             threadAdjacency = executor.submit(processAdjacency, kkma_list)
-            result.update(threadAdjacency.result())
+            result["adjacency"] = threadAdjacency.result()
 
         # v1.1 추가 ------------------------------------------------------------------------
-        if "list" in targets:
+        if "basic" in targets:
             threadLst = executor.submit(counter.counter, text, sentences, words, kkma, kkma_list)
-            result.update(threadLst.result())
+            temp = threadLst.result()
+            result["basic_count"] = temp["basic_count"]
+            result["basic_list"] = temp["basic_list"]
 
     return result

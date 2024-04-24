@@ -1,299 +1,197 @@
 nohup: ignoring input
-[2024-04-10 13:26:57 +0000] [1699587] [INFO] Starting gunicorn 21.2.0
-[2024-04-10 13:26:57 +0000] [1699587] [INFO] Listening at: http://0.0.0.0:8000 (1699587)
-[2024-04-10 13:26:57 +0000] [1699587] [INFO] Using worker: uvicorn.workers.UvicornWorker
-[2024-04-10 13:26:57 +0000] [1699589] [INFO] Booting worker with pid: 1699589
-[2024-04-10 13:26:57 +0000] [1699590] [INFO] Booting worker with pid: 1699590
-[2024-04-10 13:27:04 +0000] [1699589] [INFO] Started server process [1699589]
-[2024-04-10 13:27:04 +0000] [1699589] [INFO] Waiting for application startup.
-[2024-04-10 13:27:04 +0000] [1699589] [INFO] Application startup complete.
-[2024-04-10 13:27:04 +0000] [1699590] [INFO] Started server process [1699590]
-[2024-04-10 13:27:04 +0000] [1699590] [INFO] Waiting for application startup.
-[2024-04-10 13:27:04 +0000] [1699590] [INFO] Application startup complete.
-[2024-04-10 13:27:08 +0000] [1699590] [ERROR] Exception in ASGI application
+[2024-04-24 18:24:30 +0000] [2638147] [INFO] Starting gunicorn 21.2.0
+[2024-04-24 18:24:30 +0000] [2638147] [INFO] Listening at: http://0.0.0.0:8000 (2638147)
+[2024-04-24 18:24:30 +0000] [2638147] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2024-04-24 18:24:30 +0000] [2638149] [INFO] Booting worker with pid: 2638149
+[2024-04-24 18:24:30 +0000] [2638150] [INFO] Booting worker with pid: 2638150
+[2024-04-24 18:24:30 +0000] [2638154] [INFO] Booting worker with pid: 2638154
+[2024-04-24 18:24:30 +0000] [2638155] [INFO] Booting worker with pid: 2638155
+[2024-04-24 18:24:33 +0000] [2638150] [INFO] Started server process [2638150]
+[2024-04-24 18:24:33 +0000] [2638150] [INFO] Waiting for application startup.
+[2024-04-24 18:24:33 +0000] [2638150] [INFO] Application startup complete.
+[2024-04-24 18:24:33 +0000] [2638149] [INFO] Started server process [2638149]
+[2024-04-24 18:24:33 +0000] [2638149] [INFO] Waiting for application startup.
+[2024-04-24 18:24:33 +0000] [2638149] [INFO] Application startup complete.
+[2024-04-24 18:24:33 +0000] [2638155] [INFO] Started server process [2638155]
+[2024-04-24 18:24:33 +0000] [2638155] [INFO] Waiting for application startup.
+[2024-04-24 18:24:33 +0000] [2638155] [INFO] Application startup complete.
+[2024-04-24 18:24:33 +0000] [2638154] [INFO] Started server process [2638154]
+[2024-04-24 18:24:33 +0000] [2638154] [INFO] Waiting for application startup.
+[2024-04-24 18:24:33 +0000] [2638154] [INFO] Application startup complete.
+[2024-04-24 18:25:11 +0000] [2638154] [ERROR] Exception in ASGI application
 Traceback (most recent call last):
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 404, in run_asgi
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
     result = await app(  # type: ignore[func-returns-value]
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
     return await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
     await super().__call__(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
     await self.middleware_stack(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
     raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
     await self.app(scope, receive, _send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
     await self.simple_response(scope, receive, send, request_headers=headers)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
     await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
     raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
     await app(scope, receive, sender)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 762, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 758, in __call__
     await self.middleware_stack(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 782, in app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 778, in app
     await route.handle(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 297, in handle
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 299, in handle
     await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 79, in app
     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
     raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
     await app(scope, receive, sender)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 75, in app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
     await response(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/responses.py", line 155, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/responses.py", line 158, in __call__
     await send({"type": "http.response.body", "body": self.body})
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 152, in send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 152, in send
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 161, in _send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 161, in _send
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 501, in send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 507, in send
     output = self.conn.send(event=h11.Data(data=data))
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_connection.py", line 512, in send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 512, in send
     data_list = self.send_with_data_passthrough(event)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_connection.py", line 545, in send_with_data_passthrough
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 545, in send_with_data_passthrough
     writer(event, data_list.append)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_writers.py", line 65, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 65, in __call__
     self.send_data(event.data, write)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
     raise LocalProtocolError("Too much data for declared Content-Length")
 h11._util.LocalProtocolError: Too much data for declared Content-Length
-[2024-04-10 13:27:08 +0000] [1699590] [ERROR] Exception in ASGI application
+[2024-04-24 18:25:15 +0000] [2638154] [ERROR] Exception in ASGI application
 Traceback (most recent call last):
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 404, in run_asgi
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
     result = await app(  # type: ignore[func-returns-value]
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
     return await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
     await super().__call__(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
     await self.middleware_stack(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
     raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
     await self.app(scope, receive, _send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
     await self.simple_response(scope, receive, send, request_headers=headers)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
     await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
     raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
     await app(scope, receive, sender)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 762, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 758, in __call__
     await self.middleware_stack(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 782, in app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 778, in app
     await route.handle(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 297, in handle
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 299, in handle
     await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 79, in app
     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
     raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
     await app(scope, receive, sender)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 75, in app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
     await response(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/responses.py", line 155, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/responses.py", line 158, in __call__
     await send({"type": "http.response.body", "body": self.body})
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 152, in send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 152, in send
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 161, in _send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 161, in _send
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 501, in send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 507, in send
     output = self.conn.send(event=h11.Data(data=data))
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_connection.py", line 512, in send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 512, in send
     data_list = self.send_with_data_passthrough(event)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_connection.py", line 545, in send_with_data_passthrough
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 545, in send_with_data_passthrough
     writer(event, data_list.append)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_writers.py", line 65, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 65, in __call__
     self.send_data(event.data, write)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
     raise LocalProtocolError("Too much data for declared Content-Length")
 h11._util.LocalProtocolError: Too much data for declared Content-Length
-[2024-04-10 13:28:54 +0000] [1699590] [ERROR] Exception in ASGI application
+[2024-04-24 18:26:43 +0000] [2638149] [ERROR] Exception in ASGI application
 Traceback (most recent call last):
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 404, in run_asgi
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
     result = await app(  # type: ignore[func-returns-value]
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
     return await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
     await super().__call__(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
     await self.middleware_stack(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
     raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
     await self.app(scope, receive, _send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
     await self.simple_response(scope, receive, send, request_headers=headers)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
     await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
     raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
     await app(scope, receive, sender)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 762, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 758, in __call__
     await self.middleware_stack(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 782, in app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 778, in app
     await route.handle(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 297, in handle
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 299, in handle
     await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 79, in app
     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
     raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
     await app(scope, receive, sender)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 72, in app
-    response = await func(request)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/fastapi/routing.py", line 299, in app
-    raise e
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/fastapi/routing.py", line 294, in app
-    raw_response = await run_endpoint_function(
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
-    return await dependant.call(**values)
-  File "/home/ttytu/projects/KorCAT-web/backend/apps/routers.py", line 33, in upload_files
-    results = process(contents.decode("UTF8"))
-  File "/home/ttytu/projects/KorCAT-web/backend/apps/cohesion/process.py", line 118, in process
-    result["bigramLemmaTtr"] = TTR.bigramLemmaTtr(wordsAfterLemma)
-  File "/home/ttytu/projects/KorCAT-web/backend/apps/cohesion/TTR.py", line 219, in bigramLemmaTtr
-    return len(uniquengrams) / len(ngrams)
-ZeroDivisionError: division by zero
-[2024-04-10 13:29:14 +0000] [1699590] [ERROR] Exception in ASGI application
-Traceback (most recent call last):
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 404, in run_asgi
-    result = await app(  # type: ignore[func-returns-value]
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
-    return await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
-    await super().__call__(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
-    raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
-    await self.app(scope, receive, _send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
-    await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
-    raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
-    await app(scope, receive, sender)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 762, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 782, in app
-    await route.handle(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 297, in handle
-    await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
-    raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
-    await app(scope, receive, sender)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 72, in app
-    response = await func(request)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/fastapi/routing.py", line 299, in app
-    raise e
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/fastapi/routing.py", line 294, in app
-    raw_response = await run_endpoint_function(
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
-    return await dependant.call(**values)
-  File "/home/ttytu/projects/KorCAT-web/backend/apps/routers.py", line 33, in upload_files
-    results = process(contents.decode("UTF8"))
-  File "/home/ttytu/projects/KorCAT-web/backend/apps/cohesion/process.py", line 118, in process
-    result["bigramLemmaTtr"] = TTR.bigramLemmaTtr(wordsAfterLemma)
-  File "/home/ttytu/projects/KorCAT-web/backend/apps/cohesion/TTR.py", line 219, in bigramLemmaTtr
-    return len(uniquengrams) / len(ngrams)
-ZeroDivisionError: division by zero
-[2024-04-10 13:30:13 +0000] [1699590] [ERROR] Exception in ASGI application
-Traceback (most recent call last):
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 404, in run_asgi
-    result = await app(  # type: ignore[func-returns-value]
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
-    return await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
-    await super().__call__(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
-    raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
-    await self.app(scope, receive, _send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
-    await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
-    raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
-    await app(scope, receive, sender)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 762, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 782, in app
-    await route.handle(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 297, in handle
-    await self.app(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
-    raise exc
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
-    await app(scope, receive, sender)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/routing.py", line 75, in app
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
     await response(scope, receive, send)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/responses.py", line 155, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/responses.py", line 158, in __call__
     await send({"type": "http.response.body", "body": self.body})
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/cors.py", line 152, in send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 152, in send
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/starlette/middleware/errors.py", line 161, in _send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 161, in _send
     await send(message)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 501, in send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 507, in send
     output = self.conn.send(event=h11.Data(data=data))
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_connection.py", line 512, in send
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 512, in send
     data_list = self.send_with_data_passthrough(event)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_connection.py", line 545, in send_with_data_passthrough
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 545, in send_with_data_passthrough
     writer(event, data_list.append)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_writers.py", line 65, in __call__
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 65, in __call__
     self.send_data(event.data, write)
-  File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
     raise LocalProtocolError("Too much data for declared Content-Length")
 h11._util.LocalProtocolError: Too much data for declared Content-Length
-[2024-04-24 03:43:47 +0000] [1699589] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/process.py modified
-[2024-04-24 03:43:47 +0000] [1699590] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/process.py modified
-[2024-04-24 03:57:56 +0000] [1699587] [INFO] Handling signal: term
-[2024-04-24 03:57:58 +0000] [1699587] [ERROR] Worker (pid:1699589) exited with code 143
-[2024-04-24 03:57:58 +0000] [1699587] [ERROR] Worker (pid:1699589) exited with code 143.
-[2024-04-24 03:57:58 +0000] [1699587] [ERROR] Worker (pid:1699590) exited with code 143
-[2024-04-24 03:57:58 +0000] [1699587] [ERROR] Worker (pid:1699590) exited with code 143.
-[2024-04-24 03:57:58 +0000] [1699587] [INFO] Shutting down: Master

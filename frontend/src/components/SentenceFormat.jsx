@@ -21,7 +21,7 @@ const HilightText = ({ range, offset, content, color }) => {
 const ToggleTable = ({ tableHidden, setTableHidden, index }) => {
 	return (
 		<button
-			className="btn-primary rounded-full flex gap-1 p-1 items-center"
+			className="btn-primary rounded-lg flex gap-1 p-1 items-center"
 			onClick={() => setTableHidden(tableHidden.map((item, i) => i === index ? !item : item))}
 		>
 			<div className={`px-2 rounded-full ${tableHidden[index] ? "bg-slate-300 hover:bg-slate-500 text-slate-800" : ""}`}>
