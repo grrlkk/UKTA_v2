@@ -289,3 +289,11 @@ Traceback (most recent call last):
   File "/home/ttytu/anaconda3/envs/korcat/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
     raise LocalProtocolError("Too much data for declared Content-Length")
 h11._util.LocalProtocolError: Too much data for declared Content-Length
+[2024-04-24 03:43:47 +0000] [1699589] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/process.py modified
+[2024-04-24 03:43:47 +0000] [1699590] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/process.py modified
+[2024-04-24 03:57:56 +0000] [1699587] [INFO] Handling signal: term
+[2024-04-24 03:57:58 +0000] [1699587] [ERROR] Worker (pid:1699589) exited with code 143
+[2024-04-24 03:57:58 +0000] [1699587] [ERROR] Worker (pid:1699589) exited with code 143.
+[2024-04-24 03:57:58 +0000] [1699587] [ERROR] Worker (pid:1699590) exited with code 143
+[2024-04-24 03:57:58 +0000] [1699587] [ERROR] Worker (pid:1699590) exited with code 143.
+[2024-04-24 03:57:58 +0000] [1699587] [INFO] Shutting down: Master

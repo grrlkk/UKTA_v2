@@ -125,7 +125,7 @@ def nounTtr(words, kkma):
         for morp in pos:
             if "N" in morp[1] and morp[1] != "ON":
                 type[morp[0]] = type[morp[0]] + 1
-                totalCnt += 1
+            totalCnt += 1
 
     return len(type) / totalCnt
 
@@ -225,5 +225,8 @@ def trigramLemmaTtr(words):
     for b in range(0, len(words) - n + 1):
         ngrams.append(tuple(words[b : b + n]))
     uniquengrams = set(ngrams)
+
+    if len(ngrams) == 0:
+        return 0
 
     return len(uniquengrams) / len(ngrams)
