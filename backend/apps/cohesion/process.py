@@ -5,7 +5,7 @@ from apps.morph.morph import mecab
 from keybert import KeyBERT
 from transformers import BertModel
 
-from . import TTR, adjacent_overlap, counter, similarity, textpreprocess, topic
+from . import TTR, adjacent_overlap, counter, similarity, textpreprocess
 
 # 대명사 목록, 지시대명사 -> 인칭대명사 순서
 pronounList = [
@@ -378,7 +378,7 @@ def processAdjacency(kkma_list):
     return result
 
 
-def process(text, targets):
+def process(text, targets=["ttr", "similarity", "adjacency", "list"]):
     # kkma = inference.inf(text)
     morph = mecab()
 
