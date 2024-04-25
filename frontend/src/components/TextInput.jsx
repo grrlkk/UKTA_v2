@@ -57,7 +57,7 @@ const TextInput = () => {
 		<div className='grid grid-cols-1 gap-4'>
 			<h2 className="text-2xl font-bold py-2">한국어 입력</h2>
 
-			<div className='grid grid-cols-1 gap-4 p-3 rounded-3xl bg-slate-100 dark:bg-slate-900 shadow'>
+			<div className='grid grid-cols-1 gap-4 p-4 rounded-3xl bg-slate-100 dark:bg-slate-900 shadow'>
 				<div className='flex justify-between gap-2 text-sm shrink'>
 					<input
 						type="file" id="fileInput" accept=".txt" onChange={handleFileInputChange}

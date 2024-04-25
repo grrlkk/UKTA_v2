@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import Pagination from '../Pagination';
 
-import ResultHeader from '../ResultHeader';
+import OriginalText from '../OriginalText';
 import { ResultsList, ResultsNumeric } from './AnalysisFormat';
 
 
@@ -25,12 +25,11 @@ const ResultsCoh = () => {
 	}, []);
 
 	useEffect(() => {
-		const element = document.getElementById('coh_' + selectedFile);
+		var element = document.getElementById('coh_' + selectedFile);
 		if (element) {
 			let position = element.getBoundingClientRect().top;
 			window.scrollTo({ top: position + window.scrollY - 100, behavior: 'smooth' });
 		}
-
 	}, [selectedFile]);
 
 	const handleFileDownload = (item) => {
@@ -95,14 +94,13 @@ const ResultsCoh = () => {
 						`}
 					>
 						<div className='grid grid-cols-1'>
-							<div className='grid grid-cols-1 gap-8' onClick={handleSelectFile(index)}>
-								<ResultHeader title={item.filename} content={item.contents} trunc={selectedFile !== index} date={item.upload_date} procTime={item.process_time} />
-							</div>
+							<h3 onClick={handleSelectFile(index)} className='pb-4 text-lg font-bold truncate'>{item.filename}</h3>
+							<OriginalText content={item.contents} trunc={selectedFile !== index} date={item.upload_date} procTime={item.process_time} />
 
-							<div key={index} className={`${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out font-semibold`}>
-								<hr className='mb-6' />
+							<div key={index} className={`flex flex-col gap-4 ${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out`}>
+								<hr className='' />
 
-								<div className='flex flex-col gap-4'>
+								<div className='flex flex-col gap-4 font-semibold'>
 									<ResultsNumeric result={item.results.ttr} title={"TTR"} />
 									<ResultsNumeric result={item.results.similarity} title={"Similarity"} />
 									<ResultsNumeric result={item.results.adjacency} title={"Adjacency"} />

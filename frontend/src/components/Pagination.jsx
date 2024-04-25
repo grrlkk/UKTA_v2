@@ -2,17 +2,22 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 
-const Pagination = ({ componentArray }) => {
+const Pagination = ({ componentArray, setSelectedFile }) => {
 	const [currentPage, setCurrentPage] = useState(1);
-	const itemsPerPage = 5;
+	const itemsPerPage = 7;
 
 	const indexOfLastItem = currentPage * itemsPerPage;
 	const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 	const currentItems = componentArray.slice(indexOfFirstItem, indexOfLastItem);
-	const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+	function paginate(pageNumber) {
+		setCurrentPage(pageNumber);
+		setSelectedFile(pageNumber * itemsPerPage - itemsPerPage);
+		console.log(pageNumber * itemsPerPage - itemsPerPage);	
+	}
 
 	return (
-		<div className='grid grid-cols-1 gap-3'>
+		<div className='grid grid-cols-1 gap-4'>
 			<AnimatePresence mode='sync'>
 				{currentItems.map((component, index) => (
 					<motion.div

@@ -99,7 +99,7 @@ const ResultsNumeric = ({ result, title }) => {
 					</table>
 				</div>
 
-				<div className='table-contents w-full overflow-y-scroll max-h-64'>
+				<div className='table-contents w-full overflow-y-scroll max-h-72'>
 					<table className='w-full table-fixed'>
 						<tbody className='w-full'>
 							{Object.entries(result).map(([key, value], index) => (
@@ -254,7 +254,7 @@ const ResultsList = ({ result, title }) => {
 					</table>
 				</div>
 
-				<div className='table-contents w-full overflow-y-scroll max-h-64'>
+				<div className='table-contents w-full overflow-y-scroll max-h-72'>
 					<table className='w-full table-fixed'>
 						<tbody className='w-full'>
 							{Object.entries(result).map(([key, value], index) => (
@@ -268,7 +268,7 @@ const ResultsList = ({ result, title }) => {
 									<td className='p-1 w-1/12 font-mono italic'>
 										{Object.keys(result).indexOf(key) + 1}
 									</td>
-									<td className='p-1 w-2/5 break-all'>
+									<td className='p-1 w-1/4 break-all'>
 										{key}
 									</td>
 									<td className='w-84'>
