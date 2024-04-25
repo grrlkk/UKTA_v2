@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import './App.css';
@@ -8,12 +8,10 @@ import Dummy from './components/Dummy';
 import Foot from './components/Foot';
 import Loading from './components/Loading';
 import Nav from './components/Nav';
-
-import ResultsCoh from './components/cohesion/ResultsCohesion';
-import ResultsMor from './components/morpheme/ResultsMorpheme';
-
 import TagInfo from './components/TagInfo';
 import TextInput from './components/TextInput';
+import ResultsCoh from './components/cohesion/ResultsCohesion';
+import ResultsMor from './components/morpheme/ResultsMorpheme';
 
 
 function App() {
@@ -23,15 +21,17 @@ function App() {
 		return preferredColorScheme ? true : false;
 	});
 
+	useEffect(() => {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+	}, [currentPage]);
+
 	return (
 		<div className={`App ${darkMode ? 'dark' : ''} overflow-x-hidden`}>
 			<div
 				className='fixed top-0 h-full w-full z-0 
 					bg-gradient-to-b from-slate-50 dark:from-slate-950 dark:via-black via-white to-slate-50 dark:to-slate-950
 				'
-			>
-				asdfasdf
-			</div>
+			></div>
 
 			<div className="relative text-slate-900 dark:text-slate-50 transition-all ease-in-out min-w-[320px]">
 				<Nav currentPage={currentPage.pathname} />

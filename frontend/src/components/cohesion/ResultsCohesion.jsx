@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import Pagination from '../Pagination';
 
 import OriginalText from '../OriginalText';
+import Pagination from '../Pagination';
 import { ResultsList, ResultsNumeric } from './AnalysisFormat';
 
 
@@ -94,7 +94,7 @@ const ResultsCoh = () => {
 						`}
 					>
 						<div className='grid grid-cols-1'>
-							<h3 onClick={handleSelectFile(index)} className='pb-4 text-lg font-bold truncate'>{item.filename}</h3>
+							<h3 onClick={handleSelectFile(index)} className='pb-4 text-lg font-bold truncate'>{index + 1}. {item.filename}</h3>
 							<OriginalText content={item.contents} trunc={selectedFile !== index} date={item.upload_date} procTime={item.process_time} />
 
 							<div key={index} className={`flex flex-col gap-4 ${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out`}>
@@ -124,7 +124,7 @@ const ResultsCoh = () => {
 							</button>
 						</div>
 					</div>
-				))} />
+				))} setSelectedFile={setSelectedFile} />
 		</motion.div>
 	);
 };

@@ -31,7 +31,6 @@ const ResultsMor = () => {
 			let position = element.getBoundingClientRect().top;
 			window.scrollTo({ top: position + window.scrollY - 100, behavior: 'smooth' });
 		}
-
 	}, [selectedFile]);
 
 	const handleFileDownload = (item, type) => {
@@ -109,7 +108,7 @@ const ResultsMor = () => {
 							${selectedFile === index ? 'bg-slate-100 dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
 					>
 						<div className={`grid grid-cols-1`}>
-							<h3 onClick={handleSelectFile(index)} className='pb-4 text-lg font-bold truncate'>{item.filename}</h3>
+							<h3 onClick={handleSelectFile(index)} className='pb-4 text-lg font-bold truncate'>{index + 1}. {item.filename}</h3>
 							<OriginalText content={item.contents} trunc={selectedFile !== index} date={item.upload_date} procTime={item.process_time} />
 
 							<div className={`flex flex-col gap-4 overflow-y-hidden transition-all ease-in-out ${selectedFile === index ? "mt-4" : "h-0 overflow-hidden"}`}>
