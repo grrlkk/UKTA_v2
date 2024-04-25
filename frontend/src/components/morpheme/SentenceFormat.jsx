@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Tags from "./Tags";
+import Tags from "../Tags";
 
 
 const HilightText = ({ range, offset, content, color }) => {

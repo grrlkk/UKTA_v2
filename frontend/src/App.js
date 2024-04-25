@@ -8,8 +8,10 @@ import Dummy from './components/Dummy';
 import Foot from './components/Foot';
 import Loading from './components/Loading';
 import Nav from './components/Nav';
-import ResultsCoh from './components/ResultsCohesion';
-import ResultsMor from './components/ResultsMorpheme';
+
+import ResultsCoh from './components/cohesion/ResultsCohesion';
+import ResultsMor from './components/morpheme/ResultsMorpheme';
+
 import TagInfo from './components/TagInfo';
 import TextInput from './components/TextInput';
 

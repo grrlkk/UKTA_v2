@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Pagination from './Pagination';
+import Pagination from '../Pagination';
 import { motion } from 'framer-motion';
 
-import ResultHeader from './ResultHeader';
+import ResultHeader from '../ResultHeader';
 import Sentence from './SentenceFormat';
 
 
@@ -80,7 +80,7 @@ const ResultsMor = () => {
 			console.error(error);
 		} finally {
 			setMorphemeResult([]);
-			fetchData();
+			await fetchData();
 
 			if (morphemeResult.length > 0) {
 				setSelectedFile(0);
