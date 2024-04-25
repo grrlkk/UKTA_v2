@@ -6,7 +6,7 @@ from konlpy.tag import Kkma
 # text 문장 단위 분할하기
 def splitText(text):
     sens = collections.deque()
-    sentences = re.split("\. |\? |\!", text)
+    sentences = re.split("\. |\? |\! |\n", text)
     for item in sentences:
         sens.append(item)
 

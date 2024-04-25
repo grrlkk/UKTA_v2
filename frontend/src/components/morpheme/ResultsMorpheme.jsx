@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Pagination from './Pagination';
+import Pagination from '../Pagination';
 import { motion } from 'framer-motion';
 
-import ResultHeader from './ResultHeader';
+import OriginalText from '../OriginalText';
 import Sentence from './SentenceFormat';
 
 
@@ -31,7 +31,6 @@ const ResultsMor = () => {
 			let position = element.getBoundingClientRect().top;
 			window.scrollTo({ top: position + window.scrollY - 100, behavior: 'smooth' });
 		}
-
 	}, [selectedFile]);
 
 	const handleFileDownload = (item, type) => {
@@ -62,6 +61,7 @@ const ResultsMor = () => {
 	const handleSelectFile = (index) => {
 		return () => {
 			selectedFile === index ? setSelectedFile(-1) : setSelectedFile(index);
+			console.log(index);
 		}
 	}
 
@@ -80,7 +80,7 @@ const ResultsMor = () => {
 			console.error(error);
 		} finally {
 			setMorphemeResult([]);
-			fetchData();
+			await fetchData();
 
 			if (morphemeResult.length > 0) {
 				setSelectedFile(0);
@@ -108,13 +108,11 @@ const ResultsMor = () => {
 							${selectedFile === index ? 'bg-slate-100 dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
 					>
 						<div className={`grid grid-cols-1`}>
-							<div className='grid grid-cols-1 gap-8' onClick={handleSelectFile(index)}>
-								<ResultHeader title={item.filename} content={item.contents} trunc={selectedFile !== index} date={item.upload_date} procTime={item.process_time} />
-							</div>
+							<h3 onClick={handleSelectFile(index)} className='pb-4 text-lg font-bold truncate'>{index + 1}. {item.filename}</h3>
+							<OriginalText content={item.contents} trunc={selectedFile !== index} date={item.upload_date} procTime={item.process_time} />
 
-							<div className={`overflow-y-hidden transition-all ease-in-out grid grid-cols-1 ${selectedFile === index ? "mt-4" : "h-0 overflow-hidden"}`}>
-								<hr className='mb-6' />
-
+							<div className={`flex flex-col gap-4 overflow-y-hidden transition-all ease-in-out ${selectedFile === index ? "mt-4" : "h-0 overflow-hidden"}`}>
+								<hr className='' />
 								<Sentence result={item.results_full} content={item.contents} />
 							</div>
 						</div>
@@ -139,7 +137,7 @@ const ResultsMor = () => {
 							</button>
 						</div>
 					</div>
-				))} />
+				))} setSelectedFile={setSelectedFile} />
 		</motion.div>
 	);
 };
