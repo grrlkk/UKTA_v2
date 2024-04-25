@@ -40,7 +40,7 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
             "upload_date": now,
             "process_time": process_time.total_seconds(),
             "filename": file.filename,
-            "contents": contents,
+            "contents": contents.decode("UTF8"),
             "results": results,
         }
         cnt += 1
@@ -90,7 +90,7 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
             "upload_date": now,
             "process_time": process_time.total_seconds(),
             "filename": file.filename,
-            "contents": contents,
+            "contents": contents.decode("UTF8"),
             "results": results,
             "results_full": results_full,
         }
