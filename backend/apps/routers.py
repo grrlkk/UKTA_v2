@@ -1,14 +1,10 @@
 import datetime
-import json
-import os
 from typing import List
 
-import pydantic
+import apps.cohesion.textpreprocess as tp
 from apps.cohesion.process import process
 from apps.morph.morph import mecab
-from bson import ObjectId
-from fastapi import APIRouter, File, HTTPException, Request, UploadFile, status
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, File, HTTPException, Request, Response, UploadFile
 
 # pydantic.json.ENCODERS_BY_TYPE[ObjectId] = str
 router = APIRouter()
@@ -65,22 +61,16 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
         now = datetime.datetime.now()
 
         # process the uploaded text
-        temp = morph.pos(contents.decode("UTF8"))
-        temp_full = morph.parse(contents.decode("UTF8"))
+        sentences = tp.splitText(contents.decode("UTF8"))
 
         results = []
         results_full = []
 
-        bef = 0
-
-        for index in range(len(temp)):
-            if temp[index][1] == "SF":
-                results.append(temp[bef : index + 1])
-                results_full.append(temp_full[bef : index + 1])
-                bef = index + 1
-            elif index == len(temp) - 1:
-                results.append(temp[bef : index + 1])
-                results_full.append(temp_full[bef : index + 1])
+        for index in range(len(sentences)):
+            morph_result = morph.pos(sentences[index])
+            if len(morph_result) > 0:
+                results.append(morph_result)
+                results_full.append(morph.parse(sentences[index]))
 
         process_time = datetime.datetime.now() - now
 
@@ -91,6 +81,7 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
             "process_time": process_time.total_seconds(),
             "filename": file.filename,
             "contents": contents.decode("UTF8"),
+            "sentences": list(sentences),
             "results": results,
             "results_full": results_full,
         }
@@ -143,8 +134,7 @@ async def delete_file(id: str, request: Request):
     delete_result = await request.app.mongodb["cohesion"].delete_one({"_id": id})
 
     if delete_result.deleted_count == 1:
-        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT, content={"message": "File deleted successfully"})
-
+        return Response(status_code=204, content="File deleted")
     raise HTTPException(status_code=404, detail=f"Task {id} not found")
 
 
@@ -154,6 +144,5 @@ async def delete_file(id: str, request: Request):
     delete_result = await request.app.mongodb["morpheme"].delete_one({"_id": id})
 
     if delete_result.deleted_count == 1:
-        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT, content={"message": "File deleted successfully"})
-
+        return Response(status_code=204, content="File deleted")
     raise HTTPException(status_code=404, detail=f"Task {id} not found")

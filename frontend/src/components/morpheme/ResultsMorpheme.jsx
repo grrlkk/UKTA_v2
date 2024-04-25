@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Pagination from '../Pagination';
 import { motion } from 'framer-motion';
-
+import React, { useEffect, useState } from 'react';
 import OriginalText from '../OriginalText';
-import Sentence from './SentenceFormat';
+import Pagination from '../Pagination';
+import Sentences from './SentenceFormat';
 
 
 const ResultsMor = () => {
@@ -113,7 +112,7 @@ const ResultsMor = () => {
 
 							<div className={`flex flex-col gap-4 overflow-y-hidden transition-all ease-in-out ${selectedFile === index ? "mt-4" : "h-0 overflow-hidden"}`}>
 								<hr className='' />
-								<Sentence result={item.results_full} content={item.contents} />
+								<Sentences result={item.results_full} content={item.sentences} />
 							</div>
 						</div>
 

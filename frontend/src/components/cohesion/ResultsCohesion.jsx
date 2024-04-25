@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-
 import OriginalText from '../OriginalText';
 import Pagination from '../Pagination';
 import { ResultsList, ResultsNumeric } from './AnalysisFormat';

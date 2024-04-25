@@ -16,13 +16,14 @@ import ResultsMor from './components/morpheme/ResultsMorpheme';
 
 function App() {
 	const currentPage = useLocation();
+	const [uploadInProgress, setUploadInProgress] = useState(false);
 	const [darkMode, setDarkMode] = useState(() => {
 		const preferredColorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 		return preferredColorScheme ? true : false;
 	});
 
 	useEffect(() => {
-			window.scrollTo({ top: 0, behavior: 'smooth' });
+		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}, [currentPage]);
 
 	return (
@@ -39,7 +40,7 @@ function App() {
 				<div className="items-start pt-32 grid grid-cols-1 gap-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className='fixed top-0'></div>
 
-					<TextInput />
+					<TextInput uploadInProgress={uploadInProgress} setUploadInProgress={setUploadInProgress} />
 
 					<hr id="content_area_start" />
 
@@ -49,8 +50,9 @@ function App() {
 								<Route path='/morpheme' element={<ResultsMor />} />
 								<Route path='/cohesion' element={<ResultsCoh />} />
 								<Route path='/tagging' element={<TagInfo />} />
-								<Route path='/loading' element={<Loading />} />
 								<Route path='*' element={<Dummy />} />
+
+								{uploadInProgress && <Route path='/loading' element={<Loading />} />}
 							</Routes>
 						</AnimatePresence>
 					</div>

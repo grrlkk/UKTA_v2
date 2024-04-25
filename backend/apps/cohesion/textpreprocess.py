@@ -6,10 +6,10 @@ from konlpy.tag import Kkma
 # text 문장 단위 분할하기
 def splitText(text):
     sens = collections.deque()
-    sentences = re.split("\. |\? |\! |\n", text)
+    sentences = re.split("(?<=\. )|(?<=\? )|(?<=\! )|(?<=\n)", text)
     for item in sentences:
-        sens.append(item)
-
+        if len(item) > 0 and item[0] != "\n" and item[0] != " " and item[0] != "\t" and item[0] != "\r":
+            sens.append(item)
     return sens
 
 

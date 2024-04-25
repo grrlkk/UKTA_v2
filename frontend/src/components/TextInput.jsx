@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 
-const TextInput = () => {
+const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 	const [inputValue, setInputValue] = useState('');
-	const [uploadInProgress, setUploadInProgress] = useState(false);
 	const [selectedFile, setSelectedFile] = useState(null);
 
 	const navigate = useNavigate();
@@ -83,15 +82,15 @@ const TextInput = () => {
 					</button>
 				</div>
 
-				<div className='rounded-xl bg-white dark:bg-black has-[:focus]:ring-2 has-[:focus]:ring-slate-500'>
+				<div className='rounded-xl overflow-hidden bg-white dark:bg-black has-[:focus]:ring-2 has-[:focus]:ring-slate-500'>
 					<textarea
 						value={inputValue}
 						onChange={handleInputChange}
 						className={`
-									p-2 overflow-auto rounded-xl transition-all ease-in-out w-full 
-									${inputValue.length === 0 ? 'h-[4em] focus:h-32' : 'h-32'}
-									focus:outline-none ring-0 dark:bg-black
-								`}
+							p-2 overflow-y-auto rounded-xl transition-all ease-in-out w-full 
+							${inputValue.length === 0 ? 'h-[4em] focus:h-32' : 'h-32'}
+							focus:outline-none ring-0 dark:bg-black
+						`}
 						placeholder="한국어를 입력하세요."
 						spellCheck="false"
 						disabled={uploadInProgress}
