@@ -13,7 +13,7 @@ const Pagination = ({ componentArray, setSelectedFile }) => {
 	function paginate(pageNumber) {
 		setCurrentPage(pageNumber);
 		setSelectedFile(pageNumber * itemsPerPage - itemsPerPage);
-		console.log(pageNumber * itemsPerPage - itemsPerPage);	
+		console.log(pageNumber * itemsPerPage - itemsPerPage);
 	}
 
 	return (
@@ -39,13 +39,15 @@ const Pagination = ({ componentArray, setSelectedFile }) => {
 							className={`
 								${index === currentPage - 1 ?
 									'font-bold' :
-									'bg-transparent'}
-								btn-primary p-3 rounded-full
+									'bg-opacity-50'}
+								btn-primary p-3 rounded-full items-center justify-center
 							`}
 							key={index}
 							onClick={() => paginate(index + 1)}
 						>
-							{index + 1}
+							<div className='w-5 h-5 text-center text-sm'>
+								{index + 1}
+							</div>
 						</button>
 					))}
 				</div>

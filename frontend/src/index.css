@@ -19,7 +19,7 @@ body {
 	}
 
 	.btn-icon {
-		@apply rounded-xl hover:text-slate-400 text-slate-50;
+		@apply rounded-xl hover:text-slate-400 dark:text-slate-50 text-slate-900;
 	}
 
 	hr {
