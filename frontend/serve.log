@@ -4770,3 +4770,483 @@ nohup: ignoring input
  HTTP  5/30/2024 3:59:01 AM 127.0.0.1 Returned 304 in 0 ms
  HTTP  5/30/2024 3:59:01 AM 127.0.0.1 GET /kdd_logo_r.png
  HTTP  5/30/2024 3:59:01 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:01:15 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 4:01:15 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 4:01:15 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 4:01:15 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 4:01:15 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 4:01:15 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:01:15 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 4:01:15 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 4:01:16 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 4:18:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 4:18:10 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 4:19:28 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 4:19:29 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 5:06:11 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 5:08:50 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 5:08:51 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 5:12:41 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:12:42 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 5:12:42 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:12:42 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 5:12:42 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:12:42 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 5:12:42 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 5:57:58 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:03:47 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:03:48 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:03:48 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:03:48 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 6:03:48 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:03:48 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 6:03:48 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 6:08:42 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 6:10:41 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 6:16:27 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 6:17:09 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:21:57 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:21:58 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:21:58 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:21:58 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 6:21:58 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:21:58 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 6:21:58 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 6:23:25 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 6:25:31 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:41:41 AM 127.0.0.1 GET /
+ HTTP  5/30/2024 6:41:41 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 200 in 0 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /static/js/main.b798fe9a.js.map
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /static/css/main.03c18bbb.css.map
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 6:46:48 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 GET /cohesion
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 GET /dist/output.css
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 GET /static/css/main.03c18bbb.css
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 Returned 200 in 1 ms
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 GET /static/js/main.b798fe9a.js
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 GET /inha_logo_p.png
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 GET /kdd_logo_p.png
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 GET /kdd_logo.png
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 Returned 304 in 0 ms
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 GET /manifest.json
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 GET /kdd_logo_r.png
+ HTTP  5/30/2024 7:03:27 AM 127.0.0.1 Returned 304 in 1 ms
+ HTTP  5/30/2024 7:05:52 AM 127.0.0.1 GET /
+ HTTP  5/30/2024 7:05:52 AM 127.0.0.1 Returned 200 in 1 ms

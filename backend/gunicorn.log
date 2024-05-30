@@ -1,24 +1,24 @@
 nohup: ignoring input
-[2024-04-25 08:01:56 +0000] [2683309] [INFO] Starting gunicorn 21.2.0
-[2024-04-25 08:01:56 +0000] [2683309] [INFO] Listening at: http://0.0.0.0:8000 (2683309)
-[2024-04-25 08:01:56 +0000] [2683309] [INFO] Using worker: uvicorn.workers.UvicornWorker
-[2024-04-25 08:01:56 +0000] [2683311] [INFO] Booting worker with pid: 2683311
-[2024-04-25 08:01:56 +0000] [2683312] [INFO] Booting worker with pid: 2683312
-[2024-04-25 08:01:56 +0000] [2683313] [INFO] Booting worker with pid: 2683313
-[2024-04-25 08:01:56 +0000] [2683314] [INFO] Booting worker with pid: 2683314
-[2024-04-25 08:01:59 +0000] [2683311] [INFO] Started server process [2683311]
-[2024-04-25 08:01:59 +0000] [2683311] [INFO] Waiting for application startup.
-[2024-04-25 08:01:59 +0000] [2683311] [INFO] Application startup complete.
-[2024-04-25 08:01:59 +0000] [2683312] [INFO] Started server process [2683312]
-[2024-04-25 08:01:59 +0000] [2683314] [INFO] Started server process [2683314]
-[2024-04-25 08:01:59 +0000] [2683312] [INFO] Waiting for application startup.
-[2024-04-25 08:01:59 +0000] [2683314] [INFO] Waiting for application startup.
-[2024-04-25 08:01:59 +0000] [2683314] [INFO] Application startup complete.
-[2024-04-25 08:01:59 +0000] [2683312] [INFO] Application startup complete.
-[2024-04-25 08:01:59 +0000] [2683313] [INFO] Started server process [2683313]
-[2024-04-25 08:01:59 +0000] [2683313] [INFO] Waiting for application startup.
-[2024-04-25 08:01:59 +0000] [2683313] [INFO] Application startup complete.
-[2024-04-25 08:03:54 +0000] [2683314] [ERROR] Exception in ASGI application
+[2024-05-30 06:46:43 +0000] [2721035] [INFO] Starting gunicorn 21.2.0
+[2024-05-30 06:46:43 +0000] [2721035] [INFO] Listening at: http://0.0.0.0:8000 (2721035)
+[2024-05-30 06:46:43 +0000] [2721035] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2024-05-30 06:46:43 +0000] [2721040] [INFO] Booting worker with pid: 2721040
+[2024-05-30 06:46:43 +0000] [2721041] [INFO] Booting worker with pid: 2721041
+[2024-05-30 06:46:43 +0000] [2721042] [INFO] Booting worker with pid: 2721042
+[2024-05-30 06:46:43 +0000] [2721043] [INFO] Booting worker with pid: 2721043
+[2024-05-30 06:46:46 +0000] [2721040] [INFO] Started server process [2721040]
+[2024-05-30 06:46:46 +0000] [2721040] [INFO] Waiting for application startup.
+[2024-05-30 06:46:46 +0000] [2721040] [INFO] Application startup complete.
+[2024-05-30 06:46:46 +0000] [2721041] [INFO] Started server process [2721041]
+[2024-05-30 06:46:46 +0000] [2721041] [INFO] Waiting for application startup.
+[2024-05-30 06:46:46 +0000] [2721041] [INFO] Application startup complete.
+[2024-05-30 06:46:46 +0000] [2721042] [INFO] Started server process [2721042]
+[2024-05-30 06:46:46 +0000] [2721042] [INFO] Waiting for application startup.
+[2024-05-30 06:46:46 +0000] [2721042] [INFO] Application startup complete.
+[2024-05-30 06:46:46 +0000] [2721043] [INFO] Started server process [2721043]
+[2024-05-30 06:46:46 +0000] [2721043] [INFO] Waiting for application startup.
+[2024-05-30 06:46:46 +0000] [2721043] [INFO] Application startup complete.
+[2024-05-30 06:46:52 +0000] [2721043] [ERROR] Exception in ASGI application
 Traceback (most recent call last):
   File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
     result = await app(  # type: ignore[func-returns-value]
@@ -77,20 +77,243 @@ Traceback (most recent call last):
   File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
     raise LocalProtocolError("Too much data for declared Content-Length")
 h11._util.LocalProtocolError: Too much data for declared Content-Length
-[2024-05-30 02:14:10 +0000] [2683313] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/counter.py modified
-[2024-05-30 02:14:11 +0000] [2683314] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/counter.py modified
-[2024-05-30 02:14:11 +0000] [2683311] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/counter.py modified
-[2024-05-30 02:14:11 +0000] [2683312] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/counter.py modified
-[2024-05-30 02:57:18 +0000] [2683309] [INFO] Handling signal: term
-[2024-05-30 02:57:18 +0000] [2683311] [INFO] Shutting down
-[2024-05-30 02:57:18 +0000] [2683311] [INFO] Waiting for application shutdown.
-[2024-05-30 02:57:18 +0000] [2683311] [INFO] Application shutdown complete.
-[2024-05-30 02:57:18 +0000] [2683311] [INFO] Finished server process [2683311]
-[2024-05-30 02:57:18 +0000] [2683311] [INFO] Worker exiting (pid: 2683311)
-[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683314) exited with code 143
-[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683314) exited with code 143.
-[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683312) exited with code 143
-[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683312) exited with code 143.
-[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683313) exited with code 143
-[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683313) exited with code 143.
-[2024-05-30 02:57:19 +0000] [2683309] [INFO] Shutting down: Master
+[2024-05-30 06:46:56 +0000] [2721043] [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
+    await response(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/responses.py", line 158, in __call__
+    await send({"type": "http.response.body", "body": self.body})
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 152, in send
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 161, in _send
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 507, in send
+    output = self.conn.send(event=h11.Data(data=data))
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 512, in send
+    data_list = self.send_with_data_passthrough(event)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 545, in send_with_data_passthrough
+    writer(event, data_list.append)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 65, in __call__
+    self.send_data(event.data, write)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
+    raise LocalProtocolError("Too much data for declared Content-Length")
+h11._util.LocalProtocolError: Too much data for declared Content-Length
+[2024-05-30 06:46:57 +0000] [2721043] [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
+    await response(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/responses.py", line 158, in __call__
+    await send({"type": "http.response.body", "body": self.body})
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 152, in send
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 161, in _send
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 507, in send
+    output = self.conn.send(event=h11.Data(data=data))
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 512, in send
+    data_list = self.send_with_data_passthrough(event)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 545, in send_with_data_passthrough
+    writer(event, data_list.append)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 65, in __call__
+    self.send_data(event.data, write)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
+    raise LocalProtocolError("Too much data for declared Content-Length")
+h11._util.LocalProtocolError: Too much data for declared Content-Length
+[2024-05-30 06:46:59 +0000] [2721041] [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
+    await response(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/responses.py", line 158, in __call__
+    await send({"type": "http.response.body", "body": self.body})
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 152, in send
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 161, in _send
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 507, in send
+    output = self.conn.send(event=h11.Data(data=data))
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 512, in send
+    data_list = self.send_with_data_passthrough(event)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 545, in send_with_data_passthrough
+    writer(event, data_list.append)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 65, in __call__
+    self.send_data(event.data, write)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
+    raise LocalProtocolError("Too much data for declared Content-Length")
+h11._util.LocalProtocolError: Too much data for declared Content-Length
+[2024-05-30 06:47:58 +0000] [2721043] [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
+    await response(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/responses.py", line 158, in __call__
+    await send({"type": "http.response.body", "body": self.body})
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 152, in send
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 161, in _send
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 507, in send
+    output = self.conn.send(event=h11.Data(data=data))
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 512, in send
+    data_list = self.send_with_data_passthrough(event)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 545, in send_with_data_passthrough
+    writer(event, data_list.append)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 65, in __call__
+    self.send_data(event.data, write)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
+    raise LocalProtocolError("Too much data for declared Content-Length")
+h11._util.LocalProtocolError: Too much data for declared Content-Length
+[2024-05-30 07:06:03 +0000] [2721041] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/adjacent_overlap.py modified
+[2024-05-30 07:06:03 +0000] [2721040] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/adjacent_overlap.py modified
+[2024-05-30 07:06:03 +0000] [2721042] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/adjacent_overlap.py modified
+[2024-05-30 07:06:03 +0000] [2721043] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/adjacent_overlap.py modified

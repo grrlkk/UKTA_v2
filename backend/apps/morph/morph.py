@@ -13,9 +13,14 @@ class mecab:
 	def nouns(self, text):
 		return mecab_kr.nouns(text)
 
-	def pos(self, text):
+	def pos(self, text, simple=False):
 		parse = mecab_kr.parse(text)
 		pos = []
+
+		if simple:
+			for r in parse:
+				pos.append((r[1], r[2][0]))
+			return pos
 
 		for r in parse:
 			if r[2][7] != None:
