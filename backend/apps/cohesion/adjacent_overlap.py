@@ -1,6 +1,5 @@
 import collections
 
-
 pronounList = [
     "이",
     "그",
@@ -36,1103 +35,325 @@ pronounList = [
 ]
 
 
+# Helper function to check content lemma
+def is_content_lemma(pos_tag):
+    return "NN" in pos_tag or "V" in pos_tag or "MA" in pos_tag
+
+
+# Helper function to check function lemma
+def is_function_lemma(pos_tag):
+    return ("J" in pos_tag or "E" in pos_tag) and pos_tag not in {"MAJ", "SE"}
+
+
+# Helper function to check noun lemma
+def is_noun_lemma(pos_tag):
+    return "N" in pos_tag and pos_tag != "ON"
+
+
+# Helper function to check verb lemma
+def is_verb_lemma(pos_tag):
+    return "V" in pos_tag and pos_tag not in {"XPV", "XSV"}
+
+
+# Helper function to check adjective lemma
+def is_adjective_lemma(pos_tag):
+    return "VXA" in pos_tag or "VA" in pos_tag
+
+
+# Helper function to check adverb lemma
+def is_adverb_lemma(pos_tag):
+    return "MAG" in pos_tag or "MAJ" in pos_tag
+
+
 # All lemmas
 def adjacent_sentence_overlap_all_lemmas(now, target):
-    lemma = collections.defaultdict()
-    sum = 0
-
-    for item in now:
-        lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now)
+    return sum(1 for item in target if item[1] in lemma)
 
 
 def adjacent_sentence_overlap_all_lemmas_normed(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[1] for item in now)
+    return 1 if any(item[1] in lemma for item in target) else 0
 
 
 def binary_adjacent_sentence_overlap_all_lemmas(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        lemma[item[0]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[0]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[0] for item in now)
+    return 1 if any(item[0] in lemma for item in target) else 0
 
 
 def adjacent_two_sentence_overlap_all_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-
-    sum = 0
-
-    for item in now:
-        lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-        except:
-            continue
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 2:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now)
+    overlap = {item[1] for item in target1 if item[1] in lemma}
+    return sum(1 for item in target2 if item[1] in overlap)
 
 
 def adjacent_two_sentence_overlap_all_lemmas_normed(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[1] for item in now)
+    return (
+        1
+        if any(item[1] in lemma for item in target1)
+        and any(item[1] in lemma for item in target2)
+        else 0
+    )
 
 
 def binary_adjacent_two_sentence_overlap_all_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        lemma[item[0]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[0]] == 1:
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[0]] == 1:
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[0] for item in now)
+    return (
+        1
+        if any(item[0] in lemma for item in target1)
+        and any(item[0] in lemma for item in target2)
+        else 0
+    )
 
 
 # content lemmas
 def adjacent_sentence_overlap_content_lemmas(now, target):
-    lemma = collections.defaultdict()
-    sum = 0
-
-    for item in now:
-        if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_content_lemma(item[1]))
+    return sum(1 for item in target if item[1] in lemma)
 
 
 def adjacent_sentence_overlap_content_lemmas_normed(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[1] for item in now if is_content_lemma(item[1]))
+    return 1 if any(item[1] in lemma for item in target) else 0
 
 
 def binary_adjacent_sentence_overlap_content_lemmas(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[0]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[0]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[0] for item in now if is_content_lemma(item[1]))
+    return 1 if any(item[0] in lemma for item in target) else 0
 
 
 def adjacent_two_sentence_overlap_content_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-
-    sum = 0
-
-    for item in now:
-        if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-        except:
-            continue
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 2:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_content_lemma(item[1]))
+    overlap = {item[1] for item in target1 if item[1] in lemma}
+    return sum(1 for item in target2 if item[1] in overlap)
 
 
 def adjacent_two_sentence_overlap_content_lemmas_normed(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[1] for item in now if is_content_lemma(item[1]))
+    return (
+        1
+        if any(item[1] in lemma for item in target1)
+        and any(item[1] in lemma for item in target2)
+        else 0
+    )
 
 
 def binary_adjacent_two_sentence_overlap_content_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "NN" in item[1] or "V" in item[1] or "MA" in item[1]:
-            lemma[item[0]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[0]] == 1 and ("NN" in item[1] or "V" in item[1] or "MA" in item[1]):
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[0]] == 1 and ("NN" in item[1] or "V" in item[1] or "MA" in item[1]):
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[0] for item in now if is_content_lemma(item[1]))
+    return (
+        1
+        if any(item[0] in lemma for item in target1)
+        and any(item[0] in lemma for item in target2)
+        else 0
+    )
 
 
 # function lemmas
 def adjacent_sentence_overlap_function_lemmas(now, target):
-    lemma = collections.defaultdict()
-    sum = 0
-
-    for item in now:
-        if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_function_lemma(item[1]))
+    return sum(1 for item in target if item[1] in lemma)
 
 
 def adjacent_sentence_overlap_function_lemmas_normed(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[1] for item in now if is_function_lemma(item[1]))
+    return 1 if any(item[1] in lemma for item in target) else 0
 
 
 def binary_adjacent_sentence_overlap_function_lemmas(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
-            lemma[item[0]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[0]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[0] for item in now if is_function_lemma(item[1]))
+    return 1 if any(item[0] in lemma for item in target) else 0
 
 
 def adjacent_two_sentence_overlap_function_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-
-    sum = 0
-
-    for item in now:
-        if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-        except:
-            continue
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 2:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_function_lemma(item[1]))
+    overlap = {item[1] for item in target1 if item[1] in lemma}
+    return sum(1 for item in target2 if item[1] in overlap)
 
 
 def adjacent_two_sentence_overlap_function_lemmas_normed(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[1] for item in now if is_function_lemma(item[1]))
+    return (
+        1
+        if any(item[1] in lemma for item in target1)
+        and any(item[1] in lemma for item in target2)
+        else 0
+    )
 
 
 def binary_adjacent_two_sentence_overlap_function_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
-            lemma[item[0]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[0]] == 1 and ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[0]] == 1 and ("J" in item[1] or "E" in item[1]) and (item[1] != "MAJ" or item[1] != "SE"):
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[0] for item in now if is_function_lemma(item[1]))
+    return (
+        1
+        if any(item[0] in lemma for item in target1)
+        and any(item[0] in lemma for item in target2)
+        else 0
+    )
 
 
 # noun lemmas
 def adjacent_sentence_overlap_noun_lemmas(now, target):
-    lemma = collections.defaultdict()
-    sum = 0
-
-    for item in now:
-        if "N" in item[1] and item[1] != "ON":
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_noun_lemma(item[1]))
+    return sum(1 for item in target if item[1] in lemma)
 
 
 def adjacent_sentence_overlap_noun_lemmas_normed(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "N" in item[1] and item[1] != "ON":
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[1] for item in now if is_noun_lemma(item[1]))
+    return 1 if any(item[1] in lemma for item in target) else 0
 
 
 def binary_adjacent_sentence_overlap_noun_lemmas(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "N" in item[1] and item[1] != "ON":
-            lemma[item[0]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[0]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[0] for item in now if is_noun_lemma(item[1]))
+    return 1 if any(item[0] in lemma for item in target) else 0
 
 
 def adjacent_two_sentence_overlap_noun_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-
-    sum = 0
-
-    for item in now:
-        if "N" in item[1] and item[1] != "ON":
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-        except:
-            continue
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 2:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_noun_lemma(item[1]))
+    overlap = {item[1] for item in target1 if item[1] in lemma}
+    return sum(1 for item in target2 if item[1] in overlap)
 
 
 def adjacent_two_sentence_overlap_noun_lemmas_normed(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "N" in item[1] and item[1] != "ON":
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[1] for item in now if is_noun_lemma(item[1]))
+    return (
+        1
+        if any(item[1] in lemma for item in target1)
+        and any(item[1] in lemma for item in target2)
+        else 0
+    )
 
 
 def binary_adjacent_two_sentence_overlap_noun_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "N" in item[1] and item[1] != "ON":
-            lemma[item[0]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[0]] == 1 and ("N" in item[1] and item[1] != "ON"):
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[0]] == 1 and ("N" in item[1] and item[1] != "ON"):
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[0] for item in now if is_noun_lemma(item[1]))
+    return (
+        1
+        if any(item[0] in lemma for item in target1)
+        and any(item[0] in lemma for item in target2)
+        else 0
+    )
 
 
 # verb lemmas
 def adjacent_sentence_overlap_verb_lemmas(now, target):
-    lemma = collections.defaultdict()
-    sum = 0
-
-    for item in now:
-        if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_verb_lemma(item[1]))
+    return sum(1 for item in target if item[1] in lemma)
 
 
 def adjacent_sentence_overlap_verb_lemmas_normed(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[1] for item in now if is_verb_lemma(item[1]))
+    return 1 if any(item[1] in lemma for item in target) else 0
 
 
 def binary_adjacent_sentence_overlap_verb_lemmas(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
-            lemma[item[0]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[0]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[0] for item in now if is_verb_lemma(item[1]))
+    return 1 if any(item[0] in lemma for item in target) else 0
 
 
 def adjacent_two_sentence_overlap_verb_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-
-    sum = 0
-
-    for item in now:
-        if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-        except:
-            continue
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 2:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_verb_lemma(item[1]))
+    overlap = {item[1] for item in target1 if item[1] in lemma}
+    return sum(1 for item in target2 if item[1] in overlap)
 
 
 def adjacent_two_sentence_overlap_verb_lemmas_normed(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[1] for item in now if is_verb_lemma(item[1]))
+    return (
+        1
+        if any(item[1] in lemma for item in target1)
+        and any(item[1] in lemma for item in target2)
+        else 0
+    )
 
 
 def binary_adjacent_two_sentence_overlap_verb_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "V" in item[1] and (item[1] != "XPV" or item[1] != "XSV"):
-            lemma[item[0]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[0]] == 1 and ("V" in item[1] and (item[1] != "XPV" or item[1] != "XSV")):
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[0]] == 1 and ("V" in item[1] and (item[1] != "XPV" or item[1] != "XSV")):
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[0] for item in now if is_verb_lemma(item[1]))
+    return (
+        1
+        if any(item[0] in lemma for item in target1)
+        and any(item[0] in lemma for item in target2)
+        else 0
+    )
 
 
 # adjective lemmas
 def adjacent_sentence_overlap_adjective_lemmas(now, target):
-    lemma = collections.defaultdict()
-    sum = 0
-
-    for item in now:
-        if "VXA" in item[1] or "VA" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_adjective_lemma(item[1]))
+    return sum(1 for item in target if item[1] in lemma)
 
 
 def adjacent_sentence_overlap_adjective_lemmas_normed(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "VXA" in item[1] or "VA" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[1] for item in now if is_adjective_lemma(item[1]))
+    return 1 if any(item[1] in lemma for item in target) else 0
 
 
 def binary_adjacent_sentence_overlap_adjective_lemmas(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "VXA" in item[1] or "VA" in item[1]:
-            lemma[item[0]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[0]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[0] for item in now if is_adjective_lemma(item[1]))
+    return 1 if any(item[0] in lemma for item in target) else 0
 
 
 def adjacent_two_sentence_overlap_adjective_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-
-    sum = 0
-
-    for item in now:
-        if "VXA" in item[1] or "VA" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-        except:
-            continue
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 2:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_adjective_lemma(item[1]))
+    overlap = {item[1] for item in target1 if item[1] in lemma}
+    return sum(1 for item in target2 if item[1] in overlap)
 
 
 def adjacent_two_sentence_overlap_adjective_lemmas_normed(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "VXA" in item[1] or "VA" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[1] for item in now if is_adjective_lemma(item[1]))
+    return (
+        1
+        if any(item[1] in lemma for item in target1)
+        and any(item[1] in lemma for item in target2)
+        else 0
+    )
 
 
 def binary_adjacent_two_sentence_overlap_adjective_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "VXA" in item[1] or "VA" in item[1]:
-            lemma[item[0]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[0]] == 1 and ("VXA" in item[1] or "VA" in item[1]):
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[0]] == 1 and ("VXA" in item[1] or "VA" in item[1]):
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[0] for item in now if is_adjective_lemma(item[1]))
+    return (
+        1
+        if any(item[0] in lemma for item in target1)
+        and any(item[0] in lemma for item in target2)
+        else 0
+    )
 
 
 # adverb lemmas
 def adjacent_sentence_overlap_adverb_lemmas(now, target):
-    lemma = collections.defaultdict()
-    sum = 0
-
-    for item in now:
-        if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_adverb_lemma(item[1]))
+    return sum(1 for item in target if item[1] in lemma)
 
 
 def adjacent_sentence_overlap_adverb_lemmas_normed(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[1] for item in now if is_adverb_lemma(item[1]))
+    return 1 if any(item[1] in lemma for item in target) else 0
 
 
 def binary_adjacent_sentence_overlap_adverb_lemmas(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[0]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[0]] == 1:
-                return 1
-        except:
-            continue
-    return 0
+    lemma = set(item[0] for item in now if is_adverb_lemma(item[1]))
+    return 1 if any(item[0] in lemma for item in target) else 0
 
 
 def adjacent_two_sentence_overlap_adverb_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-
-    sum = 0
-
-    for item in now:
-        if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-        except:
-            continue
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 2:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
+    lemma = set(item[1] for item in now if is_adverb_lemma(item[1]))
+    overlap = {item[1] for item in target1 if item[1] in lemma}
+    return sum(1 for item in target2 if item[1] in overlap)
 
 
 def adjacent_two_sentence_overlap_adverb_lemmas_normed(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-
-    return 0
+    lemma = set(item[1] for item in now if is_adverb_lemma(item[1]))
+    return (
+        1
+        if any(item[1] in lemma for item in target1)
+        and any(item[1] in lemma for item in target2)
+        else 0
+    )
 
 
 def binary_adjacent_two_sentence_overlap_adverb_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[0]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[0]] == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[0]] == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
-                return 1
-        except:
-            continue
-
-    return 0
-
-
-# 대명사는 아직 미구현~
-# pronoun lemmas
-def adjacent_sentence_overlap_pronoun_lemmas(now, target):
-    lemma = collections.defaultdict()
-    sum = 0
-
-    oneLetterPronounFlag = False
-
-    for pron in pronounList:
-        for i, word in enumerate(lemma):
-            # 이 책, 이 사람, 저 때 등 이,그,저 + @인 경우
-            if oneLetterPronounFlag == True:
-                oneLetterPronounFlag = False
-                type[word] = type[word] + 1
-                sum += 1
-                continue
-
-            # 대명사를 내포하는지 체크 또한 접속사일 경우 제외
-            if word[0 : len(pron)] == pron:
-                type[word] = type[word] + 1
-                sum += 1
-
-            # 단 '이', '그', '저'는 한글자로만 사용되므로 예외
-            elif (pron == "이" and word == "이") or (pron == "그" and word == "그") or (pron == "저" and word == "저"):
-                oneLetterPronounFlag = True
-
-    return sum
-
-
-def adjacent_sentence_overlap_pronoun_lemmas_normed(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-    return 0
-
-
-def binary_adjacent_sentence_overlap_pronoun_lemmas(now, target):
-    lemma = collections.defaultdict()
-
-    for item in now:
-        if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[0]] = 1
-
-    for item in target:
-        try:
-            if lemma[item[0]] == 1:
-                return 1
-        except:
-            continue
-    return 0
-
-
-def adjacent_two_sentence_overlap_pronoun_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-
-    sum = 0
-
-    for item in now:
-        if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                lemma[item[1]] += 1
-        except:
-            continue
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 2:
-                lemma[item[1]] += 1
-                sum += 1
-        except:
-            continue
-
-    return sum
-
-
-def adjacent_two_sentence_overlap_pronoun_lemmas_normed(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[1]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[1]] == 1:
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[1]] == 1:
-                return 1
-        except:
-            continue
-
-    return 0
-
-
-def binary_adjacent_two_sentence_overlap_pronoun_lemmas(now, target1, target2):
-    lemma = collections.defaultdict()
-    flag = False
-
-    for item in now:
-        if "MAG" in item[1] or "MAJ" in item[1]:
-            lemma[item[0]] = 1
-
-    for item in target1:
-        try:
-            if lemma[item[0]] == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
-                flag = True
-                break
-        except:
-            continue
-
-    if flag == False:
-        return 0
-
-    for item in target2:
-        try:
-            if lemma[item[0]] == 1 and ("MAG" in item[1] or "MAJ" in item[1]):
-                return 1
-        except:
-            continue
-
-    return 0
-
-
-# noun&pronoun lemmas
+    lemma = set(item[0] for item in now if is_adverb_lemma(item[1]))
+    return (
+        1
+        if any(item[0] in lemma for item in target1)
+        and any(item[0] in lemma for item in target2)
+        else 0
+    )

@@ -77,3 +77,20 @@ Traceback (most recent call last):
   File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
     raise LocalProtocolError("Too much data for declared Content-Length")
 h11._util.LocalProtocolError: Too much data for declared Content-Length
+[2024-05-30 02:14:10 +0000] [2683313] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/counter.py modified
+[2024-05-30 02:14:11 +0000] [2683314] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/counter.py modified
+[2024-05-30 02:14:11 +0000] [2683311] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/counter.py modified
+[2024-05-30 02:14:11 +0000] [2683312] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/counter.py modified
+[2024-05-30 02:57:18 +0000] [2683309] [INFO] Handling signal: term
+[2024-05-30 02:57:18 +0000] [2683311] [INFO] Shutting down
+[2024-05-30 02:57:18 +0000] [2683311] [INFO] Waiting for application shutdown.
+[2024-05-30 02:57:18 +0000] [2683311] [INFO] Application shutdown complete.
+[2024-05-30 02:57:18 +0000] [2683311] [INFO] Finished server process [2683311]
+[2024-05-30 02:57:18 +0000] [2683311] [INFO] Worker exiting (pid: 2683311)
+[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683314) exited with code 143
+[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683314) exited with code 143.
+[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683312) exited with code 143
+[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683312) exited with code 143.
+[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683313) exited with code 143
+[2024-05-30 02:57:18 +0000] [2683309] [ERROR] Worker (pid:2683313) exited with code 143.
+[2024-05-30 02:57:19 +0000] [2683309] [INFO] Shutting down: Master
