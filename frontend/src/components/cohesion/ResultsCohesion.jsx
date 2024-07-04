@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import OriginalText from '../OriginalText';
 import Pagination from '../Pagination';
-import { ResultsList, ResultsNumeric } from './AnalysisFormat';
+import { ResultsList, ResultsNumeric, MorphemeFormat } from './AnalysisFormat';
 
 
 const ResultsCoh = () => {
@@ -100,6 +100,7 @@ const ResultsCoh = () => {
 								<hr className='' />
 
 								<div className='flex flex-col gap-4 font-semibold'>
+									<MorphemeFormat result={item.results.morpheme.sentences} title={"Morpheme"} />
 									<ResultsNumeric result={item.results.ttr} title={"TTR"} />
 									<ResultsNumeric result={item.results.similarity} title={"Similarity"} />
 									<ResultsNumeric result={item.results.adjacency} title={"Adjacency"} />

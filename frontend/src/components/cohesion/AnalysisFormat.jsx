@@ -1,5 +1,81 @@
 import React, { useState } from 'react';
+import Tags from "../Tags";
 
+const Sentence = ({ tokens, content, index }) => {
+	return (
+		<div className="flex flex-col gap-2">
+			<div className="flex gap-2">
+				<div className="">{index + 1}.</div>
+				<div className="font-normal">{content}</div>
+			</div>
+
+			<div className="flex flex-col bg-slate-300 dark:bg-slate-900 rounded-xl overflow-hidden font-semibold">
+				<div
+					className={`
+						flex overflow-x-auto 
+						bg-slate-200 dark:bg-slate-950 
+						divide-x-[1px] divide-slate-300 dark:divide-slate-600 
+						h-fit text-sm
+					`}
+				>
+					{tokens.map((token, index) => {
+						console.log(token.morphemes)
+
+						return (
+							<div key={index} className="flex flex-row">
+								{token.morphemes.map((morph, index_) => {
+									return (
+										<div
+											key={index_}
+											className={`
+												flex flex-col gap-1 p-2 text-nowrap *:flex *:justify-center 
+											`}
+										>
+											<div className="">
+												{morph.text.content}
+											</div>
+											<div
+												className=""
+												style={{ "color": Tags.find(tag => tag.tag === morph.tag)?.color }}
+											>
+												{morph.tag}
+											</div>
+										</div>
+									);
+								})}
+							</div>
+						);
+					})}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+const MorphemeFormat = ({ result, title }) => {
+	const [hidden, setHidden] = useState(true);
+
+	return (
+		<div className='rounded-xl text-sm overflow-hidden flex flex-col'>
+			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
+				<h3 className='text-lg font-semibold'>{title} Results</h3>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${!hidden && "rotate-90"} transition-transform ease-in-out w-5 h-5`}>
+					<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+				</svg>
+			</button>
+
+			<div className={`${hidden ? "h-0" : "max-h-96 pt-2"} transition-all ease-in-out`}>
+				<div className='table-header max-h-96 p-2 gap-4 grid grid-cols-1 overflow-scroll pr-2'>
+					{result.map((sentence, index) => {
+						return (
+							<Sentence key={index} tokens={sentence.tokens} content={sentence.text.content} index={index} />
+						)
+					})}
+				</div>
+			</div >
+		</div>
+	);
+}
 
 const ResultsNumeric = ({ result, title }) => {
 	const [selectedAll, setSelectedAll] = useState(false);
@@ -296,4 +372,4 @@ const ResultsList = ({ result, title }) => {
 };
 
 
-export { ResultsNumeric, ResultsList };
+export { ResultsNumeric, ResultsList, MorphemeFormat };
