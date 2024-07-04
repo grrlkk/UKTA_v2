@@ -317,3 +317,145 @@ h11._util.LocalProtocolError: Too much data for declared Content-Length
 [2024-05-30 07:06:03 +0000] [2721040] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/adjacent_overlap.py modified
 [2024-05-30 07:06:03 +0000] [2721042] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/adjacent_overlap.py modified
 [2024-05-30 07:06:03 +0000] [2721043] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/cohesion/adjacent_overlap.py modified
+[2024-05-30 07:06:26 +0000] [2721035] [INFO] Handling signal: hup
+[2024-05-30 07:06:26 +0000] [2721035] [INFO] Hang up: Master
+[2024-05-30 07:06:26 +0000] [2736462] [INFO] Booting worker with pid: 2736462
+[2024-05-30 07:06:26 +0000] [2736463] [INFO] Booting worker with pid: 2736463
+[2024-05-30 07:06:26 +0000] [2736464] [INFO] Booting worker with pid: 2736464
+[2024-05-30 07:06:26 +0000] [2736465] [INFO] Booting worker with pid: 2736465
+[2024-05-30 07:06:26 +0000] [2721035] [ERROR] Worker (pid:2721041) was sent SIGHUP!
+--- Logging error ---
+[2024-05-30 07:06:26 +0000] [2721035] [ERROR] Worker (pid:2721042) was sent SIGHUP!
+Traceback (most recent call last):
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/logging/__init__.py", line 1082, in emit
+    stream.write(msg + self.terminator)
+RuntimeError: reentrant call inside <_io.BufferedWriter name='<stderr>'>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/logging/__init__.py", line 1082, in emit
+    stream.write(msg + self.terminator)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/arbiter.py", line 554, in reap_workers
+    self.log.error(msg)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/glogging.py", line 272, in error
+    self.error_log.error(msg, *args, **kwargs)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/logging/__init__.py", line 1463, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/logging/__init__.py", line 1577, in _log
+    self.handle(record)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/logging/__init__.py", line 1587, in handle
+    self.callHandlers(record)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/logging/__init__.py", line 1649, in callHandlers
+    hdlr.handle(record)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/logging/__init__.py", line 948, in handle
+    self.emit(record)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/logging/__init__.py", line 1087, in emit
+    self.handleError(record)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/logging/__init__.py", line 1000, in handleError
+    sys.stderr.write('--- Logging error ---\n')
+RuntimeError: reentrant call inside <_io.BufferedWriter name='<stderr>'>
+Call stack:
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/__main__.py", line 7, in <module>
+    run()
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/app/wsgiapp.py", line 67, in run
+    WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]").run()
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/app/base.py", line 236, in run
+    super().run()
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/app/base.py", line 72, in run
+    Arbiter(self).run()
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/arbiter.py", line 209, in run
+    self.sleep()
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/arbiter.py", line 360, in sleep
+    ready = select.select([self.PIPE[0]], [], [], 1.0)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/arbiter.py", line 554, in reap_workers
+    self.log.error(msg)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/gunicorn/glogging.py", line 272, in error
+    self.error_log.error(msg, *args, **kwargs)
+Message: 'Worker (pid:2721041) was sent SIGHUP!'
+Arguments: ()
+[2024-05-30 07:06:26 +0000] [2721035] [ERROR] Worker (pid:2721043) exited with code 129
+[2024-05-30 07:06:26 +0000] [2721035] [ERROR] Worker (pid:2721043) exited with code 129.
+[2024-05-30 07:06:28 +0000] [2736465] [INFO] Started server process [2736465]
+[2024-05-30 07:06:28 +0000] [2736465] [INFO] Waiting for application startup.
+[2024-05-30 07:06:28 +0000] [2736465] [INFO] Application startup complete.
+[2024-05-30 07:06:29 +0000] [2736463] [INFO] Started server process [2736463]
+[2024-05-30 07:06:29 +0000] [2736463] [INFO] Waiting for application startup.
+[2024-05-30 07:06:29 +0000] [2736463] [INFO] Application startup complete.
+[2024-05-30 07:06:29 +0000] [2736462] [INFO] Started server process [2736462]
+[2024-05-30 07:06:29 +0000] [2736462] [INFO] Waiting for application startup.
+[2024-05-30 07:06:29 +0000] [2736462] [INFO] Application startup complete.
+[2024-05-30 07:06:29 +0000] [2736464] [INFO] Started server process [2736464]
+[2024-05-30 07:06:29 +0000] [2736464] [INFO] Waiting for application startup.
+[2024-05-30 07:06:29 +0000] [2736464] [INFO] Application startup complete.
+[2024-05-31 08:09:52 +0000] [2736465] [ERROR] Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/routing.py", line 77, in app
+    await response(scope, receive, send)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/responses.py", line 158, in __call__
+    await send({"type": "http.response.body", "body": self.body})
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/_exception_handler.py", line 50, in sender
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/cors.py", line 152, in send
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/starlette/middleware/errors.py", line 161, in _send
+    await send(message)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 507, in send
+    output = self.conn.send(event=h11.Data(data=data))
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 512, in send
+    data_list = self.send_with_data_passthrough(event)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_connection.py", line 545, in send_with_data_passthrough
+    writer(event, data_list.append)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 65, in __call__
+    self.send_data(event.data, write)
+  File "/home/ttytu/anaconda3/envs/ukta/lib/python3.9/site-packages/h11/_writers.py", line 91, in send_data
+    raise LocalProtocolError("Too much data for declared Content-Length")
+h11._util.LocalProtocolError: Too much data for declared Content-Length
+[2024-07-03 07:31:26 +0000] [2736463] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/morph/morph.py modified
+[2024-07-03 07:31:26 +0000] [2736464] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/morph/morph.py modified
+[2024-07-03 07:31:26 +0000] [2736465] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/morph/morph.py modified
+[2024-07-03 07:31:26 +0000] [2736462] [INFO] Worker reloading: /home/ttytu/projects/KorCAT-web/backend/apps/morph/morph.py modified
