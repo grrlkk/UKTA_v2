@@ -18,7 +18,7 @@ const Nav = ({ currentPage }) => {
 	}, [scrollDown]);
 
 	return (
-		<nav className="fixed top-0 bg-slate-50 bg-opacity-30 dark:bg-slate-950 dark:bg-opacity-30 w-full backdrop-blur-xl z-50 shadow-sm">
+		<nav className="fixed top-0 bg-slate-50 bg-opacity-40 dark:bg-slate-950 dark:bg-opacity-40 w-full backdrop-blur z-50 shadow-sm">
 			<div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
 				<Link to='/' className="flex gap-2 items-center group">
 					<img src={`${process.env.PUBLIC_URL}/kdd_logo.png`} alt="logo" className="h-12 py-2 group-hover:saturate-50 transition-all ease-in-out" />
