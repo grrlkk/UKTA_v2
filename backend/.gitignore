@@ -4,4 +4,4 @@ __pycache__/
 venv/
 *.env
 chk/
-*.log
+gunicorn.log
