@@ -39,7 +39,7 @@ async def shutdown_db_client():
 
 
 # include file routers & run ===================================
-app.include_router(router, tags=["files"], prefix="/korcat")
+app.include_router(router, prefix="/korcat")
 
 
 if __name__ == "__main__":

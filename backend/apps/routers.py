@@ -12,7 +12,7 @@ morph = mecab()
 
 
 # POST: upload multiple .txt files =============================
-@router.post("/cohesion")
+@router.post("/cohesion", tags=["cohesion"])
 async def upload_files(request: Request, files: List[UploadFile] = File(...)):
     cnt = 100
 
@@ -47,7 +47,7 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
     return {"filenames": [file.filename for file in files]}
 
 
-@router.post("/morpheme")
+@router.post("/morpheme", tags=["morpheme"])
 async def upload_files(request: Request, files: List[UploadFile] = File(...)):
     cnt = 100
 
@@ -94,7 +94,7 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 
 
 # GET: list all files; list file by ID =========================
-@router.get("/cohesion", response_description="List all files")
+@router.get("/cohesion", response_description="List all files", tags=["cohesion"])
 async def list_files(request: Request):
     files = []
 
@@ -103,7 +103,7 @@ async def list_files(request: Request):
     return files
 
 
-@router.get("/morpheme", response_description="List all files")
+@router.get("/morpheme", response_description="List all files", tags=["morpheme"])
 async def list_files(request: Request):
     files = []
 
@@ -112,7 +112,7 @@ async def list_files(request: Request):
     return files
 
 
-@router.get("/cohesion/{id}", response_description="Get a single file")
+@router.get("/cohesion/{id}", response_description="Get a single file", tags=["cohesion"])
 async def show_file(id: str, request: Request):
     if (file := await request.app.mongodb["cohesion"].find_one({"_id": id})) is not None:
         return file
@@ -120,7 +120,7 @@ async def show_file(id: str, request: Request):
     raise HTTPException(status_code=404, detail=f"File {id} not found")
 
 
-@router.get("/morpheme/{id}", response_description="Get a single file")
+@router.get("/morpheme/{id}", response_description="Get a single file", tags=["morpheme"])
 async def show_file(id: str, request: Request):
     if (file := await request.app.mongodb["morpheme"].find_one({"_id": id})) is not None:
         return file
@@ -129,7 +129,7 @@ async def show_file(id: str, request: Request):
 
 
 # delete file by ID ============================================
-@router.delete("/cohesion/{id}", response_description="Delete file")
+@router.delete("/cohesion/{id}", response_description="Delete file", tags=["cohesion"])
 async def delete_file(id: str, request: Request):
     delete_result = await request.app.mongodb["cohesion"].delete_one({"_id": id})
 
@@ -139,7 +139,7 @@ async def delete_file(id: str, request: Request):
 
 
 # delete file by ID ============================================
-@router.delete("/morpheme/{id}", response_description="Delete file")
+@router.delete("/morpheme/{id}", response_description="Delete file", tags=["morpheme"])
 async def delete_file(id: str, request: Request):
     delete_result = await request.app.mongodb["morpheme"].delete_one({"_id": id})
 
