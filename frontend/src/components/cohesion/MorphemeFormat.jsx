@@ -19,7 +19,7 @@ const Sentence = ({ tokens, content, index }) => {
 					`}
 				>
 					{tokens.map((token, index) => {
-						console.log(token.morphemes)
+						// console.log(token.morphemes)
 
 						return (
 							<div key={index} className="flex flex-row">

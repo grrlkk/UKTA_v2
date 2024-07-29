@@ -13,7 +13,7 @@ const Pagination = ({ componentArray, setSelectedFile }) => {
 	function paginate(pageNumber) {
 		setCurrentPage(pageNumber);
 		setSelectedFile(pageNumber * itemsPerPage - itemsPerPage);
-		console.log(pageNumber * itemsPerPage - itemsPerPage);
+		// console.log(pageNumber * itemsPerPage - itemsPerPage);
 	}
 
 	return (

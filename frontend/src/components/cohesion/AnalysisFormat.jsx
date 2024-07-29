@@ -19,7 +19,7 @@ const Sentence = ({ tokens, content, index }) => {
 					`}
 				>
 					{tokens.map((token, index) => {
-						console.log(token.morphemes)
+						// console.log(token.morphemes)
 
 						return (
 							<div key={index} className="flex flex-row">
@@ -86,7 +86,7 @@ const ResultsNumeric = ({ result, title }) => {
 		return () => {
 			const updatedProperty = selectedProperty?.includes(property) ? selectedProperty.filter(p => p !== property) : [...selectedProperty, property];
 			setSelectedProperty(updatedProperty);
-			console.log(updatedProperty);
+			// console.log(updatedProperty);
 		};
 	};
 
@@ -168,7 +168,8 @@ const ResultsNumeric = ({ result, title }) => {
 									<input type="checkbox" className='w-full accent-slate-600 align-middle' checked={selectedAll} onChange={handleSelectAll()} />
 								</th>
 								<th className='px-1 w-1/12'>n.</th>
-								<th className='px-1'>자질 ({selectedProperty.length})</th>
+								<th className='px-1 w-1/3'>태그 ({selectedProperty.length})</th>
+								<th className='px-1 w-1/3'>자질 설명</th>
 								<th className='px-1 pr-4 w-32 text-right'>값</th>
 							</tr>
 						</thead>
@@ -189,8 +190,11 @@ const ResultsNumeric = ({ result, title }) => {
 									<td className='p-1 w-1/12 font-mono italic'>
 										{Object.keys(result).indexOf(key) + 1}
 									</td>
-									<td className='p-1 break-all'>
+									<td className='p-1 w-1/3 break-all'>
 										{key}
+									</td>
+									<td className='p-1 w-1/3 break-all'>
+										자질 설명
 									</td>
 									<td className='p-1 pr-4 w-32 text-right font-mono italic'>
 										{value.toFixed(4)}
@@ -209,12 +213,13 @@ const ResultsList = ({ result, title }) => {
 	const [selectedAll, setSelectedAll] = useState(false);
 	const [selectedProperty, setSelectedProperty] = useState([]);
 	const [hidden, setHidden] = useState(true);
+	const [expanded, setExpanded] = useState(false);
 
 	const handleSelectProperty = (property) => {
 		return () => {
 			const updatedProperty = selectedProperty?.includes(property) ? selectedProperty.filter(p => p !== property) : [...selectedProperty, property];
 			setSelectedProperty(updatedProperty);
-			console.log(updatedProperty);
+			// console.log(updatedProperty);
 		};
 	};
 
@@ -229,7 +234,7 @@ const ResultsList = ({ result, title }) => {
 					return updatedProperty;
 				});
 				setSelectedAll(true);
-				console.log(selectedProperty);
+				// console.log(selectedProperty);
 			}
 		};
 	};
@@ -281,6 +286,10 @@ const ResultsList = ({ result, title }) => {
 		}
 	}
 
+	const handleExpand = () => {
+		setExpanded(!expanded);
+	}
+
 	return (
 		<div className='rounded-xl text-sm overflow-hidden flex flex-col transition-all ease-in-out'>
 			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
@@ -302,7 +311,10 @@ const ResultsList = ({ result, title }) => {
 						<button className={`sm:grow-0 btn-primary py-1 px-3 rounded-lg rounded-l-none`} onClick={() => handleFileDownload("csv")}>
 							csv
 						</button>
-						<hr className="ml-2 grow" />
+						<hr className="m-2 grow" />
+						<button className={`sm:grow-0 btn-primary py-1 px-3 rounded-lg`} onClick={() => handleExpand()}>
+							{expanded ? '접기' : '확장'}
+						</button>
 					</div>
 
 					<table className='w-full'>
@@ -312,19 +324,25 @@ const ResultsList = ({ result, title }) => {
 									<input type="checkbox" className='w-full accent-slate-600 align-middle' checked={selectedAll} onChange={handleSelectAll()} />
 								</th>
 								<th className='px-1 w-1/12'>n.</th>
-								<th className='px-1 w-2/5'>자질 ({selectedProperty.length})</th>
-								<td className='w-84'>
-									<table className='w-full'>
-										<tbody>
-											<tr className='border-0 hover:bg-inherit'>
-												<th className='px-1 w-1/12'>n.</th>
-												<th className='px-1 w-2/12'>품사</th>
-												<th className='px-1 w-1/12'>태그</th>
-												<th className='px-1 w-8/12'>포함 문장</th>
-											</tr>
-										</tbody>
-									</table>
-								</td>
+								<th className='px-1 w-1/6'>태그 ({selectedProperty.length})</th>
+								<th className='px-1 w-1/6'>자질</th>
+								{expanded && (
+									<td className='w-84'>
+										<table className='w-full'>
+											<tbody>
+												<tr className='border-0 hover:bg-inherit'>
+													<th className='px-1 w-1/12'>n.</th>
+													<th className='px-1 w-2/12'>품사</th>
+													<th className='px-1 w-1/12'>태그</th>
+													<th className='px-1 w-8/12'>포함 문장</th>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								)}
+								{!expanded && (
+									<th className='px-1 w-84 text-right pr-4'>해당 품사 수</th>
+								)}
 							</tr>
 						</thead>
 					</table>
@@ -334,7 +352,7 @@ const ResultsList = ({ result, title }) => {
 					<table className='w-full table-fixed'>
 						<tbody className='w-full'>
 							{Object.entries(result).map(([key, value], index) => (
-								<tr key={key} className='' onClick={handleSelectProperty(index)}>
+								<tr key={key} className='align-top' onClick={handleSelectProperty(index)}>
 									<td className='p-1 px-3 w-12'>
 										<input
 											className='w-full accent-slate-600 align-middle'
@@ -344,23 +362,31 @@ const ResultsList = ({ result, title }) => {
 									<td className='p-1 w-1/12 font-mono italic'>
 										{Object.keys(result).indexOf(key) + 1}
 									</td>
-									<td className='p-1 w-1/4 break-all'>
+									<td className='p-1 w-1/6 break-all'>
 										{key}
 									</td>
-									<td className='w-84'>
-										<table className='w-full'>
-											<tbody>
-												{value.map((v) => (
-													<tr className='last:border-0' key={v}>
-														<td className='p-1 w-1/12 font-mono italic'>{v[0]}</td>
-														<td className='p-1 w-2/12'>{v[1]}</td>
-														<td className='p-1 w-1/12 font-mono italic'>{v[2]}</td>
-														<td className='p-1 w-8/12 break-all'>{v[3]}</td>
-													</tr>
-												))}
-											</tbody>
-										</table>
+									<td className='p-1 w-1/6 break-all'>
+										자질 설명
 									</td>
+									{expanded && (
+										<td className='w-84'>
+											<table className='w-full'>
+												<tbody>
+													{value.map((v) => (
+														<tr className='last:border-0' key={v}>
+															<td className='p-1 w-1/12 font-mono italic'>{v[0] + 1}</td>
+															<td className='p-1 w-2/12'>{v[1]}</td>
+															<td className='p-1 w-1/12 font-mono italic'>{v[2]}</td>
+															<td className='p-1 w-8/12 break-all'>{v[3]}</td>
+														</tr>
+													))}
+												</tbody>
+											</table>
+										</td>
+									)}
+									{!expanded && (
+										<td className='px-1 w-84 font-mono italic text-right pr-4'>{value.length}</td>
+									)}
 								</tr>
 							))}
 						</tbody>

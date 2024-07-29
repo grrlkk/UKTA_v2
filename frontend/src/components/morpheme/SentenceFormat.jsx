@@ -170,7 +170,7 @@ const Sentence = ({ result, content, index }) => {
 																	<td rowSpan={String(morph[2][7]).split("+").length} className="px-3 py-1 font-mono italic text-right w-1/12">
 																		{index + 1}
 																	</td>
-																	<td rowSpan={String(morph[2][7]).split("+").length} className="px-3 py-1 font-mono">
+																	<td rowSpan={String(morph[2][7]).split("+").length} className="px-3 py-1">
 																		{morph[1]}
 																	</td>
 																</>
@@ -203,7 +203,7 @@ const Sentence = ({ result, content, index }) => {
 												}}
 												key={index} className="">
 												<td className="px-3 py-1 font-mono text-right w-1/12 italic">{index + 1}</td>
-												<td colSpan={2} className="px-3 py-1 font-mono">{morph[1]}</td>
+												<td colSpan={2} className="px-3 py-1">{morph[1]}</td>
 												<td
 													className="px-3 py-1 font-mono w-1/6"
 													style={{ "color": Tags.find(tag => tag.tag === morph[2][0])?.color }}

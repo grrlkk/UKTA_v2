@@ -60,7 +60,7 @@ const ResultsMor = () => {
 	const handleSelectFile = (index) => {
 		return () => {
 			selectedFile === index ? setSelectedFile(-1) : setSelectedFile(index);
-			console.log(index);
+			// console.log(index);
 		}
 	}
 
