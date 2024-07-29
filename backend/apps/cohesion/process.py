@@ -66,13 +66,13 @@ def processTTR(kkma, words):
 
 	# lemmazation -----------------------------------------------------------------------
 	wordsAfterLemma = textpreprocess.lemma(words)
-	result["lemmaCnt"] = len(wordsAfterLemma)
+	result["lemmaCnt"] = len(wordsAfterLemma) # 어절 수
 
 	# TTR --------------------------------------------------------------------------------
 	# lemmattr
-	result["lemmaTTR"] = TTR.lemmaTtr(wordsAfterLemma)
+	result["lemmaTTR"] = TTR.lemmaTtr(wordsAfterLemma) # 어휘 다양성
 	# lemma_mattr
-	result["lemmaMTTR"] = TTR.lemmaMattr(wordsAfterLemma)
+	result["lemmaMTTR"] = TTR.lemmaMattr(wordsAfterLemma) # 어휘 다양성
 	# lexical_density_tokens
 	result["lexicalDensityTokens"] = TTR.lexicalDensityTokens(wordsAfterLemma, kkma)
 	# lexical_density_tokens
