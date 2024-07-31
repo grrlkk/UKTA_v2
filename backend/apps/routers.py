@@ -42,7 +42,9 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
         cnt += 1
 
         new_file = await request.app.mongodb["cohesion"].insert_one(upload)
-        created_file = await request.app.mongodb["cohesion"].find_one({"_id": new_file.inserted_id})
+        created_file = await request.app.mongodb["cohesion"].find_one(
+            {"_id": new_file.inserted_id}
+        )
 
     return {"filenames": [file.filename for file in files]}
 
@@ -88,7 +90,9 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
         cnt += 1
 
         new_file = await request.app.mongodb["morpheme"].insert_one(upload)
-        created_file = await request.app.mongodb["morpheme"].find_one({"_id": new_file.inserted_id})
+        created_file = await request.app.mongodb["morpheme"].find_one(
+            {"_id": new_file.inserted_id}
+        )
 
     return {"filenames": [file.filename for file in files]}
 
@@ -112,17 +116,25 @@ async def list_files(request: Request):
     return files
 
 
-@router.get("/cohesion/{id}", response_description="Get a single file", tags=["cohesion"])
+@router.get(
+    "/cohesion/{id}", response_description="Get a single file", tags=["cohesion"]
+)
 async def show_file(id: str, request: Request):
-    if (file := await request.app.mongodb["cohesion"].find_one({"_id": id})) is not None:
+    if (
+        file := await request.app.mongodb["cohesion"].find_one({"_id": id})
+    ) is not None:
         return file
 
     raise HTTPException(status_code=404, detail=f"File {id} not found")
 
 
-@router.get("/morpheme/{id}", response_description="Get a single file", tags=["morpheme"])
+@router.get(
+    "/morpheme/{id}", response_description="Get a single file", tags=["morpheme"]
+)
 async def show_file(id: str, request: Request):
-    if (file := await request.app.mongodb["morpheme"].find_one({"_id": id})) is not None:
+    if (
+        file := await request.app.mongodb["morpheme"].find_one({"_id": id})
+    ) is not None:
         return file
 
     raise HTTPException(status_code=404, detail=f"File {id} not found")
@@ -130,19 +142,19 @@ async def show_file(id: str, request: Request):
 
 # delete file by ID ============================================
 @router.delete("/cohesion/{id}", response_description="Delete file", tags=["cohesion"])
-async def delete_file(id: str, request: Request):
+async def delete_file_cohesion(id: str, request: Request):
     delete_result = await request.app.mongodb["cohesion"].delete_one({"_id": id})
 
     if delete_result.deleted_count == 1:
-        return Response(status_code=204, content="File deleted")
+        return Response(status_code=204)
     raise HTTPException(status_code=404, detail=f"Task {id} not found")
 
 
 # delete file by ID ============================================
 @router.delete("/morpheme/{id}", response_description="Delete file", tags=["morpheme"])
-async def delete_file(id: str, request: Request):
+async def delete_file_morpheme(id: str, request: Request):
     delete_result = await request.app.mongodb["morpheme"].delete_one({"_id": id})
 
     if delete_result.deleted_count == 1:
-        return Response(status_code=204, content="File deleted")
+        return Response(status_code=204)
     raise HTTPException(status_code=404, detail=f"Task {id} not found")

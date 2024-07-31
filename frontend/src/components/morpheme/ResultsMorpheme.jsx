@@ -79,6 +79,7 @@ const ResultsMor = () => {
 			console.error(error);
 		} finally {
 			setMorphemeResult([]);
+			await new Promise(resolve => setTimeout(resolve, 500));
 			await fetchData();
 
 			if (morphemeResult.length > 0) {

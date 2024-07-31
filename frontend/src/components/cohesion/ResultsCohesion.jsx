@@ -63,6 +63,7 @@ const ResultsCoh = () => {
 			console.error(error);
 		} finally {
 			setCohesionResult([]);
+			await new Promise(resolve => setTimeout(resolve, 500));
 			await fetchData();
 
 			if (cohesionResult.length > 0) {
