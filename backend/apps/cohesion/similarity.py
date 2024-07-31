@@ -28,10 +28,10 @@ def similar(text, simil_model, kw_model, device="cuda"):
         text, keyphrase_ngram_range=(1, 1), stop_words=None, top_n=10
     )
 
-    document_embeddings = simil_model.encode(docs, convert_to_tensor=True, device=device)
+    document_embeddings = simil_model.encode(docs, convert_to_tensor=True)
 
     query = keywords[0]
-    query_embedding = simil_model.encode(query, convert_to_tensor=True, device=device)
+    query_embedding = simil_model.encode(query, convert_to_tensor=True)
 
     top_k = len(docs)
 

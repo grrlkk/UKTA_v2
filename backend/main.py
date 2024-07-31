@@ -2,6 +2,8 @@ import uvicorn
 from apps.routers import router
 from config import settings
 from fastapi import FastAPI
+from apps.cohesion.process import initialize_models
+
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 
@@ -31,6 +33,7 @@ app.add_middleware(
 async def startup_db_client():
 	app.mongodb_client = AsyncIOMotorClient(settings.DB_URL)
 	app.mongodb = app.mongodb_client[settings.DB_NAME]
+	initialize_models()
 
 
 @app.on_event("shutdown")
