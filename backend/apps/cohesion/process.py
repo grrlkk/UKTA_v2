@@ -497,6 +497,9 @@ def process(text, targets=["ttr", "similarity", "adjacency", "basic"]):
 
         if "basic" in targets and "basic" in futures:
             temp = result["basic"]
+            result.pop("basic")
             result["basic_count"] = temp["basic_count"]
+            result["basic_density"] = temp["basic_density"]
+            result["basic_level"] = temp["basic_level"]	
             result["basic_list"] = temp["basic_list"]
     return result
