@@ -95,17 +95,17 @@ def processTTR(kkma, words):
     # contentTtr
     result["contentTTR"] = TTR.contentTtr(wordsAfterLemma, kkma)
     # functionTtr
-    result["functionTTR"] = TTR.functionTtr(wordsAfterLemma, kkma)
+    result["formalTTR"] = TTR.functionTtr(wordsAfterLemma, kkma)
 
     # nounTtr ----------------------------------------------------------------------------
     # uniqueNoun,nounNum,
     result["nounTTR"] = TTR.nounTtr(wordsAfterLemma, kkma)
     # verbTtr
-    result["verbTTR"] = TTR.verbTtr(wordsAfterLemma, kkma)
+    result["VVTTR"] = TTR.verbTtr(wordsAfterLemma, kkma)
     # adjTtr
-    result["adjTTR"] = TTR.adjTtr(wordsAfterLemma, kkma)
+    result["MATTR"] = TTR.adjTtr(wordsAfterLemma, kkma)
     # advTtr
-    result["advTTR"] = TTR.advTtr(wordsAfterLemma, kkma)
+    result["VATTR"] = TTR.advTtr(wordsAfterLemma, kkma)
 
     # advTtr
     result["bigramLemmaTTR"] = TTR.bigramLemmaTtr(wordsAfterLemma)
@@ -121,7 +121,7 @@ def processTTR(kkma, words):
 def processSimilarity(text):
     # topic & similarity -----------------------------------------------------------------
     result = collections.defaultdict()
-    result["average_sentence_similarity"], result["topic_consistency"] = (
+    result["avgSentSimilarity"], result["topicConsistency"] = (
         similarity.similar(text, simil_model, kw_model, device=device)
     )
 

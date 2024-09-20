@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Tags from "../Tags";
+import { Tags, TagDesc } from "../Tags";
 
 const Sentence = ({ tokens, content, index }) => {
 	return (
@@ -194,7 +194,7 @@ const ResultsNumeric = ({ result, title }) => {
 										{key}
 									</td>
 									<td className='p-1 w-1/3 break-all'>
-										자질 설명
+										{TagDesc[key]}
 									</td>
 									<td className='p-1 pr-4 w-32 text-right font-mono italic'>
 										{value.toFixed(4)}
@@ -366,7 +366,7 @@ const ResultsList = ({ result, title }) => {
 										{key}
 									</td>
 									<td className='p-1 w-1/6 break-all'>
-										자질 설명
+										{TagDesc[key]}
 									</td>
 									{expanded && (
 										<td className='w-84'>

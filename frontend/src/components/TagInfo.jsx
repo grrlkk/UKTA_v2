@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-import Tags from "./Tags";
+import { Tags } from "./Tags";
 
 
 

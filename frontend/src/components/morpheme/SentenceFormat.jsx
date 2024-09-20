@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Tags from "../Tags";
+import { Tags } from "../Tags";
 
 
 const HilightText = ({ range, content, color }) => {
@@ -64,7 +64,7 @@ const Sentence = ({ result, content, index }) => {
 	}
 
 	return (
-		<div className="flex flex-col gap-2">
+		<div className="flex flex-col gap-2 text-sm">
 			<div className="flex gap-2">
 				<div className="">{index + 1}.</div>
 				<HilightText range={range} content={content} color={hoverColor} />
@@ -72,7 +72,7 @@ const Sentence = ({ result, content, index }) => {
 
 			<div className="flex flex-col bg-slate-300 dark:bg-slate-900 rounded-xl overflow-hidden font-semibold">
 				<div className="flex gap-2 m-2 mb-0 items-center">
-					<ToggleTable tableHidden={tableHidden} setTableHidden={setTableHidden}/>
+					<ToggleTable tableHidden={tableHidden} setTableHidden={setTableHidden} />
 					<hr className="grow" />
 				</div>
 
