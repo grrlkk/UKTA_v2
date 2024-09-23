@@ -1,9 +1,8 @@
 import collections
-import math
 from lexical_diversity import lex_div as ld
+import math
 
 
-# morphs -----------------------------------------------------------------------------
 morphs_content = [
 	"NNG",
 	"NNP",
@@ -89,368 +88,260 @@ morphs_E = ["EP", "EF", "EC", "ETN", "ETM"]
 morphs_X = ["XPN", "XSN", "XSV", "XSA"]
 
 
-def init(words, kkma):
-	content_morphs = []
-	for word in words:
-		pos = kkma
-		for morp in pos:
+def safe_divide(numerator, denominator):
+	if denominator == 0 or denominator == 0.0:
+		index = 0
+	else:
+		index = numerator / denominator
+	return index
+
+
+def cttr(text):
+	ntokens = len(text)
+	ntypes = len(set(text))
+
+	return safe_divide(ntypes, math.sqrt(2 * ntokens))
+
+
+class TTR:
+	def __init__(self, kkma):
+		self.kkma = [morp for morp in kkma if not morp[1].startswith("S")]
+		self.TTR = collections.defaultdict()
+		self.TTR["lemma_Cnt"] = len(self.kkma)
+
+		self.lemma_lst = []
+		self.content_lst = []
+		self.substansive_lst = []
+		self.noun_lst = []
+		self.NNG_lst = []
+		self.NNP_lst = []
+		self.NNB_lst = []
+		self.NP_lst = []
+		self.NR_lst = []
+		self.verb_lst = []
+		self.VV_lst = []
+		self.VA_lst = []
+		self.mod_lst = []
+		self.MM_lst = []
+		self.MA_lst = []
+		self.MAJ_lst = []
+		self.IC_lst = []
+		self.formal_lst = []
+		self.J_lst = []
+		self.E_lst = []
+		self.X_lst = []
+
+		for morp in kkma:
+			self.lemma_lst.append(morp[0])
 			if morp[1] in morphs_content:
-				content_morphs.append(morp[0])
+				self.content_lst.append(morp[0])
+			if morp[1] in morphs_substansive:
+				self.substansive_lst.append(morp[0])
+			if morp[1] in morphs_noun:
+				self.noun_lst.append(morp[0])
+			if morp[1] == "NNG":
+				self.NNG_lst.append(morp[0])
+			if morp[1] == "NNP":
+				self.NNP_lst.append(morp[0])
+			if morp[1] == "NNB":
+				self.NNB_lst.append(morp[0])
+			if morp[1] == "NP":
+				self.NP_lst.append(morp[0])
+			if morp[1] == "NR":
+				self.NR_lst.append(morp[0])
+			if morp[1] in morphs_verb:
+				self.verb_lst.append(morp[0])
+			if morp[1] == "VV":
+				self.VV_lst.append(morp[0])
+			if morp[1] == "VA":
+				self.VA_lst.append(morp[0])
+			if morp[1] in morphs_mod:
+				self.mod_lst.append(morp[0])
+			if morp[1] == "MM":
+				self.MM_lst.append(morp[0])
+			if morp[1] in morphs_MA:
+				self.MA_lst.append(morp[0])
+			if morp[1] == "MAJ":
+				self.MAJ_lst.append(morp[0])
+			if morp[1] == "IC":
+				self.IC_lst.append(morp[0])
+			if morp[1] in morphs_formal:
+				self.formal_lst.append(morp[0])
+			if morp[1] in morphs_J:
+				self.J_lst.append(morp[0])
+			if morp[1] in morphs_E:
+				self.E_lst.append(morp[0])
+			if morp[1] in morphs_X:
+				self.X_lst.append(morp[0])
 
+		self.cal_TTR()
+		self.cal_RTTR()
+		self.cal_CTTR()
+		self.cal_MSTTR()
+		self.cal_MATTR()
+		self.cal_MTLD()
+		self.cal_HDD()
 
-# 단어 전체 ttr
-def lemma_TTR(words, kkma):
-	types = collections.defaultdict(int)
-	for word in words:
-		types[word] = types[word] + 1
+	def cal_TTR(self):
+		self.TTR["lemma_TTR"] = ld.ttr(self.lemma_lst)
+		self.TTR["content_TTR"] = ld.ttr(self.content_lst)
+		self.TTR["substansive_TTR"] = ld.ttr(self.substansive_lst)
+		self.TTR["noun_TTR"] = ld.ttr(self.noun_lst)
+		self.TTR["NNG_TTR"] = ld.ttr(self.NNG_lst)
+		self.TTR["NNP_TTR"] = ld.ttr(self.NNP_lst)
+		self.TTR["NNB_TTR"] = ld.ttr(self.NNB_lst)
+		self.TTR["NP_TTR"] = ld.ttr(self.NP_lst)
+		self.TTR["NR_TTR"] = ld.ttr(self.NR_lst)
+		self.TTR["verb_TTR"] = ld.ttr(self.verb_lst)
+		self.TTR["VV_TTR"] = ld.ttr(self.VV_lst)
+		self.TTR["VA_TTR"] = ld.ttr(self.VA_lst)
+		self.TTR["mod_TTR"] = ld.ttr(self.mod_lst)
+		self.TTR["MM_TTR"] = ld.ttr(self.MM_lst)
+		self.TTR["MA_TTR"] = ld.ttr(self.MA_lst)
+		self.TTR["MAJ_TTR"] = ld.ttr(self.MAJ_lst)
+		self.TTR["IC_TTR"] = ld.ttr(self.IC_lst)
+		self.TTR["formal_TTR"] = ld.ttr(self.formal_lst)
+		self.TTR["J_TTR"] = ld.ttr(self.J_lst)
+		self.TTR["E_TTR"] = ld.ttr(self.E_lst)
+		self.TTR["X_TTR"] = ld.ttr(self.X_lst)
 
-	return len(types) / len(words)
+	def cal_RTTR(self):
+		self.TTR["lemma_RTTR"] = ld.root_ttr(self.lemma_lst)
+		self.TTR["content_RTTR"] = ld.root_ttr(self.content_lst)
+		self.TTR["substansive_RTTR"] = ld.root_ttr(self.substansive_lst)
+		self.TTR["noun_RTTR"] = ld.root_ttr(self.noun_lst)
+		self.TTR["NNG_RTTR"] = ld.root_ttr(self.NNG_lst)
+		self.TTR["NNP_RTTR"] = ld.root_ttr(self.NNP_lst)
+		self.TTR["NNB_RTTR"] = ld.root_ttr(self.NNB_lst)
+		self.TTR["NP_RTTR"] = ld.root_ttr(self.NP_lst)
+		self.TTR["NR_RTTR"] = ld.root_ttr(self.NR_lst)
+		self.TTR["verb_RTTR"] = ld.root_ttr(self.verb_lst)
+		self.TTR["VV_RTTR"] = ld.root_ttr(self.VV_lst)
+		self.TTR["VA_RTTR"] = ld.root_ttr(self.VA_lst)
+		self.TTR["mod_RTTR"] = ld.root_ttr(self.mod_lst)
+		self.TTR["MM_RTTR"] = ld.root_ttr(self.MM_lst)
+		self.TTR["MA_RTTR"] = ld.root_ttr(self.MA_lst)
+		self.TTR["MAJ_RTTR"] = ld.root_ttr(self.MAJ_lst)
+		self.TTR["IC_RTTR"] = ld.root_ttr(self.IC_lst)
+		self.TTR["formal_RTTR"] = ld.root_ttr(self.formal_lst)
+		self.TTR["J_RTTR"] = ld.root_ttr(self.J_lst)
+		self.TTR["E_RTTR"] = ld.root_ttr(self.E_lst)
+		self.TTR["X_RTTR"] = ld.root_ttr(self.X_lst)
 
+	def cal_CTTR(self):
+		self.TTR["lemma_CTTR"] = cttr(self.lemma_lst)
+		self.TTR["content_CTTR"] = cttr(self.content_lst)
+		self.TTR["substansive_CTTR"] = cttr(self.substansive_lst)
+		self.TTR["noun_CTTR"] = cttr(self.noun_lst)
+		self.TTR["NNG_CTTR"] = cttr(self.NNG_lst)
+		self.TTR["NNP_CTTR"] = cttr(self.NNP_lst)
+		self.TTR["NNB_CTTR"] = cttr(self.NNB_lst)
+		self.TTR["NP_CTTR"] = cttr(self.NP_lst)
+		self.TTR["NR_CTTR"] = cttr(self.NR_lst)
+		self.TTR["verb_CTTR"] = cttr(self.verb_lst)
+		self.TTR["VV_CTTR"] = cttr(self.VV_lst)
+		self.TTR["VA_CTTR"] = cttr(self.VA_lst)
+		self.TTR["mod_CTTR"] = cttr(self.mod_lst)
+		self.TTR["MM_CTTR"] = cttr(self.MM_lst)
+		self.TTR["MA_CTTR"] = cttr(self.MA_lst)
+		self.TTR["MAJ_CTTR"] = cttr(self.MAJ_lst)
+		self.TTR["IC_CTTR"] = cttr(self.IC_lst)
+		self.TTR["formal_CTTR"] = cttr(self.formal_lst)
+		self.TTR["J_CTTR"] = cttr(self.J_lst)
+		self.TTR["E_CTTR"] = cttr(self.E_lst)
+		self.TTR["X_CTTR"] = cttr(self.X_lst)
 
-def calculate_TTR(words, kkma, morphs=None):
-	type_counts = collections.defaultdict(int)
-	totalCnt = 0
+	def cal_MSTTR(self):
+		self.TTR["lemma_MSTTR"] = ld.msttr(self.lemma_lst)
+		self.TTR["content_MSTTR"] = ld.msttr(self.content_lst)
+		self.TTR["substansive_MSTTR"] = ld.msttr(self.substansive_lst)
+		self.TTR["noun_MSTTR"] = ld.msttr(self.noun_lst)
+		self.TTR["NNG_MSTTR"] = ld.msttr(self.NNG_lst)
+		self.TTR["NNP_MSTTR"] = ld.msttr(self.NNP_lst)
+		self.TTR["NNB_MSTTR"] = ld.msttr(self.NNB_lst)
+		self.TTR["NP_MSTTR"] = ld.msttr(self.NP_lst)
+		self.TTR["NR_MSTTR"] = ld.msttr(self.NR_lst)
+		self.TTR["verb_MSTTR"] = ld.msttr(self.verb_lst)
+		self.TTR["VV_MSTTR"] = ld.msttr(self.VV_lst)
+		self.TTR["VA_MSTTR"] = ld.msttr(self.VA_lst)
+		self.TTR["mod_MSTTR"] = ld.msttr(self.mod_lst)
+		self.TTR["MM_MSTTR"] = ld.msttr(self.MM_lst)
+		self.TTR["MA_MSTTR"] = ld.msttr(self.MA_lst)
+		self.TTR["MAJ_MSTTR"] = ld.msttr(self.MAJ_lst)
+		self.TTR["IC_MSTTR"] = ld.msttr(self.IC_lst)
+		self.TTR["formal_MSTTR"] = ld.msttr(self.formal_lst)
+		self.TTR["J_MSTTR"] = ld.msttr(self.J_lst)
+		self.TTR["E_MSTTR"] = ld.msttr(self.E_lst)
+		self.TTR["X_MSTTR"] = ld.msttr(self.X_lst)
 
-	for word in words:
-		pos = kkma
-		for morp in pos:
-			if morphs and morp[1] in morphs:
-				type_counts[morp[0]] += 1
-				totalCnt += 1
+	def cal_MATTR(self):
+		self.TTR["lemma_MATTR"] = ld.mattr(self.lemma_lst)
+		self.TTR["content_MATTR"] = ld.mattr(self.content_lst)
+		self.TTR["substansive_MATTR"] = ld.mattr(self.substansive_lst)
+		self.TTR["noun_MATTR"] = ld.mattr(self.noun_lst)
+		self.TTR["NNG_MATTR"] = ld.mattr(self.NNG_lst)
+		self.TTR["NNP_MATTR"] = ld.mattr(self.NNP_lst)
+		self.TTR["NNB_MATTR"] = ld.mattr(self.NNB_lst)
+		self.TTR["NP_MATTR"] = ld.mattr(self.NP_lst)
+		self.TTR["NR_MATTR"] = ld.mattr(self.NR_lst)
+		self.TTR["verb_MATTR"] = ld.mattr(self.verb_lst)
+		self.TTR["VV_MATTR"] = ld.mattr(self.VV_lst)
+		self.TTR["VA_MATTR"] = ld.mattr(self.VA_lst)
+		self.TTR["mod_MATTR"] = ld.mattr(self.mod_lst)
+		self.TTR["MM_MATTR"] = ld.mattr(self.MM_lst)
+		self.TTR["MA_MATTR"] = ld.mattr(self.MA_lst)
+		self.TTR["MAJ_MATTR"] = ld.mattr(self.MAJ_lst)
+		self.TTR["IC_MATTR"] = ld.mattr(self.IC_lst)
+		self.TTR["formal_MATTR"] = ld.mattr(self.formal_lst)
+		self.TTR["J_MATTR"] = ld.mattr(self.J_lst)
+		self.TTR["E_MATTR"] = ld.mattr(self.E_lst)
+		self.TTR["X_MATTR"] = ld.mattr(self.X_lst)
 
-	try:
-		return len(type_counts) / totalCnt
-	except ZeroDivisionError:
-		return 0
+	def cal_MTLD(self):
+		self.TTR["lemma_MTLD"] = ld.mtld(self.lemma_lst)
+		self.TTR["content_MTLD"] = ld.mtld(self.content_lst)
+		self.TTR["substansive_MTLD"] = ld.mtld(self.substansive_lst)
+		self.TTR["noun_MTLD"] = ld.mtld(self.noun_lst)
+		self.TTR["NNG_MTLD"] = ld.mtld(self.NNG_lst)
+		self.TTR["NNP_MTLD"] = ld.mtld(self.NNP_lst)
+		self.TTR["NNB_MTLD"] = ld.mtld(self.NNB_lst)
+		self.TTR["NP_MTLD"] = ld.mtld(self.NP_lst)
+		self.TTR["NR_MTLD"] = ld.mtld(self.NR_lst)
+		self.TTR["verb_MTLD"] = ld.mtld(self.verb_lst)
+		self.TTR["VV_MTLD"] = ld.mtld(self.VV_lst)
+		self.TTR["VA_MTLD"] = ld.mtld(self.VA_lst)
+		self.TTR["mod_MTLD"] = ld.mtld(self.mod_lst)
+		self.TTR["MM_MTLD"] = ld.mtld(self.MM_lst)
+		self.TTR["MA_MTLD"] = ld.mtld(self.MA_lst)
+		self.TTR["MAJ_MTLD"] = ld.mtld(self.MAJ_lst)
+		self.TTR["IC_MTLD"] = ld.mtld(self.IC_lst)
+		self.TTR["formal_MTLD"] = ld.mtld(self.formal_lst)
+		self.TTR["J_MTLD"] = ld.mtld(self.J_lst)
+		self.TTR["E_MTLD"] = ld.mtld(self.E_lst)
+		self.TTR["X_MTLD"] = ld.mtld(self.X_lst)
 
+	def cal_HDD(self):
+		self.TTR["lemma_HDD"] = ld.hdd(self.lemma_lst)
+		self.TTR["content_HDD"] = ld.hdd(self.content_lst)
+		self.TTR["substansive_HDD"] = ld.hdd(self.substansive_lst)
+		self.TTR["noun_HDD"] = ld.hdd(self.noun_lst)
+		self.TTR["NNG_HDD"] = ld.hdd(self.NNG_lst)
+		self.TTR["NNP_HDD"] = ld.hdd(self.NNP_lst)
+		self.TTR["NNB_HDD"] = ld.hdd(self.NNB_lst)
+		self.TTR["NP_HDD"] = ld.hdd(self.NP_lst)
+		self.TTR["NR_HDD"] = ld.hdd(self.NR_lst)
+		self.TTR["verb_HDD"] = ld.hdd(self.verb_lst)
+		self.TTR["VV_HDD"] = ld.hdd(self.VV_lst)
+		self.TTR["VA_HDD"] = ld.hdd(self.VA_lst)
+		self.TTR["mod_HDD"] = ld.hdd(self.mod_lst)
+		self.TTR["MM_HDD"] = ld.hdd(self.MM_lst)
+		self.TTR["MA_HDD"] = ld.hdd(self.MA_lst)
+		self.TTR["MAJ_HDD"] = ld.hdd(self.MAJ_lst)
+		self.TTR["IC_HDD"] = ld.hdd(self.IC_lst)
+		self.TTR["formal_HDD"] = ld.hdd(self.formal_lst)
+		self.TTR["J_HDD"] = ld.hdd(self.J_lst)
+		self.TTR["E_HDD"] = ld.hdd(self.E_lst)
+		self.TTR["X_HDD"] = ld.hdd(self.X_lst)
 
-# ngram TTR -----------------------------------------------------
-def ngram_TTR(words, kkma):
-	result = collections.defaultdict()
-	for i in range(2, 9):
-		n = i
-		ngrams = []
-		for b in range(0, len(words) - n + 1):
-			ngrams.append(tuple(words[b : b + n]))
-		uniquengrams = set(ngrams)
-
-		if len(ngrams) == 0:
-			return 0
-
-		result[f"ngram{n}_TTR"] = len(uniquengrams) / len(ngrams)
-	return result
-
-
-# -----------------------------------------------------
-# 어휘형태소(명사 동사 형용사 부사) 개수의 비율
-def lexicalDensityTokens(words, kkma):
-	cnt = 0
-	totalCnt = 0
-
-	for word in words:
-		pos = kkma
-		for morp in pos:
-			totalCnt += len(pos)
-			if "NN" in morp[1] or "V" in morp[1] or "MA" in morp[1]:
-				cnt += 1
-
-	return cnt / totalCnt
-
-
-# 어휘형태소 종류의 비율
-def lexicalDensityTypes(words, kkma):
-	type = collections.defaultdict(int)
-	totalCnt = 0
-
-	for word in words:
-		pos = kkma
-		for morp in pos:
-			totalCnt += len(pos)
-			if "NN" in morp[1] or "V" in morp[1] or "MA" in morp[1]:
-				type[morp[0]] = type[morp[0]] + 1
-
-	return len(type) / totalCnt
-
-
-def TTR(words, kkma):
-	result = collections.defaultdict()
-	result["lemma_TTR"] = lemma_TTR(words, kkma)
-	result["content_TTR"] = calculate_TTR(words, kkma, morphs=morphs_content)
-	result["substantive_TTR"] = calculate_TTR(words, kkma, morphs=morphs_substansive)
-	result["noun_TTR"] = calculate_TTR(words, kkma, morphs=morphs_noun)
-	result["NNG_TTR"] = calculate_TTR(words, kkma, morphs=["NNG"])
-	result["NNP_TTR"] = calculate_TTR(words, kkma, morphs=["NNP"])
-	result["NNB_TTR"] = calculate_TTR(words, kkma, morphs=["NNB"])
-	result["NP_TTR"] = calculate_TTR(words, kkma, morphs=["NP"])
-	result["NR_TTR"] = calculate_TTR(words, kkma, morphs=["NR"])
-	result["verb_TTR"] = calculate_TTR(words, kkma, morphs=morphs_verb)
-	result["VV_TTR"] = calculate_TTR(words, kkma, morphs=["VV"])
-	result["VA_TTR"] = calculate_TTR(words, kkma, morphs=["VA"])
-	result["mod_TTR"] = calculate_TTR(words, kkma, morphs=morphs_mod)
-	result["MM_TTR"] = calculate_TTR(words, kkma, morphs=["MM"])
-	result["MA_TTR"] = calculate_TTR(words, kkma, morphs=morphs_MA)
-	result["IC_TTR"] = calculate_TTR(words, kkma, morphs=["IC"])
-	result["formal_TTR"] = calculate_TTR(words, kkma, morphs=morphs_formal)
-	result["J_TTR"] = calculate_TTR(words, kkma, morphs=morphs_J)
-	result["E_TTR"] = calculate_TTR(words, kkma, morphs=morphs_E)
-	result["X_TTR"] = calculate_TTR(words, kkma, morphs=morphs_X)
-	for key, value in ngram_TTR(words, kkma).items():
-		result[key] = value
-	result["lexicalDensityTokens"] = lexicalDensityTokens(words, kkma)
-	result["lexicalDensityTypes"] = lexicalDensityTypes(words, kkma)
-	return result
-
-
-# rttr ----------------------------------------------------------------
-def lemma_RTTR(words, kkma):
-	types = collections.defaultdict(int)
-	for word in words:
-		types[word] = types[word] + 1
-
-	return len(types) / math.sqrt(len(words))
-
-
-def calculate_RTTR(words, kkma, morphs=None):
-	type_counts = collections.defaultdict(int)
-	totalCnt = 0
-
-	for word in words:
-		pos = kkma
-		for morp in pos:
-			if morphs and morp[1] in morphs:
-				type_counts[morp[0]] += 1
-				totalCnt += 1
-
-	try:
-		return len(type_counts) / math.sqrt(totalCnt)
-	except ZeroDivisionError:
-		return 0
-
-
-def RTTR(words, kkma):
-	result = collections.defaultdict()
-	result["lemma_RTTR"] = lemma_RTTR(words, kkma)
-	result["content_RTTR"] = calculate_RTTR(words, kkma, morphs=morphs_content)
-	result["substantive_RTTR"] = calculate_RTTR(words, kkma, morphs=morphs_substansive)
-	result["noun_RTTR"] = calculate_RTTR(words, kkma, morphs=morphs_noun)
-	result["NNG_RTTR"] = calculate_RTTR(words, kkma, morphs=["NNG"])
-	result["NNP_RTTR"] = calculate_RTTR(words, kkma, morphs=["NNP"])
-	result["NNB_RTTR"] = calculate_RTTR(words, kkma, morphs=["NNB"])
-	result["NP_RTTR"] = calculate_RTTR(words, kkma, morphs=["NP"])
-	result["NR_RTTR"] = calculate_RTTR(words, kkma, morphs=["NR"])
-	result["verb_RTTR"] = calculate_RTTR(words, kkma, morphs=morphs_verb)
-	result["VV_RTTR"] = calculate_RTTR(words, kkma, morphs=["VV"])
-	result["VA_RTTR"] = calculate_RTTR(words, kkma, morphs=["VA"])
-	result["mod_RTTR"] = calculate_RTTR(words, kkma, morphs=morphs_mod)
-	result["MM_RTTR"] = calculate_RTTR(words, kkma, morphs=["MM"])
-	result["MA_RTTR"] = calculate_RTTR(words, kkma, morphs=morphs_MA)
-	result["IC_RTTR"] = calculate_RTTR(words, kkma, morphs=["IC"])
-	result["formal_RTTR"] = calculate_RTTR(words, kkma, morphs=morphs_formal)
-	result["J_RTTR"] = calculate_RTTR(words, kkma, morphs=morphs_J)
-	result["E_RTTR"] = calculate_RTTR(words, kkma, morphs=morphs_E)
-	result["X_RTTR"] = calculate_RTTR(words, kkma, morphs=morphs_X)
-	return result
-
-
-# CTTR ----------------------------------------------------------------
-def lemma_CTTR(words, kkma):
-	types = collections.defaultdict(int)
-	for word in words:
-		types[word] = types[word] + 1
-
-	return len(types) / math.sqrt(2 * len(words))
-
-
-def calculate_CTTR(words, kkma, morphs=None):
-	type_counts = collections.defaultdict(int)
-	totalCnt = 0
-
-	for word in words:
-		pos = kkma
-		for morp in pos:
-			if morphs and morp[1] in morphs:
-				type_counts[morp[0]] += 1
-				totalCnt += 1
-
-	try:
-		return len(type_counts) / math.sqrt(2 * totalCnt)
-	except ZeroDivisionError:
-		return 0
-
-
-def CTTR(words, kkma):
-	result = collections.defaultdict()
-	result["lemma_CTTR"] = lemma_CTTR(words, kkma)
-	result["content_CTTR"] = calculate_CTTR(words, kkma, morphs=morphs_content)
-	result["substantive_CTTR"] = calculate_CTTR(words, kkma, morphs=morphs_substansive)
-	result["noun_CTTR"] = calculate_CTTR(words, kkma, morphs=morphs_noun)
-	result["NNG_CTTR"] = calculate_CTTR(words, kkma, morphs=["NNG"])
-	result["NNP_CTTR"] = calculate_CTTR(words, kkma, morphs=["NNP"])
-	result["NNB_CTTR"] = calculate_CTTR(words, kkma, morphs=["NNB"])
-	result["NP_CTTR"] = calculate_CTTR(words, kkma, morphs=["NP"])
-	result["NR_CTTR"] = calculate_CTTR(words, kkma, morphs=["NR"])
-	result["verb_CTTR"] = calculate_CTTR(words, kkma, morphs=morphs_verb)
-	result["VV_CTTR"] = calculate_CTTR(words, kkma, morphs=["VV"])
-	result["VA_CTTR"] = calculate_CTTR(words, kkma, morphs=["VA"])
-	result["mod_CTTR"] = calculate_CTTR(words, kkma, morphs=morphs_mod)
-	result["MM_CTTR"] = calculate_CTTR(words, kkma, morphs=["MM"])
-	result["MA_CTTR"] = calculate_CTTR(words, kkma, morphs=morphs_MA)
-	result["IC_CTTR"] = calculate_CTTR(words, kkma, morphs=["IC"])
-	result["formal_CTTR"] = calculate_CTTR(words, kkma, morphs=morphs_formal)
-	result["J_CTTR"] = calculate_CTTR(words, kkma, morphs=morphs_J)
-	result["E_CTTR"] = calculate_CTTR(words, kkma, morphs=morphs_E)
-	result["X_CTTR"] = calculate_CTTR(words, kkma, morphs=morphs_X)
-	return result
-
-
-# MSTTR ----------------------------------------------------------------
-def lemma_MSTTR(words, kkma):
-	if len(words) < 50:
-		return -1
-	idx = 0
-	ttr = 0.0
-	cnt = 0
-	while idx <= len(words):
-		types = collections.defaultdict(int)
-		ttrList = words[idx : idx + 50]
-		if len(ttrList) == 0:
-			return 0
-		for word in ttrList:
-			types[word] = types[word] + 1
-		cnt += 1
-		ttr += len(types) / len(ttrList)
-		idx += 50
-	if cnt == 0:
-		return 0
-	return ttr / cnt
-
-
-def calculate_MSTTR(words, kkma, morphs=None):
-	if len(words) < 50:
-		return -1
-	idx = 0
-	ttr = 0.0
-	cnt = 0
-	while idx <= len(words):
-		types = collections.defaultdict(int)
-		ttrList = words[idx : idx + 50]
-		if len(ttrList) == 0:
-			return 0
-		for word in ttrList:
-			pos = kkma
-			for morp in pos:
-				if morphs and morp[1] in morphs:
-					types[morp[0]] = types[morp[0]] + 1
-		cnt += 1
-		ttr += len(types) / len(ttrList)
-		idx += 50
-	if cnt == 0:
-		return 0
-	return ttr / cnt
-
-
-def MSTTR(words, kkma):
-	result = collections.defaultdict()
-	result["lemma_MSTTR"] = lemma_MSTTR(words, kkma)
-	result["content_MSTTR"] = calculate_MSTTR(words, kkma, morphs=morphs_content)
-	result["substantive_MSTTR"] = calculate_MSTTR(
-		words, kkma, morphs=morphs_substansive
-	)
-	result["noun_MSTTR"] = calculate_MSTTR(words, kkma, morphs=morphs_noun)
-	result["NNG_MSTTR"] = calculate_MSTTR(words, kkma, morphs=["NNG"])
-	result["NNP_MSTTR"] = calculate_MSTTR(words, kkma, morphs=["NNP"])
-	result["NNB_MSTTR"] = calculate_MSTTR(words, kkma, morphs=["NNB"])
-	result["NP_MSTTR"] = calculate_MSTTR(words, kkma, morphs=["NP"])
-	result["NR_MSTTR"] = calculate_MSTTR(words, kkma, morphs=["NR"])
-	result["verb_MSTTR"] = calculate_MSTTR(words, kkma, morphs=morphs_verb)
-	result["VV_MSTTR"] = calculate_MSTTR(words, kkma, morphs=["VV"])
-	result["VA_MSTTR"] = calculate_MSTTR(words, kkma, morphs=["VA"])
-	result["mod_MSTTR"] = calculate_MSTTR(words, kkma, morphs=morphs_mod)
-	result["MM_MSTTR"] = calculate_MSTTR(words, kkma, morphs=["MM"])
-	result["MA_MSTTR"] = calculate_MSTTR(words, kkma, morphs=morphs_MA)
-	result["IC_MSTTR"] = calculate_MSTTR(words, kkma, morphs=["IC"])
-	result["formal_MSTTR"] = calculate_MSTTR(words, kkma, morphs=morphs_formal)
-	result["J_MSTTR"] = calculate_MSTTR(words, kkma, morphs=morphs_J)
-	result["E_MSTTR"] = calculate_MSTTR(words, kkma, morphs=morphs_E)
-	result["X_MSTTR"] = calculate_MSTTR(words, kkma, morphs=morphs_X)
-	return result
-
-
-# MATTR ----------------------------------------------------------------
-def lemma_MATTR(words, kkma):
-	if len(words) < 50:
-		return -1
-	idx = 0
-	ttr = 0.0
-	cnt = 0
-	while idx <= len(words):
-		types = collections.defaultdict(int)
-		ttrList = words[idx : idx + 50]
-		if len(ttrList) == 0:
-			return 0
-		for word in ttrList:
-			types[word] = types[word] + 1
-		cnt += 1
-		ttr += len(types) / 50
-		idx += 1
-	if cnt == 0:
-		return 0
-	return ttr / cnt
-
-
-def calculate_MATTR(words, kkma, morphs=None):
-	if len(words) < 50:
-		return -1
-	idx = 0
-	ttr = 0.0
-	cnt = 0
-	while idx <= len(words):
-		types = collections.defaultdict(int)
-		ttrList = words[idx : idx + 50]
-		if len(ttrList) == 0:
-			return 0
-		for word in ttrList:
-			pos = kkma
-			for morp in pos:
-				if morphs and morp[1] in morphs:
-					types[morp[0]] = types[morp[0]] + 1
-		cnt += 1
-		ttr += len(types) / 50
-		idx += 1
-	if cnt == 0:
-		return 0
-	return ttr / cnt
-
-
-def MATTR(words, kkma):
-	result = collections.defaultdict()
-	result["lemma_MATTR"] = lemma_MATTR(words, kkma)
-	result["content_MATTR"] = calculate_MATTR(words, kkma, morphs=morphs_content)
-	result["substantive_MATTR"] = calculate_MATTR(
-		words, kkma, morphs=morphs_substansive
-	)
-	result["noun_MATTR"] = calculate_MATTR(words, kkma, morphs=morphs_noun)
-	result["NNG_MATTR"] = calculate_MATTR(words, kkma, morphs=["NNG"])
-	result["NNP_MATTR"] = calculate_MATTR(words, kkma, morphs=["NNP"])
-	result["NNB_MATTR"] = calculate_MATTR(words, kkma, morphs=["NNB"])
-	result["NP_MATTR"] = calculate_MATTR(words, kkma, morphs=["NP"])
-	result["NR_MATTR"] = calculate_MATTR(words, kkma, morphs=["NR"])
-	result["verb_MATTR"] = calculate_MATTR(words, kkma, morphs=morphs_verb)
-	result["VV_MATTR"] = calculate_MATTR(words, kkma, morphs=["VV"])
-	result["VA_MATTR"] = calculate_MATTR(words, kkma, morphs=["VA"])
-	result["mod_MATTR"] = calculate_MATTR(words, kkma, morphs=morphs_mod)
-	result["MM_MATTR"] = calculate_MATTR(words, kkma, morphs=["MM"])
-	result["MA_MATTR"] = calculate_MATTR(words, kkma, morphs=morphs_MA)
-	result["IC_MATTR"] = calculate_MATTR(words, kkma, morphs=["IC"])
-	result["formal_MATTR"] = calculate_MATTR(words, kkma, morphs=morphs_formal)
-	result["J_MATTR"] = calculate_MATTR(words, kkma, morphs=morphs_J)
-	result["E_MATTR"] = calculate_MATTR(words, kkma, morphs=morphs_E)
-	result["X_MATTR"] = calculate_MATTR(words, kkma, morphs=morphs_X)
-	return result
-
-
-# MTLD ----------------------------------------------------------------
-def MTLD(words, kkma):
-	result = collections.defaultdict()
-	result["lemma_MTLD"] = ld.mtld(words)
-	return result
+	def get_TTR(self):
+		return self.TTR

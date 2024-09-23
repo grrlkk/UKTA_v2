@@ -10,7 +10,7 @@ from apps.morph.bareun import bareun
 from keybert import KeyBERT
 from transformers import BertModel
 
-from . import TTR2, adjacent_overlap, counter, similarity, textpreprocess
+from . import TTR, adjacent_overlap, counter, similarity, textpreprocess
 
 logging.basicConfig(level=logging.INFO)
 
@@ -64,7 +64,7 @@ pronounList = [
 
 def processTTR(kkma):
     result = collections.defaultdict()
-    result = TTR2.TTR(kkma).get_TTR()
+    result = TTR.TTR(kkma).get_TTR()
     return result
 
 
@@ -449,8 +449,8 @@ def process(text, targets=["ttr", "similarity", "basic"]):
             temp = result["basic"]
             result.pop("basic")
             result["basic_count"] = temp["basic_count"]
-            result["NDW"] = temp["NDW"]
             result["basic_density"] = temp["basic_density"]
             result["basic_level"] = temp["basic_level"]
             result["basic_list"] = temp["basic_list"]
+            result["NDW"] = temp["NDW"]
     return result
