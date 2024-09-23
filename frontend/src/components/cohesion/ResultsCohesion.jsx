@@ -103,8 +103,9 @@ const ResultsCoh = () => {
 								<div className='flex flex-col gap-4 font-semibold'>
 									<MorphemeFormat result={item.results.morpheme.sentences} title={"Morpheme"} />
 									<ResultsNumeric result={item.results.ttr} title={"TTR"} />
+									<ResultsNumeric result={item.results.NDW} title={"NDW"} />
 									<ResultsNumeric result={item.results.similarity} title={"Similarity"} />
-									<ResultsNumeric result={item.results.adjacency} title={"Adjacency"} />
+									{/* <ResultsNumeric result={item.results.adjacency} title={"Adjacency"} /> */}
 									<ResultsNumeric result={item.results.basic_count} title={"Morph Count"} />
 									<ResultsNumeric result={item.results.basic_density} title={"Morph Density"} />
 									<ResultsNumeric result={item.results.basic_level} title={"Morph Level"} />
