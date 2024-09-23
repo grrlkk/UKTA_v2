@@ -1,5 +1,6 @@
 import collections
 import logging
+import inspect
 import multiprocessing
 import subprocess
 import time
@@ -82,38 +83,19 @@ def processTTR(kkma, words):
     # lemmazation -----------------------------------------------------------------------
     wordsAfterLemma = textpreprocess.lemma(words)
     result["lemmaCnt"] = len(wordsAfterLemma)  # 어절 수
-
-    # TTR --------------------------------------------------------------------------------
-    # lemmattr
-    result["lemmaTTR"] = TTR.lemmaTtr(wordsAfterLemma)  # 어휘 다양성
-    # lemma_mattr
-    result["lemmaMTTR"] = TTR.lemmaMattr(wordsAfterLemma)  # 어휘 다양성
-    # lexical_density_tokens
-    result["lexicalDensityTokens"] = TTR.lexicalDensityTokens(wordsAfterLemma, kkma)
-    # lexical_density_tokens
-    result["lexicalDensityTypes"] = TTR.lexicalDensityTypes(wordsAfterLemma, kkma)
-    # contentTtr
-    result["contentTTR"] = TTR.contentTtr(wordsAfterLemma, kkma)
-    # functionTtr
-    result["formalTTR"] = TTR.functionTtr(wordsAfterLemma, kkma)
-
-    # nounTtr ----------------------------------------------------------------------------
-    # uniqueNoun,nounNum,
-    result["nounTTR"] = TTR.nounTtr(wordsAfterLemma, kkma)
-    # verbTtr
-    result["VVTTR"] = TTR.verbTtr(wordsAfterLemma, kkma)
-    # adjTtr
-    result["MATTR"] = TTR.adjTtr(wordsAfterLemma, kkma)
-    # advTtr
-    result["VATTR"] = TTR.advTtr(wordsAfterLemma, kkma)
-
-    # advTtr
-    result["bigramLemmaTTR"] = TTR.bigramLemmaTtr(wordsAfterLemma)
-    # advTtr
-    result["trigramLemmaTTR"] = TTR.trigramLemmaTtr(wordsAfterLemma)
-
-    # conjuctions ------------------------------------------------------------------------
     result["conjuctions"] = conjuctions(kkma, wordsAfterLemma, words)
+
+    # TTR -------------------------------------------------------------------------------
+    functions = inspect.getmembers(TTR, inspect.isfunction)
+
+    for name, func in functions:
+        try:
+            if "kkma" in inspect.signature(func).parameters:
+                result[name] = func(wordsAfterLemma, kkma)
+            else:
+                result[name] = func(wordsAfterLemma)
+        except Exception as e:
+            result[name] = 0
 
     return result
 
@@ -121,8 +103,8 @@ def processTTR(kkma, words):
 def processSimilarity(text):
     # topic & similarity -----------------------------------------------------------------
     result = collections.defaultdict()
-    result["avgSentSimilarity"], result["topicConsistency"] = (
-        similarity.similar(text, simil_model, kw_model, device=device)
+    result["avgSentSimilarity"], result["topicConsistency"] = similarity.similar(
+        text, simil_model, kw_model, device=device
     )
 
     return result
@@ -500,6 +482,6 @@ def process(text, targets=["ttr", "similarity", "adjacency", "basic"]):
             result.pop("basic")
             result["basic_count"] = temp["basic_count"]
             result["basic_density"] = temp["basic_density"]
-            result["basic_level"] = temp["basic_level"]	
+            result["basic_level"] = temp["basic_level"]
             result["basic_list"] = temp["basic_list"]
     return result
