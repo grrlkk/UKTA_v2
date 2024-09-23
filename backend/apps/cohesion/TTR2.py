@@ -1,5 +1,6 @@
 import collections
 from lexical_diversity import lex_div as ld
+import math
 
 
 morphs_content = [
@@ -87,64 +88,260 @@ morphs_E = ["EP", "EF", "EC", "ETN", "ETM"]
 morphs_X = ["XPN", "XSN", "XSV", "XSA"]
 
 
-def content_Lst(kkma):
-	content_lst = []
-	substansive_lst = []
-	noun_lst = []
-	NNG_lst = []
-	NNP_lst = []
-	NNB_lst = []
-	NP_lst = []
-	NR_lst = []
-	verb_lst = []
-	VV_lst = []
-	VA_lst = []
-	mod_lst = []
-	MM_lst = []
-	MA_lst = []
-	IC_lst = []
-	formal_lst = []
-	J_lst = []
-	E_lst = []
-	X_lst = []
+def safe_divide(numerator, denominator):
+	if denominator == 0 or denominator == 0.0:
+		index = 0
+	else:
+		index = numerator / denominator
+	return index
 
-	for morp in kkma:
-		if morp[1] in morphs_content:
-			content_lst.append(morp[0])
-		if morp[1] in morphs_substansive:
-			substansive_lst.append(morp[0])
-		if morp[1] in morphs_noun:
-			noun_lst.append(morp[0])
-		if morp[1] == "NNG":
-			NNG_lst.append(morp[0])
-		if morp[1] == "NNP":
-			NNP_lst.append(morp[0])
-		if morp[1] == "NNB":
-			NNB_lst.append(morp[0])	
-		if morp[1] == "NP":	
-			NP_lst.append(morp[0])	
-		if morp[1] == "NR":	
-			NR_lst.append(morp[0])	
-		if morp[1] in morphs_verb:	
-			verb_lst.append(morp[0])	
-		if morp[1] == "VV":	
-			VV_lst.append(morp[0])	
-		if morp[1] == "VA":
-			VA_lst.append(morp[0])
-		if morp[1] in morphs_mod:	
-			mod_lst.append(morp[0])	
-		if morp[1] == "MM":
-			MM_lst.append(morp[0])
-		if morp[1] in morphs_MA:
-			MA_lst.append(morp[0])	
-		if morp[1] == "IC":
-			IC_lst.append(morp[0])
-		if morp[1] in morphs_formal:
-			formal_lst.append(morp[0])
-		if morp[1] in morphs_J:
-			J_lst.append(morp[0])	
-		if morp[1] in morphs_E:
-			E_lst.append(morp[0])	
-		if morp[1] in morphs_X:	
-			X_lst.append(morp[0])
-	return content_lst
+
+def cttr(text):
+	ntokens = len(text)
+	ntypes = len(set(text))
+
+	return safe_divide(ntypes, math.sqrt(2 * ntokens))
+
+
+class TTR:
+	def __init__(self, kkma):
+		self.kkma = [morp for morp in kkma if not morp[1].startswith("S")]
+		self.TTR = collections.defaultdict()
+		self.TTR["lemma_Cnt"] = len(self.kkma)
+
+		self.lemma_lst = []
+		self.content_lst = []
+		self.substansive_lst = []
+		self.noun_lst = []
+		self.NNG_lst = []
+		self.NNP_lst = []
+		self.NNB_lst = []
+		self.NP_lst = []
+		self.NR_lst = []
+		self.verb_lst = []
+		self.VV_lst = []
+		self.VA_lst = []
+		self.mod_lst = []
+		self.MM_lst = []
+		self.MA_lst = []
+		self.MAJ_lst = []
+		self.IC_lst = []
+		self.formal_lst = []
+		self.J_lst = []
+		self.E_lst = []
+		self.X_lst = []
+
+		for morp in kkma:
+			self.lemma_lst.append(morp[0])
+			if morp[1] in morphs_content:
+				self.content_lst.append(morp[0])
+			if morp[1] in morphs_substansive:
+				self.substansive_lst.append(morp[0])
+			if morp[1] in morphs_noun:
+				self.noun_lst.append(morp[0])
+			if morp[1] == "NNG":
+				self.NNG_lst.append(morp[0])
+			if morp[1] == "NNP":
+				self.NNP_lst.append(morp[0])
+			if morp[1] == "NNB":
+				self.NNB_lst.append(morp[0])
+			if morp[1] == "NP":
+				self.NP_lst.append(morp[0])
+			if morp[1] == "NR":
+				self.NR_lst.append(morp[0])
+			if morp[1] in morphs_verb:
+				self.verb_lst.append(morp[0])
+			if morp[1] == "VV":
+				self.VV_lst.append(morp[0])
+			if morp[1] == "VA":
+				self.VA_lst.append(morp[0])
+			if morp[1] in morphs_mod:
+				self.mod_lst.append(morp[0])
+			if morp[1] == "MM":
+				self.MM_lst.append(morp[0])
+			if morp[1] in morphs_MA:
+				self.MA_lst.append(morp[0])
+			if morp[1] == "MAJ":
+				self.MAJ_lst.append(morp[0])
+			if morp[1] == "IC":
+				self.IC_lst.append(morp[0])
+			if morp[1] in morphs_formal:
+				self.formal_lst.append(morp[0])
+			if morp[1] in morphs_J:
+				self.J_lst.append(morp[0])
+			if morp[1] in morphs_E:
+				self.E_lst.append(morp[0])
+			if morp[1] in morphs_X:
+				self.X_lst.append(morp[0])
+
+		self.cal_TTR()
+		self.cal_RTTR()
+		self.cal_CTTR()
+		self.cal_MSTTR()
+		self.cal_MATTR()
+		self.cal_MTLD()
+		self.cal_HDD()
+
+	def cal_TTR(self):
+		self.TTR["lemma_TTR"] = ld.ttr(self.lemma_lst)
+		self.TTR["content_TTR"] = ld.ttr(self.content_lst)
+		self.TTR["substansive_TTR"] = ld.ttr(self.substansive_lst)
+		self.TTR["noun_TTR"] = ld.ttr(self.noun_lst)
+		self.TTR["NNG_TTR"] = ld.ttr(self.NNG_lst)
+		self.TTR["NNP_TTR"] = ld.ttr(self.NNP_lst)
+		self.TTR["NNB_TTR"] = ld.ttr(self.NNB_lst)
+		self.TTR["NP_TTR"] = ld.ttr(self.NP_lst)
+		self.TTR["NR_TTR"] = ld.ttr(self.NR_lst)
+		self.TTR["verb_TTR"] = ld.ttr(self.verb_lst)
+		self.TTR["VV_TTR"] = ld.ttr(self.VV_lst)
+		self.TTR["VA_TTR"] = ld.ttr(self.VA_lst)
+		self.TTR["mod_TTR"] = ld.ttr(self.mod_lst)
+		self.TTR["MM_TTR"] = ld.ttr(self.MM_lst)
+		self.TTR["MA_TTR"] = ld.ttr(self.MA_lst)
+		self.TTR["MAJ_TTR"] = ld.ttr(self.MAJ_lst)
+		self.TTR["IC_TTR"] = ld.ttr(self.IC_lst)
+		self.TTR["formal_TTR"] = ld.ttr(self.formal_lst)
+		self.TTR["J_TTR"] = ld.ttr(self.J_lst)
+		self.TTR["E_TTR"] = ld.ttr(self.E_lst)
+		self.TTR["X_TTR"] = ld.ttr(self.X_lst)
+
+	def cal_RTTR(self):
+		self.TTR["lemma_RTTR"] = ld.root_ttr(self.lemma_lst)
+		self.TTR["content_RTTR"] = ld.root_ttr(self.content_lst)
+		self.TTR["substansive_RTTR"] = ld.root_ttr(self.substansive_lst)
+		self.TTR["noun_RTTR"] = ld.root_ttr(self.noun_lst)
+		self.TTR["NNG_RTTR"] = ld.root_ttr(self.NNG_lst)
+		self.TTR["NNP_RTTR"] = ld.root_ttr(self.NNP_lst)
+		self.TTR["NNB_RTTR"] = ld.root_ttr(self.NNB_lst)
+		self.TTR["NP_RTTR"] = ld.root_ttr(self.NP_lst)
+		self.TTR["NR_RTTR"] = ld.root_ttr(self.NR_lst)
+		self.TTR["verb_RTTR"] = ld.root_ttr(self.verb_lst)
+		self.TTR["VV_RTTR"] = ld.root_ttr(self.VV_lst)
+		self.TTR["VA_RTTR"] = ld.root_ttr(self.VA_lst)
+		self.TTR["mod_RTTR"] = ld.root_ttr(self.mod_lst)
+		self.TTR["MM_RTTR"] = ld.root_ttr(self.MM_lst)
+		self.TTR["MA_RTTR"] = ld.root_ttr(self.MA_lst)
+		self.TTR["MAJ_RTTR"] = ld.root_ttr(self.MAJ_lst)
+		self.TTR["IC_RTTR"] = ld.root_ttr(self.IC_lst)
+		self.TTR["formal_RTTR"] = ld.root_ttr(self.formal_lst)
+		self.TTR["J_RTTR"] = ld.root_ttr(self.J_lst)
+		self.TTR["E_RTTR"] = ld.root_ttr(self.E_lst)
+		self.TTR["X_RTTR"] = ld.root_ttr(self.X_lst)
+
+	def cal_CTTR(self):
+		self.TTR["lemma_CTTR"] = cttr(self.lemma_lst)
+		self.TTR["content_CTTR"] = cttr(self.content_lst)
+		self.TTR["substansive_CTTR"] = cttr(self.substansive_lst)
+		self.TTR["noun_CTTR"] = cttr(self.noun_lst)
+		self.TTR["NNG_CTTR"] = cttr(self.NNG_lst)
+		self.TTR["NNP_CTTR"] = cttr(self.NNP_lst)
+		self.TTR["NNB_CTTR"] = cttr(self.NNB_lst)
+		self.TTR["NP_CTTR"] = cttr(self.NP_lst)
+		self.TTR["NR_CTTR"] = cttr(self.NR_lst)
+		self.TTR["verb_CTTR"] = cttr(self.verb_lst)
+		self.TTR["VV_CTTR"] = cttr(self.VV_lst)
+		self.TTR["VA_CTTR"] = cttr(self.VA_lst)
+		self.TTR["mod_CTTR"] = cttr(self.mod_lst)
+		self.TTR["MM_CTTR"] = cttr(self.MM_lst)
+		self.TTR["MA_CTTR"] = cttr(self.MA_lst)
+		self.TTR["MAJ_CTTR"] = cttr(self.MAJ_lst)
+		self.TTR["IC_CTTR"] = cttr(self.IC_lst)
+		self.TTR["formal_CTTR"] = cttr(self.formal_lst)
+		self.TTR["J_CTTR"] = cttr(self.J_lst)
+		self.TTR["E_CTTR"] = cttr(self.E_lst)
+		self.TTR["X_CTTR"] = cttr(self.X_lst)
+
+	def cal_MSTTR(self):
+		self.TTR["lemma_MSTTR"] = ld.msttr(self.lemma_lst)
+		self.TTR["content_MSTTR"] = ld.msttr(self.content_lst)
+		self.TTR["substansive_MSTTR"] = ld.msttr(self.substansive_lst)
+		self.TTR["noun_MSTTR"] = ld.msttr(self.noun_lst)
+		self.TTR["NNG_MSTTR"] = ld.msttr(self.NNG_lst)
+		self.TTR["NNP_MSTTR"] = ld.msttr(self.NNP_lst)
+		self.TTR["NNB_MSTTR"] = ld.msttr(self.NNB_lst)
+		self.TTR["NP_MSTTR"] = ld.msttr(self.NP_lst)
+		self.TTR["NR_MSTTR"] = ld.msttr(self.NR_lst)
+		self.TTR["verb_MSTTR"] = ld.msttr(self.verb_lst)
+		self.TTR["VV_MSTTR"] = ld.msttr(self.VV_lst)
+		self.TTR["VA_MSTTR"] = ld.msttr(self.VA_lst)
+		self.TTR["mod_MSTTR"] = ld.msttr(self.mod_lst)
+		self.TTR["MM_MSTTR"] = ld.msttr(self.MM_lst)
+		self.TTR["MA_MSTTR"] = ld.msttr(self.MA_lst)
+		self.TTR["MAJ_MSTTR"] = ld.msttr(self.MAJ_lst)
+		self.TTR["IC_MSTTR"] = ld.msttr(self.IC_lst)
+		self.TTR["formal_MSTTR"] = ld.msttr(self.formal_lst)
+		self.TTR["J_MSTTR"] = ld.msttr(self.J_lst)
+		self.TTR["E_MSTTR"] = ld.msttr(self.E_lst)
+		self.TTR["X_MSTTR"] = ld.msttr(self.X_lst)
+
+	def cal_MATTR(self):
+		self.TTR["lemma_MATTR"] = ld.mattr(self.lemma_lst)
+		self.TTR["content_MATTR"] = ld.mattr(self.content_lst)
+		self.TTR["substansive_MATTR"] = ld.mattr(self.substansive_lst)
+		self.TTR["noun_MATTR"] = ld.mattr(self.noun_lst)
+		self.TTR["NNG_MATTR"] = ld.mattr(self.NNG_lst)
+		self.TTR["NNP_MATTR"] = ld.mattr(self.NNP_lst)
+		self.TTR["NNB_MATTR"] = ld.mattr(self.NNB_lst)
+		self.TTR["NP_MATTR"] = ld.mattr(self.NP_lst)
+		self.TTR["NR_MATTR"] = ld.mattr(self.NR_lst)
+		self.TTR["verb_MATTR"] = ld.mattr(self.verb_lst)
+		self.TTR["VV_MATTR"] = ld.mattr(self.VV_lst)
+		self.TTR["VA_MATTR"] = ld.mattr(self.VA_lst)
+		self.TTR["mod_MATTR"] = ld.mattr(self.mod_lst)
+		self.TTR["MM_MATTR"] = ld.mattr(self.MM_lst)
+		self.TTR["MA_MATTR"] = ld.mattr(self.MA_lst)
+		self.TTR["MAJ_MATTR"] = ld.mattr(self.MAJ_lst)
+		self.TTR["IC_MATTR"] = ld.mattr(self.IC_lst)
+		self.TTR["formal_MATTR"] = ld.mattr(self.formal_lst)
+		self.TTR["J_MATTR"] = ld.mattr(self.J_lst)
+		self.TTR["E_MATTR"] = ld.mattr(self.E_lst)
+		self.TTR["X_MATTR"] = ld.mattr(self.X_lst)
+
+	def cal_MTLD(self):
+		self.TTR["lemma_MTLD"] = ld.mtld(self.lemma_lst)
+		self.TTR["content_MTLD"] = ld.mtld(self.content_lst)
+		self.TTR["substansive_MTLD"] = ld.mtld(self.substansive_lst)
+		self.TTR["noun_MTLD"] = ld.mtld(self.noun_lst)
+		self.TTR["NNG_MTLD"] = ld.mtld(self.NNG_lst)
+		self.TTR["NNP_MTLD"] = ld.mtld(self.NNP_lst)
+		self.TTR["NNB_MTLD"] = ld.mtld(self.NNB_lst)
+		self.TTR["NP_MTLD"] = ld.mtld(self.NP_lst)
+		self.TTR["NR_MTLD"] = ld.mtld(self.NR_lst)
+		self.TTR["verb_MTLD"] = ld.mtld(self.verb_lst)
+		self.TTR["VV_MTLD"] = ld.mtld(self.VV_lst)
+		self.TTR["VA_MTLD"] = ld.mtld(self.VA_lst)
+		self.TTR["mod_MTLD"] = ld.mtld(self.mod_lst)
+		self.TTR["MM_MTLD"] = ld.mtld(self.MM_lst)
+		self.TTR["MA_MTLD"] = ld.mtld(self.MA_lst)
+		self.TTR["MAJ_MTLD"] = ld.mtld(self.MAJ_lst)
+		self.TTR["IC_MTLD"] = ld.mtld(self.IC_lst)
+		self.TTR["formal_MTLD"] = ld.mtld(self.formal_lst)
+		self.TTR["J_MTLD"] = ld.mtld(self.J_lst)
+		self.TTR["E_MTLD"] = ld.mtld(self.E_lst)
+		self.TTR["X_MTLD"] = ld.mtld(self.X_lst)
+
+	def cal_HDD(self):
+		self.TTR["lemma_HDD"] = ld.hdd(self.lemma_lst)
+		self.TTR["content_HDD"] = ld.hdd(self.content_lst)
+		self.TTR["substansive_HDD"] = ld.hdd(self.substansive_lst)
+		self.TTR["noun_HDD"] = ld.hdd(self.noun_lst)
+		self.TTR["NNG_HDD"] = ld.hdd(self.NNG_lst)
+		self.TTR["NNP_HDD"] = ld.hdd(self.NNP_lst)
+		self.TTR["NNB_HDD"] = ld.hdd(self.NNB_lst)
+		self.TTR["NP_HDD"] = ld.hdd(self.NP_lst)
+		self.TTR["NR_HDD"] = ld.hdd(self.NR_lst)
+		self.TTR["verb_HDD"] = ld.hdd(self.verb_lst)
+		self.TTR["VV_HDD"] = ld.hdd(self.VV_lst)
+		self.TTR["VA_HDD"] = ld.hdd(self.VA_lst)
+		self.TTR["mod_HDD"] = ld.hdd(self.mod_lst)
+		self.TTR["MM_HDD"] = ld.hdd(self.MM_lst)
+		self.TTR["MA_HDD"] = ld.hdd(self.MA_lst)
+		self.TTR["MAJ_HDD"] = ld.hdd(self.MAJ_lst)
+		self.TTR["IC_HDD"] = ld.hdd(self.IC_lst)
+		self.TTR["formal_HDD"] = ld.hdd(self.formal_lst)
+		self.TTR["J_HDD"] = ld.hdd(self.J_lst)
+		self.TTR["E_HDD"] = ld.hdd(self.E_lst)
+		self.TTR["X_HDD"] = ld.hdd(self.X_lst)
+
+	def get_TTR(self):
+		return self.TTR
