@@ -388,7 +388,7 @@ def processAdjacency(kkma_list):
     return result
 
 
-def process(text, targets=["ttr", "similarity", "basic"]):
+def process(text, targets=["ttr", "similarity", "basic", "adjacency"]):
     # kkma = inference.inf(text)
     morph = bareun()
 
