@@ -132,7 +132,7 @@ class TTR:
 		self.E_lst = []
 		self.X_lst = []
 
-		for morp in kkma:
+		for morp in self.kkma:
 			self.lemma_lst.append(morp[0])
 			if morp[1] in morphs_CL:
 				self.CL_lst.append(morp[0])

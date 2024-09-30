@@ -385,7 +385,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
     finalresult["basic_count"] = result
     finalresult["NDW"] = resultNDW
     finalresult["basic_density"] = resultDensity
-    finalresult["basic_level"] = resultLvl
+    finalresult["basic_level"] = resultLvl 
     finalresult["basic_list"] = resultLst
 
     return finalresult
