@@ -1,6 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import './App.css';
 
@@ -50,9 +50,8 @@ function App() {
 								<Route path='/morpheme' element={<ResultsMor />} />
 								<Route path='/cohesion' element={<ResultsCoh />} />
 								<Route path='/tagging' element={<TagInfo />} />
-								<Route path='*' element={<Dummy />} />
-
 								{uploadInProgress && <Route path='/loading' element={<Loading />} />}
+								<Route path='*' element={<Navigate to="/" />} />
 							</Routes>
 						</AnimatePresence>
 					</div>

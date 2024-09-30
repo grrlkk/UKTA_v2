@@ -14,13 +14,17 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 		await new Promise(resolve => setTimeout(resolve, 1000));
 		const formData = new FormData();
 
-		for (let i = 0; i < files.length; i++) {
-			const file = files[i];
-			formData.append("files", file, file.name);
+		if (inputValue.length > 0) {
+			formData.append("files", new Blob([inputValue], { type: "text/plain" }), inputValue.split(" ")[0] + "...");
+		} else if (selectedFile) {
+			for (let i = 0; i < files.length; i++) {
+				const file = files[i];
+				formData.append("files", file, file.name);
+			}
 		}
 
 		try {
-			const response = await fetch(`https://ukta.inha.ac.kr/api/korcat/${type}`, {
+			const response = await fetch(`${process.env.REACT_APP_API_URI}/korcat/${type}`, {
 				method: 'POST',
 				body: formData,
 			});
@@ -104,7 +108,7 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 							${inputValue.length === 0 ? 'h-[4em] focus:h-32' : 'h-32'}
 							focus:outline-none ring-0 dark:bg-black
 						`}
-						placeholder={files.length > 1 ? '하나의 파일을 선택했을 때에만 수정이 가능합니다.': '한국어 문장을 입력하세요...'}
+						placeholder={files.length > 1 ? '하나의 파일을 선택했을 때에만 수정이 가능합니다.' : '한국어 문장을 입력하세요...'}
 						spellCheck="false"
 						disabled={uploadInProgress || files.length > 1}
 					></textarea>

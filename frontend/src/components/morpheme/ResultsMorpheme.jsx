@@ -11,7 +11,7 @@ const ResultsMor = () => {
 
 	const fetchData = async () => {
 		try {
-			const response = await fetch('https://ukta.inha.ac.kr/api/korcat/morpheme');
+			const response = await fetch(`${process.env.REACT_APP_API_URI}/korcat/morpheme`);
 			const data = await response.json();
 			setMorphemeResult(data);
 		} catch (error) {
@@ -68,7 +68,7 @@ const ResultsMor = () => {
 		const id = morphemeResult[index]._id;
 
 		try {
-			const response = await fetch(`https://ukta.inha.ac.kr/api/korcat/morpheme/${id}`, {
+			const response = await fetch(`${process.env.REACT_APP_API_URI}/korcat/morpheme/${id}`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',

@@ -1,9 +1,71 @@
-import { motion } from 'framer-motion';
+import { color, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
+import { Radar } from 'react-chartjs-2';
+import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, Ticks } from 'chart.js';
+
 import OriginalText from '../OriginalText';
 import Pagination from '../Pagination';
 import { ResultsList, ResultsNumeric, MorphemeFormat } from './AnalysisFormat';
 
+ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
+
+
+const radarData = {
+	labels: ['문법', '단어', '문장 표현', '문단 내 구조의 적절성', '문단 간 구조의 적절성', '구조의 일관성', '분량', '주제의 명료함', '참신성', '프롬프트 독해력', '서술력'],
+	datasets: [
+		{
+			label: 'Analysis Results',
+			data: [
+				79, 90, 20, 40, 60, 60, 45, 34, 23, 90, 89
+			],
+			backgroundColor: 'rgba(34, 202, 236, 0.2)',
+			borderColor: 'rgba(34, 202, 236, 1)',
+			borderWidth: 1,
+			pointBackgroundColor: 'rgba(34, 202, 236, 1)',
+			pointBorderColor: '#fff',
+			pointHoverBackgroundColor: '#fff',
+			pointHoverBorderColor: 'rgba(34, 202, 236, 1)',
+		},
+	],
+};
+
+const radarOptions = {
+	scales: {
+		r: {
+			angleLines: {
+				display: true,
+				color: '#313e50',
+			},
+			grid: {
+				color: '#313e50',
+			},
+			suggestedMin: 0,
+			suggestedMax: 100,
+			pointLabels: {
+				color: '#f8fafc',
+			},
+			ticks: {
+				display: false,
+			}
+		}
+	},
+	animations: {
+		tension: {
+			duration: 1000,
+			easing: 'linear',
+			from: 0,
+			to: 0.1,
+			loop: true
+		}
+	},
+	plugins: {
+		legend: {
+			labels: {
+				color: '#f8fafc',
+			},
+		},
+	}
+};
 
 const ResultsCoh = () => {
 	const [cohesionResult, setCohesionResult] = useState([]);
@@ -11,7 +73,7 @@ const ResultsCoh = () => {
 
 	const fetchData = async () => {
 		try {
-			const response = await fetch('https://ukta.inha.ac.kr/api/korcat/cohesion');
+			const response = await fetch(`${process.env.REACT_APP_API_URI}/korcat/cohesion`);
 			const data = await response.json();
 			setCohesionResult(data);
 		} catch (error) {
@@ -52,7 +114,7 @@ const ResultsCoh = () => {
 		const id = cohesionResult[index]._id;
 
 		try {
-			const response = await fetch(`https://ukta.inha.ac.kr/api/korcat/cohesion/${id}`, {
+			const response = await fetch(`${process.env.REACT_APP_API_URI}/korcat/cohesion/${id}`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json'
@@ -100,16 +162,81 @@ const ResultsCoh = () => {
 							<div key={index} className={`flex flex-col gap-4 ${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out`}>
 								<hr className='' />
 
+								<div className='flex flex-col md:flex-row md:gap-4 items-center justify-around '>
+									<div className='grow pr-1 bg-[#020617] rounded-xl'>
+										<Radar data={radarData} options={radarOptions} />
+									</div>
+									<div className='text-sm grow pl-1 bg-[#020617] rounded-xl'>
+										<table className='w-full'>
+											<thead>
+												<tr>
+													<th>Index</th>
+													<th>Label</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>1</td>
+													<td>문법</td>
+												</tr>
+												<tr>
+													<td>2</td>
+													<td>단어</td>
+												</tr>
+												<tr>
+													<td>3</td>
+													<td>문장 표현</td>
+												</tr>
+												<tr>
+													<td>4</td>
+													<td>문단 내 구조의 적절성</td>
+												</tr>
+												<tr>
+													<td>5</td>
+													<td>문단 간 구조의 적절성</td>
+												</tr>
+												<tr>
+													<td>6</td>
+													<td>구조의 일관성</td>
+												</tr>
+												<tr>
+													<td>7</td>
+													<td>분량</td>
+												</tr>
+												<tr>
+													<td>8</td>
+													<td>주제의 명료함</td>
+												</tr>
+												<tr>
+													<td>9</td>
+													<td>참신성</td>
+												</tr>
+												<tr>
+													<td>10</td>
+													<td>프롬프트 독해력</td>
+												</tr>
+												<tr>
+													<td>11</td>
+													<td>서술력</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+
 								<div className='flex flex-col gap-4 font-semibold'>
-									<MorphemeFormat result={item.results.morpheme.sentences} title={"Morpheme"} />
-									<ResultsNumeric result={item.results.ttr} title={"TTR"} />
-									<ResultsNumeric result={item.results.NDW} title={"NDW"} />
-									<ResultsNumeric result={item.results.similarity} title={"Similarity"} />
+									<MorphemeFormat result={item.results.morpheme.sentences} title={"Morpheme Analysis"} />
+
+									<ResultsNumeric result={item.results.basic_count} title={"Morpheme Count"} />
+									<ResultsNumeric result={item.results.basic_density} title={"Morpheme Density"} />
+									<ResultsNumeric result={item.results.basic_level} title={"Morpheme Level"} />
+									<ResultsList result={item.results.basic_list} title={"Morpheme Lists"} />
+
+									<ResultsNumeric result={item.results.ttr} title={"Lexical Richness (TTR)"} />
+									<ResultsNumeric result={item.results.NDW} title={"Lexical Richness (NDW)"} />
+
 									{/* <ResultsNumeric result={item.results.adjacency} title={"Adjacency"} /> */}
-									<ResultsNumeric result={item.results.basic_count} title={"Morph Count"} />
-									<ResultsNumeric result={item.results.basic_density} title={"Morph Density"} />
-									<ResultsNumeric result={item.results.basic_level} title={"Morph Level"} />
-									<ResultsList result={item.results.basic_list} title={"Morph Lists"} />
+									<ResultsNumeric result={item.results.similarity} title={"Semantic Cohesion"} />
 								</div>
 							</div>
 						</div>
