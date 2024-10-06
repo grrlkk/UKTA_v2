@@ -11,7 +11,7 @@ const radarData = {
 		{
 			label: 'Analysis Results',
 			data: [
-				79, 90, 20, 40, 60, 60, 45, 34, 23, 90, 89
+				3, 3, 3, 3, 3, 3, 3, 3, 2, 0, 3
 			],
 			backgroundColor: 'rgba(34, 202, 236, 0.2)',
 			borderColor: 'rgba(34, 202, 236, 1)',
@@ -35,7 +35,7 @@ const radarOptions = {
 				color: '#313e50',
 			},
 			suggestedMin: 0,
-			suggestedMax: 100,
+			suggestedMax: 3,
 			pointLabels: {
 				color: '#f8fafc',
 			},
@@ -74,12 +74,61 @@ const EvalFormat = ({ result, title }) => {
 				</svg>
 			</button>
 
-			<div className={`${hidden ? "h-0" : "h-auto pt-2"} transition-all ease-in-out grid grid-cols-1 md:grid-cols-2 gap-2 *:p-2`}>
-				<div className='bg-[#020617] rounded-xl flex justify-center'>
+			<div className={`${hidden ? "h-0" : "h-auto pt-2"} transition-all ease-in-out grid grid-cols-1 md:grid-cols-5 gap-2 *:p-2`}>
+				<div className='bg-[#020617] rounded-xl flex justify-center col-span-3'>
 					<Radar data={radarData} options={radarOptions} />
 				</div>
-				<div className='text-sm bg-[#020617] rounded-xl'>
-					Attention
+				<div className='text-sm bg-[#020617] rounded-xl col-span-2'>
+					<table className="w-full *:text-center">
+						<thead className="*:h-12">
+							<tr>
+								<th>Rank</th>
+								<th>Metric</th>
+							</tr>
+						</thead>
+						<tbody className="*:h-12">
+							<tr>
+								<td>1</td>
+								<td>NN_Cnt</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>VV_MATTR</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>NN_CTTR</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>NL_RTTR</td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td>CL_VOCDD</td>
+							</tr>
+							<tr>
+								<td>6</td>
+								<td>NN_RTTR</td>
+							</tr>
+							<tr>
+								<td>7</td>
+								<td>NL_NDW</td>
+							</tr>
+							<tr>
+								<td>8</td>
+								<td>NNP_MTLD</td>
+							</tr>
+							<tr>
+								<td>9</td>
+								<td>NL_MTLD</td>
+							</tr>
+							<tr>
+								<td>10</td>
+								<td>NNP_RTTR</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

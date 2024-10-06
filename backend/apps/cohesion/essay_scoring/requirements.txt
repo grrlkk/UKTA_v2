@@ -1,0 +1,1 @@
+kobert-transformers==0.6.0
