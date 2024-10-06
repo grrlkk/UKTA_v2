@@ -49,45 +49,30 @@ def scoring(bert_model, gru_model, extracted_features, tokenizer):
 
 	# 자질 추출
 	sample_essay_features = []
-	feature_list = []
 	keys = ["ttr", "similarity", "adjacency", "basic_count", "basic_density", "NDW"]
+	
 	for key in keys:
-		sample_essay_features.extend(list(extracted_features[key].values()))
-		feature_list.extend(list(extracted_features[key].keys()))
+		if len(extracted_features[key]) > 0:
+			sample_essay_features.extend(list(extracted_features[key].values()))
+		else:
+			sample_essay_features.extend([0]*42)
+
 
 	scaler = pd.read_csv(
 		"./apps/cohesion/essay_scoring/features/scaler.csv", encoding="cp949"
 	)
 
-	filtered_features = []
-	filtered_feature_list = []
-
-	# Filter features based on the scaler
-	for feature_key in scaler["feature"].values:
-		if feature_key in feature_list:
-			filtered_features.append(sample_essay_features[feature_list.index(feature_key)])
-			filtered_feature_list.append(feature_key)
-
-	sample_essay_features = filtered_features
-	feature_list = filtered_feature_list
+	feature_list = scaler['feature'].to_list()
 
 	# Ensure mean and scale are numeric
 	scaler["mean"] = pd.to_numeric(scaler["mean"], errors="coerce")
 	scaler["scale"] = pd.to_numeric(scaler["scale"], errors="coerce")
 
 	# Initialize lists to store scaled features
-	scaled_features = []
-
-	# Scale each feature
-	for feature_name in feature_list:
-		mean = scaler.loc[scaler["feature"] == feature_name, "mean"].values[0]
-		scale = scaler.loc[scaler["feature"] == feature_name, "scale"].values[0]
-		feature_value = sample_essay_features[feature_list.index(feature_name)]
-		scaled_feature = (feature_value - mean) / scale
-		scaled_features.append(scaled_feature)
-
+	mean = scaler['mean'].to_numpy()
+	scale = scaler['scale'].to_numpy()
+	scaled_features = (np.array(sample_essay_features) - mean)/scale
 	scaled_features = torch.tensor([scaled_features], dtype=torch.float32)
-	print(scaled_features.shape)
 
 	# bert 모델 문장별 임베딩 추출
 	max_length = 50
