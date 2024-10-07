@@ -1,58 +1,9 @@
 import React, { useState } from 'react';
 import { MorphTags, CohTags } from "../Tags";
+import Sentences from '../morpheme/SentenceFormat';
 
-const Sentence = ({ tokens, content, index }) => {
-	return (
-		<div className="flex flex-col gap-2">
-			<div className="flex gap-2">
-				<div className="">{index + 1}.</div>
-				<div className="font-normal">{content}</div>
-			</div>
 
-			<div className="flex flex-col bg-slate-300 dark:bg-slate-900 rounded-xl overflow-hidden font-semibold">
-				<div
-					className={`
-						flex overflow-x-auto 
-						bg-slate-200 dark:bg-slate-950 
-						divide-x-[1px] divide-slate-300 dark:divide-slate-600 
-						h-fit text-sm
-					`}
-				>
-					{tokens.map((token, index) => {
-						// console.log(token.morphemes)
-
-						return (
-							<div key={index} className="flex flex-row">
-								{token.morphemes.map((morph, index_) => {
-									return (
-										<div
-											key={index_}
-											className={`
-												flex flex-col gap-1 p-2 text-nowrap *:flex *:justify-center 
-											`}
-										>
-											<div className="">
-												{morph.text.content}
-											</div>
-											<div
-												className=""
-												style={{ "color": MorphTags.find(tag => tag.tag === morph.tag)?.color }}
-											>
-												{morph.tag}
-											</div>
-										</div>
-									);
-								})}
-							</div>
-						);
-					})}
-				</div>
-			</div>
-		</div>
-	);
-}
-
-const MorphemeFormat = ({ result, title }) => {
+const MorphemeFormat = ({ results, title }) => {
 	const [hidden, setHidden] = useState(true);
 
 	return (
@@ -64,14 +15,8 @@ const MorphemeFormat = ({ result, title }) => {
 				</svg>
 			</button>
 
-			<div className={`${hidden ? "h-0" : "max-h-96 pt-2"} transition-all ease-in-out`}>
-				<div className='table-header max-h-96 p-2 gap-4 grid grid-cols-1 overflow-scroll pr-2'>
-					{result.map((sentence, index) => {
-						return (
-							<Sentence key={index} tokens={sentence.tokens} content={sentence.text.content} index={index} />
-						)
-					})}
-				</div>
+			<div className={`${hidden ? "h-0" : "h-auto pt-2"} -pr-[6px] transition-all ease-in-out`}>
+				<Sentences results={results} />
 			</div >
 		</div>
 	);
@@ -194,7 +139,7 @@ const ResultsNumeric = ({ result, title }) => {
 										{key}
 									</td>
 									<td className='p-1 w-1/3 break-all'>
-										{CohTags[key]}
+										{CohTags[key]?.desc && <p>{CohTags[key].target} {CohTags[key].desc}</p>}
 									</td>
 									<td className='p-1 pr-4 w-32 text-right font-mono italic'>
 										{value.toFixed(4)}
@@ -366,7 +311,7 @@ const ResultsList = ({ result, title }) => {
 										{key}
 									</td>
 									<td className='p-1 w-1/6 break-all'>
-										{CohTags[key]}
+										{CohTags[key]?.desc && <p>{CohTags[key].target} {CohTags[key].desc}</p>}
 									</td>
 									{expanded && (
 										<td className='w-84'>

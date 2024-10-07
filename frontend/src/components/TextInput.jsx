@@ -132,11 +132,11 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 						</button> :
 						<>
 							<Link to='/loading' className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('cohesion')}>
-								Analyze
+								Analyze Cohesion
 							</Link>
-							{/* <Link to='/loading' className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('morpheme')}>
-								형태소 분석
-							</Link> */}
+							<Link to='/loading' className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('morpheme')}>
+								Analyze Morpheme
+							</Link>
 						</>}
 			</div>
 		</div>
