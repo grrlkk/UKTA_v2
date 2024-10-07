@@ -36,7 +36,7 @@ const Nav = ({ currentPage }) => {
 							transition-all ease-in-out`
 						}
 					>
-						자질
+						Cohesion
 					</Link>
 					<Link to="/morpheme"
 						className={`
@@ -48,7 +48,7 @@ const Nav = ({ currentPage }) => {
 							transition-all ease-in-out`
 						}
 					>
-						형태소
+						Morpheme
 					</Link>
 				</div>
 			</div>

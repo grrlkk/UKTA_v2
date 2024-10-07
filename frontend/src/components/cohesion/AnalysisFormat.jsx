@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tags, TagDesc } from "../Tags";
+import { MorphTags, CohTags } from "../Tags";
 
 const Sentence = ({ tokens, content, index }) => {
 	return (
@@ -36,7 +36,7 @@ const Sentence = ({ tokens, content, index }) => {
 											</div>
 											<div
 												className=""
-												style={{ "color": Tags.find(tag => tag.tag === morph.tag)?.color }}
+												style={{ "color": MorphTags.find(tag => tag.tag === morph.tag)?.color }}
 											>
 												{morph.tag}
 											</div>
@@ -194,7 +194,7 @@ const ResultsNumeric = ({ result, title }) => {
 										{key}
 									</td>
 									<td className='p-1 w-1/3 break-all'>
-										{TagDesc[key]}
+										{CohTags[key]}
 									</td>
 									<td className='p-1 pr-4 w-32 text-right font-mono italic'>
 										{value.toFixed(4)}
@@ -366,7 +366,7 @@ const ResultsList = ({ result, title }) => {
 										{key}
 									</td>
 									<td className='p-1 w-1/6 break-all'>
-										{TagDesc[key]}
+										{CohTags[key]}
 									</td>
 									{expanded && (
 										<td className='w-84'>

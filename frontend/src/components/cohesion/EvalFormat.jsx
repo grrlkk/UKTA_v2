@@ -1,28 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Radar } from 'react-chartjs-2';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, Ticks } from 'chart.js';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
-
-const radarData = {
-	labels: ['문법', '단어', '문장 표현', '문단 내 구조의 적절성', '문단 간 구조의 적절성', '구조의 일관성', '분량', '주제의 명료함', '참신성', '프롬프트 독해력', '서술력'],
-	datasets: [
-		{
-			label: 'Analysis Results',
-			data: [
-				3, 3, 3, 3, 3, 3, 3, 3, 2, 0, 3
-			],
-			backgroundColor: 'rgba(34, 202, 236, 0.2)',
-			borderColor: 'rgba(34, 202, 236, 1)',
-			borderWidth: 1,
-			pointBackgroundColor: 'rgba(34, 202, 236, 1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(34, 202, 236, 1)',
-		},
-	],
-};
 
 const radarOptions = {
 	scales: {
@@ -44,15 +25,6 @@ const radarOptions = {
 			}
 		}
 	},
-	animations: {
-		tension: {
-			duration: 1000,
-			easing: 'linear',
-			from: 0,
-			to: 0.1,
-			loop: true
-		}
-	},
 	plugins: {
 		legend: {
 			labels: {
@@ -62,13 +34,59 @@ const radarOptions = {
 	}
 };
 
+const initialRadarData = {
+	labels: ['문법', '단어', '문장 표현', '문단 내 구조의 적절성', '문단 간 구조의 적절성', '구조의 일관성', '분량', '주제의 명료함', '참신성', '프롬프트 독해력', '서술력'],
+	datasets: [],
+};
+
 const EvalFormat = ({ result, title }) => {
 	const [hidden, setHidden] = useState(false);
+	const [radarData, setRadarData] = useState(initialRadarData);
+
+	useEffect(() => {
+		console.log(result);
+		if (result) {
+			const newDatasets = result.map((essayScore, index) => {
+				const results = [
+					essayScore.grammar,
+					essayScore.vocabulary,
+					essayScore.sentence_expression,
+					essayScore.intra_paragraph_structure,
+					essayScore.inter_paragraph_structure,
+					essayScore.structural_consistency,
+					essayScore.length,
+					essayScore.topic_clarity,
+					essayScore.originality,
+					essayScore.prompt_comprehension,
+					essayScore.narrative,
+				];
+
+				const hue = (index * 40) % 360;
+
+				return {
+					label: `${essayScore.filename}`,
+					data: results,
+					backgroundColor: `hsla(${hue}, 100%, 70%, 0.1)`,
+					borderColor: `hsl(${hue}, 100%, 50%)`,
+					borderWidth: 1,
+					pointBackgroundColor: `hsl(${hue}, 100%, 50%)`,
+					pointBorderColor: '#fff',
+					pointHoverBackgroundColor: '#fff',
+					pointHoverBorderColor: `hsl(${hue}, 100%, 50%)`,
+				};
+			});
+
+			setRadarData((prevData) => ({
+				...prevData,
+				datasets: newDatasets,
+			}));
+		}
+	}, [result]);
 
 	return (
 		<div className='rounded-xl text-sm overflow-hidden flex flex-col'>
 			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
-				<h3 className='text-lg font-semibold'>{title}</h3>
+				<h2 className="text-2xl font-bold py-2">{title}</h2>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${!hidden && "rotate-90"} transition-transform ease-in-out w-5 h-5`}>
 					<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 				</svg>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Tags from "../Tags";
+import MorphTags from "../Tags";
 
 const Sentence = ({ tokens, content, index }) => {
 	return (
@@ -36,7 +36,7 @@ const Sentence = ({ tokens, content, index }) => {
 											</div>
 											<div
 												className=""
-												style={{ "color": Tags.find(tag => tag.tag === morph.tag)?.color }}
+												style={{ "color": MorphTags.find(tag => tag.tag === morph.tag)?.color }}
 											>
 												{morph.tag}
 											</div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-import { Tags } from "./Tags";
+import { MorphTags } from "./Tags";
 
 
 
@@ -9,7 +9,7 @@ const TagInfo = () => {
 	const [tags, setTags] = useState([]);
 
 	useEffect(() => {
-		setTags(Tags);
+		setTags(MorphTags);
 	}, []);
 
 	return (
@@ -20,23 +20,22 @@ const TagInfo = () => {
 			transition={{ duration: 0.1 }}
 			className='grid grid-cols-1 gap-4'
 		>
-			<h2 className="text-2xl font-bold py-2">품사 태깅표</h2>
+			<h2 className="text-2xl font-bold py-2">Morpheme Tags</h2>
 
 			<div className="rounded-xl w-full shadow overflow-hidden text-center">
-				<table className="w-full">
+				<table className="w-full text-sm">
 					<thead className="border-b-[1px] table-header">
 						<tr className="*:py-2 *:px-3">
-							<th className="">태그</th>
-							<th className="">태그 설명</th>
-							<th className="">지정 색</th>
+							<th className="">Tag Color</th>
+							<th className="">Tag</th>
+							<th className="">Description (KR)</th>
+							<th className="">Description</th>
 						</tr>
 					</thead>
 
 					<tbody className="table-contents dark:bg-slate-800">
 						{tags.map((tag) => (
 							<tr key={tag.tag} className="">
-								<td className="px-3 py-1 font-mono">{tag.tag}</td>
-								<td className="px-3 py-1">{tag.desc}</td>
 								<td
 									className="px-3 py-1 font-mono italic text-white"
 									style={{
@@ -45,6 +44,9 @@ const TagInfo = () => {
 								>
 									{tag.color}
 								</td>
+								<td className="px-3 py-1 font-mono">{tag.tag}</td>
+								<td className="px-3 py-1">{tag.desc}</td>
+								<td className="px-3 py-1">{tag.desc_eng}</td>
 							</tr>
 						))}
 					</tbody>

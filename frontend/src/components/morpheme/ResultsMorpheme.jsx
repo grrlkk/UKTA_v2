@@ -96,7 +96,7 @@ const ResultsMor = () => {
 			transition={{ duration: 0.1 }}
 			className='grid grid-cols-1 gap-4'
 		>
-			<h2 className="text-2xl font-bold py-2">형태소 분석 결과</h2>
+			<h2 className="text-2xl font-bold py-2">Morpheme Analysis Results</h2>
 
 			<Pagination componentArray=
 				{morphemeResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tags } from "../Tags";
+import { MorphTags } from "../Tags";
 
 
 const HilightText = ({ range, content, color }) => {
@@ -37,18 +37,21 @@ const ToggleTable = ({ tableHidden, setTableHidden }) => {
 	);
 }
 
-const MorphDesc = ({ kr, tag, desc }) => {
+const MorphDesc = ({ kr, tag }) => {
 	return (
 		<>
 			<div className='flex justify-center'>
 				{kr}
 			</div>
-			<div className='flex flex-col justify-center group-hover:gap-1 text-xs gap-1' style={{ "color": Tags.find(t => t.tag === tag)?.color }}>
-				<span className='flex justify-center'>
+			<div className='flex flex-col justify-center group-hover:gap-1 text-xs gap-1' style={{ "color": MorphTags.find(t => t.tag === tag)?.color }}>
+				<span className='flex justify-center text-sm'>
 					{tag}
 				</span>
 				<span className='flex justify-center'>
-					{desc}
+					{MorphTags.find(t => t.tag === tag)?.desc}
+				</span>
+				<span className='flex justify-center'>
+					{MorphTags.find(t => t.tag === tag)?.desc_eng}
 				</span>
 			</div>
 		</>
@@ -98,7 +101,7 @@ const Sentence = ({ result, content, index }) => {
 												<div
 													onMouseEnter={() => {
 														handleMouseEnter(morph[0]);
-														setHoverColor(Tags.find(tag => tag.tag === mmorph.split("/")[1])?.color);
+														setHoverColor(MorphTags.find(tag => tag.tag === mmorph.split("/")[1])?.color);
 													}}
 													onMouseLeave={() => {
 														setRange([0, 0]);
@@ -106,7 +109,11 @@ const Sentence = ({ result, content, index }) => {
 													}}
 													className='p-2 flex flex-col gap-4' key={mmorph}
 												>
-													<MorphDesc kr={mmorph.split("/")[0]} tag={mmorph.split("/")[1]} desc={Tags.find(tag => tag.tag === mmorph.split("/")[1])?.desc} index={index} />
+													<MorphDesc
+														kr={mmorph.split("/")[0]}
+														tag={mmorph.split("/")[1]}
+														index={index}
+													/>
 												</div>
 											);
 										})}
@@ -114,7 +121,7 @@ const Sentence = ({ result, content, index }) => {
 									<div
 										onMouseEnter={() => {
 											handleMouseEnter(morph[0]);
-											setHoverColor(Tags.find(tag => tag.tag === morph[2][0])?.color);
+											setHoverColor(MorphTags.find(tag => tag.tag === morph[2][0])?.color);
 										}}
 										onMouseLeave={() => {
 											setRange([0, 0]);
@@ -124,7 +131,11 @@ const Sentence = ({ result, content, index }) => {
 										id={`${morph[1]}`}
 										className={`group hover:bg-slate-300 dark:hover:bg-slate-700 relative text-sm flex flex-col gap-4 whitespace-nowrap p-2`}
 									>
-										<MorphDesc kr={morph[1]} tag={morph[2][0]} desc={Tags.find(tag => tag.tag === morph[2][0])?.desc} index={index} />
+										<MorphDesc
+											kr={morph[1]}
+											tag={morph[2][0]}
+											index={index}
+										/>
 									</div>
 								)}
 							</div>
@@ -138,9 +149,9 @@ const Sentence = ({ result, content, index }) => {
 							<thead className="">
 								<tr className="">
 									<th className="px-3 text-right w-1/12">n.</th>
-									<th colSpan={2} className="px-3">품사</th>
-									<th className="px-3 w-1/6">태그</th>
-									<th className="px-3 w-1/3">태그 설명</th>
+									<th colSpan={2} className="px-3">Morpheme</th>
+									<th className="px-3 w-1/6">Tag</th>
+									<th className="px-3 w-1/3">Description</th>
 								</tr>
 							</thead>
 						</table>
@@ -158,7 +169,7 @@ const Sentence = ({ result, content, index }) => {
 														<tr
 															onMouseEnter={() => {
 																handleMouseEnter(morph[0]);
-																setHoverColor(Tags.find(tag => tag.tag === mmorph.split("/")[1])?.color);
+																setHoverColor(MorphTags.find(tag => tag.tag === mmorph.split("/")[1])?.color);
 															}}
 															onMouseLeave={() => {
 																setRange([0, 0]);
@@ -178,15 +189,17 @@ const Sentence = ({ result, content, index }) => {
 															<td className="px-3 py-1">{mmorph.split("/")[0]}</td>
 															<td
 																className="px-3 py-1 font-mono w-1/6"
-																style={{ "color": Tags.find(tag => tag.tag === mmorph.split("/")[1])?.color }}
+																style={{ "color": MorphTags.find(tag => tag.tag === mmorph.split("/")[1])?.color }}
 															>
 																{mmorph.split("/")[1]}
 															</td>
 															<td
 																className="px-3 py-1 w-1/3"
-																style={{ "color": Tags.find(tag => tag.tag === mmorph.split("/")[1])?.color }}
+																style={{ "color": MorphTags.find(tag => tag.tag === mmorph.split("/")[1])?.color }}
 															>
-																{Tags.find(tag => tag.tag === mmorph.split("/")[1])?.desc}
+																{MorphTags.find(tag => tag.tag === mmorph.split("/")[1])?.desc}
+																&nbsp;/&nbsp;
+																{MorphTags.find(tag => tag.tag === mmorph.split("/")[1])?.desc}
 															</td>
 														</tr>
 													);
@@ -195,7 +208,7 @@ const Sentence = ({ result, content, index }) => {
 											<tr
 												onMouseEnter={() => {
 													handleMouseEnter(morph[0]);
-													setHoverColor(Tags.find(tag => tag.tag === morph[2][0])?.color);
+													setHoverColor(MorphTags.find(tag => tag.tag === morph[2][0])?.color);
 												}}
 												onMouseLeave={() => {
 													setRange([0, 0]);
@@ -206,15 +219,17 @@ const Sentence = ({ result, content, index }) => {
 												<td colSpan={2} className="px-3 py-1">{morph[1]}</td>
 												<td
 													className="px-3 py-1 font-mono w-1/6"
-													style={{ "color": Tags.find(tag => tag.tag === morph[2][0])?.color }}
+													style={{ "color": MorphTags.find(tag => tag.tag === morph[2][0])?.color }}
 												>
 													{morph[2][0]}
 												</td>
 												<td
 													className="px-3 py-1 w-1/3"
-													style={{ "color": Tags.find(tag => tag.tag === morph[2][0])?.color }}
+													style={{ "color": MorphTags.find(tag => tag.tag === morph[2][0])?.color }}
 												>
-													{Tags.find(tag => tag.tag === morph[2][0])?.desc}
+													{MorphTags.find(tag => tag.tag === morph[2][0])?.desc}
+													&nbsp;/&nbsp;
+													{MorphTags.find(tag => tag.tag === morph[2][0])?.desc_eng}
 												</td>
 											</tr>
 										}
