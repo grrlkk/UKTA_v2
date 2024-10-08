@@ -59,8 +59,7 @@ const ResultsMor = () => {
 
 	const handleSelectFile = (index) => {
 		return () => {
-			selectedFile === index ? setSelectedFile(-1) : setSelectedFile(index);
-			// console.log(index);
+			setSelectedFile(index);
 		}
 	}
 
@@ -96,24 +95,25 @@ const ResultsMor = () => {
 			transition={{ duration: 0.1 }}
 			className='grid grid-cols-1 gap-4'
 		>
-			<h2 className="text-2xl font-bold py-2">형태소 분석 결과</h2>
+			<h2 className="text-2xl font-bold py-2">Morpheme Analysis Results</h2>
 
 			<Pagination componentArray=
 				{morphemeResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (
 					<div
 						id={"mor_" + index}
 						key={index}
+						onClick={handleSelectFile(index)}s
 						className={`
 							p-4 h-fit rounded-3xl overflow-auto w-full shadow relative transition-all 
 							${selectedFile === index ? 'bg-slate-100 dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
 					>
 						<div className={`grid grid-cols-1`}>
-							<h3 onClick={handleSelectFile(index)} className='pb-4 text-lg font-bold truncate'>{index + 1}. {item.filename}</h3>
+							<h3 className='pb-4 text-lg font-bold truncate'>{index + 1}. {item.filename}</h3>
 							<OriginalText content={item.contents} trunc={selectedFile !== index} date={item.upload_date} procTime={item.process_time} />
 
 							<div className={`flex flex-col gap-4 overflow-y-hidden transition-all ease-in-out ${selectedFile === index ? "mt-4" : "h-0 overflow-hidden"}`}>
 								<hr className='' />
-								<Sentences result={item.results_full} content={item.sentences} />
+								<Sentences results={item.results} />
 							</div>
 						</div>
 

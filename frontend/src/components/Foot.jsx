@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-const Foot = ({ darkMode, setDarkMode }) => {
+const Foot = () => {
 	return (
 		<footer
 			className="mt-64 pt-32 pb-16 text-slate-500 text-xs bg-slate-50 dark:bg-slate-950"
@@ -10,9 +10,9 @@ const Foot = ({ darkMode, setDarkMode }) => {
 			<div className="max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto flex flex-col lg:items-end lg:flex-row justify-between gap-16">
 				<div className='flex flex-col justify-between lg:justify-start items-center lg:items-start gap-4 w-full'>
 					<div className='divide-x-2 dark:divide-slate-700 *:px-2 flex justify-center'>
-						<Link to='/cohesion' className='hover:font-bold first:pl-0'>자질 분석</Link>
-						<Link to='/morpheme' className='hover:font-bold'>형태소 분석</Link>
-						<Link to='/tagging' className='hover:font-bold'>품사 태깅표</Link>
+						<Link to='/cohesion' className='hover:font-bold first:pl-0'>Cohesion</Link>
+						<Link to='/morpheme' className='hover:font-bold'>Morpheme</Link>
+						<Link to='/tagging' className='hover:font-bold'>Morpheme Tags</Link>
 					</div>
 
 					{/* <button

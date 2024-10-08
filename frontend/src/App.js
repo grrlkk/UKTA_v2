@@ -47,6 +47,7 @@ function App() {
 					<div className='min-h-80'>
 						<AnimatePresence mode='wait'>
 							<Routes location={currentPage} key={currentPage.pathname}>
+								<Route path='/' element={<Dummy />} />
 								<Route path='/morpheme' element={<ResultsMor />} />
 								<Route path='/cohesion' element={<ResultsCoh />} />
 								<Route path='/tagging' element={<TagInfo />} />

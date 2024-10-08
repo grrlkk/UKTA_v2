@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Tags } from "../Tags";
+import React, { useEffect, useState } from "react";
+import { MorphTags } from "../Tags";
 
 
 const HilightText = ({ range, content, color }) => {
@@ -37,29 +37,34 @@ const ToggleTable = ({ tableHidden, setTableHidden }) => {
 	);
 }
 
-const MorphDesc = ({ kr, tag, desc }) => {
+const MorphDesc = ({ kr, tag }) => {
 	return (
 		<>
 			<div className='flex justify-center'>
 				{kr}
 			</div>
-			<div className='flex flex-col justify-center group-hover:gap-1 text-xs gap-1' style={{ "color": Tags.find(t => t.tag === tag)?.color }}>
-				<span className='flex justify-center'>
+			<div className='flex flex-col justify-center group-hover:gap-1 text-xs gap-1' style={{ "color": MorphTags.find(t => t.tag === tag)?.color }}>
+				<span className='flex justify-center text-sm'>
 					{tag}
 				</span>
 				<span className='flex justify-center'>
-					{desc}
+					{MorphTags.find(t => t.tag === tag)?.desc}
+				</span>
+				<span className='flex justify-center'>
+					{MorphTags.find(t => t.tag === tag)?.desc_eng}
 				</span>
 			</div>
 		</>
 	);
 }
 
-const Sentence = ({ result, content, index }) => {
+const Sentence = ({ index, sentence }) => {
 	const [range, setRange] = useState([0, 0]);
 	const [hoverColor, setHoverColor] = useState('');
 	const [tableHidden, setTableHidden] = useState(true);
 	const handleMouseEnter = (range) => {
+		range[0] = range[0] - sentence.text.beginOffset;
+		range[1] = range[1] - sentence.text.beginOffset;
 		setRange(range);
 	}
 
@@ -67,7 +72,7 @@ const Sentence = ({ result, content, index }) => {
 		<div className="flex flex-col gap-2 text-sm">
 			<div className="flex gap-2">
 				<div className="">{index + 1}.</div>
-				<HilightText range={range} content={content} color={hoverColor} />
+				<HilightText range={range} content={sentence.text.content} color={hoverColor} />
 			</div>
 
 			<div className="flex flex-col bg-slate-300 dark:bg-slate-900 rounded-xl overflow-hidden font-semibold">
@@ -84,49 +89,35 @@ const Sentence = ({ result, content, index }) => {
 						${tableHidden ? "h-fit mt-2" : "h-0 pt-0 m-0"}
 					`}
 				>
-					{result.map((morph, index) => {
+					{sentence.tokens.map((token, index) => {
 						return (
-							<div key={index}>
-								{morph[2][7] != null ? (
-									<div
-										key={index + morph[1]}
-										id={`${morph[1]}`}
-										className={`group hover:bg-slate-300 dark:hover:bg-slate-700 relative text-sm flex whitespace-nowrap`}
-									>
-										{String(morph[2][7]).split("+").map((mmorph, index) => {
-											return (
-												<div
-													onMouseEnter={() => {
-														handleMouseEnter(morph[0]);
-														setHoverColor(Tags.find(tag => tag.tag === mmorph.split("/")[1])?.color);
-													}}
-													onMouseLeave={() => {
-														setRange([0, 0]);
-														setHoverColor('');
-													}}
-													className='p-2 flex flex-col gap-4' key={mmorph}
-												>
-													<MorphDesc kr={mmorph.split("/")[0]} tag={mmorph.split("/")[1]} desc={Tags.find(tag => tag.tag === mmorph.split("/")[1])?.desc} index={index} />
-												</div>
-											);
-										})}
-									</div>) : (
-									<div
-										onMouseEnter={() => {
-											handleMouseEnter(morph[0]);
-											setHoverColor(Tags.find(tag => tag.tag === morph[2][0])?.color);
-										}}
-										onMouseLeave={() => {
-											setRange([0, 0]);
-											setHoverColor('');
-										}}
-										key={index + morph[1]}
-										id={`${morph[1]}`}
-										className={`group hover:bg-slate-300 dark:hover:bg-slate-700 relative text-sm flex flex-col gap-4 whitespace-nowrap p-2`}
-									>
-										<MorphDesc kr={morph[1]} tag={morph[2][0]} desc={Tags.find(tag => tag.tag === morph[2][0])?.desc} index={index} />
-									</div>
-								)}
+							<div
+								key={index}
+								className="flex flex-row"
+							>
+								{token.morphemes.map((morph, index_) => {
+									return (
+										<div
+											key={index_}
+											className={`
+												flex flex-col gap-1 p-2 text-nowrap *:flex *:justify-center 
+												hover:bg-slate-300 dark:hover:bg-slate-700
+											`}
+											onMouseEnter={() => {
+												handleMouseEnter([morph.text.beginOffset, morph.text.beginOffset + morph.text.length]);
+												setHoverColor(MorphTags.find(tag => tag.tag === morph.tag)?.color);
+											}}
+											onMouseLeave={() => {
+												setRange([0, 0]);
+												setHoverColor('');
+											}}
+										>
+											<div className="flex flex-col gap-2">
+												<MorphDesc kr={morph.text.content} tag={morph.tag} />
+											</div>
+										</div>
+									);
+								}, [])}
 							</div>
 						);
 					})}
@@ -138,9 +129,10 @@ const Sentence = ({ result, content, index }) => {
 							<thead className="">
 								<tr className="">
 									<th className="px-3 text-right w-1/12">n.</th>
-									<th colSpan={2} className="px-3">품사</th>
-									<th className="px-3 w-1/6">태그</th>
-									<th className="px-3 w-1/3">태그 설명</th>
+									<th className="px-3 w-1/6">Token</th>
+									<th className="px-3">Morpheme</th>
+									<th className="px-3 w-1/6">Tag</th>
+									<th className="px-3 w-1/3">Description</th>
 								</tr>
 							</thead>
 						</table>
@@ -148,75 +140,49 @@ const Sentence = ({ result, content, index }) => {
 
 					<div className="table-contents overflow-x-hidden overflow-y-scroll max-h-96 w-full">
 						<table className="table-auto w-full">
-							{result.map((morph, index) => {
+							{sentence.tokens.map((token, index) => {
 								return (
 									<tbody key={index} className="">
-										{morph[2][7] != null ?
-											<>
-												{String(morph[2][7]).split("+").map((mmorph, index_) => {
-													return (
-														<tr
-															onMouseEnter={() => {
-																handleMouseEnter(morph[0]);
-																setHoverColor(Tags.find(tag => tag.tag === mmorph.split("/")[1])?.color);
-															}}
-															onMouseLeave={() => {
-																setRange([0, 0]);
-																setHoverColor('');
-															}}
-															key={index_} className={``}>
-															{index_ === 0 ?
-																<>
-																	<td rowSpan={String(morph[2][7]).split("+").length} className="px-3 py-1 font-mono italic text-right w-1/12">
-																		{index + 1}
-																	</td>
-																	<td rowSpan={String(morph[2][7]).split("+").length} className="px-3 py-1">
-																		{morph[1]}
-																	</td>
-																</>
-																: null}
-															<td className="px-3 py-1">{mmorph.split("/")[0]}</td>
-															<td
-																className="px-3 py-1 font-mono w-1/6"
-																style={{ "color": Tags.find(tag => tag.tag === mmorph.split("/")[1])?.color }}
-															>
-																{mmorph.split("/")[1]}
-															</td>
-															<td
-																className="px-3 py-1 w-1/3"
-																style={{ "color": Tags.find(tag => tag.tag === mmorph.split("/")[1])?.color }}
-															>
-																{Tags.find(tag => tag.tag === mmorph.split("/")[1])?.desc}
-															</td>
-														</tr>
-													);
-												})}
-											</> :
-											<tr
-												onMouseEnter={() => {
-													handleMouseEnter(morph[0]);
-													setHoverColor(Tags.find(tag => tag.tag === morph[2][0])?.color);
-												}}
-												onMouseLeave={() => {
-													setRange([0, 0]);
-													setHoverColor('');
-												}}
-												key={index} className="">
-												<td className="px-3 py-1 font-mono text-right w-1/12 italic">{index + 1}</td>
-												<td colSpan={2} className="px-3 py-1">{morph[1]}</td>
-												<td
-													className="px-3 py-1 font-mono w-1/6"
-													style={{ "color": Tags.find(tag => tag.tag === morph[2][0])?.color }}
+										{token.morphemes.map((morph, index_) => {
+											return (
+												<tr
+													onMouseEnter={() => {
+														handleMouseEnter([morph.text.beginOffset, morph.text.beginOffset + morph.text.length]);
+														setHoverColor(MorphTags.find(tag => tag.tag === morph.tag)?.color);
+													}}
+													onMouseLeave={() => {
+														setRange([0, 0]);
+														setHoverColor('');
+													}}
+													key={index_} className={`
+																hover:bg-slate-300 dark:hover:bg-slate-700
+															`}
 												>
-													{morph[2][0]}
-												</td>
-												<td
-													className="px-3 py-1 w-1/3"
-													style={{ "color": Tags.find(tag => tag.tag === morph[2][0])?.color }}
-												>
-													{Tags.find(tag => tag.tag === morph[2][0])?.desc}
-												</td>
-											</tr>
+													{index_ === 0 &&
+														<>
+															<td rowSpan={token.morphemes.length} className="px-3 py-1 font-mono text-right w-1/12 italic">{index + 1}</td>
+															<td rowSpan={token.morphemes.length} className="px-3 py-1 w-1/6">
+																{token.text.content}
+															</td>
+														</>}
+													<td className="px-3 py-1">{morph.text.content}</td>
+													<td
+														className="px-3 py-1 font-mono w-1/6"
+														style={{ "color": MorphTags.find(tag => tag.tag === morph.tag)?.color }}
+													>
+														{morph.tag}
+													</td>
+													<td
+														className="px-3 py-1 w-1/3"
+														style={{ "color": MorphTags.find(tag => tag.tag === morph.tag)?.color }}
+													>
+														{MorphTags.find(tag => tag.tag === morph.tag)?.desc}
+														&nbsp;/&nbsp;
+														{MorphTags.find(tag => tag.tag === morph.tag)?.desc_eng}
+													</td>
+												</tr>
+											);
+										})
 										}
 									</tbody>
 								);
@@ -229,16 +195,15 @@ const Sentence = ({ result, content, index }) => {
 	);
 }
 
-const Sentences = ({ result, content }) => {
+const Sentences = ({ results }) => {
 	return (
 		<div className='grid grid-cols-1 gap-4'>
-			{result.map((sentence, index) => {
+			{results.sentences.map((sentence, index) => {
 				return (
-					<Sentence key={index} result={sentence} content={content[index]} index={index} />
+					<Sentence key={index} index={index} sentence={sentence} />
 				)
 			})}
 		</div >
-
 	);
 }
 

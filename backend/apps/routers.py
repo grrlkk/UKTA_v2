@@ -5,11 +5,12 @@ import apps.cohesion.textpreprocess as tp
 from apps.cohesion.process import process
 from apps.cohesion.essay_scoring.essay_scoring import score_results
 from apps.morph.morph import mecab
+from apps.morph.bareun import bareun
 from fastapi import APIRouter, File, HTTPException, Request, Response, UploadFile
 
 # pydantic.json.ENCODERS_BY_TYPE[ObjectId] = str
 router = APIRouter()
-morph = mecab()
+morph = bareun()
 
 
 # POST: upload multiple .txt files =============================
@@ -17,7 +18,6 @@ morph = mecab()
 async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 	cnt = 100
 
-	# make object for each file uploaded
 	for file in files:
 		contents = await file.read()
 
@@ -26,14 +26,12 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 
 		now = datetime.datetime.now()
 
-		# process the uploaded text
 		results = process(contents.decode("UTF8"))
 		essay_score = score_results(results)
 		results["essay_score"] = essay_score
 
 		process_time = datetime.datetime.now() - now
 
-		# each object being uploaded to MONGODB
 		upload = {
 			"_id": now.strftime("%Y-%m-%d-%H:%M:%S") + "-C" + str(cnt),
 			"upload_date": now,
@@ -54,33 +52,26 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 
 @router.post("/morpheme", tags=["morpheme"])
 async def upload_files(request: Request, files: List[UploadFile] = File(...)):
-	cnt = 100
+    cnt = 100
 
-	# make object for each file uploaded
-	for file in files:
-		contents = await file.read()
+    # make object for each file uploaded
+    for file in files:
+        contents = await file.read()
 
-		print(file.filename)
-		print(contents.decode("UTF8"))
+        print(file.filename)
+        print(contents.decode("UTF8"))
 
-		now = datetime.datetime.now()
+        now = datetime.datetime.now()
 
-		# process the uploaded text
-		sentences = tp.splitText(contents.decode("UTF8"))
+        # process the uploaded text
+        sentences = tp.splitText(contents.decode("UTF8"))\
 
-		results = []
-		results_full = []
+        results = morph.tags(sentences).as_json()
 
-		for index in range(len(sentences)):
-			morph_result = morph.pos(sentences[index])
-			if len(morph_result) > 0:
-				results.append(morph_result)
-				results_full.append(morph.parse(sentences[index]))
+        process_time = datetime.datetime.now() - now
 
-		process_time = datetime.datetime.now() - now
-
-		# each object being uploaded to MONGODB
-		upload = {
+        # each object being uploaded to MONGODB
+        upload = {
 			"_id": now.strftime("%Y-%m-%d-%H:%M:%S") + "-M" + str(cnt),
 			"upload_date": now,
 			"process_time": process_time.total_seconds(),
@@ -88,16 +79,15 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 			"contents": contents.decode("UTF8"),
 			"sentences": list(sentences),
 			"results": results,
-			"results_full": results_full,
 		}
-		cnt += 1
+        cnt += 1
 
-		new_file = await request.app.mongodb["morpheme"].insert_one(upload)
-		created_file = await request.app.mongodb["morpheme"].find_one(
+        new_file = await request.app.mongodb["morpheme"].insert_one(upload)
+        created_file = await request.app.mongodb["morpheme"].find_one(
 			{"_id": new_file.inserted_id}
 		)
 
-	return {"filenames": [file.filename for file in files]}
+    return {"filenames": [file.filename for file in files]}
 
 
 # GET: list all files; list file by ID =========================
