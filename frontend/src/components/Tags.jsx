@@ -59,6 +59,7 @@ export const MorphTags = [
 	{ "tag": "CL", "desc": "실질", "desc_eng": "Content", "color": "#000000" },
 	{ "tag": "ML", "desc": "수식언", "desc_eng": "Modifier", "color": "#000000" },
 	{ "tag": "NL", "desc": "체언", "desc_eng": "Noun", "color": "#000000" },
+	{ "tag": "N", "desc": "체언", "desc_eng": "Noun", "color": "#000000" },
 	{ "tag": "NM", "desc": "수사", "desc_eng": "Rhetorical", "color": "#000000" },
 	{ "tag": "FL", "desc": "형식", "desc_eng": "Formal", "color": "#000000" },
 	{ "tag": "VL", "desc": "용언", "desc_eng": "Verb", "color": "#000000" },
