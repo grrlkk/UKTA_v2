@@ -9,36 +9,34 @@ import collections
 
 
 class GRUScoreModule(nn.Module):
-	def __init__(self, output_dim=11, hidden_dim=128, ukt_a_dim=294, dropout=0.5):
-		super(GRUScoreModule, self).__init__()
+    def __init__(self,output_dim, hidden_dim ,ukt_a_dim = 147, dropout=0.5):
+        super(GRUScoreModule, self).__init__()
+        
+        self.gru = nn.GRU(768, hidden_dim, dropout=dropout, batch_first=True, bidirectional=True)
+        self.ukt_a_fc = nn.Linear(ukt_a_dim*2, hidden_dim)
+        self.attention = nn.Linear(ukt_a_dim,ukt_a_dim)
+        self.dropout = nn.Dropout(dropout)
+        self.fc = nn.Linear(hidden_dim*3, output_dim)
+        self.sigmoid = nn.Sigmoid()
+        self.softmax = nn.Softmax(dim=1)
 
-		self.gru = nn.GRU(
-			768, hidden_dim, dropout=dropout, batch_first=True, bidirectional=True
-		)
-		self.ukt_a_fc = nn.Linear(ukt_a_dim, hidden_dim)
-		self.attention = nn.Linear(ukt_a_dim, ukt_a_dim)
-		self.dropout = nn.Dropout(dropout)
-		self.fc = nn.Linear(hidden_dim * 3, output_dim)
-		self.sigmoid = nn.Sigmoid()
-		self.softmax = nn.Softmax(dim=1)
+    def forward(self, x, ukt_a):
+        x, _ = self.gru(x)
+        
+        x = x[:, -1, :]  # Use the output of the last time step
 
-	def forward(self, x, ukt_a):
-		x, _ = self.gru(x)
+        ukt_a_attention = self.attention(ukt_a)
+        attention_weights = self.softmax(ukt_a_attention)
+        weighted_ukt_a = attention_weights * ukt_a
+        concat_weighted_ukta = torch.cat((weighted_ukt_a, ukt_a), dim=1)
+        ukt_a_features = self.ukt_a_fc(concat_weighted_ukta)
+        combined = torch.cat((x,ukt_a_features), dim=1)
 
-		x = x[:, -1, :]  # Use the output of the last time step
-
-		ukt_a_attention = self.attention(ukt_a)
-		attention_weights = self.softmax(ukt_a_attention)
-		weighted_ukt_a = attention_weights * ukt_a
-
-		ukt_a_features = self.ukt_a_fc(weighted_ukt_a)
-		combined = torch.cat((x, ukt_a_features), dim=1)
-
-		combined = self.dropout(combined)
-		combined = self.fc(combined)
-		output = self.sigmoid(combined)
-
-		return output, attention_weights
+        combined = self.dropout(combined)
+        combined = self.fc(combined)
+        output = self.sigmoid(combined)
+        
+        return output, attention_weights
 
 
 def scoring(bert_model, gru_model, extracted_features, tokenizer):
