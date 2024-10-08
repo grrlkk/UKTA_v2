@@ -16,6 +16,17 @@ const Pagination = ({ componentArray, setSelectedFile }) => {
 		// console.log(pageNumber * itemsPerPage - itemsPerPage);
 	}
 
+	if (componentArray.length === 0) {
+		return (
+			<div className='flex justify-center items-center h-96'>
+				<div className='text-center'>
+					<h2 className='text-2xl font-bold'>No data available</h2>
+					<p className='text-gray-500'>Please upload a file to get started</p>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className='grid grid-cols-1 gap-4'>
 			<AnimatePresence mode='sync'>

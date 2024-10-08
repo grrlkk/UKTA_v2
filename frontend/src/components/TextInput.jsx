@@ -11,15 +11,14 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 
 	const handleAnalysis = async (type) => {
 		setUploadInProgress(true);
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 500));
 		const formData = new FormData();
 
 		if (inputValue.length > 0) {
 			formData.append("files", new Blob([inputValue], { type: "text/plain" }), inputValue.split(" ")[0] + "...");
-		} else if (selectedFile) {
+		} else if (files.length > 0) {
 			for (let i = 0; i < files.length; i++) {
-				const file = files[i];
-				formData.append("files", file, file.name);
+				formData.append("files", files[i], files[i].name);
 			}
 		}
 
@@ -59,6 +58,7 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 		} else {
 			setFiles(files);
 			setInputValue('');
+			console.log(files);
 		}
 	};
 

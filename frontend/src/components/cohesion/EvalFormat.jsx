@@ -26,7 +26,6 @@ const EvalFormat = ({ result, title, darkMode }) => {
 				},
 				grid: {
 					color: darkMode ? '#1e293b' : '#cbd5e1',
-
 				},
 				suggestedMin: 0,
 				suggestedMax: 3,
@@ -46,7 +45,8 @@ const EvalFormat = ({ result, title, darkMode }) => {
 					fontSize: 12,
 				},
 			},
-		}
+		},
+		animation: false,
 	};
 
 	useEffect(() => {
@@ -68,7 +68,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 					essayScore.narrative,
 				];
 
-				const hue = (index * 40) % 360;
+				const hue = darkMode ? 0 : 200;
 
 				setTotalScore(results.reduce((acc, cur) => acc + cur, 0));
 
