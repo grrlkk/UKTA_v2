@@ -34,7 +34,7 @@ const TagInfo = () => {
 					</thead>
 
 					<tbody className="table-contents dark:bg-slate-800">
-						{tags.map((tag) => (
+						{tags.filter(tag => tag.color !== "#000000").map((tag) => (
 							<tr key={tag.tag} className="">
 								<td
 									className="px-3 py-1 font-mono italic text-white"

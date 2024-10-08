@@ -19,7 +19,7 @@ function App() {
 	const [uploadInProgress, setUploadInProgress] = useState(false);
 	const [darkMode, setDarkMode] = useState(() => {
 		const preferredColorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-		return preferredColorScheme ? true : false;
+		return preferredColorScheme ? false : false;
 	});
 
 	useEffect(() => {
@@ -49,7 +49,7 @@ function App() {
 							<Routes location={currentPage} key={currentPage.pathname}>
 								<Route path='/' element={<Dummy />} />
 								<Route path='/morpheme' element={<ResultsMor />} />
-								<Route path='/cohesion' element={<ResultsCoh />} />
+								<Route path='/cohesion' element={<ResultsCoh darkMode={darkMode} />} />
 								<Route path='/tagging' element={<TagInfo />} />
 								{uploadInProgress && <Route path='/loading' element={<Loading />} />}
 								<Route path='*' element={<Navigate to="/" />} />

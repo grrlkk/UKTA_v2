@@ -7,7 +7,7 @@ import { ResultsList, ResultsNumeric, MorphemeFormat } from './AnalysisFormat';
 import EvalFormat from './EvalFormat';
 
 
-const ResultsCoh = () => {
+const ResultsCoh = ({ darkMode }) => {
 	const [cohesionResult, setCohesionResult] = useState([]);
 	const [selectedFile, setSelectedFile] = useState(0);
 	const [selectedEssay, setSelectedEssay] = useState([]);
@@ -124,6 +124,7 @@ const ResultsCoh = () => {
 
 								<div className='flex flex-col gap-4 font-semibold'>
 									<EvalFormat
+										darkMode={darkMode}
 										result={[{
 											...item.results.essay_score,
 											filename: item.filename,

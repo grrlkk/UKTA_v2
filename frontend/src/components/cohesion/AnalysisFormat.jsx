@@ -138,8 +138,16 @@ const ResultsNumeric = ({ result, title }) => {
 									<td className='p-1 w-1/3 break-all'>
 										{key}
 									</td>
-									<td className='p-1 w-1/3 break-all'>
-										{CohTags[key]?.desc && <p>{CohTags[key].target} {CohTags[key].desc}</p>}
+									<td className='p-1 w-1/3 break-all flex gap-1'>
+										<span>
+											{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
+											{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc}
+											{MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc}
+										</span>
+										<span>
+											{CohTags[key.match(/CL_Den/)]?.desc ? CohTags[key.match(/CL_Den/)].desc :
+												CohTags[key.split("_")[1]]?.desc && CohTags[key.split("_")[1]].desc}
+										</span>
 									</td>
 									<td className='p-1 pr-4 w-32 text-right font-mono italic'>
 										{value.toFixed(4)}
