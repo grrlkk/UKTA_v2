@@ -31,7 +31,7 @@ body {
 	}
 
 	.table-header {
-		@apply shadow-sm bg-slate-300 dark:bg-slate-900 rounded-t-xl border-b-[1px] border-slate-400 dark:border-slate-700;
+		@apply shadow-sm bg-slate-300 dark:bg-slate-900 border-b-[1px] border-slate-400 dark:border-slate-700;
 	}
 
 	.table-contents {

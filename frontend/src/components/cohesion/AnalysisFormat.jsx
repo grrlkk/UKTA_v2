@@ -91,9 +91,9 @@ const ResultsNumeric = ({ result, title }) => {
 				</svg>
 			</button>
 
-			<div className={`${hidden ? "h-0" : "max-h-96 pt-2"} transition-all ease-in-out`}>
-				<div className='pr-[6px] table-header py-2'>
-					<div className='flex ml-2 mb-2 items-center font-normal'>
+			<div className={`${hidden ? "h-0" : "max-h-96 pt-2"} rounded-xl overflow-hidden transition-all ease-in-out`}>
+				<div className='table-header p-2 rounded-t-xl'>
+					<div className='flex items-center font-normal'>
 						<button className={`sm:grow-0 btn-primary py-1 px-3 rounded-lg rounded-r-none flex flex-nowrap gap-1 items-center`} onClick={() => handleFileDownload("txt")}>
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -105,24 +105,21 @@ const ResultsNumeric = ({ result, title }) => {
 						</button>
 						<hr className="ml-2 grow" />
 					</div>
-
-					<table className='w-full'>
-						<thead className='w-full'>
-							<tr className='text-left'>
-								<th className='px-3 w-12'>
-									<input type="checkbox" className='w-full accent-slate-600 align-middle' checked={selectedAll} onChange={handleSelectAll()} />
-								</th>
-								<th className='px-1 w-1/12'>n.</th>
-								<th className='px-1 w-1/3'>태그 ({selectedProperty.length})</th>
-								<th className='px-1 w-1/3'>자질 설명</th>
-								<th className='px-1 pr-4 w-32 text-right'>값</th>
-							</tr>
-						</thead>
-					</table>
 				</div>
 
 				<div className='table-contents w-full overflow-y-scroll max-h-72'>
 					<table className='w-full table-fixed'>
+						<thead className='w-full'>
+							<tr className='text-left'>
+								<th className='px-3 w-12 sticky top-0 table-header'>
+									<input type="checkbox" className='w-full accent-slate-600 align-middle' checked={selectedAll} onChange={handleSelectAll()} />
+								</th>
+								<th className='px-1 w-1/12 sticky top-0 table-header'>n.</th>
+								<th className='px-1 w-1/3 sticky top-0 table-header'>Tag ({selectedProperty.length})</th>
+								<th colSpan={2} className='px-1 sticky top-0 table-header'>Description</th>
+								<th className='px-1 pr-4 w-32 sticky top-0 table-header text-right'>Value</th>
+							</tr>
+						</thead>
 						<tbody className='w-full'>
 							{Object.entries(result).map(([key, value], index) => (
 								<tr key={key} className='' onClick={handleSelectProperty(key + '\t' + value)}>
@@ -138,16 +135,38 @@ const ResultsNumeric = ({ result, title }) => {
 									<td className='p-1 w-1/3 break-all'>
 										{key}
 									</td>
-									<td className='p-1 w-1/3 break-all flex gap-1'>
-										<span>
-											{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
-											{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc}
-											{MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc}
-										</span>
-										<span>
-											{CohTags[key.match(/CL_Den/)]?.desc ? CohTags[key.match(/CL_Den/)].desc :
-												CohTags[key.split("_")[1]]?.desc && CohTags[key.split("_")[1]].desc}
-										</span>
+									<td className='p-1 break-all'>
+										<div className='flex gap-1'>
+											<span>
+												{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
+												{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc}
+												{MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc}
+												{MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc}
+											</span>
+											<span>
+												{CohTags[key.match(/CL_Den/)]?.desc ||
+													CohTags[key.match(/FL_Den/)]?.desc ||
+													CohTags[key.split("_")[1]]?.desc ||
+													CohTags[key]?.desc}
+											</span>
+										</div>
+									</td>
+									<td className='p-1 break-all'>
+										<div className='flex gap-1'>
+											<span>
+												{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc_eng}
+												{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc_eng}
+												{MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc_eng}
+												{MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc_eng}
+											</span>
+											<span>
+												{CohTags[key.match(/CL_Den/)]?.desc_eng ||
+													CohTags[key.match(/FL_Den/)]?.desc_eng ||
+													CohTags[key.split("_")[1]]?.desc_eng ||
+													CohTags[key]?.desc_eng}
+											</span>
+
+										</div>
 									</td>
 									<td className='p-1 pr-4 w-32 text-right font-mono italic'>
 										{value.toFixed(4)}
@@ -252,9 +271,9 @@ const ResultsList = ({ result, title }) => {
 				</svg>
 			</button>
 
-			<div className={`${hidden ? "h-0" : "max-h-96 pt-2"} transition-all ease-in-out`}>
-				<div className='pr-[6px] table-header py-2'>
-					<div className='flex ml-2 mb-2 items-center font-normal'>
+			<div className={`${hidden ? "h-0" : "max-h-96 pt-2"} rounded-xl overflow-hidden transition-all ease-in-out`}>
+				<div className='table-header p-2 rounded-t-xl overflow-hidden'>
+					<div className='flex items-center font-normal'>
 						<button className={`sm:grow-0 btn-primary py-1 px-3 rounded-lg rounded-r-none flex flex-nowrap gap-1 items-center`} onClick={() => handleFileDownload("txt")}>
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -269,40 +288,37 @@ const ResultsList = ({ result, title }) => {
 							{expanded ? '접기' : '확장'}
 						</button>
 					</div>
+				</div>
 
-					<table className='w-full'>
+				<div className='table-contents w-full overflow-y-scroll max-h-72'>
+					<table className='w-full table-fixed'>
 						<thead className='w-full'>
 							<tr className='text-left'>
-								<th className='px-3 w-12'>
+								<th className='px-3 w-12 sticky top-0 table-header'>
 									<input type="checkbox" className='w-full accent-slate-600 align-middle' checked={selectedAll} onChange={handleSelectAll()} />
 								</th>
-								<th className='px-1 w-1/12'>n.</th>
-								<th className='px-1 w-1/6'>태그 ({selectedProperty.length})</th>
-								<th className='px-1 w-1/6'>자질</th>
+								<th className='px-1 w-1/12 sticky top-0 table-header'>n.</th>
+								<th className='px-1 sticky top-0 table-header'>태그 ({selectedProperty.length})</th>
+								<th className='px-1 sticky top-0 table-header'>자질</th>
 								{expanded && (
-									<td className='w-84'>
+									<td className='w-1/2 sticky top-0 table-header'>
 										<table className='w-full'>
 											<tbody>
 												<tr className='border-0 hover:bg-inherit'>
 													<th className='px-1 w-1/12'>n.</th>
-													<th className='px-1 w-2/12'>품사</th>
-													<th className='px-1 w-1/12'>태그</th>
-													<th className='px-1 w-8/12'>포함 문장</th>
+													<th className='px-1 w-1/4'>품사</th>
+													<th className='px-1 w-1/6'>태그</th>
+													<th className='px-1'>포함 문장</th>
 												</tr>
 											</tbody>
 										</table>
 									</td>
 								)}
 								{!expanded && (
-									<th className='px-1 w-84 text-right pr-4'>해당 품사 수</th>
+									<th className='px-1 text-right pr-4 sticky top-0 table-header'>해당 품사 수</th>
 								)}
 							</tr>
 						</thead>
-					</table>
-				</div>
-
-				<div className='table-contents w-full overflow-y-scroll max-h-72'>
-					<table className='w-full table-fixed'>
 						<tbody className='w-full'>
 							{Object.entries(result).map(([key, value], index) => (
 								<tr key={key} className='align-top' onClick={handleSelectProperty(index)}>
@@ -315,22 +331,33 @@ const ResultsList = ({ result, title }) => {
 									<td className='p-1 w-1/12 font-mono italic'>
 										{Object.keys(result).indexOf(key) + 1}
 									</td>
-									<td className='p-1 w-1/6 break-all'>
+									<td className='p-1 break-all'>
 										{key}
 									</td>
-									<td className='p-1 w-1/6 break-all'>
-										{CohTags[key]?.desc && <p>{CohTags[key].target} {CohTags[key].desc}</p>}
+									<td className='p-1 break-all'>
+										<span>
+											{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
+											{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc}
+											{MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc}
+											{MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc}
+										</span>
+										<span>
+											{CohTags[key.match(/CL_Den/)]?.desc ||
+												CohTags[key.match(/FL_Den/)]?.desc ||
+												CohTags[key.split("_")[1]]?.desc ||
+												CohTags[key]?.desc}
+										</span>
 									</td>
 									{expanded && (
-										<td className='w-84'>
+										<td className='w-1/2'>
 											<table className='w-full'>
 												<tbody>
 													{value.map((v) => (
 														<tr className='last:border-0' key={v}>
 															<td className='p-1 w-1/12 font-mono italic'>{v[0] + 1}</td>
-															<td className='p-1 w-2/12'>{v[1]}</td>
-															<td className='p-1 w-1/12 font-mono italic'>{v[2]}</td>
-															<td className='p-1 w-8/12 break-all'>{v[3]}</td>
+															<td className='p-1 w-1/4'>{v[1]}</td>
+															<td className='p-1 w-1/6 font-mono italic'>{v[2]}</td>
+															<td className='p-1 w-1/2 break-all'>{v[3]}</td>
 														</tr>
 													))}
 												</tbody>
@@ -338,7 +365,7 @@ const ResultsList = ({ result, title }) => {
 										</td>
 									)}
 									{!expanded && (
-										<td className='px-1 w-84 font-mono italic text-right pr-4'>{value.length}</td>
+										<td className='px-1 font-mono italic text-right pr-4'>{value.length}</td>
 									)}
 								</tr>
 							))}

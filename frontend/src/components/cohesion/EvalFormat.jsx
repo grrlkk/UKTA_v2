@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Radar } from 'react-chartjs-2';
-import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, Ticks } from 'chart.js';
+import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 import { CohTags, MorphTags, EssayTags } from "../Tags";
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
@@ -113,7 +113,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 				}
 				{result.length > 0 &&
 					<>
-					<div className='bg-slate-200 dark:bg-slate-950 rounded-xl relative flex p-2 overflow-hidden'>
+						<div className='bg-slate-200 dark:bg-slate-950 rounded-xl relative flex p-2 overflow-hidden'>
 							<div className="absolute top-0 left-0 flex flex-col gap-2 items-center p-3 bg-slate-300 dark:bg-slate-600 rounded-br-xl font-normal">
 								<span>Total Score</span>
 								<span>
@@ -125,7 +125,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 							</div>
 							<Radar data={radarData} options={radarOptions} />
 						</div>
-						<div className='bg-slate-200 dark:bg-slate-950 text-sm rounded-xl'>
+						<div className='bg-slate-200 dark:bg-slate-950 text-sm rounded-xl overflow-hidden'>
 							<div>
 								<button
 									onClick={() => setTableMode(true)}
@@ -161,12 +161,16 @@ const EvalFormat = ({ result, title, darkMode }) => {
 															<td className="p-2">
 																<div className="flex flex-col">
 																	<span>
-																		{CohTags[feature.split("_")[1]]?.type &&
-																			CohTags[feature.split("_")[1]].type}
+																		{CohTags[feature.split("_")[1]]?.type ||
+																			CohTags[feature.match(/CL_Den/)]?.type ||
+																			CohTags[feature.match(/FL_Den/)]?.type ||
+																			CohTags[feature]?.type}
 																	</span>
 																	<span>
-																		{CohTags[feature.split("_")[1]]?.type_eng &&
-																			CohTags[feature.split("_")[1]].type_eng}
+																		{CohTags[feature.split("_")[1]]?.type_eng ||
+																			CohTags[feature.match(/CL_Den/)]?.type_eng ||
+																			CohTags[feature.match(/FL_Den/)]?.type_eng ||
+																			CohTags[feature]?.type_eng}
 																	</span>
 																</div>
 															</td>
@@ -174,24 +178,30 @@ const EvalFormat = ({ result, title, darkMode }) => {
 																<div className="flex flex-col">
 																	<div className="flex gap-1">
 																		<span>
-																			{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc}
-																			{MorphTags.find(tag => tag.tag === feature.split("L_")[0])?.desc}
-																			{MorphTags.find(tag => tag.tag === feature.split("CL_")[0])?.desc}																		</span>
+																			{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc ||
+																				MorphTags.find(tag => tag.tag === feature.split("L_")[0])?.desc ||
+																				MorphTags.find(tag => tag.tag === feature.split("CL_")[0])?.desc ||
+																				MorphTags.find(tag => tag.tag === feature.split("FL_")[0])?.desc}
+																		</span>
 																		<span>
-																			{CohTags[feature.match(/CL_Den/)]?.desc ?
-																				CohTags[feature.match(/CL_Den/)].desc :
-																				CohTags[feature.split("_")[1]]?.desc && CohTags[feature.split("_")[1]].desc}
+																			{CohTags[feature.match(/CL_Den/)]?.desc ||
+																				CohTags[feature.match(/FL_Den/)]?.desc ||
+																				CohTags[feature.split("_")[1]]?.desc ||
+																				CohTags[feature]?.desc}
 																		</span>
 																	</div>
 																	<div className="flex gap-1">
 																		<span>
-																			{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc_eng}
-																			{MorphTags.find(tag => tag.tag === feature.split("L_")[0])?.desc_eng}
-																			{MorphTags.find(tag => tag.tag === feature.split("CL_")[0])?.desc_eng}																				</span>
+																			{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc_eng ||
+																				MorphTags.find(tag => tag.tag === feature.split("L_")[0])?.desc_eng ||
+																				MorphTags.find(tag => tag.tag === feature.split("CL_")[0])?.desc_eng ||
+																				MorphTags.find(tag => tag.tag === feature.split("FL_")[0])?.desc_eng}
+																		</span>
 																		<span>
-																			{CohTags[feature.match(/CL_Den/)]?.desc_eng ?
-																				CohTags[feature.match(/CL_Den/)].desc_eng :
-																				CohTags[feature.split("_")[1]]?.desc_eng && CohTags[feature.split("_")[1]].desc_eng}
+																			{CohTags[feature.match(/CL_Den/)]?.desc_eng ||
+																				CohTags[feature.match(/FL_Den/)]?.desc_eng ||
+																				CohTags[feature.split("_")[1]]?.desc_eng ||
+																				CohTags[feature]?.desc_eng}
 																		</span>
 																	</div>
 																</div>

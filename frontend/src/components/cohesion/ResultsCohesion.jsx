@@ -1,4 +1,4 @@
-import { color, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 import OriginalText from '../OriginalText';
@@ -142,7 +142,7 @@ const ResultsCoh = ({ darkMode }) => {
 									<ResultsNumeric result={item.results.ttr} title={"Lexical Richness (TTR)"} />
 									<ResultsNumeric result={item.results.NDW} title={"Lexical Richness (NDW)"} />
 
-									{/* <ResultsNumeric result={item.results.adjacency} title={"Adjacency"} /> */}
+									<ResultsNumeric result={item.results.adjacency} title={"Adjacency"} />
 									<ResultsNumeric result={item.results.similarity} title={"Semantic Cohesion"} />
 								</div>
 							</div>

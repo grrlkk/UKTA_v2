@@ -13,16 +13,17 @@ const Pagination = ({ componentArray, setSelectedFile }) => {
 	function paginate(pageNumber) {
 		setCurrentPage(pageNumber);
 		setSelectedFile(pageNumber * itemsPerPage - itemsPerPage);
-		// console.log(pageNumber * itemsPerPage - itemsPerPage);
 	}
 
 	if (componentArray.length === 0) {
 		return (
 			<div className='flex justify-center items-center h-96'>
-				<div className='text-center'>
-					<h2 className='text-2xl font-bold'>No data available</h2>
-					<p className='text-gray-500'>Please upload a file to get started</p>
-				</div>
+				<h2 className="text-3xl font-bold py-2 flex gap-2 align-middle animate-pulse">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-[32px] h-[32px] animate-spin">
+						<path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+					</svg>
+					Loading...
+				</h2>
 			</div>
 		);
 	}

@@ -32,7 +32,6 @@ export const MorphTags = [
 	{ "tag": "JX", "desc": "보조사", "desc_eng": "Auxiliary Particle", "color": "#4cb264" },
 	{ "tag": "E", "desc": "어미", "desc_eng": "Ending", "color": "#4cb26d" },
 	{ "tag": "EP", "desc": "선어말 어미", "desc_eng": "Pre-final Ending", "color": "#4cb26d" },
-	{ "tag": "EF", "desc": "종결 어미", "desc_eng": "Final Ending", "color": "#4cb276" },
 	{ "tag": "EC", "desc": "연결 어미", "desc_eng": "Connective Ending", "color": "#4cb280" },
 	{ "tag": "ETN", "desc": "명사형 전성 어미", "desc_eng": "Nominalizer", "color": "#4cb28a" },
 	{ "tag": "ETM", "desc": "관형형 전성 어미", "desc_eng": "Adnominalizer", "color": "#4cb293" },
@@ -57,12 +56,12 @@ export const MorphTags = [
 	{ "tag": "SN", "desc": "숫자", "desc_eng": "Number", "color": "#4c4cb2" },
 
 	{ "tag": "CL", "desc": "실질", "desc_eng": "Content", "color": "#000000" },
-	{ "tag": "ML", "desc": "수식언", "desc_eng": "Modifier", "color": "#000000" },
-	{ "tag": "NL", "desc": "체언", "desc_eng": "Noun", "color": "#000000" },
 	{ "tag": "N", "desc": "체언", "desc_eng": "Noun", "color": "#000000" },
+	{ "tag": "M", "desc": "수식언", "desc_eng": "Modifier", "color": "#000000" },
 	{ "tag": "NM", "desc": "수사", "desc_eng": "Rhetorical", "color": "#000000" },
 	{ "tag": "FL", "desc": "형식", "desc_eng": "Formal", "color": "#000000" },
 	{ "tag": "VL", "desc": "용언", "desc_eng": "Verb", "color": "#000000" },
+	{ "tag": "IN", "desc": "독립언", "desc_eng": "Independant", "color": "#000000" },
 	{ "tag": "IT", "desc": "독립언", "desc_eng": "Independant", "color": "#000000" },
 	{ "tag": "lemma", "desc": "렘마", "desc_eng": "Lemma", "color": "#000000" },
 	{ "tag": "morph", "desc": "형태소", "desc_eng": "Morpheme", "color": "#000000" },
@@ -139,6 +138,12 @@ export const CohTags = {
 		"desc": "실질 밀도",
 		"desc_eng": "Content Density",
 	},
+	"FL_Den": {
+		"type": "기초",
+		"type_eng": "Basic",
+		"desc": "형식 밀도",
+		"desc_eng": "Formal Density",
+	},
 	"Cnt": {
 		"type": "기초",
 		"type_eng": "Basic",
@@ -174,6 +179,258 @@ export const CohTags = {
 		"type_eng": "Semantic Cohesion",
 		"desc": "주제 일관성",
 		"desc_eng": "Topic Consistency",
+	},
+	"adjacent_sentence_overlap_all_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 전체 레마 중첩",
+		"desc_eng": "Adjacent Sentence Overlap All Lemmas",
+	},
+	"adjacent_sentence_overlap_all_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 전체 레마 중첩 정규화",
+		"desc_eng": "Adjacent Sentence Overlap All Lemmas Normed"
+	},
+	"binary_adjacent_sentence_overlap_all_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 문장 전체 레마 중첩",
+		"desc_eng": "Binary Adjacent Sentence Overlap All Lemmas"
+	},
+	"adjacent_two_sentence_overlap_all_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 전체 레마 중첩",
+		"desc_eng": "Adjacent Two Sentence Overlap All Lemmas",
+	},
+	"adjacent_two_sentence_overlap_all_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 전체 레마 중첩 정규화",
+		"desc_eng": "Adjacent Two Sentence Overlap All Lemmas Normed"
+	},
+	"binary_adjacent_two_sentence_overlap_all_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 두 문장 전체 레마 중첩",
+		"desc_eng": "Binary Adjacent Two Sentence Overlap All Lemmas"
+	},
+	"adjacent_sentence_overlap_content_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 내용 레마 중첩",
+		"desc_eng": "Adjacent Sentence Overlap Content Lemmas",
+	},
+	"adjacent_sentence_overlap_content_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 내용 레마 중첩 정규화",
+		"desc_eng": "Adjacent Sentence Overlap Content Lemmas Normed"
+	},
+	"binary_adjacent_sentence_overlap_content_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 문장 내용 레마 중첩",
+		"desc_eng": "Binary Adjacent Sentence Overlap Content Lemmas"
+	},
+	"adjacent_two_sentence_overlap_content_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 내용 레마 중첩",
+		"desc_eng": "Adjacent Two Sentence Overlap Content Lemmas",
+	},
+	"adjacent_two_sentence_overlap_content_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 내용 레마 중첩 정규화",
+		"desc_eng": "Adjacent Two Sentence Overlap Content Lemmas Normed"
+	},
+	"binary_adjacent_two_sentence_overlap_content_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 두 문장 내용 레마 중첩",
+		"desc_eng": "Binary Adjacent Two Sentence Overlap Content Lemmas"
+	},
+	"adjacent_sentence_overlap_function_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 기능 레마 중첩",
+		"desc_eng": "Adjacent Sentence Overlap Function Lemmas",
+	},
+	"adjacent_sentence_overlap_function_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 기능 레마 중첩 정규화",
+		"desc_eng": "Adjacent Sentence Overlap Function Lemmas Normed"
+	},
+	"binary_adjacent_sentence_overlap_function_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 문장 기능 레마 중첩",
+		"desc_eng": "Binary Adjacent Sentence Overlap Function Lemmas"
+	},
+	"adjacent_two_sentence_overlap_function_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 기능 레마 중첩",
+		"desc_eng": "Adjacent Two Sentence Overlap Function Lemmas",
+	},
+	"adjacent_two_sentence_overlap_function_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 기능 레마 중첩 정규화",
+		"desc_eng": "Adjacent Two Sentence Overlap Function Lemmas Normed"
+	},
+	"binary_adjacent_two_sentence_overlap_function_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 두 문장 기능 레마 중첩",
+		"desc_eng": "Binary Adjacent Two Sentence Overlap Function Lemmas"
+	},
+	"adjacent_sentence_overlap_noun_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 명사 레마 중첩",
+		"desc_eng": "Adjacent Sentence Overlap Noun Lemmas",
+	},
+	"adjacent_sentence_overlap_noun_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 명사 레마 중첩 정규화",
+		"desc_eng": "Adjacent Sentence Overlap Noun Lemmas Normed"
+	},
+	"binary_adjacent_sentence_overlap_noun_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 문장 명사 레마 중첩",
+		"desc_eng": "Binary Adjacent Sentence Overlap Noun Lemmas"
+	},
+	"adjacent_two_sentence_overlap_noun_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 명사 레마 중첩",
+		"desc_eng": "Adjacent Two Sentence Overlap Noun Lemmas",
+	},
+	"adjacent_two_sentence_overlap_noun_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 명사 레마 중첩 정규화",
+		"desc_eng": "Adjacent Two Sentence Overlap Noun Lemmas Normed"
+	},
+	"binary_adjacent_two_sentence_overlap_noun_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 두 문장 명사 레마 중첩",
+		"desc_eng": "Binary Adjacent Two Sentence Overlap Noun Lemmas"
+	},
+	"adjacent_sentence_overlap_verb_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 동사 레마 중첩",
+		"desc_eng": "Adjacent Sentence Overlap Verb Lemmas",
+	},
+	"adjacent_sentence_overlap_verb_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 동사 레마 중첩 정규화",
+		"desc_eng": "Adjacent Sentence Overlap Verb Lemmas Normed"
+	},
+	"binary_adjacent_sentence_overlap_verb_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 문장 동사 레마 중첩",
+		"desc_eng": "Binary Adjacent Sentence Overlap Verb Lemmas"
+	},
+	"adjacent_two_sentence_overlap_verb_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 동사 레마 중첩",
+		"desc_eng": "Adjacent Two Sentence Overlap Verb Lemmas",
+	},
+	"adjacent_two_sentence_overlap_verb_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 동사 레마 중첩 정규화",
+		"desc_eng": "Adjacent Two Sentence Overlap Verb Lemmas Normed"
+	},
+	"binary_adjacent_two_sentence_overlap_verb_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 두 문장 동사 레마 중첩",
+		"desc_eng": "Binary Adjacent Two Sentence Overlap Verb Lemmas"
+	},
+	"adjacent_sentence_overlap_adjective_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 형용사 레마 중첩",
+		"desc_eng": "Adjacent Sentence Overlap Adjective Lemmas",
+	},
+	"adjacent_sentence_overlap_adjective_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 형용사 레마 중첩 정규화",
+		"desc_eng": "Adjacent Sentence Overlap Adjective Lemmas Normed"
+	},
+	"binary_adjacent_sentence_overlap_adjective_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 문장 형용사 레마 중첩",
+		"desc_eng": "Binary Adjacent Sentence Overlap Adjective Lemmas"
+	},
+	"adjacent_two_sentence_overlap_adjective_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 형용사 레마 중첩",
+		"desc_eng": "Adjacent Two Sentence Overlap Adjective Lemmas",
+	},
+	"adjacent_two_sentence_overlap_adjective_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 형용사 레마 중첩 정규화",
+		"desc_eng": "Adjacent Two Sentence Overlap Adjective Lemmas Normed"
+	},
+	"binary_adjacent_two_sentence_overlap_adjective_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 두 문장 형용사 레마 중첩",
+		"desc_eng": "Binary Adjacent Two Sentence Overlap Adjective Lemmas"
+	},
+	"adjacent_sentence_overlap_adverb_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 부사 레마 중첩",
+		"desc_eng": "Adjacent Sentence Overlap Adverb Lemmas",
+	},
+	"adjacent_sentence_overlap_adverb_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 문장 부사 레마 중첩 정규화",
+		"desc_eng": "Adjacent Sentence Overlap Adverb Lemmas Normed"
+	},
+	"binary_adjacent_sentence_overlap_adverb_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 문장 부사 레마 중첩",
+		"desc_eng": "Binary Adjacent Sentence Overlap Adverb Lemmas"
+	},
+	"adjacent_two_sentence_overlap_adverb_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 부사 레마 중첩",
+		"desc_eng": "Adjacent Two Sentence Overlap Adverb Lemmas",
+	},
+	"adjacent_two_sentence_overlap_adverb_lemmas_normed": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "인접 두 문장 부사 레마 중첩 정규화",
+		"desc_eng": "Adjacent Two Sentence Overlap Adverb Lemmas Normed"
+	},
+	"binary_adjacent_two_sentence_overlap_adverb_lemmas": {
+		"type": "응집도",
+		"type_eng": "Lexical Richness",
+		"desc": "이진 인접 두 문장 부사 레마 중첩",
+		"desc_eng": "Binary Adjacent Two Sentence Overlap Adverb Lemmas"
 	}
 }
 
