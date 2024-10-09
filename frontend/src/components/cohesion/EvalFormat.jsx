@@ -3,10 +3,11 @@ import { Radar } from 'react-chartjs-2';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 import { CohTags, MorphTags, EssayTags } from "../Tags";
 
+
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
 const initialRadarData = {
-	labels: ["Grammar", "Vocabulary", "Sentence", "In-Paragraph", "Inter-Paragraph", "Consistency", "Length", "Clarity", "Originality", "Prompt", "Descriptions"],
+	labels: ["Grammar", "Vocabulary", "Sentence", "In-Paragraph", "Inter-Paragraph", "Consistency", "Length", "Clarity", "Originality", "Descriptions"],
 	datasets: [],
 };
 
@@ -52,7 +53,6 @@ const EvalFormat = ({ result, title, darkMode }) => {
 	useEffect(() => {
 		if (result) {
 			if (result.length === 0) return;
-			setHidden(false);
 			const newDatasets = result.map((essayScore, index) => {
 				const results = [
 					essayScore.grammar,
@@ -64,7 +64,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 					essayScore.length,
 					essayScore.topic_clarity,
 					essayScore.originality,
-					essayScore.prompt_comprehension,
+					// essayScore.prompt_comprehension,
 					essayScore.narrative,
 				];
 
@@ -107,20 +107,20 @@ const EvalFormat = ({ result, title, darkMode }) => {
 				</svg>
 			</button>
 
-			<div className={`${hidden ? "h-0" : "h-auto pt-2"} transition-all ease-in-out grid grid-cols-1 md:grid-cols-2 gap-2`}>
+			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} transition-all ease-in-out grid grid-cols-1 md:grid-cols-2 gap-2`}>
 				{result.length === 0 &&
 					<div className="text-center p-4">Select essays to compare</div>
 				}
 				{result.length > 0 &&
 					<>
-						<div className='bg-slate-200 dark:bg-slate-950 rounded-xl relative flex p-2 overflow-hidden'>
+						<div className='bg-slate-200 dark:bg-slate-950 rounded-xl aspect-square relative flex p-2 overflow-hidden'>
 							<div className="absolute top-0 left-0 flex flex-col gap-2 items-center p-3 bg-slate-300 dark:bg-slate-600 rounded-br-xl font-normal">
 								<span>Total Score</span>
 								<span>
 									<span className="text-2xl font-black">
 										{totalScore}
 									</span>
-									&nbsp; / 33
+									&nbsp; / 30
 								</span>
 							</div>
 							<Radar data={radarData} options={radarOptions} />
@@ -155,9 +155,9 @@ const EvalFormat = ({ result, title, darkMode }) => {
 												</thead>
 												<tbody className="table-contents">
 													{features.map((feature, index) => (
-														<tr key={index} className=''>
+														<tr key={index} className='group'>
 															<td className='p-2 w-8 text-right'>{index + 1}</td>
-															<td className='p-2 max-w-24 break-words'>{feature}</td>
+															<td className='p-2 max-w-24 break-words truncate group-hover:text-wrap'>{feature}</td>
 															<td className="p-2">
 																<div className="flex flex-col">
 																	<span>
@@ -165,12 +165,6 @@ const EvalFormat = ({ result, title, darkMode }) => {
 																			CohTags[feature.match(/CL_Den/)]?.type ||
 																			CohTags[feature.match(/FL_Den/)]?.type ||
 																			CohTags[feature]?.type}
-																	</span>
-																	<span>
-																		{CohTags[feature.split("_")[1]]?.type_eng ||
-																			CohTags[feature.match(/CL_Den/)]?.type_eng ||
-																			CohTags[feature.match(/FL_Den/)]?.type_eng ||
-																			CohTags[feature]?.type_eng}
 																	</span>
 																</div>
 															</td>
@@ -188,20 +182,6 @@ const EvalFormat = ({ result, title, darkMode }) => {
 																				CohTags[feature.match(/FL_Den/)]?.desc ||
 																				CohTags[feature.split("_")[1]]?.desc ||
 																				CohTags[feature]?.desc}
-																		</span>
-																	</div>
-																	<div className="flex gap-1">
-																		<span>
-																			{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc_eng ||
-																				MorphTags.find(tag => tag.tag === feature.split("L_")[0])?.desc_eng ||
-																				MorphTags.find(tag => tag.tag === feature.split("CL_")[0])?.desc_eng ||
-																				MorphTags.find(tag => tag.tag === feature.split("FL_")[0])?.desc_eng}
-																		</span>
-																		<span>
-																			{CohTags[feature.match(/CL_Den/)]?.desc_eng ||
-																				CohTags[feature.match(/FL_Den/)]?.desc_eng ||
-																				CohTags[feature.split("_")[1]]?.desc_eng ||
-																				CohTags[feature]?.desc_eng}
 																		</span>
 																	</div>
 																</div>
@@ -228,14 +208,13 @@ const EvalFormat = ({ result, title, darkMode }) => {
 													</tr>
 												</thead>
 												<tbody className="table-contents">
-													{Object.keys(essayScore).filter(key => key !== "top_k_features" && key !== "filename").map((key, index) => (
+													{Object.keys(essayScore).filter(key => key !== "top_k_features" && key !== "filename" && key !== "prompt_comprehension").map((key, index) => (
 														<tr key={index} className=''>
 															<td className='p-2 w-8 text-right'>{index + 1}</td>
 															{index === 0 &&
 																<td rowSpan={3} className='p-2 max-w-20 text-center'>
 																	<div className="flex flex-col">
 																		<span>{EssayTags[key].type}</span>
-																		<span>{EssayTags[key].type_eng}</span>
 																	</div>
 																</td>
 															}
@@ -243,14 +222,12 @@ const EvalFormat = ({ result, title, darkMode }) => {
 																<td rowSpan={4} className='p-2 max-w-20 text-center'>
 																	<div className="flex flex-col">
 																		<span>{EssayTags[key].type}</span>
-																		<span>{EssayTags[key].type_eng}</span>
 																	</div>
 																</td>
 															}
 															<td className='p-2'>
 																<div className="flex gap-1">
 																	<span>{EssayTags[key].desc}</span>
-																	<span>{EssayTags[key].desc_eng}</span>
 																</div>
 															</td>
 															<td className='p-2 w-10 text-right'>{essayScore[key]} / 3</td>

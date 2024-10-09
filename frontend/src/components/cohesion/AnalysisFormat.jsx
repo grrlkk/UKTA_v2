@@ -15,7 +15,7 @@ const MorphemeFormat = ({ results, title }) => {
 				</svg>
 			</button>
 
-			<div className={`${hidden ? "h-0" : "h-auto pt-2"} -pr-[6px] transition-all ease-in-out`}>
+			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} -pr-[6px] transition-all ease-in-out`}>
 				<Sentences results={results} />
 			</div >
 		</div>
@@ -91,7 +91,7 @@ const ResultsNumeric = ({ result, title }) => {
 				</svg>
 			</button>
 
-			<div className={`${hidden ? "h-0" : "max-h-96 pt-2"} rounded-xl overflow-hidden transition-all ease-in-out`}>
+			<div className={`${hidden ? "h-0 hidden" : "max-h-96 block pt-2"} rounded-xl overflow-hidden transition-all ease-in-out`}>
 				<div className='table-header p-2 rounded-t-xl'>
 					<div className='flex items-center font-normal'>
 						<button className={`sm:grow-0 btn-primary py-1 px-3 rounded-lg rounded-r-none flex flex-nowrap gap-1 items-center`} onClick={() => handleFileDownload("txt")}>
@@ -116,7 +116,7 @@ const ResultsNumeric = ({ result, title }) => {
 								</th>
 								<th className='px-1 w-1/12 sticky top-0 table-header'>n.</th>
 								<th className='px-1 w-1/3 sticky top-0 table-header'>Tag ({selectedProperty.length})</th>
-								<th colSpan={2} className='px-1 sticky top-0 table-header'>Description</th>
+								<th colSpan={1} className='px-1 sticky top-0 table-header'>Description</th>
 								<th className='px-1 pr-4 w-32 sticky top-0 table-header text-right'>Value</th>
 							</tr>
 						</thead>
@@ -135,7 +135,7 @@ const ResultsNumeric = ({ result, title }) => {
 									<td className='p-1 w-1/3 break-all'>
 										{key}
 									</td>
-									<td className='p-1 break-all'>
+									{/* <td className='p-1 break-all'>
 										<div className='flex gap-1'>
 											<span>
 												{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
@@ -150,7 +150,7 @@ const ResultsNumeric = ({ result, title }) => {
 													CohTags[key]?.desc}
 											</span>
 										</div>
-									</td>
+									</td> */}
 									<td className='p-1 break-all'>
 										<div className='flex gap-1'>
 											<span>
@@ -165,7 +165,6 @@ const ResultsNumeric = ({ result, title }) => {
 													CohTags[key.split("_")[1]]?.desc_eng ||
 													CohTags[key]?.desc_eng}
 											</span>
-
 										</div>
 									</td>
 									<td className='p-1 pr-4 w-32 text-right font-mono italic'>
@@ -271,7 +270,7 @@ const ResultsList = ({ result, title }) => {
 				</svg>
 			</button>
 
-			<div className={`${hidden ? "h-0" : "max-h-96 pt-2"} rounded-xl overflow-hidden transition-all ease-in-out`}>
+			<div className={`${hidden ? "h-0 hidden" : "max-h-96 block pt-2"} rounded-xl overflow-hidden transition-all ease-in-out`}>
 				<div className='table-header p-2 rounded-t-xl overflow-hidden'>
 					<div className='flex items-center font-normal'>
 						<button className={`sm:grow-0 btn-primary py-1 px-3 rounded-lg rounded-r-none flex flex-nowrap gap-1 items-center`} onClick={() => handleFileDownload("txt")}>
@@ -337,14 +336,12 @@ const ResultsList = ({ result, title }) => {
 									<td className='p-1 break-all'>
 										<span>
 											{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
-											{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc}
+											{/* {MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc}
 											{MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc}
-											{MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc}
+											{MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc} */}
 										</span>
 										<span>
-											{CohTags[key.match(/CL_Den/)]?.desc ||
-												CohTags[key.match(/FL_Den/)]?.desc ||
-												CohTags[key.split("_")[1]]?.desc ||
+											{CohTags[key.split("_")[1]]?.desc ||
 												CohTags[key]?.desc}
 										</span>
 									</td>

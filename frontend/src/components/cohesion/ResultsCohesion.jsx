@@ -135,14 +135,15 @@ const ResultsCoh = ({ darkMode }) => {
 									<MorphemeFormat results={item.results.morpheme} title={"Morpheme Analysis"} />
 
 									<ResultsNumeric result={item.results.basic_count} title={"Morpheme Count"} />
+									<ResultsList result={item.results.basic_list} title={"Morpheme Lists"} />
+
 									<ResultsNumeric result={item.results.basic_density} title={"Morpheme Density"} />
 									<ResultsNumeric result={item.results.basic_level} title={"Morpheme Level"} />
-									<ResultsList result={item.results.basic_list} title={"Morpheme Lists"} />
 
 									<ResultsNumeric result={item.results.ttr} title={"Lexical Richness (TTR)"} />
 									<ResultsNumeric result={item.results.NDW} title={"Lexical Richness (NDW)"} />
 
-									<ResultsNumeric result={item.results.adjacency} title={"Adjacency"} />
+									<ResultsNumeric result={item.results.adjacency} title={"Lexical Richness (Adjacency)"} />
 									<ResultsNumeric result={item.results.similarity} title={"Semantic Cohesion"} />
 								</div>
 							</div>
