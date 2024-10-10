@@ -116,6 +116,7 @@ const ResultsNumeric = ({ result, title }) => {
 								</th>
 								<th className='px-1 w-1/12 sticky top-0 table-header'>n.</th>
 								<th className='px-1 w-1/3 sticky top-0 table-header'>Tag ({selectedProperty.length})</th>
+								<th className='px-1 sticky top-0 table-header'>Target</th>
 								<th colSpan={1} className='px-1 sticky top-0 table-header'>Description</th>
 								<th className='px-1 pr-4 w-32 sticky top-0 table-header text-right'>Value</th>
 							</tr>
@@ -152,20 +153,19 @@ const ResultsNumeric = ({ result, title }) => {
 										</div>
 									</td> */}
 									<td className='p-1 break-all'>
-										<div className='flex gap-1'>
-											<span>
-												{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc_eng}
-												{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc_eng}
-												{MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc_eng}
-												{MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc_eng}
-											</span>
-											<span>
-												{CohTags[key.match(/CL_Den/)]?.desc_eng ||
-													CohTags[key.match(/FL_Den/)]?.desc_eng ||
-													CohTags[key.split("_")[1]]?.desc_eng ||
-													CohTags[key]?.desc_eng}
-											</span>
-										</div>
+										<span>
+											{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc_eng}
+											{title === 'Morpheme Density' &&
+												(MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc_eng ||
+													MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc_eng)}
+										</span>
+									</td>
+									<td className='p-1 break-all'>
+										<span>
+											{CohTags[key.split("_")[1]]?.desc_eng ||
+												CohTags[key.split("L_")[1]]?.desc_eng ||
+												CohTags[key]?.desc_eng}
+										</span>
 									</td>
 									<td className='p-1 pr-4 w-32 text-right font-mono italic'>
 										{value.toFixed(4)}
@@ -297,8 +297,9 @@ const ResultsList = ({ result, title }) => {
 									<input type="checkbox" className='w-full accent-slate-600 align-middle' checked={selectedAll} onChange={handleSelectAll()} />
 								</th>
 								<th className='px-1 w-1/12 sticky top-0 table-header'>n.</th>
-								<th className='px-1 sticky top-0 table-header'>태그 ({selectedProperty.length})</th>
-								<th className='px-1 sticky top-0 table-header'>자질</th>
+								<th className='px-1 sticky top-0 table-header'>Tag ({selectedProperty.length})</th>
+								<th className='px-1 sticky top-0 table-header'>Target</th>
+								<th className='px-1 sticky top-0 table-header'>Description</th>
 								{expanded && (
 									<td className='w-1/2 sticky top-0 table-header'>
 										<table className='w-full'>
@@ -335,14 +336,13 @@ const ResultsList = ({ result, title }) => {
 									</td>
 									<td className='p-1 break-all'>
 										<span>
-											{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
-											{/* {MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc}
-											{MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc}
-											{MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc} */}
+											{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc_eng}
 										</span>
+									</td>
+									<td className='p-1 break-all'>
 										<span>
-											{CohTags[key.split("_")[1]]?.desc ||
-												CohTags[key]?.desc}
+											{CohTags[key.split("_")[1]]?.desc_eng ||
+												CohTags[key]?.desc_eng}
 										</span>
 									</td>
 									{expanded && (

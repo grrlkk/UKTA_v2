@@ -31,6 +31,7 @@ export const MorphTags = [
 	{ "tag": "JC", "desc": "접속 조사", "desc_eng": "Conjunction", "color": "#4cb25a" },
 	{ "tag": "JX", "desc": "보조사", "desc_eng": "Auxiliary Particle", "color": "#4cb264" },
 	{ "tag": "E", "desc": "어미", "desc_eng": "Ending", "color": "#4cb26d" },
+	{ "tag": "EF", "desc": "종결 어미", "desc_eng": "Final Ending", "color": "#4cb26d" },
 	{ "tag": "EP", "desc": "선어말 어미", "desc_eng": "Pre-final Ending", "color": "#4cb26d" },
 	{ "tag": "EC", "desc": "연결 어미", "desc_eng": "Connective Ending", "color": "#4cb280" },
 	{ "tag": "ETN", "desc": "명사형 전성 어미", "desc_eng": "Nominalizer", "color": "#4cb28a" },
@@ -57,7 +58,10 @@ export const MorphTags = [
 
 	{ "tag": "CL", "desc": "실질", "desc_eng": "Content", "color": "#000000" },
 	{ "tag": "N", "desc": "체언", "desc_eng": "Noun", "color": "#000000" },
+	{ "tag": "NL", "desc": "체언", "desc_eng": "Noun", "color": "#000000" },
+	{ "tag": "NNL", "desc": "명사", "desc_eng": "Noun", "color": "#000000" },
 	{ "tag": "M", "desc": "수식언", "desc_eng": "Modifier", "color": "#000000" },
+	{ "tag": "ML", "desc": "수식언", "desc_eng": "Determiner", "color": "#000000" },
 	{ "tag": "NM", "desc": "수사", "desc_eng": "Rhetorical", "color": "#000000" },
 	{ "tag": "FL", "desc": "형식", "desc_eng": "Formal", "color": "#000000" },
 	{ "tag": "VL", "desc": "용언", "desc_eng": "Verb", "color": "#000000" },
@@ -122,7 +126,7 @@ export const CohTags = {
 	},
 	"NDW": {
 		"type": "어휘 다양성",
-		"type_eng": "Basic",
+		"type_eng": "Lexical Richness",
 		"desc": "단어 다양성",
 		"desc_eng": "Number of Different Words",
 	},
@@ -131,18 +135,6 @@ export const CohTags = {
 		"type_eng": "Basic",
 		"desc": "단어 밀도",
 		"desc_eng": "Density",
-	},
-	"CL_Den": {
-		"type": "어휘 밀도",
-		"type_eng": "Basic",
-		"desc": "실질 밀도",
-		"desc_eng": "Content Density",
-	},
-	"FL_Den": {
-		"type": "어휘 밀도",
-		"type_eng": "Basic",
-		"desc": "형식 밀도",
-		"desc_eng": "Formal Density",
 	},
 	"Cnt": {
 		"type": "기초",

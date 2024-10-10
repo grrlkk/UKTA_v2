@@ -156,15 +156,17 @@ const EvalFormat = ({ result, title, darkMode }) => {
 												<tbody className="table-contents">
 													{features.map((feature, index) => (
 														<tr key={index} className='group'>
-															<td className='p-2 w-8 text-right'>{index + 1}</td>
-															<td className='p-2 max-w-24 break-words truncate group-hover:text-wrap'>{feature}</td>
-															<td className="p-2">
+															<td className='p-1 w-8 text-right'>{index + 1}</td>
+															<td className='p-1 max-w-24 break-words truncate group-hover:text-wrap'>{feature}</td>
+															<td className="p-1">
 																<div className="flex flex-col">
 																	<span>
 																		{CohTags[feature.split("_")[1]]?.type ||
-																			CohTags[feature.match(/CL_Den/)]?.type ||
-																			CohTags[feature.match(/FL_Den/)]?.type ||
 																			CohTags[feature]?.type}
+																	</span>
+																	<span>
+																		{CohTags[feature.split("_")[1]]?.type_eng ||
+																			CohTags[feature]?.type_eng}
 																	</span>
 																</div>
 															</td>
@@ -172,18 +174,22 @@ const EvalFormat = ({ result, title, darkMode }) => {
 																<div className="flex flex-col">
 																	<div className="flex gap-1">
 																		<span>
-																			{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc ||
-																				MorphTags.find(tag => tag.tag === feature.split("L_")[0])?.desc ||
-																				MorphTags.find(tag => tag.tag === feature.split("CL_")[0])?.desc ||
-																				MorphTags.find(tag => tag.tag === feature.split("FL_")[0])?.desc}
+																			{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc}
 																		</span>
 																		<span>
-																			{CohTags[feature.match(/CL_Den/)]?.desc ||
-																				CohTags[feature.match(/FL_Den/)]?.desc ||
-																				CohTags[feature.split("_")[1]]?.desc ||
+																			{CohTags[feature.split("_")[1]]?.desc ||
 																				CohTags[feature]?.desc}
 																		</span>
 																	</div>
+																	{/* <div className="flex gap-1">
+																		<span>
+																			{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc_eng}
+																		</span>
+																		<span className="">
+																			{CohTags[feature.split("_")[1]]?.desc_eng ||
+																				CohTags[feature]?.desc_eng}
+																		</span>
+																	</div> */}
 																</div>
 															</td>
 														</tr>
