@@ -36,7 +36,7 @@ function App() {
 			<div className="relative text-slate-900 dark:text-slate-50 transition-all ease-in-out min-w-[320px]">
 				<Nav currentPage={currentPage.pathname} />
 
-				<div className="items-start pt-32 grid grid-cols-1 gap-16 max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+				<div className="items-start pt-32 grid grid-cols-1 gap-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className='fixed top-0'></div>
 
 					<TextInput uploadInProgress={uploadInProgress} setUploadInProgress={setUploadInProgress} />

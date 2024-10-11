@@ -84,7 +84,7 @@ const Sentence = ({ index, sentence }) => {
 				<div
 					className={`
 						flex overflow-x-auto 
-						bg-slate-200 dark:bg-slate-950 
+						bg-white dark:bg-slate-950 
 						divide-x-[1px] divide-slate-300 dark:divide-slate-600 
 						${tableHidden ? "h-fit mt-2" : "h-0 pt-0 m-0"}
 					`}
@@ -101,7 +101,7 @@ const Sentence = ({ index, sentence }) => {
 											key={index_}
 											className={`
 												flex flex-col gap-1 p-2 text-nowrap *:flex *:justify-center 
-												hover:bg-slate-300 dark:hover:bg-slate-700
+												hover:bg-slate-200 dark:hover:bg-slate-700
 											`}
 											onMouseEnter={() => {
 												handleMouseEnter([morph.text.beginOffset, morph.text.beginOffset + morph.text.length]);

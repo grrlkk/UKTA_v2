@@ -115,9 +115,9 @@ const ResultsNumeric = ({ result, title }) => {
 									<input type="checkbox" className='w-full accent-slate-600 align-middle' checked={selectedAll} onChange={handleSelectAll()} />
 								</th>
 								<th className='px-1 w-1/12 sticky top-0 table-header'>n.</th>
-								<th className='px-1 w-1/3 sticky top-0 table-header'>Tag ({selectedProperty.length})</th>
+								<th className='px-1 sticky top-0 table-header'>Tag ({selectedProperty.length})</th>
 								<th className='px-1 sticky top-0 table-header'>Target</th>
-								<th colSpan={1} className='px-1 sticky top-0 table-header'>Description</th>
+								<th className='px-1 w-1/2 sticky top-0 table-header'>Description</th>
 								<th className='px-1 pr-4 w-32 sticky top-0 table-header text-right'>Value</th>
 							</tr>
 						</thead>
@@ -133,39 +133,43 @@ const ResultsNumeric = ({ result, title }) => {
 									<td className='p-1 w-1/12 font-mono italic'>
 										{Object.keys(result).indexOf(key) + 1}
 									</td>
-									<td className='p-1 w-1/3 break-all'>
-										{key}
+									<td className='p-1'>
+										{CohTags[key]?.alias || key}
 									</td>
-									{/* <td className='p-1 break-all'>
-										<div className='flex gap-1'>
+									<td className='p-1'>
+										<div className='flex flex-col'>
 											<span>
-												{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
-												{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc}
-												{MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc}
-												{MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc}
+												{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc ||
+													MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc ||
+													MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc ||
+													MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
 											</span>
 											<span>
-												{CohTags[key.match(/CL_Den/)]?.desc ||
-													CohTags[key.match(/FL_Den/)]?.desc ||
-													CohTags[key.split("_")[1]]?.desc ||
-													CohTags[key]?.desc}
+												{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc_eng ||
+													MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc_eng ||
+													MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc_eng ||
+													MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc_eng}
+											</span>
+
+										</div>
+									</td>
+									<td className='p-1 w-1/2'>
+										<div className="flex flex-col">
+											<span>
+												{key.includes("CL_Den") & key !== "CL_Den" ? "실질 형태소 밀도" :
+													key.includes("FL_Den") & key !== "FL_Den" ? "형식 형태소 밀도" :
+														key.includes("L_Den") & key !== "L_Den" ? "어휘 밀도" :
+															CohTags[key.split("_")[1]]?.desc ||
+															CohTags[key]?.desc}
+											</span>
+											<span className="">
+												{key.includes("CL_Den") & key !== "CL_Den" ? "Content Morpheme Density" :
+													key.includes("FL_Den") & key !== "FL_Den" ? "Formal Morpheme Density" :
+														key.includes("L_Den") & key !== "L_Den" ? "Morheme Density" :
+															CohTags[key.split("_")[1]]?.desc_eng ||
+															CohTags[key]?.desc_eng}
 											</span>
 										</div>
-									</td> */}
-									<td className='p-1 break-all'>
-										<span>
-											{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc_eng}
-											{title === 'Morpheme Density' &&
-												(MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc_eng ||
-													MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc_eng)}
-										</span>
-									</td>
-									<td className='p-1 break-all'>
-										<span>
-											{CohTags[key.split("_")[1]]?.desc_eng ||
-												CohTags[key.split("L_")[1]]?.desc_eng ||
-												CohTags[key]?.desc_eng}
-										</span>
 									</td>
 									<td className='p-1 pr-4 w-32 text-right font-mono italic'>
 										{value.toFixed(4)}
@@ -284,7 +288,7 @@ const ResultsList = ({ result, title }) => {
 						</button>
 						<hr className="m-2 grow" />
 						<button className={`sm:grow-0 btn-primary py-1 px-3 rounded-lg`} onClick={() => handleExpand()}>
-							{expanded ? '접기' : '확장'}
+							{expanded ? 'Fold' : 'Expand'}
 						</button>
 					</div>
 				</div>
@@ -305,17 +309,17 @@ const ResultsList = ({ result, title }) => {
 										<table className='w-full'>
 											<tbody>
 												<tr className='border-0 hover:bg-inherit'>
-													<th className='px-1 w-1/12'>n.</th>
-													<th className='px-1 w-1/4'>품사</th>
-													<th className='px-1 w-1/6'>태그</th>
-													<th className='px-1'>포함 문장</th>
+													<th className='px-1 w-1/12'>N.</th>
+													<th className='px-1 w-1/4'>Morpheme</th>
+													<th className='px-1 w-1/6'>Tag</th>
+													<th className='px-1'>Containing Sentence</th>
 												</tr>
 											</tbody>
 										</table>
 									</td>
 								)}
 								{!expanded && (
-									<th className='px-1 text-right pr-4 sticky top-0 table-header'>해당 품사 수</th>
+									<th className='px-1 text-right pr-4 sticky top-0 table-header'>Morph Cnt</th>
 								)}
 							</tr>
 						</thead>

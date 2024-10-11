@@ -35,7 +35,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 					fontSize: 14,
 					font: {
 						weight: 'bold',
-						family: 'Pretandard Variable',	
+						family: 'Noto Sans KR',
 					},
 				},
 				ticks: {
@@ -51,7 +51,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 					fontSize: 14,
 					font: {
 						weight: 'bold',
-						family: 'Pretandard Variable',	
+						family: 'Noto Sans KR',
 					},
 				},
 			},
@@ -122,7 +122,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 				}
 				{result.length > 0 &&
 					<>
-						<div className='col-span-2 bg-slate-200 dark:bg-slate-950 rounded-xl relative flex p-2 overflow-hidden justify-center'>
+						<div className='col-span-2 bg-white dark:bg-slate-950 rounded-xl relative flex items-center p-2 overflow-hidden justify-center'>
 							<div className="absolute top-0 left-0 flex flex-col gap-2 items-center p-3 bg-slate-300 dark:bg-slate-600 rounded-br-xl font-normal">
 								<span>Total Score</span>
 								<span>
@@ -134,7 +134,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 							</div>
 							<Radar data={radarData} options={radarOptions} />
 						</div>
-						<div className='col-span-3 bg-slate-200 dark:bg-slate-950 text-sm rounded-xl overflow-hidden'>
+						<div className='col-span-3 bg-white dark:bg-slate-950 text-sm rounded-xl overflow-hidden'>
 							<div>
 								<button
 									onClick={() => setTableMode(true)}
@@ -152,7 +152,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 							{tableMode &&
 								<div>
 									{tableData.map((features, index) => (
-										<div key={index} className='w-full max-h-[30rem] grid grid-cols-1 gap-2 overflow-y-scroll'>
+										<div key={index} className='w-full max-h-[30rem] grid grid-cols-1 gap-2'>
 											<table className='w-full text-xs'>
 												<thead className=''>
 													<tr className="*:table-header *:rounded-none">
@@ -167,43 +167,55 @@ const EvalFormat = ({ result, title, darkMode }) => {
 													{features.map((feature, index) => (
 														<tr key={index} className='group'>
 															<td className='p-1 w-8 text-right'>{index + 1}</td>
-															<td className='p-1 max-w-24 break-words truncate group-hover:text-wrap'>{feature}</td>
+															<td className='p-1 max-w-28 break-words truncate group-hover:text-wrap'>
+																{CohTags[feature]?.alias || feature}
+															</td>
 															<td className="p-1">
-																<div className="flex gap-1">
-																	<span>
-																		{CohTags[feature.split("_")[1]]?.type ||
+																<div className="flex flex-col">
+																	<span className="text-nowrap">
+																		{feature.includes("Den") ? "어휘 밀도" :
+																			CohTags[feature.split("_")[1]]?.type ||
 																			CohTags[feature]?.type}
 																	</span>
-																	<span>
-																		{CohTags[feature.split("_")[1]]?.type_eng ||
+																	<span className="text-nowrap">
+																		{feature.includes("Den") ? "Density" :
+																			CohTags[feature.split("_")[1]]?.type_eng ||
 																			CohTags[feature]?.type_eng}
 																	</span>
 																</div>
 															</td>
 															<td className="p-1">
-																<div className="flex gap-1">
-																	<span>
-																		{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc}
+																<div className="flex flex-col">
+																	<span className="text-nowrap">
+																		{MorphTags.find(tag => tag.tag === feature.split("L_")[0])?.desc ||
+																			MorphTags.find(tag => tag.tag === feature.split("CL_")[0])?.desc ||
+																			MorphTags.find(tag => tag.tag === feature.split("FL_")[0])?.desc ||
+																			MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc}
 																	</span>
-																	<span>
-																		{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc_eng}
+																	<span className="text-nowrap">
+																		{MorphTags.find(tag => tag.tag === feature.split("L_")[0])?.desc_eng ||
+																			MorphTags.find(tag => tag.tag === feature.split("CL_")[0])?.desc_eng ||
+																			MorphTags.find(tag => tag.tag === feature.split("FL_")[0])?.desc_eng ||
+																			MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc_eng}
 																	</span>
 																</div>
 															</td>
-															<td className="p-2">
-																<div className="flex gap-1">
-																	<div className="flex gap-1 justify-between">
-																		<span>
-																			{CohTags[feature.split("_")[1]]?.desc ||
-																				CohTags[feature]?.desc}
-																		</span>
-																	</div>
-																	<div className="flex gap-1 justify-between">
-																		<span className="">
-																			{CohTags[feature.split("_")[1]]?.desc_eng ||
-																				CohTags[feature]?.desc_eng}
-																		</span>
-																	</div>
+															<td className="p-1">
+																<div className="flex flex-col">
+																	<span className="text-nowrap">
+																		{feature.includes("CL_Den") & feature !== "CL_Den" ? "실질 형태소 밀도" :
+																			feature.includes("FL_Den") & feature !== "FL_Den" ? "형식 형태소 밀도" :
+																				feature.includes("L_Den") & feature !== "L_Den" ? "어휘 밀도" :
+																					CohTags[feature.split("_")[1]]?.desc ||
+																					CohTags[feature]?.desc}
+																	</span>
+																	<span className="text-nowrap">
+																		{feature.includes("CL_Den") & feature !== "CL_Den" ? "Content Morpheme Density" :
+																			feature.includes("FL_Den") & feature !== "FL_Den" ? "Formal Morpheme Density" :
+																				feature.includes("L_Den") & feature !== "L_Den" ? "Morheme Density" :
+																					CohTags[feature.split("_")[1]]?.desc_eng ||
+																					CohTags[feature]?.desc_eng}
+																	</span>
 																</div>
 															</td>
 														</tr>
@@ -224,33 +236,36 @@ const EvalFormat = ({ result, title, darkMode }) => {
 														<th className='p-1 w-8 text-right sticky top-0'>N.</th>
 														<th className='p-1 sticky top-0'>Type</th>
 														<th className='p-1 sticky top-0 text-left'>Rubric</th>
-														<th className='p-1 w-10 sticky top-0 text-right'>Score</th>
+														<th className='p-1 sticky top-0 text-right'>Score</th>
 													</tr>
 												</thead>
 												<tbody className="table-contents">
 													{Object.keys(essayScore).filter(key => key !== "top_k_features" && key !== "filename" && key !== "prompt_comprehension").map((key, index) => (
 														<tr key={index} className=''>
-															<td className='p-2 w-8 text-right'>{index + 1}</td>
+															<td className='p-1 w-8 text-right'>{index + 1}</td>
 															{index === 0 &&
-																<td rowSpan={3} className='p-2 max-w-20 text-center'>
+																<td rowSpan={3} className='p-1 text-center'>
 																	<div className="flex flex-col">
 																		<span>{EssayTags[key].type}</span>
+																		<span>{EssayTags[key].type_eng}</span>
 																	</div>
 																</td>
 															}
 															{(index === 3 || index === 7) &&
-																<td rowSpan={4} className='p-2 max-w-20 text-center'>
+																<td rowSpan={4} className='p-1 text-center'>
 																	<div className="flex flex-col">
 																		<span>{EssayTags[key].type}</span>
+																		<span>{EssayTags[key].type_eng}</span>
 																	</div>
 																</td>
 															}
-															<td className='p-2'>
-																<div className="flex gap-1">
+															<td className='p-1'>
+																<div className="flex flex-col">
 																	<span>{EssayTags[key].desc}</span>
+																	<span>{EssayTags[key].desc_eng}</span>
 																</div>
 															</td>
-															<td className='p-2 w-10 text-right'>{essayScore[key]} / 3</td>
+															<td className='p-2 text-right'>{essayScore[key]} / 3</td>
 														</tr>
 													))}
 												</tbody>
