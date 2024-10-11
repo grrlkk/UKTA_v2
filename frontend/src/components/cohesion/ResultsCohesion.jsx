@@ -13,7 +13,6 @@ const ResultCoh = ({ resultId, darkMode }) => {
 		try {
 			const response = await fetch(`${process.env.REACT_APP_API_URI}/korcat/cohesion/${resultId}`);
 			const data = await response.json();
-			console.log(data);
 			setItem(data);
 		} catch (error) {
 			console.error(error);
@@ -171,32 +170,7 @@ const ResultsCoh = ({ darkMode }) => {
 							<div key={index} className={`flex flex-col gap-4 ${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out`}>
 								<hr className='' />
 
-								{/* <ResultCoh resultId={item._id} darkMode={darkMode} /> */}
-
-								<div className='flex flex-col gap-4 font-semibold'>
-									<EvalFormat
-										darkMode={darkMode}
-										result={[{
-											...item.results.essay_score,
-											filename: item.filename,
-										}]}
-										title={"Writing Evaluation"}
-									/>
-
-									<MorphemeFormat results={item.results.morpheme} title={"Morpheme Analysis"} />
-
-									<ResultsNumeric result={item.results.basic_count} title={"Morpheme Count"} />
-									<ResultsList result={item.results.basic_list} title={"Morpheme Lists"} />
-
-									<ResultsNumeric result={item.results.basic_density} title={"Morpheme Density"} />
-									<ResultsNumeric result={item.results.basic_level} title={"Morpheme Level"} />
-
-									<ResultsNumeric result={item.results.ttr} title={"Lexical Richness (TTR)"} />
-									<ResultsNumeric result={item.results.NDW} title={"Lexical Richness (NDW)"} />
-
-									<ResultsNumeric result={item.results.adjacency} title={"Lexical Richness (Adjacency)"} />
-									<ResultsNumeric result={item.results.similarity} title={"Semantic Cohesion"} />
-								</div>
+								{selectedFile === index && <ResultCoh resultId={item._id} darkMode={darkMode} />}
 							</div>
 						</div>
 

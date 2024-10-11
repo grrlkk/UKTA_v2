@@ -32,6 +32,11 @@ const EvalFormat = ({ result, title, darkMode }) => {
 				suggestedMax: 3,
 				pointLabels: {
 					color: darkMode ? '#f8fafc' : '#313e50',
+					fontSize: 14,
+					font: {
+						weight: 'bold',
+						family: 'Pretandard Variable',	
+					},
 				},
 				ticks: {
 					display: false,
@@ -43,7 +48,11 @@ const EvalFormat = ({ result, title, darkMode }) => {
 			legend: {
 				labels: {
 					color: darkMode ? '#f8fafc' : '#313e50',
-					fontSize: 12,
+					fontSize: 14,
+					font: {
+						weight: 'bold',
+						family: 'Pretandard Variable',	
+					},
 				},
 			},
 		},
@@ -107,13 +116,13 @@ const EvalFormat = ({ result, title, darkMode }) => {
 				</svg>
 			</button>
 
-			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} transition-all ease-in-out grid grid-cols-1 md:grid-cols-2 gap-2`}>
+			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} transition-all ease-in-out grid grid-cols-1 md:grid-cols-5 gap-2`}>
 				{result.length === 0 &&
 					<div className="text-center p-4">Select essays to compare</div>
 				}
 				{result.length > 0 &&
 					<>
-						<div className='bg-slate-200 dark:bg-slate-950 rounded-xl aspect-square relative flex p-2 overflow-hidden'>
+						<div className='col-span-2 bg-slate-200 dark:bg-slate-950 rounded-xl relative flex p-2 overflow-hidden justify-center'>
 							<div className="absolute top-0 left-0 flex flex-col gap-2 items-center p-3 bg-slate-300 dark:bg-slate-600 rounded-br-xl font-normal">
 								<span>Total Score</span>
 								<span>
@@ -125,7 +134,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 							</div>
 							<Radar data={radarData} options={radarOptions} />
 						</div>
-						<div className='bg-slate-200 dark:bg-slate-950 text-sm rounded-xl overflow-hidden'>
+						<div className='col-span-3 bg-slate-200 dark:bg-slate-950 text-sm rounded-xl overflow-hidden'>
 							<div>
 								<button
 									onClick={() => setTableMode(true)}
@@ -147,10 +156,11 @@ const EvalFormat = ({ result, title, darkMode }) => {
 											<table className='w-full text-xs'>
 												<thead className=''>
 													<tr className="*:table-header *:rounded-none">
-														<th className='p-2 w-8 text-right sticky top-0'>N.</th>
-														<th className='p-2 sticky top-0 text-left'>Feature</th>
-														<th className='p-2 sticky top-0 text-left'>Type</th>
-														<th className='p-2 sticky top-0 text-left'>Description</th>
+														<th className='p-1 w-8 text-right sticky top-0'>N.</th>
+														<th className='p-1 sticky top-0 text-left'>Feature</th>
+														<th className='p-1 sticky top-0 text-left'>Type</th>
+														<th className='p-1 sticky top-0 text-left'>Morpheme</th>
+														<th className='p-1 sticky top-0 text-left'>Description</th>
 													</tr>
 												</thead>
 												<tbody className="table-contents">
@@ -159,7 +169,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 															<td className='p-1 w-8 text-right'>{index + 1}</td>
 															<td className='p-1 max-w-24 break-words truncate group-hover:text-wrap'>{feature}</td>
 															<td className="p-1">
-																<div className="flex flex-col">
+																<div className="flex gap-1">
 																	<span>
 																		{CohTags[feature.split("_")[1]]?.type ||
 																			CohTags[feature]?.type}
@@ -170,26 +180,30 @@ const EvalFormat = ({ result, title, darkMode }) => {
 																	</span>
 																</div>
 															</td>
+															<td className="p-1">
+																<div className="flex gap-1">
+																	<span>
+																		{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc}
+																	</span>
+																	<span>
+																		{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc_eng}
+																	</span>
+																</div>
+															</td>
 															<td className="p-2">
-																<div className="flex flex-col">
-																	<div className="flex gap-1">
-																		<span>
-																			{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc}
-																		</span>
+																<div className="flex gap-1">
+																	<div className="flex gap-1 justify-between">
 																		<span>
 																			{CohTags[feature.split("_")[1]]?.desc ||
 																				CohTags[feature]?.desc}
 																		</span>
 																	</div>
-																	{/* <div className="flex gap-1">
-																		<span>
-																			{MorphTags.find(tag => tag.tag === feature.split("_")[0])?.desc_eng}
-																		</span>
+																	<div className="flex gap-1 justify-between">
 																		<span className="">
 																			{CohTags[feature.split("_")[1]]?.desc_eng ||
 																				CohTags[feature]?.desc_eng}
 																		</span>
-																	</div> */}
+																	</div>
 																</div>
 															</td>
 														</tr>
@@ -207,10 +221,10 @@ const EvalFormat = ({ result, title, darkMode }) => {
 											<table className='w-full text-xs'>
 												<thead className=''>
 													<tr className="*:table-header *:rounded-none">
-														<th className='p-2 w-8 text-right sticky top-0'>N.</th>
-														<th className='p-2 sticky top-0'>Type</th>
-														<th className='p-2 sticky top-0 text-left'>Rubric</th>
-														<th className='p-2 w-10 sticky top-0 text-right'>Score</th>
+														<th className='p-1 w-8 text-right sticky top-0'>N.</th>
+														<th className='p-1 sticky top-0'>Type</th>
+														<th className='p-1 sticky top-0 text-left'>Rubric</th>
+														<th className='p-1 w-10 sticky top-0 text-right'>Score</th>
 													</tr>
 												</thead>
 												<tbody className="table-contents">

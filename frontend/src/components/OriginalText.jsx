@@ -11,13 +11,13 @@ const OriginalText = ({ content, trunc, date, procTime }) => {
 					</p>
 				)).slice(0, trunc ? 1 : content.length)}
 			</div>
-
+{/* 
 			{!trunc &&
 				<div className='text-slate-600 text-xs'>
 					<p className=''>Upload Date: {new Date(date).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}</p>
 					<p className=''>Process Time: {procTime}</p>
 				</div>
-			}
+			} */}
 		</div>
 	);
 }

@@ -19,7 +19,7 @@ const Nav = ({ currentPage }) => {
 
 	return (
 		<nav className="fixed top-0 bg-slate-50 bg-opacity-40 dark:bg-slate-950 dark:bg-opacity-40 w-full backdrop-blur z-50 shadow-sm">
-			<div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+			<div className="max-w-full mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
 				<Link to='/' className="flex gap-2 items-center group">
 					<img src={`${process.env.PUBLIC_URL}/kdd_logo_r.png`} alt="logo" className="h-12 py-2 group-hover:animate-pulse transition-all ease-in-out" />
 					<p className="text-lg font-black group-hover:text-slate-500">UKTA</p>
