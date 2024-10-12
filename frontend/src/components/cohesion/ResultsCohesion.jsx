@@ -38,17 +38,23 @@ const ResultCoh = ({ resultId, darkMode }) => {
 
 					<MorphemeFormat results={item.results.morpheme} title={"Morpheme Analysis"} />
 
+					<hr />
+
 					<ResultsNumeric result={item.results.basic_count} title={"Morpheme Count"} />
 					<ResultsList result={item.results.basic_list} title={"Morpheme Lists"} />
 
 					<ResultsNumeric result={item.results.basic_density} title={"Morpheme Density"} />
 					<ResultsNumeric result={item.results.basic_level} title={"Morpheme/Word Length"} />
 
+					<hr />
+
 					<ResultsNumeric result={item.results.ttr} title={"Lexical Diversity (TTR)"} />
 					<ResultsNumeric result={item.results.NDW} title={"Lexical Diversity (NDW)"} />
 
-					<ResultsNumeric result={item.results.adjacency} title={"Lexical Diversity (Adjacency)"} />
-					<ResultsNumeric result={item.results.similarity} title={"Semantic Cohesion"} />
+					<hr />
+
+					<ResultsNumeric result={item.results.adjacency} title={"Cohesion (Adjacency)"} />
+					<ResultsNumeric result={item.results.similarity} title={"Cohesion (Consistancy/Similarity)"} />
 				</>
 			)}
 			{!item.results && <p className='animate-pulse'>Loading...</p>}

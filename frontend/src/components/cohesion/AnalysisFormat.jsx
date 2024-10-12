@@ -117,7 +117,7 @@ const ResultsNumeric = ({ result, title }) => {
 								<th className='px-1 w-1/12 sticky top-0 table-header'>n.</th>
 								<th className='px-1 sticky top-0 table-header'>Tag ({selectedProperty.length})</th>
 								<th className='px-1 sticky top-0 table-header'>Target</th>
-								<th className='px-1 w-1/2 sticky top-0 table-header'>Description</th>
+								<th className='px-1 sticky top-0 table-header'>Description</th>
 								<th className='px-1 pr-4 w-32 sticky top-0 table-header text-right'>Value</th>
 							</tr>
 						</thead>
@@ -136,24 +136,24 @@ const ResultsNumeric = ({ result, title }) => {
 									<td className='p-1'>
 										{CohTags[key]?.alias || key}
 									</td>
-									<td className='p-1'>
-										<div className='flex flex-col'>
-											<span>
-												{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc ||
-													MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc ||
-													MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc ||
-													MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
-											</span>
-											<span>
-												{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc_eng ||
-													MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc_eng ||
-													MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc_eng ||
-													MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc_eng}
-											</span>
-
-										</div>
-									</td>
-									<td className='p-1 w-1/2'>
+									{!key.includes("adjacent") &&
+										<td className='p-1'>
+											<div className='flex flex-col'>
+												<span>
+													{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc ||
+														MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc ||
+														MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc ||
+														MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
+												</span>
+												<span>
+													{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc_eng ||
+														MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc_eng ||
+														MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc_eng ||
+														MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc_eng}
+												</span>
+											</div>
+										</td>}
+									<td colSpan={key.includes("adjacent") && 2} className='p-1'>
 										<div className="flex flex-col">
 											<span>
 												{key.includes("CL_Den") & key !== "CL_Den" ? "실질 형태소 밀도" :

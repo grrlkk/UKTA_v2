@@ -152,7 +152,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 							{tableMode &&
 								<div>
 									{tableData.map((features, index) => (
-										<div key={index} className='w-full max-h-[30rem] grid grid-cols-1 gap-2'>
+										<div key={index} className='w-full max-h-[30rem] grid grid-cols-1 gap-2 overflow-auto'>
 											<table className='w-full text-xs'>
 												<thead className=''>
 													<tr className="*:table-header *:rounded-none">
@@ -229,7 +229,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 							{!tableMode &&
 								<div>
 									{result.map((essayScore, index) => (
-										<div key={index} className='w-full max-h-[30rem] grid grid-cols-1 gap-2 overflow-y-scroll'>
+										<div key={index} className='w-full max-h-[30rem] grid grid-cols-1 gap-2 overflow-auto'>
 											<table className='w-full text-xs'>
 												<thead className=''>
 													<tr className="*:table-header *:rounded-none">
