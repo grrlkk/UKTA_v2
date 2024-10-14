@@ -55,7 +55,7 @@ export const MorphTags = [
 	{ "tag": "SH", "desc": "한자", "desc_eng": "Chinese Character", "color": "#4c55b2" },
 	{ "tag": "SN", "desc": "숫자", "desc_eng": "Number", "color": "#4c4cb2" },
 
-	{ "tag": "NN", "desc": "명사", "desc_eng": "Noun", "color": "#b24c4c" },
+	{ "tag": "NN", "desc": "명사", "desc_eng": "Noun", "color": "#000000" },
 	{ "tag": "CL", "desc": "실질", "desc_eng": "Content", "color": "#000000" },
 	{ "tag": "N", "desc": "체언", "desc_eng": "Noun", "color": "#000000" },
 	{ "tag": "NL", "desc": "체언", "desc_eng": "Noun", "color": "#000000" },

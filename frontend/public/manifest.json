@@ -1,9 +1,9 @@
 {
-	"short_name": "U-KTA",
-	"name": "U-KTA",
+	"short_name": "UKTA",
+	"name": "UKTA",
 	"icons": [
 		{
-			"src": "kdd_logo_r.png",
+			"src": "kdd_logo_r0.png",
 			"type": "image/png",
 			"sizes": "512x512"
 		}
