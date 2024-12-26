@@ -26,19 +26,31 @@ const Nav = ({ currentPage }) => {
 				</Link>
 
 				<div className="whitespace-nowrap items-end flex text-sm *:px-2 divide-x-2 dark:divide-slate-700">
-					<Link to="/cohesion"
+					<Link to="/"
 						className={`
 							hover:text-slate-500
-							${currentPage === "/cohesion" ?
+							${currentPage === "/" ?
 								"font-bold" :
 								"text-opacity-50"
 							} 
 							transition-all ease-in-out`
 						}
 					>
-						Cohesion
+						Home
 					</Link>
-					<Link to="/morpheme"
+					<Link to="/analysis"
+						className={`
+							hover:text-slate-500
+							${currentPage === "/analysis" ?
+								"font-bold" :
+								"text-opacity-50"
+							} 
+							transition-all ease-in-out`
+						}
+					>
+						Analysis
+					</Link>
+					{/* <Link to="/morpheme"
 						className={`
 							hover:text-slate-500
 							${currentPage === "/morpheme" ?
@@ -49,7 +61,7 @@ const Nav = ({ currentPage }) => {
 						}
 					>
 						Morpheme
-					</Link>
+					</Link> */}
 				</div>
 			</div>
 		</nav>
