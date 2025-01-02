@@ -58,14 +58,15 @@ const ResultCoh = ({ resultId, darkMode }) => {
 
 					<h3 className='text-lg font-bold'>Writing Evaluation</h3>
 
-					<EvalFormat
-						darkMode={darkMode}
-						result={[{
-							...item.results.essay_score,
-							filename: item.filename,
-						}]}
-						title={"Writing Evaluation"}
-					/>
+					{(item.results.essay_score != "error") &&
+						<EvalFormat
+							darkMode={darkMode}
+							result={[{
+								...item.results.essay_score,
+								filename: item.filename,
+							}]}
+							title={"Writing Evaluation"}
+						/>}
 				</>
 			)}
 			{!item.results && <p className='animate-pulse'>Loading...</p>}
