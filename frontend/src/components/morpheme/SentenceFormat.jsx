@@ -141,6 +141,7 @@ const Sentence = ({ index, sentence }) => {
 					<div className="table-contents overflow-x-hidden overflow-y-scroll max-h-96 w-full">
 						<table className="table-auto w-full">
 							{sentence.tokens.map((token, index) => {
+								let sumPrev = sentence.tokens.slice(0, index).reduce((acc, token) => acc + token.morphemes.length, 0);
 								return (
 									<tbody key={index} className="">
 										{token.morphemes.map((morph, index_) => {
@@ -165,7 +166,10 @@ const Sentence = ({ index, sentence }) => {
 																{token.text.content}
 															</td>
 														</>}
-													<td className="px-3 py-1">{morph.text.content}</td>
+													<td className="flex px-3 py-1 gap-2">
+														<span className="w-8 font-mono text-right italic">{sumPrev + index_ + 1}</span>
+														<span>{morph.text.content}</span>
+													</td>
 													<td
 														className="px-3 py-1 font-mono w-1/6"
 														style={{ "color": MorphTags.find(tag => tag.tag === morph.tag)?.color }}
