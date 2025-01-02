@@ -37,9 +37,12 @@ const ToggleTable = ({ tableHidden, setTableHidden }) => {
 	);
 }
 
-const MorphDesc = ({ kr, tag }) => {
+const MorphDesc = ({ idx, kr, tag }) => {
 	return (
 		<>
+			<div className='flex justify-center font-mono text-xs italic border-b-[1px]'>
+				{idx}
+			</div>
 			<div className='flex justify-center'>
 				{kr}
 			</div>
@@ -90,34 +93,51 @@ const Sentence = ({ index, sentence }) => {
 					`}
 				>
 					{sentence.tokens.map((token, index) => {
+						let sumPrev = sentence.tokens.slice(0, index).reduce((acc, token) => acc + token.morphemes.length, 0);
 						return (
-							<div
-								key={index}
-								className="flex flex-row"
-							>
-								{token.morphemes.map((morph, index_) => {
-									return (
-										<div
-											key={index_}
-											className={`
+							<div key={index} className="flex flex-col">
+								<div
+									className="
+										flex justify-center p-2
+										hover:bg-slate-200 dark:hover:bg-slate-700"
+									onMouseEnter={() => {
+										handleMouseEnter([token.text.beginOffset, token.text.beginOffset + token.text.length]);
+										setHoverColor('#3381fd');
+									}}
+									onMouseLeave={() => {
+										setRange([0, 0]);
+										setHoverColor('');
+									}}
+								>
+									<span className="w-full text-center border-b-[1px]">{token.text.content}</span>
+								</div>
+								<div
+									className="flex flex-row"
+								>
+									{token.morphemes.map((morph, index_) => {
+										return (
+											<div
+												key={index_}
+												className={`
 												flex flex-col gap-1 p-2 text-nowrap *:flex *:justify-center 
 												hover:bg-slate-200 dark:hover:bg-slate-700
 											`}
-											onMouseEnter={() => {
-												handleMouseEnter([morph.text.beginOffset, morph.text.beginOffset + morph.text.length]);
-												setHoverColor(MorphTags.find(tag => tag.tag === morph.tag)?.color);
-											}}
-											onMouseLeave={() => {
-												setRange([0, 0]);
-												setHoverColor('');
-											}}
-										>
-											<div className="flex flex-col gap-2">
-												<MorphDesc kr={morph.text.content} tag={morph.tag} />
+												onMouseEnter={() => {
+													handleMouseEnter([morph.text.beginOffset, morph.text.beginOffset + morph.text.length]);
+													setHoverColor(MorphTags.find(tag => tag.tag === morph.tag)?.color);
+												}}
+												onMouseLeave={() => {
+													setRange([0, 0]);
+													setHoverColor('');
+												}}
+											>
+												<div className="flex flex-col gap-2">
+													<MorphDesc idx={sumPrev + index_ + 1} kr={morph.text.content} tag={morph.tag} />
+												</div>
 											</div>
-										</div>
-									);
-								}, [])}
+										);
+									})}
+								</div>
 							</div>
 						);
 					})}
@@ -141,6 +161,7 @@ const Sentence = ({ index, sentence }) => {
 					<div className="table-contents overflow-x-hidden overflow-y-scroll max-h-96 w-full">
 						<table className="table-auto w-full">
 							{sentence.tokens.map((token, index) => {
+								let sumPrev = sentence.tokens.slice(0, index).reduce((acc, token) => acc + token.morphemes.length, 0);
 								return (
 									<tbody key={index} className="">
 										{token.morphemes.map((morph, index_) => {
@@ -165,7 +186,10 @@ const Sentence = ({ index, sentence }) => {
 																{token.text.content}
 															</td>
 														</>}
-													<td className="px-3 py-1">{morph.text.content}</td>
+													<td className="flex px-3 py-1 gap-2">
+														<span className="w-8 font-mono text-right italic">{sumPrev + index_ + 1}</span>
+														<span>{morph.text.content}</span>
+													</td>
 													<td
 														className="px-3 py-1 font-mono w-1/6"
 														style={{ "color": MorphTags.find(tag => tag.tag === morph.tag)?.color }}

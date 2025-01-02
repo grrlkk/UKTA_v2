@@ -27,8 +27,12 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
         now = datetime.datetime.now()
 
         results = process(contents.decode("UTF8"))
-        essay_score = score_results(results)
-        results["essay_score"] = essay_score
+
+        try:
+            essay_score = score_results(results)
+            results["essay_score"] = essay_score
+        except:
+            results["essay_score"] = "error"
 
         process_time = datetime.datetime.now() - now
 

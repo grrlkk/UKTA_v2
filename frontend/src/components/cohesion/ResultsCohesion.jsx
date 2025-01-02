@@ -27,18 +27,11 @@ const ResultCoh = ({ resultId, darkMode }) => {
 		<div className='flex flex-col gap-4 font-semibold'>
 			{item.results && (
 				<>
-					<EvalFormat
-						darkMode={darkMode}
-						result={[{
-							...item.results.essay_score,
-							filename: item.filename,
-						}]}
-						title={"Writing Evaluation"}
-					/>
-
 					<MorphemeFormat results={item.results.morpheme} title={"Morpheme Analysis"} />
 
 					<hr />
+
+					<h3 className='text-lg font-bold'>Basic Information</h3>
 
 					<ResultsNumeric result={item.results.basic_count} title={"Morpheme Count"} />
 					<ResultsList result={item.results.basic_list} title={"Morpheme Lists"} />
@@ -48,13 +41,32 @@ const ResultCoh = ({ resultId, darkMode }) => {
 
 					<hr />
 
+					<h3 className='text-lg font-bold'>Morpheme/Word Level Analysis</h3>
+
+
 					<ResultsNumeric result={item.results.ttr} title={"Lexical Diversity (TTR)"} />
 					<ResultsNumeric result={item.results.NDW} title={"Lexical Diversity (NDW)"} />
 
 					<hr />
 
+					<h3 className='text-lg font-bold'>Cohesion</h3>
+
 					<ResultsNumeric result={item.results.adjacency} title={"Cohesion (Adjacency)"} />
 					<ResultsNumeric result={item.results.similarity} title={"Cohesion (Consistancy/Similarity)"} />
+
+					<hr />
+
+					<h3 className='text-lg font-bold'>Writing Evaluation</h3>
+
+					{(item.results.essay_score != "error") &&
+						<EvalFormat
+							darkMode={darkMode}
+							result={[{
+								...item.results.essay_score,
+								filename: item.filename,
+							}]}
+							title={"Writing Evaluation"}
+						/>}
 				</>
 			)}
 			{!item.results && <p className='animate-pulse'>Loading...</p>}
@@ -157,7 +169,7 @@ const ResultsCoh = ({ darkMode }) => {
 			transition={{ duration: 0.1 }}
 			className='grid grid-cols-1 gap-4'
 		>
-			<h2 className="text-2xl font-bold py-2">Cohesion Analysis Results</h2>
+			<h2 className="text-2xl font-bold py-2">Analysis Results</h2>
 
 			<Pagination componentArray=
 				{cohesionResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (

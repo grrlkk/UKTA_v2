@@ -100,7 +100,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 			}));
 
 			const newTableData = result.map((essayScore) => {
-				return essayScore.top_k_features;
+				return essayScore.top_k_features || [];
 			});
 
 			setTableData(newTableData);
@@ -110,7 +110,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 	return (
 		<div className='text-sm overflow-hidden flex flex-col'>
 			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
-				<h3 className='text-lg font-semibold'>{title}</h3>
+				<h3 className='font-semibold'>{title}</h3>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${!hidden && "rotate-90"} transition-transform ease-in-out w-5 h-5`}>
 					<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 				</svg>

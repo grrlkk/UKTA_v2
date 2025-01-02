@@ -48,7 +48,7 @@ function App() {
 							<Routes location={currentPage} key={currentPage.pathname}>
 								<Route path='/' element={<Dummy />} />
 								<Route path='/morpheme' element={<ResultsMor />} />
-								<Route path='/cohesion' element={<ResultsCoh darkMode={darkMode} />} />
+								<Route path='/analysis' element={<ResultsCoh darkMode={darkMode} />} />
 								<Route path='/tagging' element={<TagInfo />} />
 								{uploadInProgress && <Route path='/loading' element={<Loading />} />}
 								<Route path='*' element={<Navigate to="/" />} />

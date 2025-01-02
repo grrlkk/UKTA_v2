@@ -22,19 +22,22 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 			}
 		}
 
+		console.log(formData);
+
 		try {
 			const response = await fetch(`${process.env.REACT_APP_API_URI}/korcat/${type}`, {
 				method: 'POST',
 				body: formData,
 			});
 			const data = await response.json();
-			// console.log(data);
+			console.log(data);
 		} catch (error) {
 			console.error(error);
 		} finally {
 			setUploadInProgress(false);
 			handleClearInput();
-			navigate(`/${type}`);
+			if (type === 'cohesion') navigate('/analysis');
+			else navigate(`/${type}`);
 		}
 	};
 
@@ -132,7 +135,7 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 						</button> :
 						<>
 							<Link to='/loading' className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('cohesion')}>
-								Analyze Cohesion
+								Analyze
 							</Link>
 							<Link to='/loading' className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('morpheme')}>
 								Analyze Morpheme
