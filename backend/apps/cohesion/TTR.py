@@ -158,7 +158,7 @@ class TTR:
 				self.VA_lst.append(morp[0])
 			if morp[1] in morphs_ML:
 				self.ML_lst.append(morp[0])
-			if morp[1] == "MM":
+			if morp[1].startswith("MM"):
 				self.MM_lst.append(morp[0])
 			if morp[1] in morphs_MA:
 				self.MA_lst.append(morp[0])

@@ -1,12 +1,14 @@
 import collections
-import logging
 import inspect
+import json
+import logging
 import multiprocessing
 import subprocess
 import time
 from concurrent.futures import ThreadPoolExecutor
 
 from apps.morph.bareun import bareun
+from google.protobuf.json_format import MessageToDict
 from keybert import KeyBERT
 from transformers import BertModel
 
@@ -403,6 +405,8 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency"]):
     kkma_list = []
 
     result["morpheme"] = morph.tags(sentences).as_json()
+    corrections = morph.correction(text)
+    result["correction"] = MessageToDict(corrections)
 
     for idx, sentence in enumerate(sentences):
         inf = morph.pos(sentence)
