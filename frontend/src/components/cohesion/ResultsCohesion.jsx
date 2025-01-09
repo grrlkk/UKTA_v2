@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import OriginalText from '../OriginalText';
 import Pagination from '../Pagination';
-import { ResultsList, ResultsNumeric, MorphemeFormat } from './AnalysisFormat';
+import { ResultsList, ResultsNumeric, MorphemeFormat, CorrectionFormat } from './AnalysisFormat';
 import EvalFormat from './EvalFormat';
 
 
@@ -28,6 +28,9 @@ const ResultCoh = ({ resultId, darkMode }) => {
 			{item.results && (
 				<>
 					<MorphemeFormat results={item.results.morpheme} title={"Morpheme Analysis"} />
+					{item.results.correction?.revisedSentences && (
+						<CorrectionFormat results={item.results.correction} title={"Spelling/Grammar Correction"} />
+					)}
 
 					<hr />
 
@@ -58,7 +61,7 @@ const ResultCoh = ({ resultId, darkMode }) => {
 
 					<h3 className='text-lg font-bold'>Writing Evaluation</h3>
 
-					{(item.results.essay_score != "error") &&
+					{(item.results.essay_score !== "error") &&
 						<EvalFormat
 							darkMode={darkMode}
 							result={[{

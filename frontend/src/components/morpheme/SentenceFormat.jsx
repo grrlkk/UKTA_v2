@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MorphTags } from "../Tags";
+import { use } from "react";
 
 
 const HilightText = ({ range, content, color }) => {
@@ -11,6 +12,7 @@ const HilightText = ({ range, content, color }) => {
 				style={{ color: color, borderColor: color }}
 			>
 				{content.substring(range[0], range[1])}
+				{/* {range[0] === range[1] && range[0] != 0 && <span>&nbsp;&nbsp;</span>} */}
 			</span>
 			<span>{content.substring(range[1], content.length)}</span>
 		</div>
@@ -231,4 +233,124 @@ const Sentences = ({ results }) => {
 	);
 }
 
-export default Sentences;
+const SentencesCorrection = ({ results }) => {
+	function revBlocks(results) {
+		let revSentences = results.revisedSentences;
+		let revisedBlocks = revSentences.reduce((acc, sentence) => {
+			if (sentence.revisedBlocks) {
+				return acc.concat(sentence.revisedBlocks);
+			}
+			return acc;
+		}, []);
+		for (let i = 0; i < revisedBlocks.length; i++) {
+			if (revisedBlocks[i].origin.content === revisedBlocks[i].revised) {
+				revisedBlocks.splice(i, 1);
+				i--; // Adjust index after removal
+			}
+		}
+		return revisedBlocks.sort((a, b) => a.origin.beginOffset - b.origin.beginOffset);
+	}
+	const [blocks, setBlocks] = useState(revBlocks(results));
+	const [revisedBlocks, setRevisedBlocks] = useState([]);
+	function correctBlock(index, revised) {
+		let newBlocks = [...blocks];
+		newBlocks[index].revised = revised;
+		setBlocks(newBlocks);
+		if (!revisedBlocks.includes(index)) {
+			setRevisedBlocks([...revisedBlocks, index]);
+		}
+		console.log(revisedBlocks);
+	}
+	const [hRange, setHRange] = useState([0, 0]);
+
+	return (
+		<div
+			className={`
+				font-normal
+				bg-white dark:bg-slate-950 rounded-xl overflow-hidden
+				h-fit
+			`}
+		>
+			<div className="bg-slate-300 dark:bg-slate-900 rounded-t-xl overflow-hidden p-2 flex gap-2 items-center">
+				<span>
+					{blocks.length} Possible Revisions
+				</span>
+				<hr className="grow" />
+			</div>
+			<div className="p-4 leading-relaxed">
+				{blocks.map((block, index) => {
+					console.log(block);
+					let range = [block.origin.beginOffset, block.origin.beginOffset + (block.origin.length || 0)];
+					let content = results.origin;
+					let prev = index === 0 ? 0 : blocks[index - 1].origin.beginOffset + (blocks[index - 1].origin.length || 0);
+					return (
+						<>
+							<span className="">{content.substring(prev, range[0])}</span>
+							<span
+								className={`${range[0] == hRange[0] ? "bg-slate-300" : ""} font-bold border-y-2 px-1`}
+								style={{
+									color: revisedBlocks.includes(index) ? "green" : "#e23e3f",
+									borderColor: revisedBlocks.includes(index) ? "green" : "#e23e3f"
+								}}
+							>
+								{revisedBlocks.includes(index) ?
+									range[0] !== range[1] ? block.revised : " " :
+									range[0] !== range[1] ? block.origin.content : ""
+								}
+							</span>
+							{index === blocks.length - 1 && <span>{content.substring(range[1], content.length)}</span>}
+						</>
+					)
+				})}
+			</div>
+			<hr className="border-slate-300 dark:border-slate-700 shadow" />
+			<div
+				className={`
+				flex flex-col gap-2 items-start max-h-64 overflow-y-auto
+				bg-white dark:bg-slate-950 font-normal p-2
+			`}
+			>
+				{blocks.map((block, index) => {
+					return (
+						<div
+							className="flex flex-col w-full gap-1 hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-lg border-[1px]"
+							onMouseEnter={() => setHRange([block.origin.beginOffset, block.origin.beginOffset + (block.origin.length || 0)])}
+							onMouseLeave={() => setHRange([0, 0])}
+						>
+							<div className="font-bold">
+								{index + 1}. {block.origin.content}
+							</div>
+							<div className="flex gap-2">
+								{block.revisions.map((rev, index_) => {
+									return (
+										<div
+											key={index_}
+											className="hover:bg-slate-300 font-bold border-y-2 px-1 cursor-pointer"
+											style={{ color: "#3381fd", borderColor: "#3381fd" }}
+											onClick={() => correctBlock(index, rev.revised)}
+										>
+											{rev.revised}
+										</div>
+									)
+								})}
+							</div>
+							<div className="flex flex-col">
+								<div>
+									{block.revisions[0].category}
+								</div>
+								<div>
+									{block.revisions[0].comment}
+								</div>
+								<div className="text-xs text-slate-500">
+									{block.revisions[0].ruleArticle}
+								</div>
+							</div>
+						</div>
+					)
+				})}
+			</div>
+		</div>
+	);
+}
+
+export { Sentences, SentencesCorrection };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MorphTags, CohTags } from "../Tags";
-import Sentences from '../morpheme/SentenceFormat';
+import { Sentences, SentencesCorrection } from '../morpheme/SentenceFormat';
 
 
 const MorphemeFormat = ({ results, title }) => {
@@ -17,6 +17,28 @@ const MorphemeFormat = ({ results, title }) => {
 
 			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} -pr-[6px] transition-all ease-in-out`}>
 				<Sentences results={results} />
+			</div >
+		</div>
+	);
+}
+
+const CorrectionFormat = ({ results, title }) => {
+	const [hidden, setHidden] = useState(true);
+
+	return (
+		<div className='rounded-xl text-sm overflow-hidden flex flex-col'>
+			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
+				<h3 className='font-semibold'>{title}</h3>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${!hidden && "rotate-90"} transition-transform ease-in-out w-5 h-5`}>
+					<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+				</svg>
+			</button>
+
+			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} -pr-[6px] transition-all ease-in-out`}>
+				<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} -pr-[6px] transition-all ease-in-out`}>
+					{console.log(results)}
+					<SentencesCorrection results={results} />
+				</div >
 			</div >
 		</div>
 	);
@@ -379,4 +401,4 @@ const ResultsList = ({ result, title }) => {
 };
 
 
-export { ResultsNumeric, ResultsList, MorphemeFormat };
+export { ResultsNumeric, ResultsList, MorphemeFormat, CorrectionFormat };
