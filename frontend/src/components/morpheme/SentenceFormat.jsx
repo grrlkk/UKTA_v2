@@ -259,7 +259,7 @@ const SentencesCorrection = ({ results }) => {
 		if (!revisedBlocks.includes(index)) {
 			setRevisedBlocks([...revisedBlocks, index]);
 		}
-		console.log(revisedBlocks);
+		// console.log(revisedBlocks);
 	}
 	const [hRange, setHRange] = useState([0, 0]);
 
@@ -279,7 +279,7 @@ const SentencesCorrection = ({ results }) => {
 			</div>
 			<div className="p-4 leading-relaxed">
 				{blocks.map((block, index) => {
-					console.log(block);
+					// console.log(block);
 					let range = [block.origin.beginOffset, block.origin.beginOffset + (block.origin.length || 0)];
 					let content = results.origin;
 					let prev = index === 0 ? 0 : blocks[index - 1].origin.beginOffset + (blocks[index - 1].origin.length || 0);

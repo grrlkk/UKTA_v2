@@ -36,7 +36,6 @@ const CorrectionFormat = ({ results, title }) => {
 
 			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} -pr-[6px] transition-all ease-in-out`}>
 				<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} -pr-[6px] transition-all ease-in-out`}>
-					{console.log(results)}
 					<SentencesCorrection results={results} />
 				</div >
 			</div >
