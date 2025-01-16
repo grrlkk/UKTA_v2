@@ -10,13 +10,29 @@ const Foot = () => {
 			<div className="max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto flex flex-col lg:items-end lg:flex-row justify-between gap-16">
 				<div className='flex flex-col justify-between lg:justify-start items-center lg:items-start gap-4 w-full'>
 					<div className='divide-x-2 dark:divide-slate-700 *:px-2 flex justify-center'>
-						<Link to='/cohesion' className='hover:font-bold first:pl-0'>Cohesion</Link>
-						<Link to='/morpheme' className='hover:font-bold'>Morpheme</Link>
-						<Link to='/tagging' className='hover:font-bold'>Morpheme Tags</Link>
+						<Link to='/analysis' className='hover:font-bold first:pl-0'>Analysis</Link>
+						<Link to='/tagging' className='hover:font-bold'>Tag Information</Link>
 					</div>
-					{/* <a href='https://sites.google.com/view/kdd-lab/' className='hover:text-slate-500 hover:underline font-bold'>
-						2024 KDD LAB, INHA Univ.
-					</a> */}
+					{/* <div className='flex flex-col'>
+						<div className='flex flex-row gap-1'>
+							Developed by
+							<a href='https://sites.google.com/view/kdd-lab/' className='hover:text-slate-500 hover:underline font-bold'>
+								2024-2025 KDD LAB, INHA University
+							</a>
+						</div>
+						<div className='flex flex-row gap-1'>
+							Official GitHub Repository
+							<a href='https://github.com/ttytu/KorCAT-web' className='hover:text-slate-500 hover:underline font-bold'>
+								KorCAT-web
+							</a>
+						</div>
+						<div className='flex flex-row gap-1'>
+							Morpheme & Grammar Analysis by
+							<a href='https://bareun.ai/' className='hover:text-slate-500 hover:underline font-bold'>
+								Bareun
+							</a>
+						</div>
+					</div> */}
 				</div>
 
 				{/* <div className='flex flex-row gap-4 grayscale w-full justify-center lg:justify-end dark:invert'>

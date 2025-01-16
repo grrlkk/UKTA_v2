@@ -287,7 +287,7 @@ const SentencesCorrection = ({ results }) => {
 						<>
 							<span className="">{content.substring(prev, range[0])}</span>
 							<span
-								className={`${range[0] == hRange[0] ? "bg-slate-300" : ""} font-bold border-y-2 px-1`}
+								className={`${range[0] === hRange[0] ? "bg-slate-300" : ""} font-bold border-y-2 px-1`}
 								style={{
 									color: revisedBlocks.includes(index) ? "green" : "#e23e3f",
 									borderColor: revisedBlocks.includes(index) ? "green" : "#e23e3f"
