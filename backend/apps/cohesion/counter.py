@@ -261,8 +261,8 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 	result["NNP_Cnt"] = len(morphLst_NNP)
 	result["NNB_Cnt"] = len(morphLst_NNB)
 	result["NP_Cnt"] = len(morphLst_NP)
-	result["NP_People_Cnt"] = len(morphLst_NP_people)
-	result["NP_Things_Cnt"] = len(morphLst_NP_things)
+	result["NPP_Cnt"] = len(morphLst_NP_people)
+	result["NPT_Cnt"] = len(morphLst_NP_things)
 	result["NR_Cnt"] = len(morphLst_NR)
 
 	result["V_Cnt"] = len(morphLst_V)
@@ -360,8 +360,8 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 	resultLst["NNP_Lst"] = morphLst_NNP
 	resultLst["NNB_Lst"] = morphLst_NNB
 	resultLst["NP_Lst"] = morphLst_NP
-	resultLst["NP_People_Lst"] = morphLst_NP_people
-	resultLst["NP_Things_Lst"] = morphLst_NP_things
+	resultLst["NPP_Lst"] = morphLst_NP_people
+	resultLst["NPT_Lst"] = morphLst_NP_things
 	resultLst["NR_Lst"] = morphLst_NR
 	resultLst["V_Lst"] = morphLst_V
 	resultLst["VV_Lst"] = morphLst_VV

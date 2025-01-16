@@ -161,15 +161,13 @@ const ResultsNumeric = ({ result, title }) => {
 										<td className='p-1'>
 											<div className='flex flex-col'>
 												<span>
-													{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc ||
-														MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc ||
-														MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc ||
+													{MorphTags.find(tag => tag.tag === key.split("C_")[0])?.desc ||
+														MorphTags.find(tag => tag.tag === key.split("F_")[0])?.desc ||
 														MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
 												</span>
 												<span>
-													{MorphTags.find(tag => tag.tag === key.split("L_")[0])?.desc_eng ||
-														MorphTags.find(tag => tag.tag === key.split("CL_")[0])?.desc_eng ||
-														MorphTags.find(tag => tag.tag === key.split("FL_")[0])?.desc_eng ||
+													{MorphTags.find(tag => tag.tag === key.split("C_")[0])?.desc_eng ||
+														MorphTags.find(tag => tag.tag === key.split("F_")[0])?.desc_eng ||
 														MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc_eng}
 												</span>
 											</div>
@@ -177,18 +175,16 @@ const ResultsNumeric = ({ result, title }) => {
 									<td colSpan={key.includes("adjacent") && 2} className='p-1'>
 										<div className="flex flex-col">
 											<span>
-												{key.includes("CL_Den") & key !== "CL_Den" ? "실질 형태소 밀도" :
-													key.includes("FL_Den") & key !== "FL_Den" ? "형식 형태소 밀도" :
-														key.includes("L_Den") & key !== "L_Den" ? "어휘 밀도" :
-															CohTags[key.split("_")[1]]?.desc ||
-															CohTags[key]?.desc}
+												{key.includes("C_Den") & key !== "C_Den" ? "실질 형태소 밀도" :
+													key.includes("F_Den") & key !== "F_Den" ? "형식 형태소 밀도" :
+														CohTags[key.split("_")[1]]?.desc ||
+														CohTags[key]?.desc}
 											</span>
 											<span className="">
-												{key.includes("CL_Den") & key !== "CL_Den" ? "Content Morpheme Density" :
-													key.includes("FL_Den") & key !== "FL_Den" ? "Formal Morpheme Density" :
-														key.includes("L_Den") & key !== "L_Den" ? "Morheme Density" :
-															CohTags[key.split("_")[1]]?.desc_eng ||
-															CohTags[key]?.desc_eng}
+												{key.includes("C_Den") & key !== "C_Den" ? "Content Morpheme Density" :
+													key.includes("F_Den") & key !== "F_Den" ? "Formal Morpheme Density" :
+														CohTags[key.split("_")[1]]?.desc_eng ||
+														CohTags[key]?.desc_eng}
 											</span>
 										</div>
 									</td>
@@ -360,15 +356,26 @@ const ResultsList = ({ result, title }) => {
 										{key}
 									</td>
 									<td className='p-1 break-all'>
-										<span>
-											{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc_eng}
-										</span>
+										<div className='flex flex-col'>
+											<span>
+												{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc}
+											</span>
+											<span>
+												{MorphTags.find(tag => tag.tag === key.split("_")[0])?.desc_eng}
+											</span>
+										</div>
 									</td>
 									<td className='p-1 break-all'>
-										<span>
-											{CohTags[key.split("_")[1]]?.desc_eng ||
-												CohTags[key]?.desc_eng}
-										</span>
+										<div className='flex flex-col'>
+											<span>
+												{CohTags[key.split("_")[1]]?.desc ||
+													CohTags[key]?.desc}
+											</span>
+											<span>
+												{CohTags[key.split("_")[1]]?.desc_eng ||
+													CohTags[key]?.desc_eng}
+											</span>
+										</div>
 									</td>
 									{expanded && (
 										<td className='w-1/2'>
