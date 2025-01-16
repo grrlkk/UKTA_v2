@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Radar } from 'react-chartjs-2';
+import { Radar, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 import { CohTags, MorphTags, EssayTags } from "../Tags";
 
@@ -10,6 +10,7 @@ const initialRadarData = {
 	labels: ["Grammar", "Vocabulary", "Sentence", "In-Paragraph", "Inter-Paragraph", "Consistency", "Length", "Clarity", "Originality", "Descriptions"],
 	datasets: [],
 };
+
 
 const EvalFormat = ({ result, title, darkMode }) => {
 	const [hidden, setHidden] = useState(true);
@@ -282,4 +283,129 @@ const EvalFormat = ({ result, title, darkMode }) => {
 	);
 }
 
-export default EvalFormat;
+const EvalFormatCompare = ({ result, darkMode }) => {
+	const [radarData, setRadarData] = useState(initialRadarData);
+	const [tableData, setTableData] = useState([]);
+	const [tableMode, setTableMode] = useState(true);
+	const radarOptions = {
+		scales: {
+			r: {
+				angleLines: {
+					display: true,
+				},
+				grid: {
+				},
+				suggestedMin: 0,
+				suggestedMax: 3,
+				pointLabels: {
+					fontSize: 14,
+					font: {
+						weight: 'bold',
+						family: 'Noto Sans KR',
+					},
+				},
+				ticks: {
+					display: false,
+					stepSize: 1,
+				}
+			}
+		},
+		plugins: {
+			legend: {
+				labels: {
+					fontSize: 14,
+					font: {
+						weight: 'bold',
+						family: 'Noto Sans KR',
+					},
+				},
+			},
+		},
+		animation: false,
+	}
+
+	useEffect(() => {
+		if (result) {
+			if (result.length === 0) return;
+			const newDatasets = result.map((essayScore, index) => {
+				const results = [
+					essayScore.grammar,
+					essayScore.vocabulary,
+					essayScore.sentence_expression,
+					essayScore.intra_paragraph_structure,
+					essayScore.inter_paragraph_structure,
+					essayScore.structural_consistency,
+					essayScore.length,
+					essayScore.topic_clarity,
+					essayScore.originality,
+					// essayScore.prompt_comprehension,
+					essayScore.narrative,
+				];
+
+				const hue = index * 360 / result.length;
+				const lightness = darkMode ? 70 : 50;
+
+				return {
+					label: `${essayScore.filename}`,
+					data: results,
+					backgroundColor: `hsla(${hue}, 100%, ${lightness}%, 0.1)`,
+					borderColor: `hsl(${hue}, 100%, ${lightness}%)`,
+					borderWidth: 1,
+					pointBackgroundColor: `hsl(${hue}, 100%, ${lightness}%)`,
+					pointBorderColor: '#fff',
+					pointHoverBackgroundColor: '#fff',
+					pointHoverBorderColor: `hsl(${hue}, 100%, ${lightness}%)`,
+				};
+			});
+
+			setRadarData((prevData) => ({
+				...prevData,
+				datasets: newDatasets,
+			}));
+
+			const newTableData = result.map((essayScore) => {
+				return essayScore.top_k_features || [];
+			});
+
+			setTableData(newTableData);
+		}
+	}, [result]);
+
+	return (
+		<div className='w-full flex text-sm h-auto transition-all ease-in-out'>
+			{result.length === 0 &&
+				<div className="text-center p-4">Select essays to compare</div>
+			}
+			{result.length > 0 &&
+				<div className="w-full flex">
+					<div className="flex flex-col gap-2 divide-y-2 p-3 bg-slate-300 dark:bg-slate-600 rounded-xl font-normal">
+						<span className="text-lg font-semibold">Total Scores</span>
+						{result.map((essayScore, index) => (
+							<span key={index}
+								className="flex flex-col pt-2"
+							>
+								<span className="flex items-center gap-2">
+									<span
+										className="w-3 h-3 rounded-full inline-block"
+										style={{ backgroundColor: `hsl(${index * 360 / result.length}, 100%, 50%)` }}
+									></span>
+									{essayScore.filename}
+								</span>
+								<span
+									className="text-lg font-black"
+								>
+									{Object.values(essayScore).reduce((acc, cur) => acc + (typeof cur === 'number' ? cur : 0), 0)}
+									&nbsp;/&nbsp;30
+								</span>
+							</span>
+						))}
+					</div>
+					<Radar data={radarData} options={radarOptions} />
+					{/* <Line data={{ labels: [], datasets: [] }} /> */}
+				</div>
+			}
+		</div>
+	);
+}
+
+export { EvalFormat, EvalFormatCompare };

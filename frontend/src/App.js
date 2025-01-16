@@ -12,6 +12,7 @@ import TagInfo from './components/TagInfo';
 import TextInput from './components/TextInput';
 import ResultsCoh from './components/cohesion/ResultsCohesion';
 import ResultsMor from './components/morpheme/ResultsMorpheme';
+import Comparison from './components/Comparison';
 
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
 		<div className={`App ${darkMode ? 'dark' : ''} overflow-x-hidden`}>
 			<div
 				className='fixed top-0 h-full w-full z-0 bg-white dark:bg-slate-950'
-					// bg-gradient-to-b from-slate-50 dark:from-slate-950 dark:via-black via-white to-slate-50 dark:to-slate-950'
+			// bg-gradient-to-b from-slate-50 dark:from-slate-950 dark:via-black via-white to-slate-50 dark:to-slate-950'
 			></div>
 
 			<div className="relative text-slate-900 dark:text-slate-50 transition-all ease-in-out min-w-[320px]">
@@ -58,6 +59,8 @@ function App() {
 
 					<div className='fixed bottom-0'></div>
 				</div>
+
+				<Comparison />
 
 				<Foot darkMode={darkMode} setDarkMode={setDarkMode} />
 			</div>

@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import OriginalText from '../OriginalText';
 import Pagination from '../Pagination';
 import { ResultsList, ResultsNumeric, MorphemeFormat, CorrectionFormat } from './AnalysisFormat';
-import EvalFormat from './EvalFormat';
+import { EvalFormat } from './EvalFormat';
+import { useCompareFiles } from '../contexts/ComparisonContext';
 
 
 const ResultCoh = ({ resultId, darkMode }) => {
@@ -81,6 +82,7 @@ const ResultsCoh = ({ darkMode }) => {
 	const [cohesionResult, setCohesionResult] = useState([]);
 	const [selectedFile, setSelectedFile] = useState(-1);
 	const [selectedEssay, setSelectedEssay] = useState([]);
+	const { compareFiles, addCompareFile, clearCompareFiles } = useCompareFiles();
 
 	const fetchData = async () => {
 		try {
@@ -202,9 +204,6 @@ const ResultsCoh = ({ darkMode }) => {
 						</div>
 
 						<div className={`absolute top-4 right-4 flex gap-2 text-sm pl-4`}>
-							{/* <button className={`grow sm:grow-0 btn-primary flex flex-nowrap gap-1`} onClick={() => handleSelectEssay(item)}>
-								Compare
-							</button> */}
 							{index === selectedFile &&
 								<button className={`grow sm:grow-0 p-2 btn-primary group`} onClick={handleSelectFile(-1)}>
 									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 group-hover:rotate-90 transition-all ease-in-out">
@@ -212,6 +211,14 @@ const ResultsCoh = ({ darkMode }) => {
 									</svg>
 								</button>
 							}
+							<button className={`grow sm:grow-0 btn-primary flex flex-nowrap items-center gap-1`} onClick={() => addCompareFile(item._id)}>
+								<input
+									type='checkbox'
+									className='accent-slate-600'
+									checked={compareFiles.some((file) => file._id === item._id)}
+								></input>
+								Compare
+							</button>
 							<button className={`grow sm:grow-0 btn-primary flex flex-nowrap gap-1`} onClick={() => handleFileDownload(item)}>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
