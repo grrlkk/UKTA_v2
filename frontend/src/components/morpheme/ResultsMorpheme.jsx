@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import OriginalText from '../OriginalText';
 import Pagination from '../Pagination';
-import Sentences from './SentenceFormat';
+import { Sentences } from './SentenceFormat';
 
 
 const ResultsMor = () => {
@@ -102,7 +102,7 @@ const ResultsMor = () => {
 					<div
 						id={"mor_" + index}
 						key={index}
-						onClick={handleSelectFile(index)}s
+						onClick={handleSelectFile(index)} s
 						className={`
 							p-4 h-fit rounded-3xl overflow-auto w-full shadow relative transition-all 
 							${selectedFile === index ? 'bg-slate-100 dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800'}`}

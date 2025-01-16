@@ -33,8 +33,8 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 
 	# morphs list ------------------------------------------------------------------------
 	# (morph, tag, including sentence)
-	morphLst_CL = []
-	morphLst_NL = []
+	morphLst_C = []
+	morphLst_N = []
 	morphLst_NN = []
 	morphLst_NNG = []
 	morphLst_NNP = []
@@ -43,23 +43,23 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 	morphLst_NP_people = []
 	morphLst_NP_things = []
 	morphLst_NR = []
-	morphLst_VL = []
+	morphLst_V = []
 	morphLst_VV = []
 	morphLst_VA = []
 	morphLst_VX = []
 	morphLst_VCP = []
 	morphLst_VCN = []
-	morphLst_ML = []
+	morphLst_M = []
 	morphLst_MM = []
 	morphLst_MA = []
-	morphLst_FL = []
+	morphLst_F = []
 	morphLst_J = []
 	morphLst_E = []
 	morphLst_X = []
 	morphLst_IC = []
 
 	# morphs -----------------------------------------------------------------------------
-	morphs_CL = [
+	morphs_C = [
 		"NNG",
 		"NNP",
 		"NNB",
@@ -77,7 +77,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 		"IC",
 		"XR",
 	]
-	morphs_NL = ["NNG", "NNP", "NNB", "NNBC", "NP", "NR"]  # 체언
+	morphs_N = ["NNG", "NNP", "NNB", "NNBC", "NP", "NR"]  # 체언
 	morphs_NN = ["NNG", "NNP", "NNB", "NNBC"]  # 명사
 	morphs_NP_people = [
 		"나",
@@ -117,10 +117,10 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 		"아무것",
 		"아무데",
 	]
-	morphs_VL = ["VV", "VA", "VX", "VCP", "VCN"]
-	morphs_ML = ["MM", "MAG", "MAJ"]
+	morphs_V = ["VV", "VA", "VX", "VCP", "VCN"]
+	morphs_M = ["MM", "MAG", "MAJ"]
 	morphs_MA = ["MAG", "MAJ"]
-	morphs_FL = [
+	morphs_F = [
 		"JKS",
 		"JKC",
 		"JKG",
@@ -157,13 +157,13 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 	for i in range(len(kkma_list)):
 		for pos in kkma_list[i]:
 
-			if pos[1] in morphs_CL:
-				morphLst_CL.append(
-					(len(morphLst_CL), pos[0], pos[1], sentences[i])
+			if pos[1] in morphs_C:
+				morphLst_C.append(
+					(len(morphLst_C), pos[0], pos[1], sentences[i])
 				)
-				if pos[1] in morphs_NL:  # 체언
-					morphLst_NL.append(
-						(len(morphLst_NL), pos[0], pos[1], sentences[i])
+				if pos[1] in morphs_N:  # 체언
+					morphLst_N.append(
+						(len(morphLst_N), pos[0], pos[1], sentences[i])
 					)
 					if pos[1] in morphs_NN:
 						morphLst_NN.append(
@@ -200,9 +200,9 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 				elif pos[1] == "IC":
 					morphLst_IC.append((len(morphLst_IC), pos[0], pos[1], sentences[i]))
 
-				elif pos[1] in morphs_VL:
-					morphLst_VL.append(
-						(len(morphLst_VL), pos[0], pos[1], sentences[i])
+				elif pos[1] in morphs_V:
+					morphLst_V.append(
+						(len(morphLst_V), pos[0], pos[1], sentences[i])
 					)
 					if pos[1] == "VV":
 						morphLst_VV.append(
@@ -225,9 +225,9 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 							(len(morphLst_VCN), pos[0], pos[1], sentences[i])
 						)
 
-				elif pos[1] in morphs_ML:
-					morphLst_ML.append(
-						(len(morphLst_ML), pos[0], pos[1], sentences[i])
+				elif pos[1] in morphs_M:
+					morphLst_M.append(
+						(len(morphLst_M), pos[0], pos[1], sentences[i])
 					)
 					if pos[1] == "MM":
 						morphLst_MM.append(
@@ -236,9 +236,9 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 					elif pos[1] in morphs_MA:
 						morphs_MA.append((len(morphs_MA), pos[0], pos[1], sentences[i]))
 
-			elif pos[1] in morphs_FL:
-				morphLst_FL.append(
-					(len(morphLst_FL), pos[0], pos[1], sentences[i])
+			elif pos[1] in morphs_F:
+				morphLst_F.append(
+					(len(morphLst_F), pos[0], pos[1], sentences[i])
 				)
 				if pos[1] in morphs_J:
 					morphLst_J.append((len(morphLst_J), pos[0], pos[1], sentences[i]))
@@ -254,29 +254,29 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 	result["morph_Cnt"] = len(kkma)
 	result["char_Cnt"] = charCnt
 
-	result["CL_Cnt"] = len(morphLst_CL)
-	result["NL_Cnt"] = len(morphLst_NL)
+	result["C_Cnt"] = len(morphLst_C)
+	result["N_Cnt"] = len(morphLst_N)
 	result["NN_Cnt"] = len(morphLst_NN)
 	result["NNG_Cnt"] = len(morphLst_NNG)
 	result["NNP_Cnt"] = len(morphLst_NNP)
 	result["NNB_Cnt"] = len(morphLst_NNB)
 	result["NP_Cnt"] = len(morphLst_NP)
-	result["NP_People_Cnt"] = len(morphLst_NP_people)
-	result["NP_Things_Cnt"] = len(morphLst_NP_things)
+	result["NPP_Cnt"] = len(morphLst_NP_people)
+	result["NPT_Cnt"] = len(morphLst_NP_things)
 	result["NR_Cnt"] = len(morphLst_NR)
 
-	result["VL_Cnt"] = len(morphLst_VL)
+	result["V_Cnt"] = len(morphLst_V)
 	result["VV_Cnt"] = len(morphLst_VV)
 	result["VA_Cnt"] = len(morphLst_VA)
 	result["VX_Cnt"] = len(morphLst_VX)
 	result["VCP_Cnt"] = len(morphLst_VCP)
 	result["VCN_Cnt"] = len(morphLst_VCN)
 
-	result["ML_Cnt"] = len(morphLst_ML)
+	result["M_Cnt"] = len(morphLst_M)
 	result["MA_Cnt"] = len(morphLst_MA)
 	result["MM_Cnt"] = len(morphLst_MM)
 
-	result["FL_Cnt"] = len(morphLst_FL)
+	result["F_Cnt"] = len(morphLst_F)
 	result["J_Cnt"] = len(morphLst_J)
 	result["E_Cnt"] = len(morphLst_E)
 	result["X_Cnt"] = len(morphLst_X)
@@ -288,88 +288,88 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 	# resultNDW["word_NDW"] = len(set(words))
 	resultNDW["morph_NDW"] = len(set(kkma))
 
-	resultNDW["NL_NDW"] = len(set(morphLst_NL))
-	resultNDW["NNL_NDW"] = len(set(morphLst_NN))
+	resultNDW["N_NDW"] = len(set(morphLst_N))
+	resultNDW["NN_NDW"] = len(set(morphLst_NN))
 	resultNDW["NNG_NDW"] = len(set(morphLst_NNG))
 	resultNDW["NNP_NDW"] = len(set(morphLst_NNP))
 	resultNDW["NNB_NDW"] = len(set(morphLst_NNB))
 	resultNDW["NP_NDW"] = len(set(morphLst_NP))
 	resultNDW["NR_NDW"] = len(set(morphLst_NR))
 
-	resultNDW["VL_NDW"] = len(set(morphLst_VL))
+	resultNDW["V_NDW"] = len(set(morphLst_V))
 	resultNDW["VV_NDW"] = len(set(morphLst_VV))
 	resultNDW["VA_NDW"] = len(set(morphLst_VA))
 
-	resultNDW["ML_NDW"] = len(set(morphLst_ML))
+	resultNDW["M_NDW"] = len(set(morphLst_M))
 	resultNDW["MM_NDW"] = len(set(morphLst_MM))
 
 	resultNDW["IC_NDW"] = len(set(morphLst_IC))
 	resultNDW["J_NDW"] = len(set(morphLst_J))
 	resultNDW["E_NDW"] = len(set(morphLst_E))
 	resultNDW["X_NDW"] = len(set(morphLst_X))
-	resultNDW["CL_NDW"] = len(set(morphLst_CL))
-	resultNDW["FL_NDW"] = len(set(morphLst_FL))
+	resultNDW["C_NDW"] = len(set(morphLst_C))
+	resultNDW["F_NDW"] = len(set(morphLst_F))
 
 	# density result -----------------------------------------------------------------------
 	resultDensity = collections.defaultdict()
 
-	resultDensity["CL_Den"] = len(morphLst_CL) / len(kkma)
-	resultDensity["FL_Den"] = len(morphLst_FL) / len(kkma)
-	resultDensity["NNL_Den"] = len(morphLst_NN) / len(kkma)
-	resultDensity["NNGL_Den"] = len(morphLst_NNG) / len(kkma)
-	resultDensity["NNPL_Den"] = len(morphLst_NNP) / len(kkma)
-	resultDensity["NNBL_Den"] = len(morphLst_NNB) / len(kkma)
-	resultDensity["NPL_Den"] = len(morphLst_NP) / len(kkma)
-	resultDensity["NML_Den"] = len(morphLst_NR) / len(kkma)
-	resultDensity["VL_Den"] = len(morphLst_VL) / len(kkma)
-	resultDensity["VVL_Den"] = len(morphLst_VV) / len(kkma)
-	resultDensity["VAL_Den"] = len(morphLst_VA) / len(kkma)
-	resultDensity["ML_Den"] = len(morphLst_ML) / len(kkma)
-	resultDensity["MML_Den"] = len(morphLst_MM) / len(kkma)
-	resultDensity["MAL_Den"] = len(morphLst_MA) / len(kkma)
-	resultDensity["JL_Den"] = len(morphLst_J) / len(kkma)
-	resultDensity["EL_Den"] = len(morphLst_E) / len(kkma)
-	resultDensity["XL_Den"] = len(morphLst_X) / len(kkma)
-	resultDensity["ITL_Den"] = len(morphLst_IC) / len(kkma)
+	resultDensity["C_Den"] = len(morphLst_C) / len(kkma)
+	resultDensity["F_Den"] = len(morphLst_F) / len(kkma)
+	resultDensity["NN_Den"] = len(morphLst_NN) / len(kkma)
+	resultDensity["NNG_Den"] = len(morphLst_NNG) / len(kkma)
+	resultDensity["NNP_Den"] = len(morphLst_NNP) / len(kkma)
+	resultDensity["NNB_Den"] = len(morphLst_NNB) / len(kkma)
+	resultDensity["NP_Den"] = len(morphLst_NP) / len(kkma)
+	resultDensity["NM_Den"] = len(morphLst_NR) / len(kkma)
+	resultDensity["V_Den"] = len(morphLst_V) / len(kkma)
+	resultDensity["VV_Den"] = len(morphLst_VV) / len(kkma)
+	resultDensity["VA_Den"] = len(morphLst_VA) / len(kkma)
+	resultDensity["M_Den"] = len(morphLst_M) / len(kkma)
+	resultDensity["MM_Den"] = len(morphLst_MM) / len(kkma)
+	resultDensity["MA_Den"] = len(morphLst_MA) / len(kkma)
+	resultDensity["J_Den"] = len(morphLst_J) / len(kkma)
+	resultDensity["E_Den"] = len(morphLst_E) / len(kkma)
+	resultDensity["X_Den"] = len(morphLst_X) / len(kkma)
+	resultDensity["IT_Den"] = len(morphLst_IC) / len(kkma)
 	
-	if (len(morphLst_CL) > 0):
-		resultDensity["NCL_Den"] = len(morphLst_NL) / len(morphLst_CL)
-		resultDensity["NNCL_Den"] = len(morphLst_NN) / len(morphLst_CL)
-		resultDensity["NNGCL_Den"] = len(morphLst_NNP) / len(morphLst_CL)
-		resultDensity["NNBCL_Den"] = len(morphLst_NNB) / len(morphLst_CL)
-		resultDensity["NPCL_Den"] = len(morphLst_NP) / len(morphLst_CL)
-		resultDensity["NNPCL_Den"] = len(morphLst_NNP) / len(morphLst_CL)
-		resultDensity["NMCL_Den"] = len(morphLst_NR) / len(morphLst_CL)
-		resultDensity["VCL_Den"] = len(morphLst_VL) / len(morphLst_CL)
-		resultDensity["VVCL_Den"] = len(morphLst_VV) / len(morphLst_CL)
-		resultDensity["VACL_Den"] = len(morphLst_VA) / len(morphLst_CL)
-		resultDensity["MCL_Den"] = len(morphLst_ML) / len(morphLst_CL)
-		resultDensity["MMCL_Den"] = len(morphLst_MM) / len(morphLst_CL)
-		resultDensity["MACL_Den"] = len(morphLst_MA) / len(morphLst_CL)
-		resultDensity["INCL_Den"] = len(morphLst_IC) / len(morphLst_CL)
+	if (len(morphLst_C) > 0):
+		resultDensity["NC_Den"] = len(morphLst_N) / len(morphLst_C)
+		resultDensity["NNC_Den"] = len(morphLst_NN) / len(morphLst_C)
+		resultDensity["NNGC_Den"] = len(morphLst_NNP) / len(morphLst_C)
+		resultDensity["NNBC_Den"] = len(morphLst_NNB) / len(morphLst_C)
+		resultDensity["NPC_Den"] = len(morphLst_NP) / len(morphLst_C)
+		resultDensity["NNPC_Den"] = len(morphLst_NNP) / len(morphLst_C)
+		resultDensity["NMC_Den"] = len(morphLst_NR) / len(morphLst_C)
+		resultDensity["VC_Den"] = len(morphLst_V) / len(morphLst_C)
+		resultDensity["VVC_Den"] = len(morphLst_VV) / len(morphLst_C)
+		resultDensity["VAC_Den"] = len(morphLst_VA) / len(morphLst_C)
+		resultDensity["MC_Den"] = len(morphLst_M) / len(morphLst_C)
+		resultDensity["MMC_Den"] = len(morphLst_MM) / len(morphLst_C)
+		resultDensity["MAC_Den"] = len(morphLst_MA) / len(morphLst_C)
+		resultDensity["INC_Den"] = len(morphLst_IC) / len(morphLst_C)
 
-	if (len(morphLst_FL) > 0):
-		resultDensity["JFL_Den"] = len(morphLst_J) / len(morphLst_FL)
-		resultDensity["EFL_Den"] = len(morphLst_E) / len(morphLst_FL)
-		resultDensity["XFL_Den"] = len(morphLst_X) / len(morphLst_FL)
+	if (len(morphLst_F) > 0):
+		resultDensity["JF_Den"] = len(morphLst_J) / len(morphLst_F)
+		resultDensity["EF_Den"] = len(morphLst_E) / len(morphLst_F)
+		resultDensity["XF_Den"] = len(morphLst_X) / len(morphLst_F)
 
 	# result list ------------------------------------------------------------------------
-	resultLst["NL_Lst"] = morphLst_NL
+	resultLst["N_Lst"] = morphLst_N
 	resultLst["NN_Lst"] = morphLst_NN
 	resultLst["NNG_Lst"] = morphLst_NNG
 	resultLst["NNP_Lst"] = morphLst_NNP
 	resultLst["NNB_Lst"] = morphLst_NNB
 	resultLst["NP_Lst"] = morphLst_NP
-	resultLst["NP_People_Lst"] = morphLst_NP_people
-	resultLst["NP_Things_Lst"] = morphLst_NP_things
+	resultLst["NPP_Lst"] = morphLst_NP_people
+	resultLst["NPT_Lst"] = morphLst_NP_things
 	resultLst["NR_Lst"] = morphLst_NR
-	resultLst["VL_Lst"] = morphLst_VL
+	resultLst["V_Lst"] = morphLst_V
 	resultLst["VV_Lst"] = morphLst_VV
 	resultLst["VA_Lst"] = morphLst_VA
 	resultLst["VX_Lst"] = morphLst_VX
 	resultLst["VCP_Lst"] = morphLst_VCP
 	resultLst["VCN_Lst"] = morphLst_VCN
-	resultLst["ML_Lst"] = morphLst_ML
+	resultLst["M_Lst"] = morphLst_M
 	resultLst["MA_Lst"] = morphLst_MA
 	resultLst["MM_Lst"] = morphLst_MM
 	resultLst["J_Lst"] = morphLst_J
