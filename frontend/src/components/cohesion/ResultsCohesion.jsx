@@ -79,7 +79,7 @@ const ResultCoh = ({ resultId, darkMode }) => {
 
 const ResultsCoh = ({ darkMode }) => {
 	const [cohesionResult, setCohesionResult] = useState([]);
-	const [selectedFile, setSelectedFile] = useState(0);
+	const [selectedFile, setSelectedFile] = useState(-1);
 	const [selectedEssay, setSelectedEssay] = useState([]);
 
 	const fetchData = async () => {
@@ -135,7 +135,7 @@ const ResultsCoh = ({ darkMode }) => {
 
 	const handleSelectFile = (index) => {
 		return () => {
-			setSelectedFile(index);
+			index === -1 ? setSelectedFile(-1) : setSelectedFile(index);
 		}
 	}
 
@@ -179,20 +179,25 @@ const ResultsCoh = ({ darkMode }) => {
 					<div
 						id={"coh_" + index}
 						key={index}
-						onClick={handleSelectFile(index)}
 						className={`
 							p-4 h-fit rounded-3xl overflow-auto w-full shadow relative transition-all 
 							${selectedFile === index ? 'bg-slate-100 dark:bg-slate-800' : 'bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800'}
 						`}
 					>
-						<div className='grid grid-cols-1'>
+						<div
+							className='grid grid-cols-1'
+							onClick={handleSelectFile(index)}
+						>
 							<h3 className='pb-4 text-lg font-bold truncate'>{index + 1}. {item.filename}</h3>
 							<OriginalText content={item.contents} trunc={selectedFile !== index} date={item.upload_date} procTime={item.process_time} />
 
 							<div key={index} className={`flex flex-col gap-4 ${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out`}>
 								<hr className='' />
 
-								{selectedFile === index && <ResultCoh resultId={item._id} darkMode={darkMode} />}
+								{selectedFile === index ?
+									<ResultCoh resultId={item._id} darkMode={darkMode} /> :
+									<div>Loading</div>
+								}
 							</div>
 						</div>
 
@@ -200,16 +205,24 @@ const ResultsCoh = ({ darkMode }) => {
 							{/* <button className={`grow sm:grow-0 btn-primary flex flex-nowrap gap-1`} onClick={() => handleSelectEssay(item)}>
 								Compare
 							</button> */}
+							{index === selectedFile &&
+								<button className={`grow sm:grow-0 p-2 btn-primary group`} onClick={handleSelectFile(-1)}>
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 group-hover:rotate-90 transition-all ease-in-out">
+										<path strokeLinecap="round" strokeLinejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25" />
+									</svg>
+								</button>
+							}
 							<button className={`grow sm:grow-0 btn-primary flex flex-nowrap gap-1`} onClick={() => handleFileDownload(item)}>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
 								</svg>
 								json
 							</button>
-							<button className={`grow sm:grow-0 p-2 btn-red group`} onClick={() => handleDelete(index)}>
+							<button className={`flex flex-nowrap gap-1 grow sm:grow-0 p-2 btn-red group`} onClick={() => handleDelete(index)}>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 group-hover:rotate-90 transition-all ease-in-out">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
 								</svg>
+								Delete
 							</button>
 						</div>
 					</div>
