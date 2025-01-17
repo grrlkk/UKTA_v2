@@ -1,15 +1,15 @@
 version: '3'
 
 services:
-    db:
-        image: mongo:latest
-        ports:
-            - 3633:27017
-        restart: unless-stopped
-        volumes:
-            - ./database:/data/db
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: kdd
-            MONGO_INITDB_ROOT_PASSWORD: kddnumber1
-            MONGO_INITDB_DATABASE: ukta
-        tty: true
+        db:
+                image: mongo:latest
+                ports:
+                        - 3633:27017
+                restart: unless-stopped
+                volumes:
+                        - ./database:/data/db
+                environment:
+                        - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+                        - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+                        - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+                tty: true
