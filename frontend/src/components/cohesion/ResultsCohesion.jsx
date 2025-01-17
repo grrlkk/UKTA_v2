@@ -216,6 +216,7 @@ const ResultsCoh = ({ darkMode }) => {
 									type='checkbox'
 									className='accent-slate-600'
 									checked={compareFiles.some((file) => file._id === item._id)}
+									onChange={() => { }}
 								></input>
 								Compare
 							</button>

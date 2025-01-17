@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 
 
 const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 	const [inputValue, setInputValue] = useState('');
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [files, setFiles] = useState([]);
-
-	const navigate = useNavigate();
 
 	const handleAnalysis = async (type) => {
 		setUploadInProgress(true);
@@ -22,8 +19,6 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 			}
 		}
 
-		console.log(formData);
-
 		try {
 			const response = await fetch(`${process.env.REACT_APP_API_URI}/korcat/${type}`, {
 				method: 'POST',
@@ -36,8 +31,8 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 		} finally {
 			setUploadInProgress(false);
 			handleClearInput();
-			if (type === 'cohesion') navigate('/analysis');
-			else navigate(`/${type}`);
+			// if (type === 'cohesion') navigate('/analysis');
+			// else navigate(`/${type}`);
 		}
 	};
 
@@ -134,12 +129,12 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 							Input Korean Text to Analyze
 						</button> :
 						<>
-							<Link to='/loading' className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('cohesion')}>
+							<button className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('cohesion')}>
 								Analyze
-							</Link>
-							<Link to='/loading' className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('morpheme')}>
+							</button>
+							<button className={`grow sm:grow-0 btn-primary`} onClick={() => handleAnalysis('morpheme')}>
 								Analyze Morpheme
-							</Link>
+							</button>
 						</>}
 			</div>
 		</div>

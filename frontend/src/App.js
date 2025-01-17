@@ -48,10 +48,9 @@ function App() {
 						<AnimatePresence mode='wait'>
 							<Routes location={currentPage} key={currentPage.pathname}>
 								<Route path='/' element={<Dummy />} />
-								<Route path='/morpheme' element={<ResultsMor />} />
-								<Route path='/analysis' element={<ResultsCoh darkMode={darkMode} />} />
+								<Route path='/morpheme' element={uploadInProgress ? <Loading /> : <ResultsMor />} />
+								<Route path='/analysis' element={uploadInProgress ? <Loading /> : <ResultsCoh darkMode={darkMode} />} />
 								<Route path='/tagging' element={<TagInfo />} />
-								{uploadInProgress && <Route path='/loading' element={<Loading />} />}
 								<Route path='*' element={<Navigate to="/" />} />
 							</Routes>
 						</AnimatePresence>
