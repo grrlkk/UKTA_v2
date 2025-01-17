@@ -1,8 +1,8 @@
-/database
-*.pem
-
-*.log* 
-
-*.env
-
 /.vscode
+/bareun/var
+/database
+
+*.pem
+*_api.txt
+*.log* 
+*.env
