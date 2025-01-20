@@ -53,12 +53,23 @@ const ResultCoh = ({ resultId, darkMode }) => {
 
 					<hr />
 
+					<h3 className='text-lg font-bold'>Sentence/Paragraph Level Analysis</h3>
+
+					<ResultsNumeric result={item.results.sentenceLvl} title={"Sentence/Paragraph Complexity"} />
+					<ResultsNumeric result={item.results.sentenceLvlRep} title={"Repetition, Standard Expression Per Sentence/Paragraph"} />
+
+					<hr />
+
 					<h3 className='text-lg font-bold'>Cohesion</h3>
 
 					<ResultsNumeric result={item.results.adjacency} title={"Cohesion (Adjacency)"} />
 					<ResultsNumeric result={item.results.similarity} title={"Cohesion (Consistancy/Similarity)"} />
 
 					<hr />
+
+					<h3 className='text-lg font-bold'>Text Level Analysis</h3>
+
+					<ResultsNumeric result={item.results.readability} title={"Readability Scores"} />
 
 					<h3 className='text-lg font-bold'>Writing Evaluation</h3>
 
