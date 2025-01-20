@@ -172,6 +172,42 @@ export const CohTags = {
 		"desc": "표준편차",
 		"desc_eng": "Standard Deviation",
 	},
+	"sentLen": {
+		"type": "문장 복잡도",
+		"type_eng": "Sentence Complexity",
+		"desc": "문장 길이",
+		"desc_eng": "Sentence Length",
+	},
+	"sentLenAvg": {
+		"type": "문장 복잡도",
+		"type_eng": "Sentence Complexity",
+		"desc": "문장 평균 길이",
+		"desc_eng": "Average Sentence Length",
+	},
+	"sentLenStd": {
+		"type": "문장 복잡도",
+		"type_eng": "Sentence Complexity",
+		"desc": "문장 길이 표준편차",
+		"desc_eng": "Sentence Length Standard Deviation",
+	},
+	"paraLen": {
+		"type": "문단 복잡도",
+		"type_eng": "Paragraph Complexity",
+		"desc": "문단 길이",
+		"desc_eng": "Paragraph Length",
+	},
+	"paraLenAvg": {
+		"type": "문단 복잡도",
+		"type_eng": "Paragraph Complexity",
+		"desc": "문단 평균 길이",
+		"desc_eng": "Average Paragraph Length",
+	},
+	"paraLenStd": {
+		"type": "문단 복잡도",
+		"type_eng": "Paragraph Complexity",
+		"desc": "문단 길이 표준편차",
+		"desc_eng": "Paragraph Length Standard Deviation",
+	},
 	"avgSentSimilarity": {
 		"type": "응집도",
 		"type_eng": "Cohesion",
