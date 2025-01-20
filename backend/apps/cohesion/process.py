@@ -460,4 +460,5 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency"]):
             result["basic_list"] = temp["basic_list"]
             result["NDW"] = temp["NDW"]
             result["sentenceLvl"] = temp["sentenceLvl"]
+            result["sentenceLvlRep"] = temp["sentenceLvlRep"]
     return result

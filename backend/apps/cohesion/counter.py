@@ -22,8 +22,23 @@ def avgLen(words, kkma_simple):
     return morph_avg, morph_std, words_avg, words_std
 
 
+def ngram(kkma, n):
+    result = []
+    for i in range(len(kkma) - n + 1):
+        ngram = kkma[i : i + n]
+        ng = []
+
+        for j in range(n):
+            ng.append(ngram[j][0])
+
+        ngg = " ".join(ng)
+        result.append(ngg)
+    return result
+
+
 def sentence_level(sentences, kkma, kkma_by_sent, paraCnt):
     result = collections.defaultdict()
+    resultRep = collections.defaultdict()
     sentCnt = len(sentences)
     M_Cnt = sum(1 for morp in kkma if morp[1].startswith("M"))
     MM_Cnt = sum(1 for morp in kkma if morp[1] == "MM")
@@ -33,7 +48,7 @@ def sentence_level(sentences, kkma, kkma_by_sent, paraCnt):
     result["MM_sentLen"] = MM_Cnt / sentCnt
     result["MA_sentLen"] = MA_Cnt / sentCnt
 
-    # Sentence Length avg
+    # Sentence Length avg and std ---------------------------------------------------------
     result["char_sentLenAvg"] = sum(len(sent) for sent in sentences) / sentCnt
     result["morph_sentLenAvg"] = sum(len(sent) for sent in kkma_by_sent) / sentCnt
     result["word_sentLenAvg"] = sum(len(sent.split()) for sent in sentences) / sentCnt
@@ -107,7 +122,24 @@ def sentence_level(sentences, kkma, kkma_by_sent, paraCnt):
             / (paraCnt - 1)
         )
 
-    return result
+    # NGRAM
+    for i in range(2, 9):
+        ng = ngram(kkma, i)
+        ngramCnt = collections.Counter(ng)
+        resultRep[f"morph_sentNgram2_N{i}"] = (
+            sum(1 for n in ngramCnt.values() if n > 1) / sentCnt
+        )
+        resultRep[f"morph_sentNgram3_N{i}"] = (
+            sum(1 for n in ngramCnt.values() if n > 2) / sentCnt
+        )
+        resultRep[f"morph_paraNgram2_N{i}"] = (
+            sum(1 for n in ngramCnt.values() if n > 1) / paraCnt
+        )
+        resultRep[f"morph_paraNgram3_N{i}"] = (
+            sum(1 for n in ngramCnt.values() if n > 2) / paraCnt
+        )
+
+    return result, resultRep
 
 
 def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
@@ -344,7 +376,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
     result["IC_Cnt"] = len(morphLst_IC)
 
     # Sentence Level -----------------------------------------------------------------------
-    resultSent = sentence_level(sentences, kkma, kkma_by_sent, paraCnt)
+    resultSentComp, resultSentRep = sentence_level(sentences, kkma, kkma_by_sent, paraCnt)
 
     # Number of Different Words ------------------------------------------------------------
     resultNDW = collections.defaultdict()
@@ -457,6 +489,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
     finalresult["basic_density"] = resultDensity
     finalresult["basic_level"] = resultLvl
     finalresult["basic_list"] = resultLst
-    finalresult["sentenceLvl"] = resultSent
+    finalresult["sentenceLvl"] = resultSentComp
+    finalresult["sentenceLvlRep"] = resultSentRep
 
     return finalresult

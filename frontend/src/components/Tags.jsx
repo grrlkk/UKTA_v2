@@ -72,6 +72,7 @@ export const MorphTags = [
 	{ "tag": "word", "desc": "단어", "desc_eng": "Word", "color": "#000000" },
 	{ "tag": "para", "desc": "문단", "desc_eng": "Paragraph", "color": "#000000" },
 	{ "tag": "sentence", "desc": "문장", "desc_eng": "Sentence", "color": "#000000" },
+	{ "tag": "sent", "desc": "문장", "desc_eng": "Sentence", "color": "#000000" },
 	{ "tag": "char", "desc": "문자", "desc_eng": "Character", "color": "#000000" },
 ];
 
@@ -175,38 +176,62 @@ export const CohTags = {
 	"sentLen": {
 		"type": "문장 복잡도",
 		"type_eng": "Sentence Complexity",
-		"desc": "문장 길이",
+		"desc": "타겟 기준 문장 길이",
 		"desc_eng": "Sentence Length",
 	},
 	"sentLenAvg": {
 		"type": "문장 복잡도",
 		"type_eng": "Sentence Complexity",
-		"desc": "문장 평균 길이",
+		"desc": "타겟 기준 문장 평균 길이",
 		"desc_eng": "Average Sentence Length",
 	},
 	"sentLenStd": {
 		"type": "문장 복잡도",
 		"type_eng": "Sentence Complexity",
-		"desc": "문장 길이 표준편차",
+		"desc": "타겟 기준 문장 길이 표준편차",
 		"desc_eng": "Sentence Length Standard Deviation",
 	},
 	"paraLen": {
 		"type": "문단 복잡도",
 		"type_eng": "Paragraph Complexity",
-		"desc": "문단 길이",
+		"desc": "타겟 기준 문단 길이",
 		"desc_eng": "Paragraph Length",
 	},
 	"paraLenAvg": {
 		"type": "문단 복잡도",
 		"type_eng": "Paragraph Complexity",
-		"desc": "문단 평균 길이",
+		"desc": "타겟 기준 문단 평균 길이",
 		"desc_eng": "Average Paragraph Length",
 	},
 	"paraLenStd": {
 		"type": "문단 복잡도",
 		"type_eng": "Paragraph Complexity",
-		"desc": "문단 길이 표준편차",
+		"desc": "타겟 기준 문단 길이 표준편차",
 		"desc_eng": "Paragraph Length Standard Deviation",
+	},
+	"sentNgram2" : {
+		"type": "반복, 정형 표현",
+		"type_eng": "Repetition, Standard Expression",
+		"desc": "문장당 출현 수 2 이상 N-gram",
+		"desc_eng": "N-gram 2 or more per sentence",
+	},
+	"sentNgram3" : {
+		"type": "반복, 정형 표현",
+		"type_eng": "Repetition, Standard Expression",
+		"desc": "문장당 출현 수 3 이상 N-gram",
+		"desc_eng": "N-gram 3 or more per sentence",
+	},
+	"paraNgram2" : {
+		"type": "반복, 정형 표현",
+		"type_eng": "Repetition, Standard Expression",
+		"desc": "문단당 출현 수 2 이상 N-gram",
+		"desc_eng": "N-gram 2 or more per paragraph",
+	},
+	"paraNgram3" : {
+		"type": "반복, 정형 표현",
+		"type_eng": "Repetition, Standard Expression",
+		"desc": "문단당 출현 수 3 이상 N-gram",
+		"desc_eng": "N-gram 3 or more per paragraph",
 	},
 	"avgSentSimilarity": {
 		"type": "응집도",

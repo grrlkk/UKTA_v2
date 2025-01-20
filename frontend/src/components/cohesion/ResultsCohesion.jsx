@@ -56,6 +56,7 @@ const ResultCoh = ({ resultId, darkMode }) => {
 					<h3 className='text-lg font-bold'>Sentence/Paragraph Level Analysis</h3>
 
 					<ResultsNumeric result={item.results.sentenceLvl} title={"Sentence/Paragraph Complexity"} />
+					<ResultsNumeric result={item.results.sentenceLvlRep} title={"Repetition, Standard Expression Per Sentence/Paragraph"} />
 
 					<hr />
 
