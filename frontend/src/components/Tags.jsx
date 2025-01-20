@@ -74,6 +74,7 @@ export const MorphTags = [
 	{ "tag": "sentence", "desc": "문장", "desc_eng": "Sentence", "color": "#000000" },
 	{ "tag": "sent", "desc": "문장", "desc_eng": "Sentence", "color": "#000000" },
 	{ "tag": "char", "desc": "문자", "desc_eng": "Character", "color": "#000000" },
+	{ "tag": "text", "desc": "텍스트", "desc_eng": "Text", "color": "#000000" },
 ];
 
 export const CohTags = {
@@ -209,29 +210,47 @@ export const CohTags = {
 		"desc": "타겟 기준 문단 길이 표준편차",
 		"desc_eng": "Paragraph Length Standard Deviation",
 	},
-	"sentNgram2" : {
+	"sentNgram2": {
 		"type": "반복, 정형 표현",
 		"type_eng": "Repetition, Standard Expression",
 		"desc": "문장당 출현 수 2 이상 N-gram",
 		"desc_eng": "N-gram 2 or more per sentence",
 	},
-	"sentNgram3" : {
+	"sentNgram3": {
 		"type": "반복, 정형 표현",
 		"type_eng": "Repetition, Standard Expression",
 		"desc": "문장당 출현 수 3 이상 N-gram",
 		"desc_eng": "N-gram 3 or more per sentence",
 	},
-	"paraNgram2" : {
+	"paraNgram2": {
 		"type": "반복, 정형 표현",
 		"type_eng": "Repetition, Standard Expression",
 		"desc": "문단당 출현 수 2 이상 N-gram",
 		"desc_eng": "N-gram 2 or more per paragraph",
 	},
-	"paraNgram3" : {
+	"paraNgram3": {
 		"type": "반복, 정형 표현",
 		"type_eng": "Repetition, Standard Expression",
 		"desc": "문단당 출현 수 3 이상 N-gram",
 		"desc_eng": "N-gram 3 or more per paragraph",
+	},
+	"flesch": {
+		"type": "이독성",
+		"type_eng": "Readability",
+		"desc": "Flesch Reading Ease: 206.835-1.015(총 형태소 수 / 총 문장수)-84.6(총 글자 수 / 총 형태소 수)",
+		"desc_eng": "Flesch Reading Ease",
+	},
+	"fleschkincaid": {
+		"type": "이독성",
+		"type_eng": "Readability",
+		"desc": "Flesch-Kincaid Grade Level: 0.39(총 형태소 수 / 총 문장수)+11.8(총 글자 수 / 총 형태소 수)-15.59",
+		"desc_eng": "Flesch-Kincaid Grade Level",
+	},
+	"text_oridx": {
+		"type": "이독성",
+		"type_eng": "Readability",
+		"desc": "온독 지수: [{0.7(사고도구어 CTTR) + 0.3(사고도구어 토큰 수)} × 500] + 100",
+		"desc_eng": "Text O.R. Index",
 	},
 	"avgSentSimilarity": {
 		"type": "응집도",

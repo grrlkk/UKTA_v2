@@ -67,6 +67,10 @@ const ResultCoh = ({ resultId, darkMode }) => {
 
 					<hr />
 
+					<h3 className='text-lg font-bold'>Text Level Analysis</h3>
+
+					<ResultsNumeric result={item.results.readability} title={"Readability Scores"} />
+
 					<h3 className='text-lg font-bold'>Writing Evaluation</h3>
 
 					{(item.results.essay_score !== "error") &&
