@@ -401,6 +401,7 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency"]):
     words = textpreprocess.splitSen(sentences)
 
     kkma = []
+    kkma_by_sent = []
     kkma_simple = []
     kkma_list = []
 
@@ -414,6 +415,7 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency"]):
         kkma_list.append(inf)
         kkma += kkma_list[idx]
         kkma_simple += inf_simple
+        kkma_by_sent.append(inf)
 
     # Determine the number of workers
     num_workers = min(2, multiprocessing.cpu_count())
@@ -441,7 +443,7 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency"]):
         if "basic" in targets:
             curr_time = time.time()
             futures["basic"] = executor.submit(
-                counter.counter, text, sentences, words, kkma, kkma_list, kkma_simple
+                counter.counter, text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent
             )
 
         for key, future in futures.items():
@@ -457,4 +459,5 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency"]):
             result["basic_level"] = temp["basic_level"]
             result["basic_list"] = temp["basic_list"]
             result["NDW"] = temp["NDW"]
+            result["sentenceLvl"] = temp["sentenceLvl"]
     return result

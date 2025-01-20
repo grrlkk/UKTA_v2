@@ -22,7 +22,77 @@ def avgLen(words, kkma_simple):
 	return morph_avg, morph_std, words_avg, words_std
 
 
-def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
+def sentence_level(sentences, kkma, kkma_by_sent, paraCnt):
+	result = collections.defaultdict()
+	sentCnt = len(sentences)
+	M_Cnt = sum(1 for morp in kkma if morp[1].startswith("M"))
+	MM_Cnt = sum(1 for morp in kkma if morp[1] == "MM")
+	MA_Cnt = sum(1 for morp in kkma if morp[1].startswith("MA"))
+
+	result["M_sentLen"] = M_Cnt / sentCnt
+	result["MM_sentLen"] = MM_Cnt / sentCnt
+	result["MA_sentLen"] = MA_Cnt / sentCnt
+
+	# Sentence Length avg
+	result["char_sentLenAvg"] = sum(len(sent) for sent in sentences) / sentCnt
+	result["char_sentLenStd"] = (
+		sum((len(sent) - result["char_sentLenAvg"]) ** 2 for sent in sentences)
+		/ sentCnt
+	)
+	result["morph_sentLenAvg"] = sum(len(sent) for sent in kkma_by_sent) / sentCnt
+	result["morph_sentLenStd"] = (
+		sum((len(sent) - result["morph_sentLenAvg"]) ** 2 for sent in kkma_by_sent)
+		/ sentCnt
+	)
+	result["word_sentLenAvg"] = sum(len(sent.split()) for sent in sentences) / sentCnt
+	result["word_sentLenStd"] = (
+		sum((len(sent.split()) - result["word_sentLenAvg"]) ** 2 for sent in sentences)
+		/ sentCnt
+	)
+	result["V_sentLenAvg"] = (
+		sum(1 for morp in kkma if morp[1].startswith("V")) / sentCnt
+	)
+	result["V_sentLenStd"] = (
+		sum(
+			(1 - result["V_sentLenAvg"]) ** 2
+			for morp in kkma
+			if morp[1].startswith("V")
+		)
+		/ sentCnt
+	)
+
+	# paragraph level ---------------------------------------------------------------------
+	result["char_paraLenAvg"] = sum(len(sent) for sent in sentences) / paraCnt
+	result["char_paraLenStd"] = (
+		sum((len(sent) - result["char_paraLenAvg"]) ** 2 for sent in sentences)
+		/ paraCnt
+	)
+	result["morph_paraLenAvg"] = sum(len(sent) for sent in kkma_by_sent) / paraCnt
+	result["morph_paraLenStd"] = (
+		sum((len(sent) - result["morph_paraLenAvg"]) ** 2 for sent in kkma_by_sent)
+		/ paraCnt
+	)
+	result["word_paraLenAvg"] = sum(len(sent.split()) for sent in sentences) / paraCnt
+	result["word_paraLenStd"] = (
+		sum((len(sent.split()) - result["word_paraLenAvg"]) ** 2 for sent in sentences)
+		/ paraCnt
+	)
+	result["V_paraLenAvg"] = (
+		sum(1 for morp in kkma if morp[1].startswith("V")) / paraCnt
+	)
+	result["V_paraLenStd"] = (
+		sum(
+			(1 - result["V_paraLenAvg"]) ** 2
+			for morp in kkma
+			if morp[1].startswith("V")
+		)
+		/ paraCnt
+	)
+
+	return result
+
+
+def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
 	finalresult = collections.defaultdict()
 	result = collections.defaultdict()
 	resultLst = collections.defaultdict()
@@ -154,98 +224,71 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 		if i == len(text) - 1:
 			paraCnt += 1
 
-	for i in range(len(kkma_list)):
-		for pos in kkma_list[i]:
-
-			if pos[1] in morphs_C:
-				morphLst_C.append(
-					(len(morphLst_C), pos[0], pos[1], sentences[i])
-				)
-				if pos[1] in morphs_N:  # 체언
-					morphLst_N.append(
-						(len(morphLst_N), pos[0], pos[1], sentences[i])
-					)
-					if pos[1] in morphs_NN:
-						morphLst_NN.append(
-							(len(morphLst_NN), pos[0], pos[1], sentences[i])
-						)
-						if pos[1] == "NNG":
+	for i, pos_list in enumerate(kkma_list):
+		for pos in pos_list:
+			morph, tag = pos[0], pos[1]
+			if tag in morphs_C:
+				morphLst_C.append((len(morphLst_C), morph, tag, sentences[i]))
+				if tag in morphs_N:
+					morphLst_N.append((len(morphLst_N), morph, tag, sentences[i]))
+					if tag in morphs_NN:
+						morphLst_NN.append((len(morphLst_NN), morph, tag, sentences[i]))
+						if tag == "NNG":
 							morphLst_NNG.append(
-								(len(morphLst_NNG), pos[0], pos[1], sentences[i])
+								(len(morphLst_NNG), morph, tag, sentences[i])
 							)
-						elif pos[1] == "NNP":
+						elif tag == "NNP":
 							morphLst_NNP.append(
-								(len(morphLst_NNP), pos[0], pos[1], sentences[i])
+								(len(morphLst_NNP), morph, tag, sentences[i])
 							)
-						elif pos[1] == "NNB" or pos[1] == "NNBC":
+						elif tag in ["NNB", "NNBC"]:
 							morphLst_NNB.append(
-								(len(morphLst_NNB), pos[0], pos[1], sentences[i])
+								(len(morphLst_NNB), morph, tag, sentences[i])
 							)
-					elif pos[1] == "NP":
-						morphLst_NP.append(
-							(len(morphLst_NP), pos[0], pos[1], sentences[i])
-						)
-						if pos[0] in morphs_NP_people:
+					elif tag == "NP":
+						morphLst_NP.append((len(morphLst_NP), morph, tag, sentences[i]))
+						if morph in morphs_NP_people:
 							morphLst_NP_people.append(
-								(len(morphLst_NP_people), pos[0], pos[1], sentences[i])
+								(len(morphLst_NP_people), morph, tag, sentences[i])
 							)
-						elif pos[0] in morphs_NP_things:
+						elif morph in morphs_NP_things:
 							morphLst_NP_things.append(
-								(len(morphLst_NP_things), pos[0], pos[1], sentences[i])
+								(len(morphLst_NP_things), morph, tag, sentences[i])
 							)
-					elif pos[1] == "NR":
-						morphLst_NR.append(
-							(len(morphLst_NR), pos[0], pos[1], sentences[i])
-						)
-				elif pos[1] == "IC":
-					morphLst_IC.append((len(morphLst_IC), pos[0], pos[1], sentences[i]))
-
-				elif pos[1] in morphs_V:
-					morphLst_V.append(
-						(len(morphLst_V), pos[0], pos[1], sentences[i])
-					)
-					if pos[1] == "VV":
-						morphLst_VV.append(
-							(len(morphLst_VV), pos[0], pos[1], sentences[i])
-						)
-					elif pos[1] == "VA":
-						morphLst_VA.append(
-							(len(morphLst_VA), pos[0], pos[1], sentences[i])
-						)
-					elif pos[1] == "VX":
-						morphLst_VX.append(
-							(len(morphLst_VX), pos[0], pos[1], sentences[i])
-						)
-					elif pos[1] == "VCP":
+					elif tag == "NR":
+						morphLst_NR.append((len(morphLst_NR), morph, tag, sentences[i]))
+				elif tag == "IC":
+					morphLst_IC.append((len(morphLst_IC), morph, tag, sentences[i]))
+				elif tag in morphs_V:
+					morphLst_V.append((len(morphLst_V), morph, tag, sentences[i]))
+					if tag == "VV":
+						morphLst_VV.append((len(morphLst_VV), morph, tag, sentences[i]))
+					elif tag == "VA":
+						morphLst_VA.append((len(morphLst_VA), morph, tag, sentences[i]))
+					elif tag == "VX":
+						morphLst_VX.append((len(morphLst_VX), morph, tag, sentences[i]))
+					elif tag == "VCP":
 						morphLst_VCP.append(
-							(len(morphLst_VCP), pos[0], pos[1], sentences[i])
+							(len(morphLst_VCP), morph, tag, sentences[i])
 						)
-					elif pos[1] == "VCN":
+					elif tag == "VCN":
 						morphLst_VCN.append(
-							(len(morphLst_VCN), pos[0], pos[1], sentences[i])
+							(len(morphLst_VCN), morph, tag, sentences[i])
 						)
-
-				elif pos[1] in morphs_M:
-					morphLst_M.append(
-						(len(morphLst_M), pos[0], pos[1], sentences[i])
-					)
-					if pos[1] == "MM":
-						morphLst_MM.append(
-							(len(morphLst_MM), pos[0], pos[1], sentences[i])
-						)
-					elif pos[1] in morphs_MA:
-						morphs_MA.append((len(morphs_MA), pos[0], pos[1], sentences[i]))
-
-			elif pos[1] in morphs_F:
-				morphLst_F.append(
-					(len(morphLst_F), pos[0], pos[1], sentences[i])
-				)
-				if pos[1] in morphs_J:
-					morphLst_J.append((len(morphLst_J), pos[0], pos[1], sentences[i]))
-				elif pos[1] in morphs_E:
-					morphLst_E.append((len(morphLst_E), pos[0], pos[1], sentences[i]))
-				elif pos[1] in morphs_X:
-					morphLst_X.append((len(morphLst_X), pos[0], pos[1], sentences[i]))
+				elif tag in morphs_M:
+					morphLst_M.append((len(morphLst_M), morph, tag, sentences[i]))
+					if tag == "MM":
+						morphLst_MM.append((len(morphLst_MM), morph, tag, sentences[i]))
+					elif tag in morphs_MA:
+						morphLst_MA.append((len(morphLst_MA), morph, tag, sentences[i]))
+			elif tag in morphs_F:
+				morphLst_F.append((len(morphLst_F), morph, tag, sentences[i]))
+				if tag in morphs_J:
+					morphLst_J.append((len(morphLst_J), morph, tag, sentences[i]))
+				elif tag in morphs_E:
+					morphLst_E.append((len(morphLst_E), morph, tag, sentences[i]))
+				elif tag in morphs_X:
+					morphLst_X.append((len(morphLst_X), morph, tag, sentences[i]))
 
 	# cnt result --------------------------------------------------------------------------
 	result["para_Cnt"] = paraCnt
@@ -282,6 +325,9 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 	result["X_Cnt"] = len(morphLst_X)
 	result["IC_Cnt"] = len(morphLst_IC)
 
+	# Sentence Level -----------------------------------------------------------------------
+	resultSent = sentence_level(sentences, kkma, kkma_by_sent, paraCnt)
+
 	# Number of Different Words ------------------------------------------------------------
 	resultNDW = collections.defaultdict()
 
@@ -315,6 +361,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 
 	resultDensity["C_Den"] = len(morphLst_C) / len(kkma)
 	resultDensity["F_Den"] = len(morphLst_F) / len(kkma)
+	resultDensity["N_Den"] = len(morphLst_N) / len(kkma)
 	resultDensity["NN_Den"] = len(morphLst_NN) / len(kkma)
 	resultDensity["NNG_Den"] = len(morphLst_NNG) / len(kkma)
 	resultDensity["NNP_Den"] = len(morphLst_NNP) / len(kkma)
@@ -331,8 +378,8 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 	resultDensity["E_Den"] = len(morphLst_E) / len(kkma)
 	resultDensity["X_Den"] = len(morphLst_X) / len(kkma)
 	resultDensity["IT_Den"] = len(morphLst_IC) / len(kkma)
-	
-	if (len(morphLst_C) > 0):
+
+	if len(morphLst_C) > 0:
 		resultDensity["NC_Den"] = len(morphLst_N) / len(morphLst_C)
 		resultDensity["NNC_Den"] = len(morphLst_NN) / len(morphLst_C)
 		resultDensity["NNGC_Den"] = len(morphLst_NNP) / len(morphLst_C)
@@ -348,7 +395,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 		resultDensity["MAC_Den"] = len(morphLst_MA) / len(morphLst_C)
 		resultDensity["INC_Den"] = len(morphLst_IC) / len(morphLst_C)
 
-	if (len(morphLst_F) > 0):
+	if len(morphLst_F) > 0:
 		resultDensity["JF_Den"] = len(morphLst_J) / len(morphLst_F)
 		resultDensity["EF_Den"] = len(morphLst_E) / len(morphLst_F)
 		resultDensity["XF_Den"] = len(morphLst_X) / len(morphLst_F)
@@ -390,7 +437,8 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple):
 	finalresult["basic_count"] = result
 	finalresult["NDW"] = resultNDW
 	finalresult["basic_density"] = resultDensity
-	finalresult["basic_level"] = resultLvl 
+	finalresult["basic_level"] = resultLvl
 	finalresult["basic_list"] = resultLst
+	finalresult["sentenceLvl"] = resultSent
 
 	return finalresult
