@@ -221,12 +221,14 @@ const Sentence = ({ index, sentence }) => {
 	);
 }
 
-const Sentences = ({ results }) => {
+const Sentences = ({ results, grade }) => {
 	return (
 		<div className='grid grid-cols-1 gap-4'>
 			{results.sentences.map((sentence, index) => {
 				return (
-					<Sentence key={index} index={index} sentence={sentence} />
+					<>
+						<Sentence key={index} index={index} sentence={sentence} />
+					</>
 				)
 			})}
 		</div >

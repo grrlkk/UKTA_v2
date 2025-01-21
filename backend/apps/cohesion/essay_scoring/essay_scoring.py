@@ -56,7 +56,8 @@ def scoring(bert_model, gru_model, extracted_features, tokenizer):
         feature_list.extend(list(extracted_features[key].keys()))
 
     scaler = pd.read_csv(
-        "./apps/cohesion/essay_scoring/features/scaler.csv", encoding="cp949"
+        "/home/ttytu/projects/KorCAT-web/backend/apps/cohesion/essay_scoring/features/scaler.csv",
+        encoding="cp949",
     )
 
     filtered_features = []
@@ -145,7 +146,9 @@ def score_results(extracted_features):
     tokenizer = get_tokenizer()
     gru_model = GRUScoreModule().to(device)
     gru_model.load_state_dict(
-        torch.load("./apps/cohesion/essay_scoring/model/gru_scorer.pth")
+        torch.load(
+            "/home/ttytu/projects/KorCAT-web/backend/apps/cohesion/essay_scoring/model/gru_scorer.pth"
+        )
     )
     output, top_k_features = scoring(
         bert_model, gru_model, extracted_features, tokenizer

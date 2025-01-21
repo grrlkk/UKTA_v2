@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import OriginalText from '../OriginalText';
 import Pagination from '../Pagination';
-import { ResultsList, ResultsNumeric, MorphemeFormat, CorrectionFormat } from './AnalysisFormat';
+import { ResultsList, ResultsNumeric, MorphemeFormat, CorrectionFormat, GradeFormat } from './AnalysisFormat';
 import { EvalFormat } from './EvalFormat';
 import { useCompareFiles } from '../contexts/ComparisonContext';
 
@@ -32,6 +32,7 @@ const ResultCoh = ({ resultId, darkMode }) => {
 					{item.results.correction?.revisedSentences && (
 						<CorrectionFormat results={item.results.correction} title={"Spelling/Grammar Correction"} />
 					)}
+					<GradeFormat results={item.results.voc_grades} title={"Vocabulary Grades"} />
 
 					<hr />
 

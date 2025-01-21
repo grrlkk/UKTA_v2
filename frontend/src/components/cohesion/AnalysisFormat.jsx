@@ -3,7 +3,7 @@ import { MorphTags, CohTags } from "../Tags";
 import { Sentences, SentencesCorrection } from '../morpheme/SentenceFormat';
 
 
-const MorphemeFormat = ({ results, title }) => {
+const MorphemeFormat = ({ results, grade, title }) => {
 	const [hidden, setHidden] = useState(true);
 
 	return (
@@ -16,7 +16,7 @@ const MorphemeFormat = ({ results, title }) => {
 			</button>
 
 			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} -pr-[6px] transition-all ease-in-out`}>
-				<Sentences results={results} />
+				<Sentences results={results} grade={grade} />
 			</div >
 		</div>
 	);
@@ -406,5 +406,52 @@ const ResultsList = ({ result, title }) => {
 	);
 };
 
+const GradeFormat = ({ results, title }) => {
+	const [hidden, setHidden] = useState(true);
 
-export { ResultsNumeric, ResultsList, MorphemeFormat, CorrectionFormat };
+	return (
+		<div className='text-sm overflow-hidden flex flex-col'>
+			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
+				<h3 className='font-semibold'>{title}</h3>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${!hidden && "rotate-90"} transition-transform ease-in-out w-5 h-5`}>
+					<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+				</svg>
+			</button>
+
+			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} -pr-[6px] transition-all ease-in-out`}>
+				<div className='overflow-hidden flex flex-col gap-2'>
+					{results
+						.sort()
+						.map(([grade, words]) => (
+							<div
+								key={grade}
+								className='flex flex-col bg-slate-300 dark:bg-slate-900 rounded-xl overflow-hidden'
+							>
+								<h4 className='font-semibold p-2'>{grade === "-1" ? "NA" : grade + "등급"}</h4>
+								<div className='flex w-full bg-white dark:bg-slate-950'>
+									<div className='flex flex-col gap-2 font-base items-center p-2 hover:bg-slate-100 dark:hover:bg-slate-800 border-r-2'>
+										<span className='text-nowrap'>Vocab</span>
+										<span className='text-nowrap font-mono italic text-xs'>Count</span>
+									</div>
+									<div className='flex flex-row overflow-x-auto divide-x-[1px]'>
+										{words
+											.sort((a, b) => b.cnt - a.cnt)
+											.map((word, index) => (
+												<div key={index} className='flex flex-col gap-2 font-base items-center p-2 hover:bg-slate-100 dark:hover:bg-slate-800'>
+													<span className='text-nowrap'>{word.voc}</span>
+													<span className='text-nowrap font-mono italic text-xs'>{word.cnt}</span>
+												</div>
+											))}
+									</div>
+								</div>
+							</div>
+						))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+
+
+export { ResultsNumeric, ResultsList, MorphemeFormat, CorrectionFormat, GradeFormat };

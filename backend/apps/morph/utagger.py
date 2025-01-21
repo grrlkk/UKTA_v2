@@ -1,0 +1,61 @@
+import pandas as pd
+
+# import pyutagger.downloader as ud
+import pyutagger.utagger as ut
+import apps.morph.bareun as br
+
+# ud.install_utagger("utagger3")  # 유태거 3
+# ud.install_utagger("utagger4")  # 유태거 4
+# ud.install_utagger("utagger4hj")  # 유태거 4 훈민정음(옛한글 전용)
+
+
+class utagger:
+	def __init__(self):
+		self.utg4 = ut.utagger_loader("utagger4")
+		self.utg4.load()
+		if not self.utg4:
+			print("로드 실패")
+			print("failed to load")
+		self.word_grades = pd.read_csv(
+			"/home/ttytu/projects/KorCAT-web/backend/apps/morph/word_grades.csv"
+		)
+		# ['grade', 'vocab', 'homonym_num', 'pos', 'type', 'original', 'meaning', 'field']
+
+	def morphs(self, text):
+		return self.utg4.morphs(text)
+
+	def nouns(self, text):
+		return self.utg4.nouns(text)
+
+	def pos(self, text):
+		try:
+			pos = self.utg4.pos(text)
+		except:
+			br_inf = br.bareun()
+			pos = br_inf.pos(text)
+		return pos
+
+	def grade(self, text=None, pos=None):
+		if pos is None:
+			pos = self.pos(text)
+		grades = []
+		for word in pos:
+			split_word = word[0].split("__")
+			voc = split_word[0]
+			hyn = split_word[1] if len(split_word) > 1 else None
+
+			try:
+				if hyn:
+					grade = self.word_grades[
+						(self.word_grades["vocab"] == voc)
+						& (self.word_grades["homonym_num"] == int(hyn))
+					]["grade"].values[0]
+				else:
+					grade = self.word_grades[self.word_grades["vocab"] == voc][
+						"grade"
+					].values[0]
+				grade = int(grade.split("등급")[0])
+			except:
+				grade = -1
+			grades.append({"voc": word[0], "grade": grade})
+		return grades

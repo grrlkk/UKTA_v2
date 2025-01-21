@@ -31,7 +31,8 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
         try:
             essay_score = score_results(results)
             results["essay_score"] = essay_score
-        except:
+        except Exception as e:
+            print(f"Error scoring essay: {e}")
             results["essay_score"] = "error"
 
         process_time = datetime.datetime.now() - now
