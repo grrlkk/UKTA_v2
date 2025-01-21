@@ -286,7 +286,7 @@ const SentencesCorrection = ({ results }) => {
 					return (
 						<>
 							<span className="">{content.substring(prev, range[0])}</span>
-							<span
+							<span 
 								className={`${range[0] === hRange[0] ? "bg-slate-300" : ""} font-bold border-y-2 px-1`}
 								style={{
 									color: revisedBlocks.includes(index) ? "green" : "#e23e3f",
@@ -313,6 +313,7 @@ const SentencesCorrection = ({ results }) => {
 				{blocks.map((block, index) => {
 					return (
 						<div
+							key={index}
 							className="flex flex-col w-full gap-1 hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-lg border-[1px]"
 							onMouseEnter={() => setHRange([block.origin.beginOffset, block.origin.beginOffset + (block.origin.length || 0)])}
 							onMouseLeave={() => setHRange([0, 0])}

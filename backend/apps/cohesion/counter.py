@@ -126,18 +126,58 @@ def sentence_level(sentences, kkma, kkma_by_sent, paraCnt):
     for i in range(2, 9):
         ng = ngram(kkma, i)
         ngramCnt = collections.Counter(ng)
+
+        # sentence Ngram
         resultRep[f"morph_sentNgram2_N{i}"] = (
             sum(1 for n in ngramCnt.values() if n > 1) / sentCnt
         )
         resultRep[f"morph_sentNgram3_N{i}"] = (
             sum(1 for n in ngramCnt.values() if n > 2) / sentCnt
         )
+        if sentCnt == 1:
+            resultRep[f"morph_sentNgram2Std_N{i}"] = 0
+            resultRep[f"morph_sentNgram3Std_N{i}"] = 0
+        else:
+            resultRep[f"morph_sentNgram2Std_N{i}"] = math.sqrt(
+                sum(
+                    (n - resultRep[f"morph_sentNgram2_N{i}"]) ** 2
+                    for n in ngramCnt.values()
+                )
+                / (sentCnt - 1)
+            )
+            resultRep[f"morph_sentNgram3Std_N{i}"] = math.sqrt(
+                sum(
+                    (n - resultRep[f"morph_sentNgram3_N{i}"]) ** 2
+                    for n in ngramCnt.values()
+                )
+                / (sentCnt - 1)
+            )
+
+        # paragraph Ngram
         resultRep[f"morph_paraNgram2_N{i}"] = (
             sum(1 for n in ngramCnt.values() if n > 1) / paraCnt
         )
         resultRep[f"morph_paraNgram3_N{i}"] = (
             sum(1 for n in ngramCnt.values() if n > 2) / paraCnt
         )
+        if paraCnt == 1:
+            resultRep[f"morph_paraNgram2Std_N{i}"] = 0
+            resultRep[f"morph_paraNgram3Std_N{i}"] = 0
+        else:
+            resultRep[f"morph_paraNgram2Std_N{i}"] = math.sqrt(
+                sum(
+                    (n - resultRep[f"morph_paraNgram2_N{i}"]) ** 2
+                    for n in ngramCnt.values()
+                )
+                / (paraCnt - 1)
+            )
+            resultRep[f"morph_paraNgram3Std_N{i}"] = math.sqrt(
+                sum(
+                    (n - resultRep[f"morph_paraNgram3_N{i}"]) ** 2
+                    for n in ngramCnt.values()
+                )
+                / (paraCnt - 1)
+            )
 
     return result, resultRep
 
@@ -376,7 +416,9 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
     result["IC_Cnt"] = len(morphLst_IC)
 
     # Sentence Level -----------------------------------------------------------------------
-    resultSentComp, resultSentRep = sentence_level(sentences, kkma, kkma_by_sent, paraCnt)
+    resultSentComp, resultSentRep = sentence_level(
+        sentences, kkma, kkma_by_sent, paraCnt
+    )
 
     # Number of Different Words ------------------------------------------------------------
     resultNDW = collections.defaultdict()

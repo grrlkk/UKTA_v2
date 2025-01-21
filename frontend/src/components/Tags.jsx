@@ -222,6 +222,18 @@ export const CohTags = {
 		"desc": "문장당 출현 수 3 이상 N-gram",
 		"desc_eng": "N-gram 3 or more per sentence",
 	},
+	"sentNgram2Std": {
+		"type": "반복, 정형 표현",
+		"type_eng": "Repetition, Standard Expression",
+		"desc": "문장당 출현 수 2 이상 N-gram 표준편차",
+		"desc_eng": "N-gram 2 or more per sentence Standard Deviation",
+	},
+	"sentNgram3Std": {
+		"type": "반복, 정형 표현",
+		"type_eng": "Repetition, Standard Expression",
+		"desc": "문장당 출현 수 3 이상 N-gram 표준편차",
+		"desc_eng": "N-gram 3 or more per sentence Standard Deviation",
+	},
 	"paraNgram2": {
 		"type": "반복, 정형 표현",
 		"type_eng": "Repetition, Standard Expression",
@@ -233,6 +245,18 @@ export const CohTags = {
 		"type_eng": "Repetition, Standard Expression",
 		"desc": "문단당 출현 수 3 이상 N-gram",
 		"desc_eng": "N-gram 3 or more per paragraph",
+	},
+	"paraNgram2Std": {
+		"type": "반복, 정형 표현",
+		"type_eng": "Repetition, Standard Expression",
+		"desc": "문단당 출현 수 2 이상 N-gram 표준편차",
+		"desc_eng": "N-gram 2 or more per paragraph Standard Deviation",
+	},
+	"paraNgram3Std": {
+		"type": "반복, 정형 표현",
+		"type_eng": "Repetition, Standard Expression",
+		"desc": "문단당 출현 수 3 이상 N-gram 표준편차",
+		"desc_eng": "N-gram 3 or more per paragraph Standard Deviation",
 	},
 	"flesch": {
 		"type": "이독성",
