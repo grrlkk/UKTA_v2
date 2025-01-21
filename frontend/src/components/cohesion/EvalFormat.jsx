@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Radar, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 import { CohTags, MorphTags, EssayTags } from "../Tags";
+import { useCompareFiles } from "../contexts/ComparisonContext";
 
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
@@ -286,7 +287,6 @@ const EvalFormat = ({ result, title, darkMode }) => {
 const EvalFormatCompare = ({ result, darkMode }) => {
 	const [radarData, setRadarData] = useState(initialRadarData);
 	const [tableData, setTableData] = useState([]);
-	const [tableMode, setTableMode] = useState(true);
 	const radarOptions = {
 		scales: {
 			r: {
@@ -323,8 +323,10 @@ const EvalFormatCompare = ({ result, darkMode }) => {
 		},
 		animation: false,
 	}
+	const { compareFiles, addCompareFile, clearCompareFiles } = useCompareFiles();
 
 	useEffect(() => {
+		console.log(result);
 		if (result) {
 			if (result.length === 0) return;
 			const newDatasets = result.map((essayScore, index) => {
@@ -372,36 +374,121 @@ const EvalFormatCompare = ({ result, darkMode }) => {
 	}, [result]);
 
 	return (
-		<div className='w-full flex text-sm h-auto transition-all ease-in-out'>
+		<div className='w-full flex text-sm h-auto transition-all ease-in-out overflow-scroll'>
 			{result.length === 0 &&
 				<div className="text-center p-4">Select essays to compare</div>
 			}
 			{result.length > 0 &&
-				<div className="w-full flex">
+				<div className="w-full flex md:flex-row flex-col gap-2 justify-between max-h-[480px]">
 					<div className="flex flex-col gap-2 divide-y-2 p-3 bg-slate-300 dark:bg-slate-600 rounded-xl font-normal">
-						<span className="text-lg font-semibold">Total Scores</span>
-						{result.map((essayScore, index) => (
-							<span key={index}
-								className="flex flex-col pt-2"
+						<div className="flex justify-between items-center">
+							<span className="font-bold">Total Scores</span>
+							<button
+								className="btn-secondary p-1"
+								onClick={clearCompareFiles}
 							>
-								<span className="flex items-center gap-2">
-									<span
-										className="w-3 h-3 rounded-full inline-block"
-										style={{ backgroundColor: `hsl(${index * 360 / result.length}, 100%, 50%)` }}
-									></span>
-									{essayScore.filename}
-								</span>
-								<span
-									className="text-lg font-black"
+								Clear
+							</button>
+						</div>
+						{result.map((essayScore, index) => (
+							<div className="flex justify-between items-center gap-1">
+								<span key={index}
+									className="flex flex-col pt-2"
 								>
-									{Object.values(essayScore).reduce((acc, cur) => acc + (typeof cur === 'number' ? cur : 0), 0)}
-									&nbsp;/&nbsp;30
+									<span className="flex items-center gap-2">
+										{index + 1}
+										<span
+											className="rounded-full inline-block w-3 h-3"
+											style={{ backgroundColor: `hsl(${index * 360 / result.length}, 100%, 50%)` }}
+										>
+										</span>
+										<span className="text-nowrap">
+											{essayScore.filename}
+										</span>
+									</span>
+									<span
+										className="font-black"
+									>
+										{Object.values(essayScore).reduce((acc, cur) => acc + (typeof cur === 'number' ? cur : 0), 0)}
+										&nbsp;/&nbsp;30
+									</span>
 								</span>
-							</span>
+								<button
+									className="btn-secondary p-1"
+									onClick={() => addCompareFile(essayScore._id)}
+								>
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+										<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+									</svg>
+								</button>
+							</div>
 						))}
 					</div>
-					<Radar data={radarData} options={radarOptions} />
+
+					<div className="flex justify-center grow items-center aspect-square">
+						<Radar data={radarData} options={radarOptions} />
+					</div>
+
 					{/* <Line data={{ labels: [], datasets: [] }} /> */}
+
+					<div className='max-h-[32rem] grid grid-cols-1 gap-2 rounded-xl overflow-clip'>
+						<div className='w-full max-h-[32rem] grid grid-cols-1 gap-2'>
+							<table className='w-full text-xs'>
+								<thead className=''>
+									<tr className="*:table-header *:rounded-none">
+										<th className='p-1 w-8 text-right sticky top-0'>N.</th>
+										<th className='p-1 sticky top-0'>Type</th>
+										<th className='p-1 sticky top-0 text-left'>Rubric</th>
+										<th className='p-1 sticky top-0 text-right'>Score</th>
+									</tr>
+								</thead>
+								<tbody className="table-contents">
+									{Object.keys(result[0]).filter(key => key !== "top_k_features" && key !== "_id" && key !== "filename" && key !== "prompt_comprehension").map((key, index) => (
+										<tr key={index} className=''>
+											<td className='p-1 w-8 text-right'>{index + 1}</td>
+											{index === 0 &&
+												<td rowSpan={3} className='p-1 text-center'>
+													<div className="flex flex-col">
+														<span>{EssayTags[key].type}</span>
+														<span>{EssayTags[key].type_eng}</span>
+													</div>
+												</td>
+											}
+											{(index === 3 || index === 7) &&
+												<td rowSpan={4} className='p-1 text-center'>
+													<div className="flex flex-col">
+														<span>{EssayTags[key].type}</span>
+														<span>{EssayTags[key].type_eng}</span>
+													</div>
+												</td>
+											}
+											<td className='p-1'>
+												<div className="flex flex-col">
+													<span>{EssayTags[key].desc}</span>
+													<span>{EssayTags[key].desc_eng}</span>
+												</div>
+											</td>
+											<td className='p-1'>
+												<div className="flex flex-row justify-between gap-1">
+													{result.map((essayScore, index) => (
+														<span
+															key={index}
+															className={`p-2 ${Math.max(
+																...result.map(essay => essay[key])
+															) === essayScore[key] ? "font-bold" : ""}`}
+															style={{ backgroundColor: `hsla(${index * 360 / result.length}, 100%, 50%, 20%)` }}
+														>
+															{essayScore[key]}
+														</span>
+													))}
+												</div>
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			}
 		</div>
