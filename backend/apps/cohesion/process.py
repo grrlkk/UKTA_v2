@@ -8,6 +8,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 
 from apps.morph.bareun import bareun
+from apps.morph.utagger import utagger
 from google.protobuf.json_format import MessageToDict
 from keybert import KeyBERT
 from transformers import BertModel
@@ -18,7 +19,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 def initialize_models():
-	global key_model, kw_model, simil_model, device
+	global key_model, kw_model, simil_model, device, morph, morph2
 	device = "cuda"
 
 	key_model = BertModel.from_pretrained("skt/kobert-base-v1")
@@ -26,6 +27,10 @@ def initialize_models():
 
 	simil_model = similarity.model()
 	simil_model.to(device)
+
+	morph = bareun()
+	morph2 = utagger()
+	# kkma = inference.inf(text)
 
 
 # 대명사 목록, 지시대명사 -> 인칭대명사 순서
@@ -397,18 +402,13 @@ def processReadability(text, kkma, sentences, words):
 		206.835 - 1.015 * (len(kkma) / len(sentences)) - 84.6 * (len(text) / len(kkma))
 	)
 	result["text_fleschkincaid"] = (
-		0.39 * (len(kkma) / len(sentences))
-		+ 11.8 * (len(text) / len(kkma))
-		- 15.59
+		0.39 * (len(kkma) / len(sentences)) + 11.8 * (len(text) / len(kkma)) - 15.59
 	)
 	result["text_oridx"] = -1
 	return result
 
 
 def process(text, targets=["ttr", "similarity", "basic", "adjacency", "readability"]):
-	# kkma = inference.inf(text)
-	morph = bareun()
-
 	result = collections.defaultdict()
 
 	# text preprocessing -----------------------------------------------------------------
@@ -419,6 +419,7 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency", "readabili
 	kkma_by_sent = []
 	kkma_simple = []
 	kkma_list = []
+	voc_grades = []
 
 	result["morpheme"] = morph.tags(sentences).as_json()
 	corrections = morph.correction(text)
@@ -427,15 +428,25 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency", "readabili
 	for idx, sentence in enumerate(sentences):
 		inf = morph.pos(sentence)
 		inf_simple = morph.pos(sentence)
+
 		kkma_list.append(inf)
 		kkma += kkma_list[idx]
 		kkma_simple += inf_simple
 		kkma_by_sent.append(inf)
 
-	# Determine the number of workers
-	num_workers = min(2, multiprocessing.cpu_count())
+		voc_grades += morph2.grade(sentence)
+
+	grade = []
+	grade_dict = collections.defaultdict(list)
+	for item in voc_grades:
+		if not any(d['voc'] == item['voc'] for d in grade_dict[str(item['grade'])]):
+			grade_dict[str(item['grade'])].append({'voc': item['voc'], 'cnt': voc_grades.count(item)})
+
+	grade = [(k, v) for k, v in grade_dict.items()]
+	result["voc_grades"] = grade
 
 	# processing -------------------------------------------------------------------------
+	num_workers = min(2, multiprocessing.cpu_count())
 	with ThreadPoolExecutor(max_workers=num_workers) as executor:
 		futures = {}
 
@@ -467,7 +478,7 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency", "readabili
 				kkma_simple,
 				kkma_by_sent,
 			)
-			
+
 		if "readability" in targets:
 			curr_time = time.time()
 			futures["readability"] = executor.submit(
