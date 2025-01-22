@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MorphTags, CohTags } from "../Tags";
+import { CohTags, MorphTags } from "../Tags";
 import { Sentences, SentencesCorrection } from '../morpheme/SentenceFormat';
 
 
@@ -435,6 +435,7 @@ const GradeFormat = ({ results, title }) => {
 									</div>
 									<div className='flex flex-row overflow-x-auto divide-x-[1px]'>
 										{words
+											.sort((a, b) => b.voc - a.voc)
 											.sort((a, b) => b.cnt - a.cnt)
 											.map((word, index) => (
 												<div key={index} className='flex flex-col gap-2 font-base items-center p-2 hover:bg-slate-100 dark:hover:bg-slate-800'>
@@ -454,4 +455,4 @@ const GradeFormat = ({ results, title }) => {
 
 
 
-export { ResultsNumeric, ResultsList, MorphemeFormat, CorrectionFormat, GradeFormat };
+export { CorrectionFormat, GradeFormat, MorphemeFormat, ResultsList, ResultsNumeric };
