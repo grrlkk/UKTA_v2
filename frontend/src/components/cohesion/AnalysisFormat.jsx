@@ -421,26 +421,39 @@ const GradeFormat = ({ results, title }) => {
 			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} -pr-[6px] transition-all ease-in-out`}>
 				<div className='overflow-hidden flex flex-col gap-2'>
 					{results
-						.sort()
+						.sort((a, b) => b[0] - a[0])
 						.map(([grade, words]) => (
 							<div
 								key={grade}
 								className='flex flex-col bg-slate-300 dark:bg-slate-900 rounded-xl overflow-hidden'
 							>
-								<h4 className='font-semibold p-2'>{grade === "-1" ? "NA" : grade + "등급"}</h4>
+								<div className='flex flex-row justify-start items-center gap-2 p-2'>
+									<h4 className='font-semibold'>
+										{grade === "-1" ? "NA" : grade + "등급"}
+									</h4>
+									<span className=''>{words.length}개</span>
+									<span className='font-normal opacity-50'>
+										{grade === "1" && "학령전기에 습득하여 평생에 걸쳐 일상 언어생활 사용 어휘"}
+										{grade === "2" && "초등학교 1-2학년"}
+										{grade === "3" && "초등학교 3-4학년"}
+										{grade === "4" && "초등학교 5-6학년"}
+										{grade === "5" && "중학교 1-3학년"}
+									</span>
+									<hr className="grow" />
+								</div>
 								<div className='flex w-full bg-white dark:bg-slate-950'>
-									<div className='flex flex-col gap-2 font-base items-center p-2 hover:bg-slate-100 dark:hover:bg-slate-800 border-r-2'>
+									<div className='flex flex-col gap-2 font-base items-center p-2 border-r-2'>
 										<span className='text-nowrap'>Vocab</span>
-										<span className='text-nowrap font-mono italic text-xs'>Count</span>
+										<span className='text-nowrap font-normal font-mono italic text-xs'>Count</span>
 									</div>
 									<div className='flex flex-row overflow-x-auto divide-x-[1px]'>
 										{words
-											.sort((a, b) => b.voc - a.voc)
+											.sort((a, b) => a.voc.localeCompare(b.voc))
 											.sort((a, b) => b.cnt - a.cnt)
 											.map((word, index) => (
 												<div key={index} className='flex flex-col gap-2 font-base items-center p-2 hover:bg-slate-100 dark:hover:bg-slate-800'>
 													<span className='text-nowrap'>{word.voc}</span>
-													<span className='text-nowrap font-mono italic text-xs'>{word.cnt}</span>
+													<span className='text-nowrap font-normal font-mono italic text-xs'>{word.cnt}</span>
 												</div>
 											))}
 									</div>

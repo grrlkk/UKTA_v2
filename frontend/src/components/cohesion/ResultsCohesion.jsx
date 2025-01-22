@@ -172,7 +172,7 @@ const ResultsCoh = ({ darkMode }) => {
 			await fetchData();
 
 			if (cohesionResult.length > 0) {
-				setSelectedFile(0);
+				setSelectedFile(-1);
 			}
 		}
 	};
