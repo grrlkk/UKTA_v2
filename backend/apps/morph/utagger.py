@@ -16,7 +16,9 @@ class utagger:
         if not self.utg4:
             print("로드 실패")
             print("failed to load")
-        self.word_grades = pd.read_csv("/home/ttytu/projects/KorCAT-web/backend/apps/morph/word_grades.csv")
+        self.word_grades = pd.read_csv(
+            "/home/ttytu/projects/KorCAT-web/backend/apps/morph/word_grades.csv"
+        )
         # ['grade', 'vocab', 'homonym_num', 'pos', 'type', 'original', 'meaning', 'field']
 
     def morphs(self, text):
@@ -42,18 +44,58 @@ class utagger:
             voc = split_word[0]
             hyn = split_word[1] if len(split_word) > 1 else 0
 
-            try:
-                grade = self.word_grades[
-                    (self.word_grades["vocab"] == voc) & (self.word_grades["homonym_num"] == int(hyn))
-                ]["grade"].values[0]
-                grade = int(grade.split("등급")[0])
-            except:
-                try:
-                    grade = self.word_grades[
-                        (self.word_grades["vocab"] == voc + "다") & (self.word_grades["homonym_num"] == int(hyn))
-                    ]["grade"].values[0]
-                    grade = int(grade.split("등급")[0])
-                except:
-                    grade = -1
-            grades.append({"voc": word[0], "grade": grade})
+            if word[1].startswith("S") or word[1].startswith("E"):
+                continue
+
+            row = self.word_grades[
+                (self.word_grades["vocab"] == voc)
+                & (self.word_grades["homonym_num"] == int(hyn))
+            ]
+            if row.empty:
+                row = self.word_grades[
+                    (self.word_grades["vocab"] == voc + "다")
+                    & (self.word_grades["homonym_num"] == int(hyn))
+                ]
+
+            if row.empty:
+                grades.append(
+                    {
+                        "voc": word[0],
+                        "pos_tagged": word[1],
+                        "pos": "",
+                        "type": "",
+                        "meaning": "Not Found in Dictionary",
+                        "field": "",
+                        "grade": -1,
+                    }
+                )
+                continue
+
+            if str(row["pos_tag"].values[0]) not in word[1]:
+                grades.append(
+                    {
+                        "voc": word[0],
+                        "pos_tagged": word[1],
+                        "pos": "",
+                        "type": "",
+                        "meaning": "Morpheme POS MisMatch",
+                        "field": "",
+                        "grade": -1,
+                    }
+                )
+                continue
+
+            grade = row["grade"].values[0]
+            grade = int(grade.split("등급")[0])
+            grades.append(
+                {
+                    "voc": word[0],
+                    "grade": grade,
+                    "pos_tagged": word[1],
+                    "pos": row["pos"].values[0],
+                    "type": row["type"].values[0],
+                    "meaning": row["meaning"].values[0],
+                    "field": row["field"].values[0],
+                }
+            )
         return grades

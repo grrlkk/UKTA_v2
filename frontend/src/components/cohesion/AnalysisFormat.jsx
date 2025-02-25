@@ -442,17 +442,25 @@ const GradeFormat = ({ results, title }) => {
 									<hr className="grow" />
 								</div>
 								<div className='flex w-full bg-white dark:bg-slate-950'>
-									<div className='flex flex-col gap-2 font-base items-center p-2 border-r-2'>
-										<span className='text-nowrap'>Vocab</span>
-										<span className='text-nowrap font-normal font-mono italic text-xs'>Count</span>
-									</div>
 									<div className='flex flex-row overflow-x-auto divide-x-[1px]'>
 										{words
 											.sort((a, b) => a.voc.localeCompare(b.voc))
 											.sort((a, b) => b.cnt - a.cnt)
 											.map((word, index) => (
-												<div key={index} className='flex flex-col gap-2 font-base items-center p-2 hover:bg-slate-100 dark:hover:bg-slate-800'>
-													<span className='text-nowrap'>{word.voc}</span>
+												<div
+													key={index}
+													title={word.meaning}
+													className='flex flex-col items-center gap-1 font-base text-center p-2 hover:bg-slate-100 dark:hover:bg-slate-800 *:w-full'
+												>
+													<span className='text-nowrap border-b-[1px]'>{word.voc}</span>
+													<div
+														className='flex flex-row justify-center items-center gap-1'
+														style={{ "color": MorphTags.find(t => t.tag === word.pos_tagged)?.color }}
+													>
+														<span className='text-nowrap'>{word.pos_tagged}</span>
+														{word.pos && <span className='text-nowrap'>{word.pos}</span>}
+													</div>
+													{word.type && <span className='text-nowrap'>{word.type}</span>}
 													<span className='text-nowrap font-normal font-mono italic text-xs'>{word.cnt}</span>
 												</div>
 											))}

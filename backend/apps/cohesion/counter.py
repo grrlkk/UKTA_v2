@@ -41,7 +41,7 @@ def sentence_level(sentences, kkma, kkma_by_sent, paraCnt):
     resultRep = collections.defaultdict()
     sentCnt = len(sentences)
     M_Cnt = sum(1 for morp in kkma if morp[1].startswith("M"))
-    MM_Cnt = sum(1 for morp in kkma if morp[1] == "MM")
+    MM_Cnt = sum(1 for morp in kkma if morp[1].startswith("MM"))
     MA_Cnt = sum(1 for morp in kkma if morp[1].startswith("MA"))
 
     result["M_sentLen"] = M_Cnt / sentCnt
@@ -232,6 +232,9 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
         "VCP",
         "VCN",
         "MM",
+        "MMA",
+        "MMD",
+        "MMN",
         "MAG",
         "MAJ",
         "IC",
@@ -278,7 +281,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
         "아무데",
     ]
     morphs_V = ["VV", "VA", "VX", "VCP", "VCN"]
-    morphs_M = ["MM", "MAG", "MAJ"]
+    morphs_M = ["MM", "MMA", "MMD", "MMN", "MAG", "MAJ"]
     morphs_MA = ["MAG", "MAJ"]
     morphs_F = [
         "JKS",
@@ -367,7 +370,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
                         )
                 elif tag in morphs_M:
                     morphLst_M.append((len(morphLst_M), morph, tag, sentences[i]))
-                    if tag == "MM":
+                    if tag.startswith("MM"):
                         morphLst_MM.append((len(morphLst_MM), morph, tag, sentences[i]))
                     elif tag in morphs_MA:
                         morphLst_MA.append((len(morphLst_MA), morph, tag, sentences[i]))
