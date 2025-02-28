@@ -45,8 +45,8 @@ def ngram_list(words, n):
 
     ngram_counts = collections.Counter(result)
     ngram_key_value_list = collections.defaultdict(list)
-    for k, v in ngram_counts.items():
-        ngram_key_value_list[v].append(k)
+    for ngram, count in ngram_counts.items():
+        ngram_key_value_list[str(count)].append(ngram)
     return ngram_key_value_list
 
 
@@ -196,12 +196,12 @@ def sentence_level(sentences, words, kkma, kkma_by_sent, paraCnt):
             )
 
         # NGRAM LIST
-        ngram_list = ngram_list(words, i)
-        resultRepList[f"word_NgramList_N{i}"] = ngram_list
+        ngramList = ngram_list(words, i)
+        resultRepList[f"word_NgramList_N{i}"] = ngramList
 
         letters = [letter for word in words for letter in word]
-        ngram_list_letters = ngram_list(letters, i)
-        resultRepList[f"letter_NgramList_N{i}"] = ngram_list_letters
+        ngramList_letters = ngram_list(letters, i)
+        resultRepList[f"letter_NgramList_N{i}"] = ngramList_letters
 
     return result, resultRep, resultRepList
 
@@ -443,7 +443,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
     result["IC_Cnt"] = len(morphLst_IC)
 
     # Sentence Level -----------------------------------------------------------------------
-    resultSentComp, resultSentRep = sentence_level(
+    resultSentComp, resultSentRep, resultSentRepList = sentence_level(
         sentences, words, kkma, kkma_by_sent, paraCnt
     )
 
@@ -560,5 +560,6 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
     finalresult["basic_list"] = resultLst
     finalresult["sentenceLvl"] = resultSentComp
     finalresult["sentenceLvlRep"] = resultSentRep
+    finalresult["sentenceLvlRep_list"] = resultSentRepList
 
     return finalresult
