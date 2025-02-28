@@ -201,7 +201,7 @@ def sentence_level(sentences, words, kkma, kkma_by_sent, paraCnt):
 
         letters = [letter for word in words for letter in word]
         ngramList_letters = ngram_list(letters, i)
-        resultRepList[f"letter_NgramList_N{i}"] = ngramList_letters
+        resultRepList[f"char_NgramList_N{i}"] = ngramList_letters
 
     return result, resultRep, resultRepList
 
