@@ -6,18 +6,14 @@ import string
 def avgLen(words, kkma_simple):
     morph_len = [len(kkma[0]) for kkma in kkma_simple]
     morph_avg = sum(morph_len) / len(morph_len)
-    morph_std = math.sqrt(
-        sum([(x - morph_avg) ** 2 for x in morph_len]) / len(morph_len)
-    )
+    morph_std = math.sqrt(sum([(x - morph_avg) ** 2 for x in morph_len]) / len(morph_len))
 
     for i in range(len(words)):
         words[i] = words[i].translate(str.maketrans("", "", string.punctuation))
 
     words_len = [len(word) for word in words]
     words_avg = sum(words_len) / len(words_len)
-    words_std = math.sqrt(
-        sum([(x - words_avg) ** 2 for x in words_len]) / len(words_len)
-    )
+    words_std = math.sqrt(sum([(x - words_avg) ** 2 for x in words_len]) / len(words_len))
 
     return morph_avg, morph_std, words_avg, words_std
 
@@ -34,6 +30,17 @@ def ngram(kkma, n):
         ngg = " ".join(ng)
         result.append(ngg)
     return result
+
+
+def ngram_overlap(kkma_by_sent, overlap, n):
+    overlap_counts = []
+    if len(kkma_by_sent) < overlap:
+        return 0
+    for i in range(len(kkma_by_sent) - overlap + 1):
+        ngram_sets = [set(ngram(kkma_by_sent[j], n)) for j in range(i, i + overlap)]
+        overlap_count = len(set.intersection(*ngram_sets))
+        overlap_counts.append(overlap_count)
+    return sum(overlap_counts)
 
 
 def ngram_list(words, n):
@@ -68,32 +75,19 @@ def sentence_level(sentences, words, kkma, kkma_by_sent, paraCnt):
     result["char_sentLenAvg"] = sum(len(sent) for sent in sentences) / sentCnt
     result["morph_sentLenAvg"] = sum(len(sent) for sent in kkma_by_sent) / sentCnt
     result["word_sentLenAvg"] = sum(len(sent.split()) for sent in sentences) / sentCnt
-    result["V_sentLenAvg"] = (
-        sum(1 for morp in kkma if morp[1].startswith("V")) / sentCnt
-    )
+    result["V_sentLenAvg"] = sum(1 for morp in kkma if morp[1].startswith("V")) / sentCnt
     if sentCnt > 1:
         result["char_sentLenStd"] = math.sqrt(
-            sum((len(sent) - result["char_sentLenAvg"]) ** 2 for sent in sentences)
-            / (sentCnt - 1)
+            sum((len(sent) - result["char_sentLenAvg"]) ** 2 for sent in sentences) / (sentCnt - 1)
         )
         result["morph_sentLenStd"] = math.sqrt(
-            sum((len(sent) - result["morph_sentLenAvg"]) ** 2 for sent in kkma_by_sent)
-            / (sentCnt - 1)
+            sum((len(sent) - result["morph_sentLenAvg"]) ** 2 for sent in kkma_by_sent) / (sentCnt - 1)
         )
         result["word_sentLenStd"] = math.sqrt(
-            sum(
-                (len(sent.split()) - result["word_sentLenAvg"]) ** 2
-                for sent in sentences
-            )
-            / (sentCnt - 1)
+            sum((len(sent.split()) - result["word_sentLenAvg"]) ** 2 for sent in sentences) / (sentCnt - 1)
         )
         result["V_sentLenStd"] = math.sqrt(
-            sum(
-                (1 - result["V_sentLenAvg"]) ** 2
-                for morp in kkma
-                if morp[1].startswith("V")
-            )
-            / (sentCnt - 1)
+            sum((1 - result["V_sentLenAvg"]) ** 2 for morp in kkma if morp[1].startswith("V")) / (sentCnt - 1)
         )
     else:
         result["char_sentLenStd"] = 0
@@ -105,9 +99,7 @@ def sentence_level(sentences, words, kkma, kkma_by_sent, paraCnt):
     result["char_paraLenAvg"] = sum(len(sent) for sent in sentences) / paraCnt
     result["morph_paraLenAvg"] = sum(len(sent) for sent in kkma_by_sent) / paraCnt
     result["word_paraLenAvg"] = sum(len(sent.split()) for sent in sentences) / paraCnt
-    result["V_paraLenAvg"] = (
-        sum(1 for morp in kkma if morp[1].startswith("V")) / paraCnt
-    )
+    result["V_paraLenAvg"] = sum(1 for morp in kkma if morp[1].startswith("V")) / paraCnt
     if paraCnt == 1:
         result["char_paraLenStd"] = 0
         result["morph_paraLenStd"] = 0
@@ -115,27 +107,16 @@ def sentence_level(sentences, words, kkma, kkma_by_sent, paraCnt):
         result["V_paraLenStd"] = 0
     else:
         result["char_paraLenStd"] = math.sqrt(
-            sum((len(sent) - result["char_paraLenAvg"]) ** 2 for sent in sentences)
-            / (paraCnt - 1)
+            sum((len(sent) - result["char_paraLenAvg"]) ** 2 for sent in sentences) / (paraCnt - 1)
         )
         result["morph_paraLenStd"] = math.sqrt(
-            sum((len(sent) - result["morph_paraLenAvg"]) ** 2 for sent in kkma_by_sent)
-            / (paraCnt - 1)
+            sum((len(sent) - result["morph_paraLenAvg"]) ** 2 for sent in kkma_by_sent) / (paraCnt - 1)
         )
         result["word_paraLenStd"] = math.sqrt(
-            sum(
-                (len(sent.split()) - result["word_paraLenAvg"]) ** 2
-                for sent in sentences
-            )
-            / (paraCnt - 1)
+            sum((len(sent.split()) - result["word_paraLenAvg"]) ** 2 for sent in sentences) / (paraCnt - 1)
         )
         result["V_paraLenStd"] = math.sqrt(
-            sum(
-                (1 - result["V_paraLenAvg"]) ** 2
-                for morp in kkma
-                if morp[1].startswith("V")
-            )
-            / (paraCnt - 1)
+            sum((1 - result["V_paraLenAvg"]) ** 2 for morp in kkma if morp[1].startswith("V")) / (paraCnt - 1)
         )
 
     # NGRAM
@@ -144,55 +125,31 @@ def sentence_level(sentences, words, kkma, kkma_by_sent, paraCnt):
         ngramCnt = collections.Counter(ng)
 
         # sentence Ngram
-        resultRep[f"morph_sentNgram2_N{i}"] = (
-            sum(1 for n in ngramCnt.values() if n > 1) / sentCnt
-        )
-        resultRep[f"morph_sentNgram3_N{i}"] = (
-            sum(1 for n in ngramCnt.values() if n > 2) / sentCnt
-        )
+        resultRep[f"morph_sentNgram2_N{i}"] = sum(1 for n in ngramCnt.values() if n > 1) / sentCnt
+        resultRep[f"morph_sentNgram3_N{i}"] = sum(1 for n in ngramCnt.values() if n > 2) / sentCnt
         if sentCnt == 1:
             resultRep[f"morph_sentNgram2Std_N{i}"] = 0
             resultRep[f"morph_sentNgram3Std_N{i}"] = 0
         else:
             resultRep[f"morph_sentNgram2Std_N{i}"] = math.sqrt(
-                sum(
-                    (n - resultRep[f"morph_sentNgram2_N{i}"]) ** 2
-                    for n in ngramCnt.values()
-                )
-                / (sentCnt - 1)
+                sum((n - resultRep[f"morph_sentNgram2_N{i}"]) ** 2 for n in ngramCnt.values()) / (sentCnt - 1)
             )
             resultRep[f"morph_sentNgram3Std_N{i}"] = math.sqrt(
-                sum(
-                    (n - resultRep[f"morph_sentNgram3_N{i}"]) ** 2
-                    for n in ngramCnt.values()
-                )
-                / (sentCnt - 1)
+                sum((n - resultRep[f"morph_sentNgram3_N{i}"]) ** 2 for n in ngramCnt.values()) / (sentCnt - 1)
             )
 
         # paragraph Ngram
-        resultRep[f"morph_paraNgram2_N{i}"] = (
-            sum(1 for n in ngramCnt.values() if n > 1) / paraCnt
-        )
-        resultRep[f"morph_paraNgram3_N{i}"] = (
-            sum(1 for n in ngramCnt.values() if n > 2) / paraCnt
-        )
+        resultRep[f"morph_paraNgram2_N{i}"] = sum(1 for n in ngramCnt.values() if n > 1) / paraCnt
+        resultRep[f"morph_paraNgram3_N{i}"] = sum(1 for n in ngramCnt.values() if n > 2) / paraCnt
         if paraCnt == 1:
             resultRep[f"morph_paraNgram2Std_N{i}"] = 0
             resultRep[f"morph_paraNgram3Std_N{i}"] = 0
         else:
             resultRep[f"morph_paraNgram2Std_N{i}"] = math.sqrt(
-                sum(
-                    (n - resultRep[f"morph_paraNgram2_N{i}"]) ** 2
-                    for n in ngramCnt.values()
-                )
-                / (paraCnt - 1)
+                sum((n - resultRep[f"morph_paraNgram2_N{i}"]) ** 2 for n in ngramCnt.values()) / (paraCnt - 1)
             )
             resultRep[f"morph_paraNgram3Std_N{i}"] = math.sqrt(
-                sum(
-                    (n - resultRep[f"morph_paraNgram3_N{i}"]) ** 2
-                    for n in ngramCnt.values()
-                )
-                / (paraCnt - 1)
+                sum((n - resultRep[f"morph_paraNgram3_N{i}"]) ** 2 for n in ngramCnt.values()) / (paraCnt - 1)
             )
 
         # NGRAM LIST
@@ -202,6 +159,15 @@ def sentence_level(sentences, words, kkma, kkma_by_sent, paraCnt):
         letters = [letter for word in words for letter in word]
         ngramList_letters = ngram_list(letters, i)
         resultRepList[f"char_NgramList_N{i}"] = ngramList_letters
+
+        # Adjacent Ngram
+        if sentCnt > 1:
+            resultRep[f"morph_sentNgramOverlap2_N{i}"] = ngram_overlap(kkma_by_sent, 2, i) / len(kkma_by_sent) - 1
+            resultRep[f"morph_sentNgramOverlap2Avg_N{i}"] = ngram_overlap(kkma_by_sent, 2, i) / len(kkma)
+
+        if sentCnt > 2:
+            resultRep[f"morph_sentNgramOverlap3_N{i}"] = ngram_overlap(kkma_by_sent, 3, i) / len(kkma_by_sent) - 2
+            resultRep[f"morph_sentNgramOverlap3Avg_N{i}"] = ngram_overlap(kkma_by_sent, 3, i) / len(kkma)
 
     return result, resultRep, resultRepList
 
@@ -351,27 +317,17 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
                     if tag in morphs_NN:
                         morphLst_NN.append((len(morphLst_NN), morph, tag, sentences[i]))
                         if tag == "NNG":
-                            morphLst_NNG.append(
-                                (len(morphLst_NNG), morph, tag, sentences[i])
-                            )
+                            morphLst_NNG.append((len(morphLst_NNG), morph, tag, sentences[i]))
                         elif tag == "NNP":
-                            morphLst_NNP.append(
-                                (len(morphLst_NNP), morph, tag, sentences[i])
-                            )
+                            morphLst_NNP.append((len(morphLst_NNP), morph, tag, sentences[i]))
                         elif tag in ["NNB", "NNBC"]:
-                            morphLst_NNB.append(
-                                (len(morphLst_NNB), morph, tag, sentences[i])
-                            )
+                            morphLst_NNB.append((len(morphLst_NNB), morph, tag, sentences[i]))
                     elif tag == "NP":
                         morphLst_NP.append((len(morphLst_NP), morph, tag, sentences[i]))
                         if morph in morphs_NP_people:
-                            morphLst_NP_people.append(
-                                (len(morphLst_NP_people), morph, tag, sentences[i])
-                            )
+                            morphLst_NP_people.append((len(morphLst_NP_people), morph, tag, sentences[i]))
                         elif morph in morphs_NP_things:
-                            morphLst_NP_things.append(
-                                (len(morphLst_NP_things), morph, tag, sentences[i])
-                            )
+                            morphLst_NP_things.append((len(morphLst_NP_things), morph, tag, sentences[i]))
                     elif tag == "NR":
                         morphLst_NR.append((len(morphLst_NR), morph, tag, sentences[i]))
                 elif tag == "IC":
@@ -385,13 +341,9 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
                     elif tag == "VX":
                         morphLst_VX.append((len(morphLst_VX), morph, tag, sentences[i]))
                     elif tag == "VCP":
-                        morphLst_VCP.append(
-                            (len(morphLst_VCP), morph, tag, sentences[i])
-                        )
+                        morphLst_VCP.append((len(morphLst_VCP), morph, tag, sentences[i]))
                     elif tag == "VCN":
-                        morphLst_VCN.append(
-                            (len(morphLst_VCN), morph, tag, sentences[i])
-                        )
+                        morphLst_VCN.append((len(morphLst_VCN), morph, tag, sentences[i]))
                 elif tag in morphs_M:
                     morphLst_M.append((len(morphLst_M), morph, tag, sentences[i]))
                     if tag.startswith("MM"):
@@ -443,9 +395,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
     result["IC_Cnt"] = len(morphLst_IC)
 
     # Sentence Level -----------------------------------------------------------------------
-    resultSentComp, resultSentRep, resultSentRepList = sentence_level(
-        sentences, words, kkma, kkma_by_sent, paraCnt
-    )
+    resultSentComp, resultSentRep, resultSentRepList = sentence_level(sentences, words, kkma, kkma_by_sent, paraCnt)
 
     # Number of Different Words ------------------------------------------------------------
     resultNDW = collections.defaultdict()
