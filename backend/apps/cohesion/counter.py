@@ -36,12 +36,28 @@ def ngram(kkma, n):
     return result
 
 
-def sentence_level(sentences, kkma, kkma_by_sent, paraCnt):
+def ngram_list(words, n):
+    result = []
+    for i in range(len(words) - n + 1):
+        ngram = words[i : i + n]
+        ng = " ".join(ngram)
+        result.append(ng)
+
+    ngram_counts = collections.Counter(result)
+    ngram_key_value_list = collections.defaultdict(list)
+    for ngram, count in ngram_counts.items():
+        ngram_key_value_list[str(count)].append(ngram)
+    return ngram_key_value_list
+
+
+def sentence_level(sentences, words, kkma, kkma_by_sent, paraCnt):
     result = collections.defaultdict()
     resultRep = collections.defaultdict()
+    resultRepList = collections.defaultdict()
+
     sentCnt = len(sentences)
     M_Cnt = sum(1 for morp in kkma if morp[1].startswith("M"))
-    MM_Cnt = sum(1 for morp in kkma if morp[1] == "MM")
+    MM_Cnt = sum(1 for morp in kkma if morp[1].startswith("MM"))
     MA_Cnt = sum(1 for morp in kkma if morp[1].startswith("MA"))
 
     result["M_sentLen"] = M_Cnt / sentCnt
@@ -179,7 +195,15 @@ def sentence_level(sentences, kkma, kkma_by_sent, paraCnt):
                 / (paraCnt - 1)
             )
 
-    return result, resultRep
+        # NGRAM LIST
+        ngramList = ngram_list(words, i)
+        resultRepList[f"word_NgramList_N{i}"] = ngramList
+
+        letters = [letter for word in words for letter in word]
+        ngramList_letters = ngram_list(letters, i)
+        resultRepList[f"char_NgramList_N{i}"] = ngramList_letters
+
+    return result, resultRep, resultRepList
 
 
 def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
@@ -232,6 +256,9 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
         "VCP",
         "VCN",
         "MM",
+        "MMA",
+        "MMD",
+        "MMN",
         "MAG",
         "MAJ",
         "IC",
@@ -278,7 +305,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
         "아무데",
     ]
     morphs_V = ["VV", "VA", "VX", "VCP", "VCN"]
-    morphs_M = ["MM", "MAG", "MAJ"]
+    morphs_M = ["MM", "MMA", "MMD", "MMN", "MAG", "MAJ"]
     morphs_MA = ["MAG", "MAJ"]
     morphs_F = [
         "JKS",
@@ -367,7 +394,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
                         )
                 elif tag in morphs_M:
                     morphLst_M.append((len(morphLst_M), morph, tag, sentences[i]))
-                    if tag == "MM":
+                    if tag.startswith("MM"):
                         morphLst_MM.append((len(morphLst_MM), morph, tag, sentences[i]))
                     elif tag in morphs_MA:
                         morphLst_MA.append((len(morphLst_MA), morph, tag, sentences[i]))
@@ -416,8 +443,8 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
     result["IC_Cnt"] = len(morphLst_IC)
 
     # Sentence Level -----------------------------------------------------------------------
-    resultSentComp, resultSentRep = sentence_level(
-        sentences, kkma, kkma_by_sent, paraCnt
+    resultSentComp, resultSentRep, resultSentRepList = sentence_level(
+        sentences, words, kkma, kkma_by_sent, paraCnt
     )
 
     # Number of Different Words ------------------------------------------------------------
@@ -533,5 +560,6 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
     finalresult["basic_list"] = resultLst
     finalresult["sentenceLvl"] = resultSentComp
     finalresult["sentenceLvlRep"] = resultSentRep
+    finalresult["sentenceLvlRep_list"] = resultSentRepList
 
     return finalresult
