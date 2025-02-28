@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import OriginalText from '../OriginalText';
 import Pagination from '../Pagination';
-import { ResultsList, ResultsNumeric, MorphemeFormat, CorrectionFormat, GradeFormat } from './AnalysisFormat';
+import { ResultsList, ResultsListNgram, ResultsNumeric, MorphemeFormat, CorrectionFormat, GradeFormat } from './AnalysisFormat';
 import { EvalFormat } from './EvalFormat';
 import { useCompareFiles } from '../contexts/ComparisonContext';
 
@@ -58,6 +58,9 @@ const ResultCoh = ({ resultId, darkMode }) => {
 
 					<ResultsNumeric result={item.results.sentenceLvl} title={"Sentence/Paragraph Complexity"} />
 					<ResultsNumeric result={item.results.sentenceLvlRep} title={"Repetition, Standard Expression Per Sentence/Paragraph"} />
+					{item.results.sentenceLvlRep_list &&
+						<ResultsListNgram result={item.results.sentenceLvlRep_list} title={"Repetition, Standard Expression List"} />
+					}
 
 					<hr />
 
