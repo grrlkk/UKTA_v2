@@ -395,6 +395,10 @@ def processAdjacency(kkma_list):
     return result
 
 
+def processCohesion():
+    pass
+
+
 def processReadability(text, kkma, sentences, words):
     result = collections.defaultdict()
     result["text_dalechall"] = -1

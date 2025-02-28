@@ -36,9 +36,25 @@ def ngram(kkma, n):
     return result
 
 
-def sentence_level(sentences, kkma, kkma_by_sent, paraCnt):
+def ngram_list(words, n):
+    result = []
+    for i in range(len(words) - n + 1):
+        ngram = words[i : i + n]
+        ng = " ".join(ngram)
+        result.append(ng)
+
+    ngram_counts = collections.Counter(result)
+    ngram_key_value_list = collections.defaultdict(list)
+    for k, v in ngram_counts.items():
+        ngram_key_value_list[v].append(k)
+    return ngram_key_value_list
+
+
+def sentence_level(sentences, words, kkma, kkma_by_sent, paraCnt):
     result = collections.defaultdict()
     resultRep = collections.defaultdict()
+    resultRepList = collections.defaultdict()
+
     sentCnt = len(sentences)
     M_Cnt = sum(1 for morp in kkma if morp[1].startswith("M"))
     MM_Cnt = sum(1 for morp in kkma if morp[1].startswith("MM"))
@@ -179,7 +195,15 @@ def sentence_level(sentences, kkma, kkma_by_sent, paraCnt):
                 / (paraCnt - 1)
             )
 
-    return result, resultRep
+        # NGRAM LIST
+        ngram_list = ngram_list(words, i)
+        resultRepList[f"word_NgramList_N{i}"] = ngram_list
+
+        letters = [letter for word in words for letter in word]
+        ngram_list_letters = ngram_list(letters, i)
+        resultRepList[f"letter_NgramList_N{i}"] = ngram_list_letters
+
+    return result, resultRep, resultRepList
 
 
 def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
@@ -420,7 +444,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
 
     # Sentence Level -----------------------------------------------------------------------
     resultSentComp, resultSentRep = sentence_level(
-        sentences, kkma, kkma_by_sent, paraCnt
+        sentences, words, kkma, kkma_by_sent, paraCnt
     )
 
     # Number of Different Words ------------------------------------------------------------
