@@ -479,7 +479,6 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency", "readabili
             else:
                 futures["adjacency"] = executor.submit(processAdjacency, kkma_list)
 
-        # v1.1 추가 ------------------------------------------------------------------------
         if "basic" in targets:
             curr_time = time.time()
             futures["basic"] = executor.submit(
@@ -515,5 +514,4 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency", "readabili
             result["sentenceLvl"] = temp["sentenceLvl"]
             result["sentenceLvlRep"] = temp["sentenceLvlRep"]
             result["sentenceLvlRep_list"] = temp["sentenceLvlRep_list"]
-            # print(temp["sentenceLvlRep_list"])
     return result
