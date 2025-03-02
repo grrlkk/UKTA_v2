@@ -67,6 +67,27 @@ pronounList = [
     "쟤",
     "누구",
 ]
+morphs_C = [  # 내용
+    "NNG",
+    "NNP",
+    "NNB",
+    "NNBC",
+    "NP",
+    "NR",
+    "VV",
+    "VA",
+    "VX",
+    "VCP",
+    "VCN",
+    "MM",
+    "MMA",
+    "MMD",
+    "MMN",
+    "MAG",
+    "MAJ",
+    "IC",
+    "XR",
+]
 
 
 def processTTR(kkma):
@@ -352,27 +373,6 @@ def processAdjacency(kkma_list):
 
 
 def processCohesion(kkma_list, kkma, kkma_by_sent):
-    morphs_C = [  # 내용
-        "NNG",
-        "NNP",
-        "NNB",
-        "NNBC",
-        "NP",
-        "NR",
-        "VV",
-        "VA",
-        "VX",
-        "VCP",
-        "VCN",
-        "MM",
-        "MMA",
-        "MMD",
-        "MMN",
-        "MAG",
-        "MAJ",
-        "IC",
-        "XR",
-    ]
     kkma = [morp for morp in kkma if not morp[1].startswith("S")]
     kkma_by_sent = [[morp for morp in sent if not morp[1].startswith("S")] for sent in kkma_by_sent]
     result = collections.defaultdict()
@@ -405,31 +405,38 @@ def processCohesion(kkma_list, kkma, kkma_by_sent):
 
     num_sentences = len(kkma_by_sent)
 
-    for i in range(num_sentences - 1):
-        result["C_adjOverlap"] += bool(content_sets[i] & content_sets[i + 1])
-        result["NN_adjOverlap"] += bool(noun_sets[i] & noun_sets[i + 1])
-        result["morph_adjOverlap"] += bool(sent_sets[i] & sent_sets[i + 1])
-        result["N_adjOverlap"] += bool(substantive_sets[i] & substantive_sets[i + 1])
+    result["C_adjOverlap"] = 0
+    result["NN_adjOverlap"] = 0
+    result["morph_adjOverlap"] = 0
+    result["N_adjOverlap"] = 0
 
-        result["C_adjOverlapToken"] += len(content_sets[i] & content_sets[i + 1])
-        result["NN_adjOverlapToken"] += len(noun_sets[i] & noun_sets[i + 1])
-        result["morph_adjOverlapToken"] += len(sent_sets[i] & sent_sets[i + 1])
-        result["N_adjOverlapToken"] += len(substantive_sets[i] & substantive_sets[i + 1])
+    result["C_adjOverlapToken"] = 0
+    result["NN_adjOverlapToken"] = 0
+    result["morph_adjOverlapToken"] = 0
+    result["N_adjOverlapToken"] = 0
 
-    # Compute skip (n-2) features
-    for i in range(num_sentences - 2):
-        result["C_adjOverlap3"] += bool(content_sets[i] & content_sets[i + 2])
-        result["NN_adjOverlap3"] += bool(noun_sets[i] & noun_sets[i + 2])
-        result["morph_adjOverlap3"] += bool(sent_sets[i] & sent_sets[i + 2])
-        result["N_adjOverlap3"] += bool(substantive_sets[i] & substantive_sets[i + 2])
+    result["C_adjOverlap3"] = 0
+    result["NN_adjOverlap3"] = 0
+    result["morph_adjOverlap3"] = 0
+    result["N_adjOverlap3"] = 0
 
-        result["C_adjOverlap3Token"] += len(content_sets[i] & content_sets[i + 2])
-        result["NN_adjOverlap3Token"] += len(noun_sets[i] & noun_sets[i + 2])
-        result["morphe_adjOverlap3Token"] += len(sent_sets[i] & sent_sets[i + 2])
-        result["N_adjOverlap3Token"] += len(substantive_sets[i] & substantive_sets[i + 2])
+    result["C_adjOverlap3Token"] = 0
+    result["NN_adjOverlap3Token"] = 0
+    result["morphe_adjOverlap3Token"] = 0
+    result["N_adjOverlap3Token"] = 0
 
-    # Normalization Ratios
     if num_sentences > 1:
+        for i in range(num_sentences - 1):
+            result["C_adjOverlap"] += bool(content_sets[i] & content_sets[i + 1])
+            result["NN_adjOverlap"] += bool(noun_sets[i] & noun_sets[i + 1])
+            result["morph_adjOverlap"] += bool(sent_sets[i] & sent_sets[i + 1])
+            result["N_adjOverlap"] += bool(substantive_sets[i] & substantive_sets[i + 1])
+
+            result["C_adjOverlapToken"] += len(content_sets[i] & content_sets[i + 1])
+            result["NN_adjOverlapToken"] += len(noun_sets[i] & noun_sets[i + 1])
+            result["morph_adjOverlapToken"] += len(sent_sets[i] & sent_sets[i + 1])
+            result["N_adjOverlapToken"] += len(substantive_sets[i] & substantive_sets[i + 1])
+
         result["C_adjOverlapRatio"] = result["C_adjOverlap"] / (num_sentences - 1)
         result["NN_adjOverlapRatio"] = result["NN_adjOverlap"] / (num_sentences - 1)
         result["morph_adjOverlapRatio"] = result["morph_adjOverlap"] / (num_sentences - 1)
@@ -447,6 +454,17 @@ def processCohesion(kkma_list, kkma, kkma_by_sent):
         )
 
     if num_sentences > 2:
+        for i in range(num_sentences - 2):
+            result["C_adjOverlap3"] += bool(content_sets[i] & content_sets[i + 2])
+            result["NN_adjOverlap3"] += bool(noun_sets[i] & noun_sets[i + 2])
+            result["morph_adjOverlap3"] += bool(sent_sets[i] & sent_sets[i + 2])
+            result["N_adjOverlap3"] += bool(substantive_sets[i] & substantive_sets[i + 2])
+
+            result["C_adjOverlap3Token"] += len(content_sets[i] & content_sets[i + 2])
+            result["NN_adjOverlap3Token"] += len(noun_sets[i] & noun_sets[i + 2])
+            result["morphe_adjOverlap3Token"] += len(sent_sets[i] & sent_sets[i + 2])
+            result["N_adjOverlap3Token"] += len(substantive_sets[i] & substantive_sets[i + 2])
+
         result["C_adjOverlap3Ratio"] = result["C_adjOverlap3"] / (num_sentences - 2)
         result["NN_adjOverlap3Ratio"] = result["NN_adjOverlap3"] / (num_sentences - 2)
         result["morph_adjOverlap3Ratio"] = result["morph_adjOverlap3"] / (num_sentences - 2)
@@ -467,12 +485,24 @@ def processCohesion(kkma_list, kkma, kkma_by_sent):
     return result
 
 
-def processReadability(text, kkma, sentences, words):
+def processReadability(text, kkma, sentences, words, grade):
     result = collections.defaultdict()
-    result["text_dalechall"] = -1
+
+    # 0.1579*(어려운 단어 수(기초 어휘 목록에 없는) / 전체 형태소 수 * 100)+0.0496*(전체 형태소 수 / 문장 수)
+    result["text_dalechall"] = (
+        0.1579
+        * (sum(item["cnt"] for grade_level, items in grade for item in items if int(grade_level) > 2) / len(kkma) * 100)
+        + 0.0496 * (len(kkma) / len(sentences))
+        + 3.6365
+    )
+
     result["text_flesch"] = 206.835 - 1.015 * (len(kkma) / len(sentences)) - 84.6 * (len(text) / len(kkma))
+
     result["text_fleschkincaid"] = 0.39 * (len(kkma) / len(sentences)) + 11.8 * (len(text) / len(kkma)) - 15.59
-    result["text_oridx"] = -1
+
+    C = [m for m in kkma if m[1] in morphs_C]
+    C_CTTR = TTR.cttr(C)
+    result["text_oridx"] = ((0.7 * C_CTTR + 0.3 * len(C)) * 500) + 100
     return result
 
 
@@ -558,7 +588,7 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency", "readabili
 
         if "readability" in targets:
             curr_time = time.time()
-            futures["readability"] = executor.submit(processReadability, text, kkma, sentences, words)
+            futures["readability"] = executor.submit(processReadability, text, kkma, sentences, words, grade)
 
         for key, future in futures.items():
             logging.info(f"Waiting for {key} to complete...")
