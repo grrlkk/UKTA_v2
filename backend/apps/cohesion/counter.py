@@ -209,7 +209,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
     morphLst_IC = []
 
     # morphs -----------------------------------------------------------------------------
-    morphs_C = [
+    morphs_C = [ # 내용
         "NNG",
         "NNP",
         "NNB",
@@ -508,6 +508,7 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
     finalresult["basic_density"] = resultDensity
     finalresult["basic_level"] = resultLvl
     finalresult["basic_list"] = resultLst
+    
     finalresult["sentenceLvl"] = resultSentComp
     finalresult["sentenceLvlRep"] = resultSentRep
     finalresult["sentenceLvlRep_list"] = resultSentRepList

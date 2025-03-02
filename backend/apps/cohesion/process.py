@@ -67,6 +67,27 @@ pronounList = [
     "쟤",
     "누구",
 ]
+morphs_C = [  # 내용
+    "NNG",
+    "NNP",
+    "NNB",
+    "NNBC",
+    "NP",
+    "NR",
+    "VV",
+    "VA",
+    "VX",
+    "VCP",
+    "VCN",
+    "MM",
+    "MMA",
+    "MMD",
+    "MMN",
+    "MAG",
+    "MAJ",
+    "IC",
+    "XR",
+]
 
 
 def processTTR(kkma):
@@ -153,129 +174,85 @@ def processAdjacency(kkma_list):
 
     # -------------------------------------------------------------------------------------
     for idx in range(len(kkma_list) - 1):
-        result[
-            "adjacent_sentence_overlap_all_lemmas"
-        ] += adjacent_overlap.adjacent_sentence_overlap_all_lemmas(
+        result["adjacent_sentence_overlap_all_lemmas"] += adjacent_overlap.adjacent_sentence_overlap_all_lemmas(
             kkma_list[idx], kkma_list[idx + 1]
         )
         result[
             "adjacent_sentence_overlap_all_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_all_lemmas_normed(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.adjacent_sentence_overlap_all_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
         result[
             "binary_adjacent_sentence_overlap_all_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_all_lemmas(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_all_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
         # --------------------------------------------------------------------------------
-        result[
-            "adjacent_sentence_overlap_content_lemmas"
-        ] += adjacent_overlap.adjacent_sentence_overlap_content_lemmas(
+        result["adjacent_sentence_overlap_content_lemmas"] += adjacent_overlap.adjacent_sentence_overlap_content_lemmas(
             kkma_list[idx], kkma_list[idx + 1]
         )
         result[
             "adjacent_sentence_overlap_content_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_content_lemmas_normed(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.adjacent_sentence_overlap_content_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
         result[
             "binary_adjacent_sentence_overlap_content_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_content_lemmas(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_content_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
         # --------------------------------------------------------------------------------
         result[
             "adjacent_sentence_overlap_function_lemmas"
-        ] += adjacent_overlap.adjacent_sentence_overlap_function_lemmas(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.adjacent_sentence_overlap_function_lemmas(kkma_list[idx], kkma_list[idx + 1])
         result[
             "adjacent_sentence_overlap_function_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_function_lemmas_normed(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.adjacent_sentence_overlap_function_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
         result[
             "binary_adjacent_sentence_overlap_function_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_function_lemmas(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_function_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
         # --------------------------------------------------------------------------------
-        result[
-            "adjacent_sentence_overlap_noun_lemmas"
-        ] += adjacent_overlap.adjacent_sentence_overlap_noun_lemmas(
+        result["adjacent_sentence_overlap_noun_lemmas"] += adjacent_overlap.adjacent_sentence_overlap_noun_lemmas(
             kkma_list[idx], kkma_list[idx + 1]
         )
         result[
             "adjacent_sentence_overlap_noun_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_noun_lemmas_normed(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.adjacent_sentence_overlap_noun_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
         result[
             "binary_adjacent_sentence_overlap_noun_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_noun_lemmas(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_noun_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
         # --------------------------------------------------------------------------------
-        result[
-            "adjacent_sentence_overlap_verb_lemmas"
-        ] += adjacent_overlap.adjacent_sentence_overlap_verb_lemmas(
+        result["adjacent_sentence_overlap_verb_lemmas"] += adjacent_overlap.adjacent_sentence_overlap_verb_lemmas(
             kkma_list[idx], kkma_list[idx + 1]
         )
         result[
             "adjacent_sentence_overlap_verb_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_verb_lemmas_normed(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.adjacent_sentence_overlap_verb_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
         result[
             "binary_adjacent_sentence_overlap_verb_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_verb_lemmas(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_verb_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
         # --------------------------------------------------------------------------------
         result[
             "adjacent_sentence_overlap_adjective_lemmas"
-        ] += adjacent_overlap.adjacent_sentence_overlap_adjective_lemmas(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.adjacent_sentence_overlap_adjective_lemmas(kkma_list[idx], kkma_list[idx + 1])
         result[
             "adjacent_sentence_overlap_adjective_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_adjective_lemmas_normed(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.adjacent_sentence_overlap_adjective_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
         result[
             "binary_adjacent_sentence_overlap_adjective_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_adjective_lemmas(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_adjective_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
         # --------------------------------------------------------------------------------
-        result[
-            "adjacent_sentence_overlap_adverb_lemmas"
-        ] += adjacent_overlap.adjacent_sentence_overlap_adverb_lemmas(
+        result["adjacent_sentence_overlap_adverb_lemmas"] += adjacent_overlap.adjacent_sentence_overlap_adverb_lemmas(
             kkma_list[idx], kkma_list[idx + 1]
         )
         result[
             "adjacent_sentence_overlap_adverb_lemmas_normed"
-        ] += adjacent_overlap.adjacent_sentence_overlap_adverb_lemmas_normed(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.adjacent_sentence_overlap_adverb_lemmas_normed(kkma_list[idx], kkma_list[idx + 1])
         result[
             "binary_adjacent_sentence_overlap_adverb_lemmas"
-        ] += adjacent_overlap.binary_adjacent_sentence_overlap_adverb_lemmas(
-            kkma_list[idx], kkma_list[idx + 1]
-        )
+        ] += adjacent_overlap.binary_adjacent_sentence_overlap_adverb_lemmas(kkma_list[idx], kkma_list[idx + 1])
 
     # -------------------------------------------------------------------------------------
     for idx in range(len(kkma_list) - 2):
-        result[
-            "adjacent_two_sentence_overlap_all_lemmas"
-        ] += adjacent_overlap.adjacent_two_sentence_overlap_all_lemmas(
+        result["adjacent_two_sentence_overlap_all_lemmas"] += adjacent_overlap.adjacent_two_sentence_overlap_all_lemmas(
             kkma_list[idx], kkma_list[idx + 1], kkma_list[idx + 2]
         )
         result[
@@ -395,20 +372,137 @@ def processAdjacency(kkma_list):
     return result
 
 
-def processCohesion():
-    pass
-
-
-def processReadability(text, kkma, sentences, words):
+def processCohesion(kkma_list, kkma, kkma_by_sent):
+    kkma = [morp for morp in kkma if not morp[1].startswith("S")]
+    kkma_by_sent = [[morp for morp in sent if not morp[1].startswith("S")] for sent in kkma_by_sent]
     result = collections.defaultdict()
-    result["text_dalechall"] = -1
-    result["text_flesch"] = (
-        206.835 - 1.015 * (len(kkma) / len(sentences)) - 84.6 * (len(text) / len(kkma))
+
+    # 반복 형태소 비율 =================================================================================================
+    kkma_C = [morp for morp in kkma if morp[1] in morphs_C]
+    kkma_N = [morp for morp in kkma if morp[1].startswith("N")]
+    kkma_NN = [morp for morp in kkma if morp[1].startswith("NN")]
+    kkma_V = [morp for morp in kkma if morp[1].startswith("V")]
+
+    result["C_repRatio"] = len(kkma_C) / len(kkma)
+    result["N_repRatio"] = len(kkma_N) / len(kkma)
+    result["NN_repRatio"] = len(kkma_NN) / len(kkma)
+    result["V_repRatio"] = len(kkma_V) / len(kkma)
+
+    # 반복 형태소 비율 (문장별) ========================================================================================
+    # result_adj = processAdjacency(kkma_by_sent)
+    # result.update(result_adj)
+
+    # 반복 형태소 비율 new ============================================================================================
+    sent_sets = [set(m for m, t in sent) for sent in kkma_by_sent]
+    content_sets = [set(m for m, t in sent if t in morphs_C) for sent in kkma_by_sent]  # 내용
+    substantive_sets = [set(m for m, t in sent if t.startswith("N")) for sent in kkma_by_sent]  # 체언
+    noun_sets = [set(m for m, t in sent if t.startswith("NN")) for sent in kkma_by_sent]  # 명사
+
+    total_tokens = sum(len(sent) for sent in kkma_by_sent)
+    total_content_tokens = sum(len(content) for content in content_sets)
+    total_noun_tokens = sum(len(noun) for noun in noun_sets)
+    total_substantive_tokens = sum(len(substantive) for substantive in substantive_sets)
+
+    num_sentences = len(kkma_by_sent)
+
+    result["C_adjOverlap"] = 0
+    result["NN_adjOverlap"] = 0
+    result["morph_adjOverlap"] = 0
+    result["N_adjOverlap"] = 0
+
+    result["C_adjOverlapToken"] = 0
+    result["NN_adjOverlapToken"] = 0
+    result["morph_adjOverlapToken"] = 0
+    result["N_adjOverlapToken"] = 0
+
+    result["C_adjOverlap3"] = 0
+    result["NN_adjOverlap3"] = 0
+    result["morph_adjOverlap3"] = 0
+    result["N_adjOverlap3"] = 0
+
+    result["C_adjOverlap3Token"] = 0
+    result["NN_adjOverlap3Token"] = 0
+    result["morphe_adjOverlap3Token"] = 0
+    result["N_adjOverlap3Token"] = 0
+
+    if num_sentences > 1:
+        for i in range(num_sentences - 1):
+            result["C_adjOverlap"] += bool(content_sets[i] & content_sets[i + 1])
+            result["NN_adjOverlap"] += bool(noun_sets[i] & noun_sets[i + 1])
+            result["morph_adjOverlap"] += bool(sent_sets[i] & sent_sets[i + 1])
+            result["N_adjOverlap"] += bool(substantive_sets[i] & substantive_sets[i + 1])
+
+            result["C_adjOverlapToken"] += len(content_sets[i] & content_sets[i + 1])
+            result["NN_adjOverlapToken"] += len(noun_sets[i] & noun_sets[i + 1])
+            result["morph_adjOverlapToken"] += len(sent_sets[i] & sent_sets[i + 1])
+            result["N_adjOverlapToken"] += len(substantive_sets[i] & substantive_sets[i + 1])
+
+        result["C_adjOverlapRatio"] = result["C_adjOverlap"] / (num_sentences - 1)
+        result["NN_adjOverlapRatio"] = result["NN_adjOverlap"] / (num_sentences - 1)
+        result["morph_adjOverlapRatio"] = result["morph_adjOverlap"] / (num_sentences - 1)
+        result["N_adjOverlapRatio"] = result["N_adjOverlap"] / (num_sentences - 1)
+
+        result["C_adjOverlapTokenRatio"] = (
+            result["C_adjOverlapToken"] / total_content_tokens if total_content_tokens > 0 else 0
+        )
+        result["NN_adjOverlapTokenRatio"] = (
+            result["NN_adjOverlapToken"] / total_noun_tokens if total_noun_tokens > 0 else 0
+        )
+        result["morph_adjOverlapTokenRatio"] = result["morph_adjOverlapToken"] / total_tokens if total_tokens > 0 else 0
+        result["N_adjOverlapTokenRatio"] = (
+            result["N_adjOverlapToken"] / total_substantive_tokens if total_substantive_tokens > 0 else 0
+        )
+
+    if num_sentences > 2:
+        for i in range(num_sentences - 2):
+            result["C_adjOverlap3"] += bool(content_sets[i] & content_sets[i + 2])
+            result["NN_adjOverlap3"] += bool(noun_sets[i] & noun_sets[i + 2])
+            result["morph_adjOverlap3"] += bool(sent_sets[i] & sent_sets[i + 2])
+            result["N_adjOverlap3"] += bool(substantive_sets[i] & substantive_sets[i + 2])
+
+            result["C_adjOverlap3Token"] += len(content_sets[i] & content_sets[i + 2])
+            result["NN_adjOverlap3Token"] += len(noun_sets[i] & noun_sets[i + 2])
+            result["morphe_adjOverlap3Token"] += len(sent_sets[i] & sent_sets[i + 2])
+            result["N_adjOverlap3Token"] += len(substantive_sets[i] & substantive_sets[i + 2])
+
+        result["C_adjOverlap3Ratio"] = result["C_adjOverlap3"] / (num_sentences - 2)
+        result["NN_adjOverlap3Ratio"] = result["NN_adjOverlap3"] / (num_sentences - 2)
+        result["morph_adjOverlap3Ratio"] = result["morph_adjOverlap3"] / (num_sentences - 2)
+        result["N_adjOverlap3Ratio"] = result["N_adjOverlap3"] / (num_sentences - 2)
+
+        result["C_adjOverlap3TokenRatio"] = (
+            result["C_adjOverlap3Token"] / total_content_tokens if total_content_tokens > 0 else 0
+        )
+        result["NN_adjOverlap3TokenRatio"] = (
+            result["NN_adjOverlap3Token"] / total_noun_tokens if total_noun_tokens > 0 else 0
+        )
+        result["morph_adjOverlap3TokenRatio"] = (
+            result["morphe_adjOverlap3Token"] / total_tokens if total_tokens > 0 else 0
+        )
+        result["N_adjOverlap3TokenRatio"] = (
+            result["N_adjOverlap3Token"] / total_substantive_tokens if total_substantive_tokens > 0 else 0
+        )
+    return result
+
+
+def processReadability(text, kkma, sentences, words, grade):
+    result = collections.defaultdict()
+
+    # 0.1579*(어려운 단어 수(기초 어휘 목록에 없는) / 전체 형태소 수 * 100)+0.0496*(전체 형태소 수 / 문장 수)
+    result["text_dalechall"] = (
+        0.1579
+        * (sum(item["cnt"] for grade_level, items in grade for item in items if int(grade_level) > 2) / len(kkma) * 100)
+        + 0.0496 * (len(kkma) / len(sentences))
+        + 3.6365
     )
-    result["text_fleschkincaid"] = (
-        0.39 * (len(kkma) / len(sentences)) + 11.8 * (len(text) / len(kkma)) - 15.59
-    )
-    result["text_oridx"] = -1
+
+    result["text_flesch"] = 206.835 - 1.015 * (len(kkma) / len(sentences)) - 84.6 * (len(text) / len(kkma))
+
+    result["text_fleschkincaid"] = 0.39 * (len(kkma) / len(sentences)) + 11.8 * (len(text) / len(kkma)) - 15.59
+
+    C = [m for m in kkma if m[1] in morphs_C]
+    C_CTTR = TTR.cttr(C)
+    result["text_oridx"] = ((0.7 * C_CTTR + 0.3 * len(C)) * 500) + 100
     return result
 
 
@@ -477,7 +571,7 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency", "readabili
             if len(kkma_list) < 2:
                 result["adjacency"] = []
             else:
-                futures["adjacency"] = executor.submit(processAdjacency, kkma_list)
+                futures["adjacency"] = executor.submit(processCohesion, kkma_list, kkma, kkma_by_sent)
 
         if "basic" in targets:
             curr_time = time.time()
@@ -494,9 +588,7 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency", "readabili
 
         if "readability" in targets:
             curr_time = time.time()
-            futures["readability"] = executor.submit(
-                processReadability, text, kkma, sentences, words
-            )
+            futures["readability"] = executor.submit(processReadability, text, kkma, sentences, words, grade)
 
         for key, future in futures.items():
             logging.info(f"Waiting for {key} to complete...")
