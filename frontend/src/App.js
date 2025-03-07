@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import './App.css';
@@ -13,11 +13,12 @@ import TextInput from './components/TextInput';
 import ResultsCoh from './components/cohesion/ResultsCohesion';
 import ResultsMor from './components/morpheme/ResultsMorpheme';
 import Comparison from './components/Comparison';
+import { LoadingContext } from './components/contexts/LoadingContext';
 
 
 function App() {
 	const currentPage = useLocation();
-	const [uploadInProgress, setUploadInProgress] = useState(false);
+	const { isLoading, setIsLoading } = useContext(LoadingContext);
 	const [darkMode, setDarkMode] = useState(() => {
 		const preferredColorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 		return preferredColorScheme ? false : false;
@@ -40,7 +41,7 @@ function App() {
 				<div className="items-start pt-32 grid grid-cols-1 gap-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className='fixed top-0'></div>
 
-					<TextInput uploadInProgress={uploadInProgress} setUploadInProgress={setUploadInProgress} />
+					<TextInput uploadInProgress={isLoading} setUploadInProgress={setIsLoading} />
 
 					<hr id="content_area_start" />
 
@@ -48,8 +49,8 @@ function App() {
 						<AnimatePresence mode='wait'>
 							<Routes location={currentPage} key={currentPage.pathname}>
 								<Route path='/' element={<Dummy />} />
-								<Route path='/morpheme' element={uploadInProgress ? <Loading /> : <ResultsMor />} />
-								<Route path='/analysis' element={uploadInProgress ? <Loading /> : <ResultsCoh darkMode={darkMode} />} />
+								<Route path='/morpheme' element={isLoading ? <Loading /> : <ResultsMor />} />
+								<Route path='/analysis' element={isLoading ? <Loading /> : <ResultsCoh darkMode={darkMode} />} />
 								<Route path='/tagging' element={<TagInfo />} />
 								<Route path='*' element={<Navigate to="/" />} />
 							</Routes>

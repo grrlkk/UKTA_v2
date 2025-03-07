@@ -1,10 +1,12 @@
 import React, { createContext, useState, useContext } from 'react';
+import { LoadingContext } from './LoadingContext';
 
 const BatchDownloadContext = createContext();
 
 export const BatchDownloadProvider = ({ children }) => {
 	const [batchDownloadIdx, setBatchDownloadIdx] = useState([]);
 	const [batchDownloads, setBatchDownloads] = useState([]);
+	const { setIsLoading } = useContext(LoadingContext);
 	const clearBatchDownloads = () => {
 		setBatchDownloads([]);
 	};
@@ -55,14 +57,17 @@ export const BatchDownloadProvider = ({ children }) => {
 			return;
 		}
 		try {
+			setIsLoading(true);
 			for (const file of batchDownloadIdx) {
 				await fetch(`${process.env.REACT_APP_API_URI}/korcat/cohesion/${file}`, {
 					method: 'DELETE',
 				});
 			}
-			clearBatchDownloads();
 		} catch (error) {
 			console.error(error);
+		} finally {
+			clearBatchDownloads();
+			setIsLoading(false);
 		}
 	}
 
