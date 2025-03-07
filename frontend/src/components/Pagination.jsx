@@ -45,7 +45,7 @@ const Pagination = ({ componentArray, setSelectedFile }) => {
 			</AnimatePresence>
 
 			{componentArray.length > itemsPerPage &&
-				<div className='flex gap-2 justify-center mt-12'>
+				<div className='flex flex-wrap gap-2 justify-center mt-12'>
 					{Array.from({ length: Math.ceil(componentArray.length / itemsPerPage) }, (_, index) => (
 						<button
 							className={`

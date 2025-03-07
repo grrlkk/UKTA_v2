@@ -6,6 +6,7 @@ import Pagination from '../Pagination';
 import { ResultsList, ResultsListNgram, ResultsNumeric, MorphemeFormat, CorrectionFormat, GradeFormat } from './AnalysisFormat';
 import { EvalFormat } from './EvalFormat';
 import { useCompareFiles } from '../contexts/ComparisonContext';
+import { useBatchDownloads } from '../contexts/BatchDownloadContext';
 
 
 const ResultCoh = ({ resultId, darkMode }) => {
@@ -98,6 +99,7 @@ const ResultsCoh = ({ darkMode }) => {
 	const [selectedFile, setSelectedFile] = useState(-1);
 	const [selectedEssay, setSelectedEssay] = useState([]);
 	const { compareFiles, addCompareFile, clearCompareFiles } = useCompareFiles();
+	const { batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload } = useBatchDownloads();
 
 	const fetchData = async () => {
 		try {
@@ -189,7 +191,21 @@ const ResultsCoh = ({ darkMode }) => {
 			transition={{ duration: 0.1 }}
 			className='grid grid-cols-1 gap-4'
 		>
-			<h2 className="text-2xl font-bold py-2">Analysis Results</h2>
+			<h2 className="text-2xl font-bold py-2">
+				Analysis Results
+			</h2>
+
+			<div className='flex flex-row justify-end text-sm'>
+				<button
+					className="btn-primary grow-0 p-2 flex flex-nowrap items-center gap-1"
+					onClick={handleBatchDownload}
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+						<path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+					</svg>
+					Batch Download
+				</button>
+			</div>
 
 			<Pagination componentArray=
 				{cohesionResult.sort((a, b) => -a._id.localeCompare(b._id)).map((item, index) => (
@@ -235,12 +251,22 @@ const ResultsCoh = ({ darkMode }) => {
 								></input>
 								Compare
 							</button>
-							<button className={`grow sm:grow-0 btn-primary flex flex-nowrap gap-1`} onClick={() => handleFileDownload(item)}>
-								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-									<path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
-								</svg>
-								json
-							</button>
+							<div className='flex flex-nowrap divide-x divide-slate-400'>
+								<button className={`grow sm:grow-0 btn-primary rounded-r-none flex flex-nowrap gap-1`} onClick={() => handleFileDownload(item)}>
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+										<path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+									</svg>
+									json
+								</button>
+								<button className={`grow sm:grow-0 btn-primary rounded-l-none flex flex-nowrap gap-1`} onClick={() => addBatchDownload(item._id)}>
+									<input
+										type='checkbox'
+										className='accent-slate-600'
+										checked={batchDownloads.some((file) => file._id === item._id)}
+										onChange={() => { }}
+									></input>
+								</button>
+							</div>
 							<button className={`flex flex-nowrap gap-1 grow sm:grow-0 p-2 btn-red group`} onClick={() => handleDelete(index)}>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 group-hover:rotate-90 transition-all ease-in-out">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
