@@ -140,16 +140,28 @@ def get_topK_features(attention, feature_list, k=10):
     return top_k_feautres
 
 
-def score_results(extracted_features):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+def load_essay_model(device):
     bert_model = get_kobert_model().to(device)
     tokenizer = get_tokenizer()
     gru_model = GRUScoreModule().to(device)
     gru_model.load_state_dict(
         torch.load(
-            "/home/ttytu/projects/KorCAT-web/backend/apps/cohesion/essay_scoring/model/gru_scorer.pth"
-        )
-    )
+			"/home/ttytu/projects/KorCAT-web/backend/apps/cohesion/essay_scoring/model/gru_scorer.pth"
+		)
+	)
+    return bert_model, gru_model, tokenizer
+
+
+def score_results(extracted_features, bert_model, gru_model, tokenizer):
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # bert_model = get_kobert_model().to(device)
+    # tokenizer = get_tokenizer()
+    # gru_model = GRUScoreModule().to(device)
+    # gru_model.load_state_dict(
+    #     torch.load(
+    #         "/home/ttytu/projects/KorCAT-web/backend/apps/cohesion/essay_scoring/model/gru_scorer.pth"
+    #     )
+    # )
     output, top_k_features = scoring(
         bert_model, gru_model, extracted_features, tokenizer
     )

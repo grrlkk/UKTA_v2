@@ -4,6 +4,7 @@ from typing import List
 import apps.cohesion.textpreprocess as tp
 from apps.cohesion.process import process
 from apps.cohesion.essay_scoring.essay_scoring import score_results
+import torch
 from apps.morph.morph import mecab
 from apps.morph.bareun import bareun
 from fastapi import APIRouter, File, HTTPException, Request, Response, UploadFile
@@ -28,12 +29,13 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 
         results = process(contents.decode("UTF8"))
 
-        try:
-            essay_score = score_results(results)
-            results["essay_score"] = essay_score
-        except Exception as e:
-            print(f"Error scoring essay: {e}")
-            results["essay_score"] = "error"
+        # try:
+        #     torch.cuda.empty_cache()
+        #     essay_score = score_results(results)
+        #     results["essay_score"] = essay_score
+        # except Exception as e:
+        #     print(f"Error scoring essay: {e}")
+        #     results["essay_score"] = "error"
 
         process_time = datetime.datetime.now() - now
 
