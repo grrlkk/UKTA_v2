@@ -8,6 +8,7 @@ export const BatchDownloadProvider = ({ children }) => {
 	const clearBatchDownloads = () => {
 		setBatchDownloads([]);
 	};
+
 	const addBatchDownload = async (file) => {
 		if (!batchDownloadIdx.includes(file)) {
 			if (batchDownloads.length >= 10) {
@@ -34,6 +35,10 @@ export const BatchDownloadProvider = ({ children }) => {
 	};
 
 	const handleBatchDownload = () => {
+		if (batchDownloads.length === 0) {
+			alert('No files selected for download.');
+			return;
+		}
 		const data = JSON.stringify(batchDownloads);
 		const blob = new Blob([data], { type: 'application/json' });
 		const url = URL.createObjectURL(blob);
@@ -44,8 +49,25 @@ export const BatchDownloadProvider = ({ children }) => {
 		link.remove();
 	}
 
+	const handleBatchDelete = async () => {
+		if (batchDownloads.length === 0) {
+			alert('No files selected for deletion.');
+			return;
+		}
+		try {
+			for (const file of batchDownloadIdx) {
+				await fetch(`${process.env.REACT_APP_API_URI}/korcat/cohesion/${file}`, {
+					method: 'DELETE',
+				});
+			}
+			clearBatchDownloads();
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
 	return (
-		<BatchDownloadContext.Provider value={{ batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload }}>
+		<BatchDownloadContext.Provider value={{ batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete }}>
 			{children}
 		</BatchDownloadContext.Provider>
 	);

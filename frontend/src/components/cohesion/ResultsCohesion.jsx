@@ -99,7 +99,7 @@ const ResultsCoh = ({ darkMode }) => {
 	const [selectedFile, setSelectedFile] = useState(-1);
 	const [selectedEssay, setSelectedEssay] = useState([]);
 	const { compareFiles, addCompareFile, clearCompareFiles } = useCompareFiles();
-	const { batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload } = useBatchDownloads();
+	const { batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete } = useBatchDownloads();
 
 	const fetchData = async () => {
 		try {
@@ -210,10 +210,16 @@ const ResultsCoh = ({ darkMode }) => {
 						Batch Download
 					</button>
 					<button
-						className="btn-primary rounded-l-none grow-0 p-2 flex flex-nowrap items-center gap-1"
+						className="btn-primary rounded-none grow-0 p-2 flex flex-nowrap items-center gap-1"
 						onClick={clearBatchDownloads}
 					>
 						Clear
+					</button>
+					<button
+						className="btn-red rounded-l-none grow-0 p-2 flex flex-nowrap items-center gap-1"
+						onClick={handleBatchDelete}
+					>
+						Delete
 					</button>
 				</div>
 			</div>
