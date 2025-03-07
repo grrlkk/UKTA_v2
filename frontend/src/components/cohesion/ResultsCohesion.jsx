@@ -195,16 +195,27 @@ const ResultsCoh = ({ darkMode }) => {
 				Analysis Results
 			</h2>
 
-			<div className='flex flex-row justify-end text-sm'>
-				<button
-					className="btn-primary grow-0 p-2 flex flex-nowrap items-center gap-1"
-					onClick={handleBatchDownload}
-				>
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-						<path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
-					</svg>
-					Batch Download
-				</button>
+			<div className='flex flex-row gap-2 items-center justify-end text-sm'>
+				<span className='mr-2'>
+					{batchDownloads.length} Files Selected
+				</span>
+				<div className='flex flex-row divide-x divide-slate-400'>
+					<button
+						className="btn-primary rounded-r-none grow-0 p-2 flex flex-nowrap items-center gap-1"
+						onClick={handleBatchDownload}
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+						</svg>
+						Batch Download
+					</button>
+					<button
+						className="btn-primary rounded-l-none grow-0 p-2 flex flex-nowrap items-center gap-1"
+						onClick={clearBatchDownloads}
+					>
+						Clear
+					</button>
+				</div>
 			</div>
 
 			<Pagination componentArray=
