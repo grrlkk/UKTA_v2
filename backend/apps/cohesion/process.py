@@ -389,8 +389,8 @@ def processCohesion(kkma_list, kkma, kkma_by_sent):
     result["V_repRatio"] = len(kkma_V) / len(kkma)
 
     # 반복 형태소 비율 (문장별) ========================================================================================
-    # result_adj = processAdjacency(kkma_by_sent)
-    # result.update(result_adj)
+    result_adj = processAdjacency(kkma_by_sent)
+    result.update(result_adj)
 
     # 반복 형태소 비율 new ============================================================================================
     sent_sets = [set(m for m, t in sent) for sent in kkma_by_sent]
@@ -485,7 +485,7 @@ def processCohesion(kkma_list, kkma, kkma_by_sent):
     return result
 
 
-def processReadability(text, kkma, sentences, words, grade):
+def processReadability(text, kkma, sentences, grade):
     result = collections.defaultdict()
 
     # 0.1579*(어려운 단어 수(기초 어휘 목록에 없는) / 전체 형태소 수 * 100)+0.0496*(전체 형태소 수 / 문장 수)
@@ -588,7 +588,7 @@ def process(text, targets=["ttr", "similarity", "basic", "adjacency", "readabili
 
         if "readability" in targets:
             curr_time = time.time()
-            futures["readability"] = executor.submit(processReadability, text, kkma, sentences, words, grade)
+            futures["readability"] = executor.submit(processReadability, text, kkma, sentences, grade)
 
         for key, future in futures.items():
             logging.info(f"Waiting for {key} to complete...")

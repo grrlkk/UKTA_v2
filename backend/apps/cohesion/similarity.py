@@ -22,8 +22,9 @@ def model():
 
 
 def similar(text, simil_model, kw_model, device="cuda"):
-    docs = re.split("\. |\? |\!", text)
+    torch.cuda.empty_cache()
 
+    docs = re.split("\. |\? |\!", text)
     keywords = kw_model.extract_keywords(
         text, keyphrase_ngram_range=(1, 1), stop_words=None, top_n=10
     )
