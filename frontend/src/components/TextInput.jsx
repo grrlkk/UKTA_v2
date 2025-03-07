@@ -113,7 +113,7 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 				</div>
 			</div>
 
-			<div className='flex justify-end text-center gap-2 text-sm whitespace-nowrap'>
+			<div className='flex px-4 justify-end text-center gap-2 text-sm whitespace-nowrap'>
 				{uploadInProgress ?
 					<button className='btn-primary flex gap-1 grow sm:grow-0 cursor-not-allowed'>
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 animate-spin">

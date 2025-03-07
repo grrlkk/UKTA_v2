@@ -6,6 +6,7 @@ const BatchDownloadContext = createContext();
 export const BatchDownloadProvider = ({ children }) => {
 	const [batchDownloadIdx, setBatchDownloadIdx] = useState([]);
 	const [batchDownloads, setBatchDownloads] = useState([]);
+	const [compare, setCompare] = useState(false);
 	const { setIsLoading } = useContext(LoadingContext);
 	const clearBatchDownloads = () => {
 		setBatchDownloads([]);
@@ -41,6 +42,7 @@ export const BatchDownloadProvider = ({ children }) => {
 			alert('No files selected for download.');
 			return;
 		}
+		setIsLoading(true);
 		const data = JSON.stringify(batchDownloads);
 		const blob = new Blob([data], { type: 'application/json' });
 		const url = URL.createObjectURL(blob);
@@ -49,6 +51,7 @@ export const BatchDownloadProvider = ({ children }) => {
 		link.download = 'batch_downloads.json';
 		link.click();
 		link.remove();
+		setIsLoading(false);
 	}
 
 	const handleBatchDelete = async () => {
@@ -57,11 +60,13 @@ export const BatchDownloadProvider = ({ children }) => {
 			return;
 		}
 		try {
-			setIsLoading(true);
-			for (const file of batchDownloadIdx) {
-				await fetch(`${process.env.REACT_APP_API_URI}/korcat/cohesion/${file}`, {
-					method: 'DELETE',
-				});
+			if (window.confirm('Are you sure you want to delete the selected files?')) {
+				setIsLoading(true);
+				for (const file of batchDownloadIdx) {
+					await fetch(`${process.env.REACT_APP_API_URI}/korcat/cohesion/${file}`, {
+						method: 'DELETE',
+					});
+				}
 			}
 		} catch (error) {
 			console.error(error);
@@ -72,7 +77,7 @@ export const BatchDownloadProvider = ({ children }) => {
 	}
 
 	return (
-		<BatchDownloadContext.Provider value={{ batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete }}>
+		<BatchDownloadContext.Provider value={{ batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete, compare, setCompare }}>
 			{children}
 		</BatchDownloadContext.Provider>
 	);

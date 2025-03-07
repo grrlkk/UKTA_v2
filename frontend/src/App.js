@@ -29,7 +29,7 @@ function App() {
 	}, [currentPage]);
 
 	return (
-		<div className={`App ${darkMode ? 'dark' : ''} overflow-x-hidden`}>
+		<div className={`App ${darkMode ? 'dark' : ''}`}>
 			<div
 				className='fixed top-0 h-full w-full z-0 bg-white dark:bg-slate-950'
 			// bg-gradient-to-b from-slate-50 dark:from-slate-950 dark:via-black via-white to-slate-50 dark:to-slate-950'
@@ -49,7 +49,7 @@ function App() {
 						<AnimatePresence mode='wait'>
 							<Routes location={currentPage} key={currentPage.pathname}>
 								<Route path='/' element={<Dummy />} />
-								<Route path='/morpheme' element={isLoading ? <Loading /> : <ResultsMor />} />
+								{/* <Route path='/morpheme' element={isLoading ? <Loading /> : <ResultsMor />} /> */}
 								<Route path='/analysis' element={isLoading ? <Loading /> : <ResultsCoh darkMode={darkMode} />} />
 								<Route path='/tagging' element={<TagInfo />} />
 								<Route path='*' element={<Navigate to="/" />} />
@@ -59,8 +59,6 @@ function App() {
 
 					<div className='fixed bottom-0'></div>
 				</div>
-
-				<Comparison />
 
 				<Foot darkMode={darkMode} setDarkMode={setDarkMode} />
 			</div>
