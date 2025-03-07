@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Radar, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 import { CohTags, MorphTags, EssayTags } from "../Tags";
-import { useCompareFiles } from "../contexts/ComparisonContext";
-
+import { useBatchDownloads } from "../contexts/BatchDownloadContext";
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
@@ -323,7 +322,7 @@ const EvalFormatCompare = ({ result, darkMode }) => {
 		},
 		animation: false,
 	}
-	const { compareFiles, addCompareFile, clearCompareFiles } = useCompareFiles();
+	const { batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete } = useBatchDownloads();
 
 	useEffect(() => {
 		console.log(result);
@@ -385,7 +384,7 @@ const EvalFormatCompare = ({ result, darkMode }) => {
 							<span className="font-bold">Total Scores</span>
 							<button
 								className="btn-secondary p-1"
-								onClick={clearCompareFiles}
+								onClick={clearBatchDownloads}
 							>
 								Clear
 							</button>
@@ -415,7 +414,7 @@ const EvalFormatCompare = ({ result, darkMode }) => {
 								</span>
 								<button
 									className="btn-secondary p-1"
-									onClick={() => addCompareFile(essayScore._id)}
+									onClick={() => addBatchDownload(essayScore._id)}
 								>
 									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
 										<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -449,23 +448,23 @@ const EvalFormatCompare = ({ result, darkMode }) => {
 											{index === 0 &&
 												<td rowSpan={3} className='p-1 text-center'>
 													<div className="flex flex-col">
-														<span>{EssayTags[key].type}</span>
-														<span>{EssayTags[key].type_eng}</span>
+														<span>{EssayTags[key]?.type}</span>
+														<span>{EssayTags[key]?.type_eng}</span>
 													</div>
 												</td>
 											}
 											{(index === 3 || index === 7) &&
 												<td rowSpan={4} className='p-1 text-center'>
 													<div className="flex flex-col">
-														<span>{EssayTags[key].type}</span>
-														<span>{EssayTags[key].type_eng}</span>
+														<span>{EssayTags[key]?.type}</span>
+														<span>{EssayTags[key]?.type_eng}</span>
 													</div>
 												</td>
 											}
 											<td className='p-1'>
 												<div className="flex flex-col">
-													<span>{EssayTags[key].desc}</span>
-													<span>{EssayTags[key].desc_eng}</span>
+													<span>{EssayTags[key]?.desc}</span>
+													<span>{EssayTags[key]?.desc_eng}</span>
 												</div>
 											</td>
 											<td className='p-1'>

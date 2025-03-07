@@ -1,13 +1,17 @@
 import React, { createContext, useState, useContext } from 'react';
+import { LoadingContext } from './LoadingContext';
 
 const BatchDownloadContext = createContext();
 
 export const BatchDownloadProvider = ({ children }) => {
 	const [batchDownloadIdx, setBatchDownloadIdx] = useState([]);
 	const [batchDownloads, setBatchDownloads] = useState([]);
+	const [compare, setCompare] = useState(false);
+	const { setIsLoading } = useContext(LoadingContext);
 	const clearBatchDownloads = () => {
 		setBatchDownloads([]);
 	};
+
 	const addBatchDownload = async (file) => {
 		if (!batchDownloadIdx.includes(file)) {
 			if (batchDownloads.length >= 10) {
@@ -34,6 +38,11 @@ export const BatchDownloadProvider = ({ children }) => {
 	};
 
 	const handleBatchDownload = () => {
+		if (batchDownloads.length === 0) {
+			alert('No files selected for download.');
+			return;
+		}
+		setIsLoading(true);
 		const data = JSON.stringify(batchDownloads);
 		const blob = new Blob([data], { type: 'application/json' });
 		const url = URL.createObjectURL(blob);
@@ -42,10 +51,33 @@ export const BatchDownloadProvider = ({ children }) => {
 		link.download = 'batch_downloads.json';
 		link.click();
 		link.remove();
+		setIsLoading(false);
+	}
+
+	const handleBatchDelete = async () => {
+		if (batchDownloads.length === 0) {
+			alert('No files selected for deletion.');
+			return;
+		}
+		try {
+			if (window.confirm('Are you sure you want to delete the selected files?')) {
+				setIsLoading(true);
+				for (const file of batchDownloadIdx) {
+					await fetch(`${process.env.REACT_APP_API_URI}/korcat/cohesion/${file}`, {
+						method: 'DELETE',
+					});
+				}
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			clearBatchDownloads();
+			setIsLoading(false);
+		}
 	}
 
 	return (
-		<BatchDownloadContext.Provider value={{ batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload }}>
+		<BatchDownloadContext.Provider value={{ batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete, compare, setCompare }}>
 			{children}
 		</BatchDownloadContext.Provider>
 	);
