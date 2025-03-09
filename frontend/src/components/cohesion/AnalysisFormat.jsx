@@ -5,6 +5,19 @@ import { Sentences, SentencesCorrection } from '../morpheme/SentenceFormat';
 
 const MorphemeFormat = ({ results, grade, title }) => {
 	const [hidden, setHidden] = useState(true);
+	const handleMorphemeDownload = (item, type) => {
+		if (type === 'txt') {
+		} else {
+			const data = JSON.stringify(item);
+			const blob = new Blob([data], { type: 'application/json' });
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = `${item._id}_morpheme.json`;
+			link.click();
+			link.remove();
+		}
+	}
 
 	return (
 		<div className='text-sm overflow-hidden flex flex-col'>
@@ -16,6 +29,15 @@ const MorphemeFormat = ({ results, grade, title }) => {
 			</button>
 
 			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} -pr-[6px] transition-all ease-in-out`}>
+				<div className='flex flex-row divide-x-2 divide-slate-400 w-full justify-end font-normal'>
+					<button onClick={() => handleMorphemeDownload(results, "json")} className={`btn-primary grow sm:grow-0 flex flex-nowrap gap-1`}>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+						</svg>
+						Morpheme Analysis json
+					</button>
+				</div>
+
 				<Sentences results={results} grade={grade} />
 			</div >
 		</div>
