@@ -1,8 +1,4 @@
-This service incorporates components from an open-source project originally developed by 
-BAIKAL AI Inc. and Korea Press Foundation under the BSD 3-Clause License.
+This project integrates code from Bareun, originally developed by
+BAIKAL AI Inc. and Korea Press Foundation, licensed under the BSD 3-Clause License.
 
-All modifications and additional functionality are © 2025, Jun Park.
-
-The BSD-licensed portions remain under the original BSD 3-Clause License. Any new features,
-custom implementations, and proprietary extensions developed for this service are not subject 
-to open-source licensing unless explicitly stated otherwise.
+The modifications and additional code are © 2025, Jun Park, and licensed under the MIT License.
