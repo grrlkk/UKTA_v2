@@ -30,8 +30,6 @@
 
 #### Approach
 
-![image](https://github.com/user-attachments/assets/919b4e7c-15ae-4de3-939e-029d262f5840)
-
 - Over 294 numerical features, categorized as
 - Basic features: morpheme counts, density, lengths 
 - Lexical diversity:
