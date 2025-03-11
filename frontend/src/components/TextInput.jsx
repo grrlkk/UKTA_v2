@@ -6,11 +6,13 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [files, setFiles] = useState([]);
 
+	// Function to handle the analysis process
 	const handleAnalysis = async (type) => {
 		setUploadInProgress(true);
 		await new Promise(resolve => setTimeout(resolve, 500));
 		const formData = new FormData();
 
+		// Append input text or files to formData
 		if (inputValue.length > 0) {
 			formData.append("files", new Blob([inputValue], { type: "text/plain" }), inputValue.split(" ")[0] + "...");
 		} else if (files.length > 0) {
@@ -20,6 +22,7 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 		}
 
 		try {
+			// Send the formData to the server
 			const response = await fetch(`${process.env.REACT_APP_API_URI}/korcat/${type}`, {
 				method: 'POST',
 				body: formData,
@@ -36,10 +39,12 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 		}
 	};
 
+	// Function to handle changes in the input text area
 	const handleInputChange = (e) => {
 		setInputValue(e.target.value);
 	};
 
+	// Function to handle file input changes
 	const handleFileInputChange = (e) => {
 		const files = e.target.files;
 		if (files.length === 0) return;
@@ -60,6 +65,7 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 		}
 	};
 
+	// Function to clear the input and reset states
 	const handleClearInput = () => {
 		setInputValue('');
 		setSelectedFile(null);
@@ -70,6 +76,7 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 		<div className='grid grid-cols-1 gap-4'>
 			<h2 className="text-2xl font-bold py-2">Input Korean Text</h2>
 
+			{/* Input text area */}
 			<div className='grid grid-cols-1 gap-4 p-4 rounded-3xl bg-slate-100 dark:bg-slate-900 shadow'>
 				<div className='flex justify-between gap-2 text-sm shrink'>
 					<input
@@ -113,6 +120,7 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 				</div>
 			</div>
 
+			{/* Analysis button */}
 			<div className='flex px-4 justify-end text-center gap-2 text-sm whitespace-nowrap'>
 				{uploadInProgress ?
 					<button className='btn-primary flex gap-1 grow sm:grow-0 cursor-not-allowed'>
