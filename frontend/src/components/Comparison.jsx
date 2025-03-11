@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { useBatchDownloads } from '../contexts/BatchDownloadsContext';
+import { useBatchDownloads } from '../contexts/BatchDownloadContext'
 import { EvalFormatCompare } from '../pages/cohesion/EvalFormat';
 
 
 const Comparison = () => {
-	const { batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete, compare, setCompare } = useBatchDownloads();
+	const { batchDownloads, compare } = useBatchDownloads();
 
 	return (
 		<div

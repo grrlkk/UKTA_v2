@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import './App.css';
@@ -8,14 +8,14 @@ import Foot from './components/Foot';
 import Loading from './components/Loading';
 import Nav from './components/Nav';
 import TextInput from './components/TextInput';
-import { LoadingContext } from './contexts/LoadingContext';
+import { useLoadingContext } from './contexts/LoadingContext';
 import ResultsCoh from './pages/cohesion/ResultsCohesion';
 import Dummy from './pages/Dummy';
 import TagInfo from './pages/TagInfo';
 
 function App() {
 	const currentPage = useLocation();
-	const { isLoading, setIsLoading } = useContext(LoadingContext);
+	const { isLoading, setIsLoading } = useLoadingContext();
 	const [darkMode, setDarkMode] = useState(() => {
 		const preferredColorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 		return preferredColorScheme ? false : false;

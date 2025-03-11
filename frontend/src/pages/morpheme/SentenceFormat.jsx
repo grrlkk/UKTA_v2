@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MorphTags } from "../../components/Tags";
+import { MorphTags } from "../../Tags";
 
 
 const HilightText = ({ range, content, color }) => {

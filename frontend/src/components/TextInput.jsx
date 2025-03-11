@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react";
-import { LoadingContext } from "../contexts/LoadingContext";
+import React, { useState } from "react";
+import { useLoadingContext } from "../contexts/LoadingContext";
 
 const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 	const [inputValue, setInputValue] = useState('');
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [files, setFiles] = useState([]);
-	const { loading, setIsLoading } = useContext(LoadingContext);
+	const { loading, setIsLoading } = useLoadingContext();
 
 	// Function to handle the analysis process
 	const handleAnalysis = async (type) => {
