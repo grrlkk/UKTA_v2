@@ -20,7 +20,8 @@
 
 - Utilize a state-of-the-art Korean morpheme analyzer
 - Minimize errors in morpheme analysis
-- Powered by [Bareun](https://bareun.ai/)
+- Morpheme analyzer: [Bareun](https://bareun.ai/)
+- Morpheme analyzer used for vocabulary grading: [UTagger](https://pypi.org/project/pyutagger/)
 
 ## Mid-Level Analysis  
 
