@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import './App.css';
@@ -13,7 +13,6 @@ import TextInput from './components/TextInput';
 import ResultsCoh from './components/cohesion/ResultsCohesion';
 import { LoadingContext } from './components/contexts/LoadingContext';
 
-
 function App() {
 	const currentPage = useLocation();
 	const { isLoading, setIsLoading } = useContext(LoadingContext);
@@ -23,22 +22,21 @@ function App() {
 	});
 
 	useEffect(() => {
+		// Scroll to top on page change
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}, [currentPage]);
 
 	return (
 		<div className={`App ${darkMode ? 'dark' : ''}`}>
-			<div
-				className='fixed top-0 h-full w-full z-0 bg-white dark:bg-slate-950'
-			// bg-gradient-to-b from-slate-50 dark:from-slate-950 dark:via-black via-white to-slate-50 dark:to-slate-950'
-			></div>
-
+			{/* Background overlay */}
+			<div className='fixed top-0 h-full w-full z-0 bg-white dark:bg-slate-950'></div>
 			<div className="relative text-slate-900 dark:text-slate-50 transition-all ease-in-out min-w-[320px]">
+				{/* Navigation bar */}
 				<Nav currentPage={currentPage.pathname} />
 
 				<div className="items-start pt-32 grid grid-cols-1 gap-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className='fixed top-0'></div>
-
+					{/* Text input component */}
 					<TextInput uploadInProgress={isLoading} setUploadInProgress={setIsLoading} />
 
 					<hr id="content_area_start" />
@@ -57,6 +55,7 @@ function App() {
 					<div className='fixed bottom-0'></div>
 				</div>
 
+				{/* Footer component */}
 				<Foot darkMode={darkMode} setDarkMode={setDarkMode} />
 			</div>
 		</div>
