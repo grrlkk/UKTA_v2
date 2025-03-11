@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { EvalFormatCompare } from './cohesion/EvalFormat';
-import { useBatchDownloads } from './contexts/BatchDownloadContext';
+import { useBatchDownloads } from '../contexts/BatchDownloadsContext';
+import { EvalFormatCompare } from '../pages/cohesion/EvalFormat';
 
 
 const Comparison = () => {
