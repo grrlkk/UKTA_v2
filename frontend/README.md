@@ -2,4 +2,4 @@
 
 - React
 - Tailwind CSS
-- Framer Motion 
+- Framer Motion
