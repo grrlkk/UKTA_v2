@@ -2,7 +2,7 @@
 
 ## Unified Korean Text Analyzer  
 
-[Paper Arxiv](https://arxiv.org/abs/2502.09648)
+ACM/SIGAPP SAC 2025 AIED accepted paper (Oral) [Paper Arxiv](https://arxiv.org/abs/2502.09648)
 
 ![UKTA_01_Input](https://github.com/user-attachments/assets/56540368-836a-47c0-958c-0e2a6099277d)
 
