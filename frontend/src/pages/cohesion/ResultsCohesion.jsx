@@ -97,7 +97,6 @@ const ResultCoh = ({ resultId, darkMode }) => {
 const ResultsCoh = ({ darkMode }) => {
 	const [cohesionResult, setCohesionResult] = useState([]);
 	const [selectedFile, setSelectedFile] = useState(-1);
-	const [selectedEssay, setSelectedEssay] = useState([]);
 	const { batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete, compare, setCompare } = useBatchDownloads();
 
 	const fetchData = async () => {

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { CohTags, MorphTags } from "../../components/Tags";
+import { CohTags, MorphTags } from "../../Tags";
 import { Sentences, SentencesCorrection } from '../morpheme/SentenceFormat';
 
 
 const MorphemeFormat = ({ results, grade, title }) => {
+	// format morpheme analysis results
 	const [hidden, setHidden] = useState(true);
 	const handleMorphemeDownload = (item, type) => {
 		if (type === 'txt') {
@@ -45,6 +46,7 @@ const MorphemeFormat = ({ results, grade, title }) => {
 }
 
 const CorrectionFormat = ({ results, title }) => {
+	// format grammar correction results
 	const [hidden, setHidden] = useState(true);
 
 	return (
@@ -66,6 +68,7 @@ const CorrectionFormat = ({ results, title }) => {
 }
 
 const ResultsNumeric = ({ result, title }) => {
+	// format numerical results
 	const [selectedAll, setSelectedAll] = useState(false);
 	const [selectedProperty, setSelectedProperty] = useState([]);
 	const [hidden, setHidden] = useState(true);
@@ -224,6 +227,7 @@ const ResultsNumeric = ({ result, title }) => {
 };
 
 const ResultsList = ({ result, title }) => {
+	// format list results
 	const [selectedAll, setSelectedAll] = useState(false);
 	const [selectedProperty, setSelectedProperty] = useState([]);
 	const [hidden, setHidden] = useState(true);
@@ -429,6 +433,7 @@ const ResultsList = ({ result, title }) => {
 };
 
 const ResultsListNgram = ({ result, title }) => {
+	// format ngram results
 	const [selectedAll, setSelectedAll] = useState(false);
 	const [selectedProperty, setSelectedProperty] = useState([]);
 	const [hidden, setHidden] = useState(true);
@@ -619,6 +624,7 @@ const ResultsListNgram = ({ result, title }) => {
 };
 
 const GradeFormat = ({ results, title }) => {
+	// format vocab grade results
 	const [hidden, setHidden] = useState(true);
 
 	return (
