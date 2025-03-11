@@ -11,8 +11,6 @@ import Nav from './components/Nav';
 import TagInfo from './components/TagInfo';
 import TextInput from './components/TextInput';
 import ResultsCoh from './components/cohesion/ResultsCohesion';
-import ResultsMor from './components/morpheme/ResultsMorpheme';
-import Comparison from './components/Comparison';
 import { LoadingContext } from './components/contexts/LoadingContext';
 
 
