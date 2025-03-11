@@ -29,3 +29,5 @@ npm run build
 ```bash
 nohup serve -s build > serve.log 2>&1 &
 ```
+
+TailwindCSS components are located in `index.css`

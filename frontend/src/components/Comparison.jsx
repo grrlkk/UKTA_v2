@@ -5,6 +5,7 @@ import { EvalFormatCompare } from '../pages/cohesion/EvalFormat';
 
 
 const Comparison = () => {
+	// Comparison component for comparing essay score results of multiple files
 	const { batchDownloads, compare } = useBatchDownloads();
 
 	return (
