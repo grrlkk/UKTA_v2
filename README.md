@@ -1,5 +1,7 @@
 # UKTA Web  
 
+ACM/SIGAPP SAC 2025 AIED accepted paper (Oral)
+
 ## Unified Korean Text Analyzer  
 
 [Paper Arxiv](https://arxiv.org/abs/2502.09648)
