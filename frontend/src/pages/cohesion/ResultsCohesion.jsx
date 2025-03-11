@@ -122,24 +122,6 @@ const ResultsCoh = ({ darkMode }) => {
 		}
 	}, [selectedFile]);
 
-	const handleSelectEssay = (item) => {
-		const essayScore = {
-			...item.results.essay_score,
-			filename: item.filename,
-		};
-		const isAlreadySelected = selectedEssay.some(
-			(selected) => JSON.stringify(selected) === JSON.stringify(essayScore)
-		);
-
-		if (isAlreadySelected) {
-			setSelectedEssay(selectedEssay.filter(
-				(selected) => JSON.stringify(selected) !== JSON.stringify(essayScore)
-			));
-		} else {
-			setSelectedEssay([...selectedEssay, essayScore]);
-		}
-	};
-
 	const handleFileDownload = (item) => {
 		const data = JSON.stringify(item);
 		const blob = new Blob([data], { type: 'application/json' });
@@ -156,30 +138,6 @@ const ResultsCoh = ({ darkMode }) => {
 			index === -1 ? setSelectedFile(-1) : setSelectedFile(index);
 		}
 	}
-
-	const handleDelete = async (index) => {
-		const id = cohesionResult[index]._id;
-
-		try {
-			const response = await fetch(`${process.env.REACT_APP_API_URI}/korcat/cohesion/${id}`, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ id })
-			});
-		} catch (error) {
-			console.error(error);
-		} finally {
-			setCohesionResult([]);
-			await new Promise(resolve => setTimeout(resolve, 500));
-			await fetchData();
-
-			if (cohesionResult.length > 0) {
-				setSelectedFile(-1);
-			}
-		}
-	};
 
 
 	return (
