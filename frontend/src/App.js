@@ -47,7 +47,6 @@ function App() {
 						<AnimatePresence mode='wait'>
 							<Routes location={currentPage} key={currentPage.pathname}>
 								<Route path='/' element={<Dummy />} />
-								{/* <Route path='/morpheme' element={isLoading ? <Loading /> : <ResultsMor />} /> */}
 								<Route path='/analysis' element={isLoading ? <Loading /> : <ResultsCoh darkMode={darkMode} />} />
 								<Route path='/tagging' element={<TagInfo />} />
 								<Route path='*' element={<Navigate to="/" />} />
