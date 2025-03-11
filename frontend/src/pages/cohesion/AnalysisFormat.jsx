@@ -562,7 +562,7 @@ const ResultsListNgram = ({ result, title }) => {
 						<tbody className='w-full'>
 							{Object.entries(result).map(([key, value], index) => (
 								<tr key={key} className='align-top' onClick={handleSelectProperty(index)}>
-									{console.log(value)}
+									{/* {console.log(value)} */}
 									<td className='p-1 px-3 w-12'>
 										<input
 											className='w-full accent-slate-600 align-middle'

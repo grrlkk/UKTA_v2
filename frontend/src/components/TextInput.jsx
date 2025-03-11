@@ -29,7 +29,7 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 				body: formData,
 			});
 			const data = await response.json();
-			console.log(data);
+			// console.log(data);
 		} catch (error) {
 			console.error(error);
 		} finally {

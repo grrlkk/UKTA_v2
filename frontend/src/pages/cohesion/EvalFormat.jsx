@@ -325,7 +325,7 @@ const EvalFormatCompare = ({ result, darkMode }) => {
 	const { batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete } = useBatchDownloads();
 
 	useEffect(() => {
-		console.log(result);
+		// console.log(result);
 		if (result) {
 			if (result.length === 0) return;
 			const newDatasets = result.map((essayScore, index) => {
