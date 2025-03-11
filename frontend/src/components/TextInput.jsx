@@ -62,7 +62,7 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 		} else {
 			setFiles(files);
 			setInputValue('');
-			console.log(files);
+			// console.log(files);
 		}
 	};
 
