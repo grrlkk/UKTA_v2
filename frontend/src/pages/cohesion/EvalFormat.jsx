@@ -1,8 +1,8 @@
+import { Chart as ChartJS, Filler, Legend, LineElement, PointElement, RadialLinearScale, Tooltip } from 'chart.js';
 import React, { useEffect, useState } from "react";
-import { Radar, Line } from 'react-chartjs-2';
-import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
-import { CohTags, MorphTags, EssayTags } from "../Tags";
-import { useBatchDownloads } from "../contexts/BatchDownloadContext";
+import { Radar } from 'react-chartjs-2';
+import { CohTags, EssayTags, MorphTags } from "../../Tags";
+import { useBatchDownloads } from "../../contexts/BatchDownloadContext"
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
@@ -325,7 +325,7 @@ const EvalFormatCompare = ({ result, darkMode }) => {
 	const { batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete } = useBatchDownloads();
 
 	useEffect(() => {
-		console.log(result);
+		// console.log(result);
 		if (result) {
 			if (result.length === 0) return;
 			const newDatasets = result.map((essayScore, index) => {

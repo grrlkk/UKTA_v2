@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
-import OriginalText from '../OriginalText';
-import Pagination from '../Pagination';
-import Comparison from '../Comparison';
-import { ResultsList, ResultsListNgram, ResultsNumeric, MorphemeFormat, CorrectionFormat, GradeFormat } from './AnalysisFormat';
+import Comparison from '../../components/Comparison';
+import OriginalText from '../../components/OriginalText';
+import Pagination from '../../components/Pagination';
+import { useBatchDownloads } from '../../contexts/BatchDownloadContext';
+import { CorrectionFormat, GradeFormat, MorphemeFormat, ResultsList, ResultsListNgram, ResultsNumeric } from './AnalysisFormat';
 import { EvalFormat } from './EvalFormat';
-import { useBatchDownloads } from '../contexts/BatchDownloadContext';
 
 
 const ResultCoh = ({ resultId, darkMode }) => {
@@ -97,7 +97,6 @@ const ResultCoh = ({ resultId, darkMode }) => {
 const ResultsCoh = ({ darkMode }) => {
 	const [cohesionResult, setCohesionResult] = useState([]);
 	const [selectedFile, setSelectedFile] = useState(-1);
-	const [selectedEssay, setSelectedEssay] = useState([]);
 	const { batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete, compare, setCompare } = useBatchDownloads();
 
 	const fetchData = async () => {
@@ -122,24 +121,6 @@ const ResultsCoh = ({ darkMode }) => {
 		}
 	}, [selectedFile]);
 
-	const handleSelectEssay = (item) => {
-		const essayScore = {
-			...item.results.essay_score,
-			filename: item.filename,
-		};
-		const isAlreadySelected = selectedEssay.some(
-			(selected) => JSON.stringify(selected) === JSON.stringify(essayScore)
-		);
-
-		if (isAlreadySelected) {
-			setSelectedEssay(selectedEssay.filter(
-				(selected) => JSON.stringify(selected) !== JSON.stringify(essayScore)
-			));
-		} else {
-			setSelectedEssay([...selectedEssay, essayScore]);
-		}
-	};
-
 	const handleFileDownload = (item) => {
 		const data = JSON.stringify(item);
 		const blob = new Blob([data], { type: 'application/json' });
@@ -156,30 +137,6 @@ const ResultsCoh = ({ darkMode }) => {
 			index === -1 ? setSelectedFile(-1) : setSelectedFile(index);
 		}
 	}
-
-	const handleDelete = async (index) => {
-		const id = cohesionResult[index]._id;
-
-		try {
-			const response = await fetch(`${process.env.REACT_APP_API_URI}/korcat/cohesion/${id}`, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ id })
-			});
-		} catch (error) {
-			console.error(error);
-		} finally {
-			setCohesionResult([]);
-			await new Promise(resolve => setTimeout(resolve, 500));
-			await fetchData();
-
-			if (cohesionResult.length > 0) {
-				setSelectedFile(-1);
-			}
-		}
-	};
 
 
 	return (
@@ -298,12 +255,6 @@ const ResultsCoh = ({ darkMode }) => {
 									></input>
 								</button>
 							</div>
-							{/* <button className={`flex flex-nowrap gap-1 grow sm:grow-0 p-2 btn-red group`} onClick={() => handleDelete(index)}>
-								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 group-hover:rotate-90 transition-all ease-in-out">
-									<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-								</svg>
-								Delete
-							</button> */}
 						</div>
 					</div>
 				))} setSelectedFile={setSelectedFile} />

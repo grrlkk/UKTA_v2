@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { EvalFormatCompare } from './cohesion/EvalFormat';
-import { useBatchDownloads } from './contexts/BatchDownloadContext';
+import { useBatchDownloads } from '../contexts/BatchDownloadContext'
+import { EvalFormatCompare } from '../pages/cohesion/EvalFormat';
 
 
 const Comparison = () => {
-	const { batchDownloads, addBatchDownload, clearBatchDownloads, handleBatchDownload, handleBatchDelete, compare, setCompare } = useBatchDownloads();
+	// Comparison component for comparing essay score results of multiple files
+	const { batchDownloads, compare } = useBatchDownloads();
 
 	return (
 		<div
