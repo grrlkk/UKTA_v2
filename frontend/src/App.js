@@ -4,13 +4,13 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import './App.css';
 
-import Dummy from './components/Dummy';
+import Dummy from './pages/Dummy';
 import Foot from './components/Foot';
 import Loading from './components/Loading';
 import Nav from './components/Nav';
-import TagInfo from './components/TagInfo';
+import TagInfo from './pages/TagInfo';
 import TextInput from './components/TextInput';
-import ResultsCoh from './components/cohesion/ResultsCohesion';
+import ResultsCoh from './pages/cohesion/ResultsCohesion';
 import { LoadingContext } from './contexts/LoadingContext';
 
 function App() {

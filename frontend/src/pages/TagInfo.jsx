@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { MorphTags } from "./Tags";
+import React, { useEffect, useState } from "react";
+import { MorphTags } from "../components/Tags";
 
 
 const TagInfo = () => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Radar, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
-import { CohTags, MorphTags, EssayTags } from "../Tags";
+import { CohTags, MorphTags, EssayTags } from "../../components/Tags";
 import { useBatchDownloads } from "../contexts/BatchDownloadContext";
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);

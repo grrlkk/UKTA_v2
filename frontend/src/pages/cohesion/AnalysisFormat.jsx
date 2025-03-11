@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CohTags, MorphTags } from "../Tags";
+import { CohTags, MorphTags } from "../../components/Tags";
 import { Sentences, SentencesCorrection } from '../morpheme/SentenceFormat';
 
 

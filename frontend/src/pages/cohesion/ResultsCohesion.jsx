@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
-import OriginalText from '../OriginalText';
-import Pagination from '../Pagination';
-import Comparison from '../Comparison';
+import OriginalText from '../../components/OriginalText';
+import Pagination from '../../components/Pagination';
+import Comparison from '../../components/Comparison';
 import { ResultsList, ResultsListNgram, ResultsNumeric, MorphemeFormat, CorrectionFormat, GradeFormat } from './AnalysisFormat';
 import { EvalFormat } from './EvalFormat';
 import { useBatchDownloads } from '../contexts/BatchDownloadContext';

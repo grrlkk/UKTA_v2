@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MorphTags } from "../Tags";
+import { MorphTags } from "../../components/Tags";
 import { use } from "react";
 
 
