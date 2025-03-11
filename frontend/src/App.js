@@ -11,7 +11,7 @@ import Nav from './components/Nav';
 import TagInfo from './components/TagInfo';
 import TextInput from './components/TextInput';
 import ResultsCoh from './components/cohesion/ResultsCohesion';
-import { LoadingContext } from './components/contexts/LoadingContext';
+import { LoadingContext } from './contexts/LoadingContext';
 
 function App() {
 	const currentPage = useLocation();
