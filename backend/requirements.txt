@@ -2,7 +2,7 @@ bareunpy==1.6.6
 coloredlogs==15.0.1
 fastapi==0.115.11
 gluonnlp==0.10.0
-huggingface_hub==0.25.1
+huggingface_hub==0.29.3
 keybert==0.8.5
 kobert_transformers==0.6.0
 konlpy==0.6.0
@@ -25,6 +25,6 @@ spacy==3.8.4
 top2vec==1.0.36
 torch==2.4.1+cu124
 torchtext==0.18.0
-tqdm==4.66.5
-transformers==4.45.1
+tqdm==4.67.1
+transformers==4.49.0
 uvicorn==0.34.0
