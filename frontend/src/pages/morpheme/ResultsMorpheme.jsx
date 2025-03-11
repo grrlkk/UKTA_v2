@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import OriginalText from '../OriginalText';
-import Pagination from '../Pagination';
+import OriginalText from '../components/OriginalText';
+import Pagination from '../components/Pagination';
 import { Sentences } from './SentenceFormat';
 
 

@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
+import Comparison from '../../components/Comparison';
 import OriginalText from '../../components/OriginalText';
 import Pagination from '../../components/Pagination';
-import Comparison from '../../components/Comparison';
-import { ResultsList, ResultsListNgram, ResultsNumeric, MorphemeFormat, CorrectionFormat, GradeFormat } from './AnalysisFormat';
+import { useBatchDownloads } from '../../contexts/BatchDownloadContext';
+import { CorrectionFormat, GradeFormat, MorphemeFormat, ResultsList, ResultsListNgram, ResultsNumeric } from './AnalysisFormat';
 import { EvalFormat } from './EvalFormat';
-import { useBatchDownloads } from '../contexts/BatchDownloadContext';
 
 
 const ResultCoh = ({ resultId, darkMode }) => {
