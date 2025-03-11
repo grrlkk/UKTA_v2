@@ -298,12 +298,6 @@ const ResultsCoh = ({ darkMode }) => {
 									></input>
 								</button>
 							</div>
-							{/* <button className={`flex flex-nowrap gap-1 grow sm:grow-0 p-2 btn-red group`} onClick={() => handleDelete(index)}>
-								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 group-hover:rotate-90 transition-all ease-in-out">
-									<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-								</svg>
-								Delete
-							</button> */}
 						</div>
 					</div>
 				))} setSelectedFile={setSelectedFile} />
