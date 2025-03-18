@@ -13,8 +13,8 @@ ACM/SIGAPP SAC 2025 AIED accepted paper (Oral) [Paper Arxiv](https://arxiv.org/a
 ### Objective
 
 - Accurate segmentation of Korean morphemes
-- Challenging due to agglutinative nature (frequent morphological changes)
-- Errors propagate and negatively affect higher-level analyses
+  - Challenging due to agglutinative nature (frequent morphological changes)
+  - Errors propagate and negatively affect higher-level analyses
 
 ### Approach
 
