@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const Pagination = ({ componentArray, setSelectedFile }) => {
 	const [currentPage, setCurrentPage] = useState(1);
-	const itemsPerPage = 7;
+	const itemsPerPage = 10;
 
 	const indexOfLastItem = currentPage * itemsPerPage;
 	const indexOfFirstItem = indexOfLastItem - itemsPerPage;
