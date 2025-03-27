@@ -23,7 +23,7 @@ const MorphemeFormat = ({ results, grade, title }) => {
 	return (
 		<div className='text-sm overflow-hidden flex flex-col'>
 			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
-				<h3 className='font-semibold'>{title}</h3>
+				<h3 className='font-semibold text-nowrap text-left'>{title}</h3>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${!hidden && "rotate-90"} transition-transform ease-in-out w-5 h-5`}>
 					<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 				</svg>
@@ -31,7 +31,7 @@ const MorphemeFormat = ({ results, grade, title }) => {
 
 			<div className={`${hidden ? "h-0 hidden" : "h-auto block pt-2"} -pr-[6px] transition-all ease-in-out`}>
 				<div className='flex flex-row divide-x-2 divide-slate-400 w-full justify-end font-normal'>
-					<button onClick={() => handleMorphemeDownload(results, "json")} className={`btn-primary grow sm:grow-0 flex flex-nowrap gap-1`}>
+					<button onClick={() => handleMorphemeDownload(results, "json")} className={`btn-primary grow-0 flex flex-nowrap gap-1`}>
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
 							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
 						</svg>
@@ -52,7 +52,7 @@ const CorrectionFormat = ({ results, title }) => {
 	return (
 		<div className='text-sm overflow-hidden flex flex-col'>
 			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
-				<h3 className='font-semibold'>{title}</h3>
+				<h3 className='font-semibold text-nowrap text-left'>{title}</h3>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${!hidden && "rotate-90"} transition-transform ease-in-out w-5 h-5`}>
 					<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 				</svg>
@@ -129,9 +129,9 @@ const ResultsNumeric = ({ result, title }) => {
 	}
 
 	return (
-		<div className='text-sm overflow-hidden flex flex-col'>
+		<div className='text-sm items-start align-middle overflow-hidden flex flex-col'>
 			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
-				<h3 className='font-semibold'>{title}</h3>
+				<h3 className='font-semibold text-nowrap text-left'>{title}</h3>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${!hidden && "rotate-90"} transition-transform ease-in-out w-5 h-5`}>
 					<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 				</svg>
@@ -311,7 +311,7 @@ const ResultsList = ({ result, title }) => {
 	return (
 		<div className='text-sm overflow-hidden flex flex-col transition-all ease-in-out'>
 			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
-				<h3 className='font-semibold'>{title}</h3>
+				<h3 className='font-semibold text-nowrap text-left'>{title}</h3>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${!hidden && "rotate-90"} transition-transform ease-in-out w-5 h-5`}>
 					<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 				</svg>
@@ -510,9 +510,9 @@ const ResultsListNgram = ({ result, title }) => {
 	}
 
 	return (
-		<div className='text-sm overflow-hidden flex flex-col transition-all ease-in-out'>
+		<div className='text-sm items-start align-middle overflow-hidden flex flex-col transition-all ease-in-out'>
 			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
-				<h3 className='font-semibold'>{title}</h3>
+				<h3 className='font-semibold text-nowrap text-left'>{title}</h3>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${!hidden && "rotate-90"} transition-transform ease-in-out w-5 h-5`}>
 					<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 				</svg>
@@ -630,7 +630,7 @@ const GradeFormat = ({ results, title }) => {
 	return (
 		<div className='text-sm overflow-hidden flex flex-col'>
 			<button onClick={() => setHidden(!hidden)} className={`btn-icon flex gap-2 items-center`}>
-				<h3 className='font-semibold'>{title}</h3>
+				<h3 className='font-semibold text-nowrap text-left'>{title}</h3>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${!hidden && "rotate-90"} transition-transform ease-in-out w-5 h-5`}>
 					<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 				</svg>
