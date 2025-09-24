@@ -5,6 +5,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { BatchDownloadProvider } from './contexts/BatchDownloadContext';
 import { LoadingProvider } from './contexts/LoadingContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -13,7 +14,9 @@ root.render(
 		<BrowserRouter>
 			<LoadingProvider>
 				<BatchDownloadProvider>
-					<App />
+					<LanguageProvider>
+						<App />
+					</LanguageProvider>
 				</BatchDownloadProvider>
 			</LoadingProvider>
 		</BrowserRouter>

@@ -8,9 +8,24 @@ import torch
 from apps.morph.morph import mecab
 from apps.morph.bareun import bareun
 from fastapi import APIRouter, File, HTTPException, Request, Response, UploadFile
+import os, json, re
+from pathlib import Path
+from pydantic import BaseModel
+from dotenv import load_dotenv
+from openai import OpenAI
+
 
 # pydantic.json.ENCODERS_BY_TYPE[ObjectId] = str
 router = APIRouter()
+
+# .env 로드 (프로젝트 루트: /home/ttytu/projects/KorCAT-web copy/.env)
+ROOT_DIR = Path(__file__).resolve().parents[2]
+load_dotenv(ROOT_DIR / ".env")
+
+# 키 이름은 OPENAI_API_KEY 또는 OPEN_AI_KEY 둘 다 지원
+OPENAI_KEY = os.getenv("OPENAI_API_KEY") or os.getenv("OPEN_AI_KEY")
+client = OpenAI(api_key=OPENAI_KEY) if OPENAI_KEY else None
+
 morph = bareun()
 
 

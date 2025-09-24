@@ -1,8 +1,11 @@
 import collections
 import math
-
+import logging
+from . import counter
 from lexical_diversity import lex_div as ld
 from lexicalrichness import LexicalRichness as lr
+from .counter import ngram
+
 
 morphs_CL = [
 	"NNG",
@@ -183,6 +186,20 @@ class TTR:
 		self.cal_MTLD()
 		self.cal_VOCDD()
 		self.cal_HDD()
+
+		self.cal_ngram_TTRs()
+
+
+	def cal_ngram_TTRs(self):
+			total_ngram_token_count = sum(len(ngram(self.kkma, n)) for n in range(2, 9))
+			for n in range(2, 9):
+				ngram_list = ngram(self.kkma, n)
+				ngram_type_count = len(set(ngram_list))
+				ngram_token_count = len(ngram_list)
+				self.TTR[f"{n}-gram_TTR"] = ngram_type_count / total_ngram_token_count if total_ngram_token_count > 0 else 0
+				self.TTR[f"{n}-gram_RTTR"] = ngram_type_count / (total_ngram_token_count ** 0.5) if total_ngram_token_count > 0 else 0
+				self.TTR[f"{n}-gram_CTTR"] = ngram_type_count / ((2 * total_ngram_token_count) ** 0.5) if total_ngram_token_count > 0 else 0
+
 
 	def cal_TTR(self):
 		self.TTR["lemma_TTR"] = ld.ttr(self.lemma_lst)

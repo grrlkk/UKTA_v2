@@ -1,8 +1,11 @@
 /.vscode
 /bareun/var
 /database
+/U-KTA_excel_data.xlsx
+
 
 *.pem
 *_api.txt
 *.log* 
 *.env
+backend/train.csv

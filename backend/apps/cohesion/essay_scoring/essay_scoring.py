@@ -217,7 +217,7 @@ if __name__ == "__main__":
     gru_model.load_state_dict(torch.load("./model/gru_scorer.pth"))
 
     # 글 점수 및 top-k 자질 출력
-    output, top_k_features = scoring(bert_model, gru_model, extracted_features)
+    output, top_k_features = scoring(bert_model, gru_model, extracted_features, tokenizer)
 
     rubric = [
         "문법",

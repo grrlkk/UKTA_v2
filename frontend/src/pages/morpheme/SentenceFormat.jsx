@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+//import React, { createContext, useContext } from "react";
 import { MorphTags } from "../../Tags";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { LABELS } from "../../labels";
+
 
 
 const HilightText = ({ range, content, color }) => {
@@ -264,6 +268,8 @@ const SentencesCorrection = ({ results }) => {
 	}
 	const [hRange, setHRange] = useState([0, 0]);
 
+	const { language } = useLanguage();
+
 	return (
 		<div
 			className={`
@@ -274,7 +280,7 @@ const SentencesCorrection = ({ results }) => {
 		>
 			<div className="bg-slate-300 dark:bg-slate-900 rounded-t-xl overflow-hidden p-2 flex gap-2 items-center">
 				<span>
-					{blocks.length} Possible Revisions
+					{blocks.length} {LABELS.revisions[language]}
 				</span>
 				<hr className="grow" />
 			</div>

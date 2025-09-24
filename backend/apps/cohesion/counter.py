@@ -1,8 +1,15 @@
 import collections
 import math
 import string
+import logging
 
+logging.basicConfig(
+    level=logging.DEBUG,  # DEBUG 레벨 이상만 출력
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
+# 어휘와 형태소의 평균 길이/표준편차 계산
+# 문장/단어의 복잡성 평가 (짧은 단어 위주인지, 긴 단어를 자주 쓰는지)
 def avgLen(words, kkma_simple):
     morph_len = [len(kkma[0]) for kkma in kkma_simple]
     morph_avg = sum(morph_len) / len(morph_len)
@@ -18,6 +25,7 @@ def avgLen(words, kkma_simple):
     return morph_avg, morph_std, words_avg, words_std
 
 
+# 형태소 단위 n-gram 리스트 생성
 def ngram(kkma, n):
     result = []
     for i in range(len(kkma) - n + 1):
@@ -32,6 +40,7 @@ def ngram(kkma, n):
     return result
 
 
+# 인접 문장 간 n-gram 겹침 정도 측정
 def ngram_overlap(kkma_by_sent, overlap, n):
     overlap_counts = []
     if len(kkma_by_sent) < overlap:
@@ -42,7 +51,8 @@ def ngram_overlap(kkma_by_sent, overlap, n):
         overlap_counts.append(overlap_count)
     return sum(overlap_counts)
 
-
+# 단어 또는 문자 n-gram을 빈도별로 분류
+# 이거 실질/형식 형태소로 n-gram 만든 후 빈도별 목록화 할 때 사용하면 될 듯
 def ngram_list(words, n):
     result = []
     for i in range(len(words) - n + 1):
@@ -402,6 +412,14 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
 
     # resultNDW["word_NDW"] = len(set(words))
     resultNDW["morph_NDW"] = len(set(kkma))
+    
+    # Ngram NDW 추가 부분 (25.5.20(수정))
+    for n in range(2, 9):
+        ngram_list_str = ngram(kkma, n)            
+        ngram_list_tuple = [tuple(ng.split()) for ng in ngram_list_str]
+        resultNDW[f"{n}-gram_NDW"] = len(set(ngram_list_tuple))
+    logging.debug("=====================디버깅용=====================\n%s", resultNDW[f"{n}-gram_NDW"])
+    
 
     resultNDW["N_NDW"] = len(set(morphLst_N))
     resultNDW["NN_NDW"] = len(set(morphLst_NN))
@@ -513,4 +531,5 @@ def counter(text, sentences, words, kkma, kkma_list, kkma_simple, kkma_by_sent):
     finalresult["sentenceLvlRep"] = resultSentRep
     finalresult["sentenceLvlRep_list"] = resultSentRepList
 
+    logging.debug("=====================디버깅용=====================\n%s", finalresult)
     return finalresult

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Radar } from 'react-chartjs-2';
 import { CohTags, EssayTags, MorphTags } from "../../Tags";
 import { useBatchDownloads } from "../../contexts/BatchDownloadContext"
+import { LABELS } from "../../labels";
+import { useLanguage } from '../../contexts/LanguageContext';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
@@ -18,6 +20,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 	const [tableData, setTableData] = useState([]);
 	const [tableMode, setTableMode] = useState(true);
 	const [totalScore, setTotalScore] = useState(0);
+	const { language } = useLanguage();
 
 	const radarOptions = {
 		scales: {
@@ -125,7 +128,7 @@ const EvalFormat = ({ result, title, darkMode }) => {
 					<>
 						<div className='col-span-2 bg-white dark:bg-slate-950 rounded-xl relative flex items-center p-2 overflow-hidden justify-center'>
 							<div className="absolute top-0 left-0 flex flex-col gap-2 items-center p-3 bg-slate-300 dark:bg-slate-600 rounded-br-xl font-normal">
-								<span>Total Score</span>
+								<span>{LABELS.total_score[language]}</span>
 								<span>
 									<span className="text-2xl font-black">
 										{totalScore}
@@ -141,13 +144,14 @@ const EvalFormat = ({ result, title, darkMode }) => {
 									onClick={() => setTableMode(true)}
 									className={`btn-secondary rounded-b-none border-b-0 ${tableMode ? "table-header" : ""}`}
 								>
-									Top-K Indices
+									
+									{LABELS.top_k_indices?.[language]}
 								</button>
 								<button
 									onClick={() => setTableMode(false)}
-									className={`btn-secondary rounded-b-none border-b-0 ${tableMode ? "" : "table-header"}`}
+									className={`btn-secondary rounded-b-none border-b-0 ${!tableMode ? "table-header" : ""}`}
 								>
-									Essay Score
+									{LABELS.essay_score?.[language]}
 								</button>
 							</div>
 							{tableMode &&
@@ -158,10 +162,10 @@ const EvalFormat = ({ result, title, darkMode }) => {
 												<thead className=''>
 													<tr className="*:table-header *:rounded-none">
 														<th className='p-1 w-8 text-right sticky top-0'>N.</th>
-														<th className='p-1 sticky top-0 text-left'>Feature</th>
-														<th className='p-1 sticky top-0 text-left'>Type</th>
-														<th className='p-1 sticky top-0 text-left'>Morpheme</th>
-														<th className='p-1 sticky top-0 text-left'>Description</th>
+														<th className='p-1 sticky top-0 text-left'>{LABELS.feature[language]}</th>
+														<th className='p-1 sticky top-0 text-left'>{LABELS.type[language]}</th>
+														<th className='p-1 sticky top-0 text-left'>{LABELS.Mor[language]}</th>
+														<th className='p-1 sticky top-0 text-left'>{LABELS.description[language]}</th>
 													</tr>
 												</thead>
 												<tbody className="table-contents">
@@ -235,9 +239,9 @@ const EvalFormat = ({ result, title, darkMode }) => {
 												<thead className=''>
 													<tr className="*:table-header *:rounded-none">
 														<th className='p-1 w-8 text-right sticky top-0'>N.</th>
-														<th className='p-1 sticky top-0'>Type</th>
-														<th className='p-1 sticky top-0 text-left'>Rubric</th>
-														<th className='p-1 sticky top-0 text-right'>Score</th>
+														<th className='p-1 sticky top-0'>{LABELS.type1?.[language]}</th>
+														<th className='p-1 sticky top-0 text-left'>{LABELS.rubric?.[language]}</th>
+														<th className='p-1 sticky top-0 text-right'>{LABELS.score?.[language]}</th>
 													</tr>
 												</thead>
 												<tbody className="table-contents">

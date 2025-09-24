@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { MorphTags } from "../Tags";
+import { LABELS } from "../labels";
+import { useLanguage } from '../contexts/LanguageContext'; 
 
 
 const TagInfo = () => {
 	const [tags, setTags] = useState([]);
+	const { language } = useLanguage();
 
 	useEffect(() => {
 		setTags(MorphTags);
@@ -18,7 +21,7 @@ const TagInfo = () => {
 			transition={{ duration: 0.1 }}
 			className='grid grid-cols-1 gap-4'
 		>
-			<h2 className="text-2xl font-bold py-2">Morpheme Tags</h2>
+			<h2 className="text-2xl font-bold py-2">{LABELS.morpheme_tags[language]}</h2>
 
 			<div className="rounded-xl w-full shadow overflow-hidden text-center">
 				<table className="w-full text-sm">

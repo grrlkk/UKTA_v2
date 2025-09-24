@@ -12,6 +12,10 @@ import { useLoadingContext } from './contexts/LoadingContext';
 import ResultsCoh from './pages/cohesion/ResultsCohesion';
 import Dummy from './pages/Dummy';
 import TagInfo from './pages/TagInfo';
+import { useLanguage } from "./contexts/LanguageContext";
+
+import Feedback from './pages/Feedback';
+
 
 function App() {
 	const currentPage = useLocation();
@@ -26,6 +30,13 @@ function App() {
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}, [currentPage]);
 
+	const { language, setLanguage } = useLanguage();
+
+	const LABELS = {
+		title: { ko: "텍스트 입력", en: "Input Korean Text" },
+		// ...
+	};
+
 	return (
 		<div className={`App ${darkMode ? 'dark' : ''}`}>
 			{/* Background overlay */}
@@ -37,7 +48,10 @@ function App() {
 				<div className="items-start pt-32 grid grid-cols-1 gap-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className='fixed top-0'></div>
 					{/* Text input component */}
-					<TextInput uploadInProgress={isLoading} setUploadInProgress={setIsLoading} />
+					{/*<TextInput uploadInProgress={isLoading} setUploadInProgress={setIsLoading} />*/}
+					{currentPage.pathname !== "/feedback" && (
+						<TextInput uploadInProgress={isLoading} setUploadInProgress={setIsLoading} />
+					)}
 
 					<hr id="content_area_start" />
 
@@ -47,7 +61,8 @@ function App() {
 								<Route path='/' element={<Dummy />} />
 								<Route path='/analysis' element={isLoading ? <Loading /> : <ResultsCoh darkMode={darkMode} />} />
 								<Route path='/tagging' element={<TagInfo />} />
-								<Route path='*' element={<Navigate to="/" />} />
+								<Route path='/feedback' element={<Feedback />} />
+								{/* <Route path='*' element={<Navigate to="/" />} /> */}
 							</Routes>
 						</AnimatePresence>
 					</div>
