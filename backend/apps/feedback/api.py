@@ -15,18 +15,18 @@ client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 router = APIRouter(prefix="/feedback", tags=["feedback"])
 
-DEFAULT_SAVE_DIR = os.getenv(
-    "FEEDBACK_SAVE_DIR",
-    "/home/ttytu/projects/KorCAT-web copy/backend/apps/feedback/fb_result",
-)
+# 이 파일 기준 기본 저장 폴더 (ENV가 없으면 여기로 저장)
+_DEFAULT_DIR = Path(__file__).resolve().parent / "fb_result"
+DEFAULT_SAVE_DIR = Path(os.getenv("FEEDBACK_SAVE_DIR", str(_DEFAULT_DIR)))
+DEFAULT_SAVE_DIR.mkdir(parents=True, exist_ok=True)
 
 DEFAULT_MODEL = os.getenv("FEEDBACK_MODEL", "gpt-4o-mini")
 DEFAULT_TEMP = float(os.getenv("FEEDBACK_TEMPERATURE", "0.2"))
 ALLOW_CLIENT_OVERRIDE = os.getenv("FEEDBACK_ALLOW_CLIENT_OVERRIDE", "false").lower() == "true"
 
 # ===== Utils =====
-def _ensure_dir(path_str: str) -> Path:
-    p = Path(path_str)
+def _ensure_dir(pathlike: Path) -> Path:
+    p = Path(pathlike)
     p.mkdir(parents=True, exist_ok=True)
     return p
 
@@ -35,10 +35,9 @@ def _safe_name(text: str, limit: int = 16) -> str:
     preview = "".join(ch for ch in text.strip().splitlines()[0][:limit] if ch.isalnum())
     return f"{h}_{preview or 'nohdr'}"
 
-def _save_feedback_json(save_dir: str, payload: dict) -> str:
+def _save_feedback_json(save_dir: Path, payload: dict) -> str:
     d = _ensure_dir(save_dir)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    base = _safe_name(payload.get("original_text", ""))
     fname = f"fb_{ts}.json"
     fpath = d / fname
     with fpath.open("w", encoding="utf-8") as f:
@@ -56,10 +55,7 @@ def _chat(model: str, messages: list, temperature: float) -> str:
     return r.choices[0].message.content
 
 def _resolve_params(req_model: str | None, req_temp: float | None) -> tuple[str, float]:
-    """
-    서버에서 최종 파라미터 결정.
-    allow_client_override=false면 .env 기본값이 항상 우선.
-    """
+    """서버에서 최종 파라미터 결정. allow_client_override=False면 .env 기본값 고정."""
     if ALLOW_CLIENT_OVERRIDE:
         model = (req_model or DEFAULT_MODEL).strip()
         temp = float(req_temp if req_temp is not None else DEFAULT_TEMP)
@@ -80,7 +76,7 @@ def generate_feedback(req: FeedbackReq):
     # 0) 파라미터 결정
     model, temp = _resolve_params(req.model, req.temperature)
 
-    # 1) Call #1: Generator → draft JSON
+    # 1) Generator
     g_prompt = create_generator_prompt(req.original_text)
     draft_json = _chat(
         model,
@@ -91,7 +87,7 @@ def generate_feedback(req: FeedbackReq):
         temp,
     )
 
-    # LLM 출력 JSON 정리
+    # JSON 파싱
     try:
         draft = json.loads(draft_json)
     except Exception:
@@ -100,7 +96,7 @@ def generate_feedback(req: FeedbackReq):
             raise HTTPException(status_code=500, detail="Invalid draft JSON from LLM")
         draft = json.loads(m.group(0))
 
-    # 2) Call #2: Verifier → Final Markdown
+    # 2) Verifier
     v_prompt = create_verifier_prompt(req.original_text, json.dumps(draft, ensure_ascii=False))
     final_md = _chat(
         model,
@@ -108,10 +104,10 @@ def generate_feedback(req: FeedbackReq):
             {"role": "system", "content": "You are a precise verifier for writing feedback."},
             {"role": "user", "content": v_prompt},
         ],
-        0.1,  # 검증은 낮은 temperature 추천
+        0.1,
     )
 
-    # 3) 저장 payload 구성 및 저장
+    # 3) 저장
     payload = {
         "original_text": req.original_text,
         "draft": draft,
@@ -121,13 +117,12 @@ def generate_feedback(req: FeedbackReq):
             "temperature": temp,
             "created_at": datetime.now().isoformat(timespec="seconds"),
             "allow_client_override": ALLOW_CLIENT_OVERRIDE,
-            # saved_path는 저장 후에 주입
         },
     }
     saved_path = _save_feedback_json(DEFAULT_SAVE_DIR, payload)
     payload["meta"]["saved_path"] = saved_path
 
-    # 4) 응답 (프론트에서 바로 쓰기 쉽게)
+    # 4) 응답
     return {
         "draft": draft,
         "final_markdown": final_md,

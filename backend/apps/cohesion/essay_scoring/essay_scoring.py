@@ -1,3 +1,5 @@
+#/home/ukta/KorCAT-web_v2/backend/apps/cohesion/essay_scoring/essay_scoring.py
+
 import json
 import pandas as pd
 from kobert_transformers import get_kobert_model, get_tokenizer
@@ -6,6 +8,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 import collections
+from pathlib import Path
 
 
 class GRUScoreModule(nn.Module):
@@ -55,10 +58,11 @@ def scoring(bert_model, gru_model, extracted_features, tokenizer):
         sample_essay_features.extend(list(extracted_features[key].values()))
         feature_list.extend(list(extracted_features[key].keys()))
 
-    scaler = pd.read_csv(
-        "/home/ttytu/projects/KorCAT-web/backend/apps/cohesion/essay_scoring/features/scaler.csv",
-        encoding="cp949",
-    )
+    BASE = Path(__file__).parent
+    SCALER_CSV = BASE / "features" / "scaler.csv"
+
+    # 자질 추출 ...
+    scaler = pd.read_csv(SCALER_CSV, encoding="cp949")
 
     filtered_features = []
     filtered_feature_list = []
@@ -144,11 +148,8 @@ def load_essay_model(device):
     bert_model = get_kobert_model().to(device)
     tokenizer = get_tokenizer()
     gru_model = GRUScoreModule().to(device)
-    gru_model.load_state_dict(
-        torch.load(
-			"/home/ttytu/projects/KorCAT-web/backend/apps/cohesion/essay_scoring/model/gru_scorer.pth"
-		)
-	)
+    WEIGHT_PATH = Path(__file__).parent / "model" / "gru_scorer.pth"
+    gru_model.load_state_dict(torch.load(WEIGHT_PATH, map_location=device))
     return bert_model, gru_model, tokenizer
 
 

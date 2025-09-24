@@ -1,8 +1,10 @@
+## /home/ukta/KorCAT-web_v2/backend/apps/morph/utagger.py
 import apps.morph.bareun as br
 import pandas as pd
 
 # import pyutagger.downloader as ud
 import pyutagger.utagger as ut
+from pathlib import Path
 
 # ud.install_utagger("utagger3")  # 유태거 3
 # ud.install_utagger("utagger4")  # 유태거 4
@@ -16,9 +18,9 @@ class utagger:
         if not self.utg4:
             print("로드 실패")
             print("failed to load")
-        self.word_grades = pd.read_csv(
-            "/home/ttytu/projects/KorCAT-web/backend/apps/morph/word_grades.csv"
-        )
+
+        WORD_GRADES = Path(__file__).parent / "word_grades.csv"
+        self.word_grades = pd.read_csv(WORD_GRADES)
         # ['grade', 'vocab', 'homonym_num', 'pos', 'type', 'original', 'meaning', 'field']
 
     def morphs(self, text):
