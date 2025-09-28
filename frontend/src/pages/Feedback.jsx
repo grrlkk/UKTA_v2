@@ -5,14 +5,17 @@ import { LABELS } from "../labels";
 import { useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+// 🔹 전역 로딩 컨텍스트 사용
+import { useLoadingContext } from "../contexts/LoadingContext";
 
 export default function Feedback() {
   const { language } = useLanguage();
+  const { isLoading, setIsLoading } = useLoadingContext(); // 🔹 전역 로딩
   const T = (k) => LABELS?.[k]?.[language] ?? k; // 라벨 헬퍼
   const rootRef = useRef(null);
   const location = useLocation();
 
-  const [loading, setLoading] = useState(false);
+  // 🔻 로컬 loading state 제거 (전역 isLoading 사용)
   const [error, setError] = useState("");
   const [aiMd, setAiMd] = useState("");
   const [payload, setPayload] = useState(null);
@@ -73,7 +76,7 @@ export default function Feedback() {
 
     async function run() {
       setError("");
-      setLoading(true);
+      setIsLoading(true);      // 🔹 전역 로딩 ON
       setAiMd("");
       try {
         const base = process.env.REACT_APP_API_URI || "";
@@ -88,21 +91,19 @@ export default function Feedback() {
       } catch (e) {
         setError(String(e?.message || e));
       } finally {
-        setLoading(false);
+        setIsLoading(false);   // 🔹 전역 로딩 OFF
       }
     }
 
     if (original?.trim()) run();
-  }, [location.state]);
+  }, [location.state, setIsLoading]);
 
   // === 어휘 등급 분포: 1~5 + NA (등장빈도 cnt 가중) ===
   const lexDist = useMemo(() => {
-    // 1~5만 남김
     const rows = ["1","2","3","4","5"].map(lv => ({ key: lv, label: T(`level_${lv}`), value: 0 }));
-  
     const vg = payload?.results?.voc_grades;
     if (!Array.isArray(vg)) return rows;
-  
+
     let total = 0;
     for (const [gradeRaw, entries] of vg) {
       const grade = String(gradeRaw);
@@ -125,7 +126,7 @@ export default function Feedback() {
       <style>{`
         .fb-wrap{max-width:1200px;margin:24px auto;padding:0 16px;color:#e2e8f0}
         .fb-grid{display:grid;grid-template-columns:1.4fr 0.6fr;gap:16px}
-        .fb-card{background:rgba(15,23,42,.9);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+        .fb-card{position:relative;background:rgba(15,23,42,.9);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
         .fb-title{font-weight:800;font-size:18px;margin:0 0 12px}
         .fb-sub{color:#94a3b8;font-size:13px}
 
@@ -176,6 +177,13 @@ export default function Feedback() {
         .lex-bar{flex:1;height:10px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
         .lex-fill{height:100%;background:linear-gradient(90deg,#60a5fa,#16a34a)}
         .lex-val{width:44px;text-align:right;font-size:12px;color:#cbd5e1}
+
+        /* 🔹 로딩 오버레이 */
+        .fb-loading-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,.6);border-radius:16px;backdrop-filter:blur(2px);z-index:5}
+        .fb-loader{display:flex;align-items:center;gap:10px;font-size:14px;color:#cbd5e1}
+        .fb-spinner{width:22px;height:22px;border-radius:50%;border:3px solid rgba(255,255,255,.25);border-top-color:#fff;animation:spin 0.9s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
       `}</style>
 
       <div className="fb-grid">
@@ -208,7 +216,7 @@ export default function Feedback() {
         <div className="fb-card">
           <div className="fb-title">
             {LABELS.ai_fb[language]}
-            {loading && <span className="fb-sub"> · {LABELS.fb_gene[language]}</span>}
+            {isLoading && <span className="fb-sub"> · {LABELS.fb_gene[language]}</span>}
             {error && <span className="fb-sub" style={{ color: "#ef4444" }}> · {error}</span>}
             <button
               className="fb-badge"
@@ -220,9 +228,21 @@ export default function Feedback() {
               {LABELS.copy[language]}
             </button>
           </div>
-          <div className="fb-md">
+
+          {/* 🔹 로딩 상태일 때 카드 오버레이 표시 */}
+          {isLoading && (
+            <div className="fb-loading-overlay" role="status" aria-live="polite">
+              <div className="fb-loader">
+                <div className="fb-spinner" aria-hidden="true" />
+                <span>{LABELS.fb_gene[language]}</span>
+                <span className="sr-only">Loading</span>
+              </div>
+            </div>
+          )}
+
+          <div className="fb-md" aria-busy={isLoading}>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {aiMd || (loading ? "" : LABELS.no_content[language])}
+              {aiMd || (isLoading ? "" : LABELS.no_content[language])}
             </ReactMarkdown>
           </div>
         </div>
