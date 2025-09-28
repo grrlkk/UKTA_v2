@@ -221,7 +221,7 @@ def load_essay_model(device):
         dropout=0.5,
     ).to(device)
 
-    weight_path = BASE / "model" / "not_topic_model.pth"
+    weight_path = BASE / "model" / "not_topic_model.pth"  ### 프롬프트 사용 안한 최신 모델
     state = torch.load(weight_path, map_location=device)
     gru_model.load_state_dict(state)
     gru_model.eval()
