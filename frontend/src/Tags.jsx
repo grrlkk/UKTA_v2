@@ -635,7 +635,48 @@ export const CohTags = {
 		"type_eng": "Cohesion",
 		"desc": "이진 인접 두 문장 부사 레마 중첩",
 		"desc_eng": "Binary Adjacent Two Sentence Overlap Adverb Lemmas"
-	}
+	},
+
+	"text_dalechall": {
+		"alias": "text_dalechall",
+		"type": "텍스트",
+		"type_eng": "Text",
+		"desc": "Dale–Chall 가독성 지수",
+		"desc_eng": "Dale–Chall Readability Index",
+	},
+	
+	// New 어휘 등급 비율 (2, 3, 4, -1등급)
+	"grade_4_ratio": {
+	"alias": "grade_4_ratio",
+	"type": "어휘 등급",
+	"type_eng": "Vocab Grade",
+	"desc": "4등급 비율",
+	"desc_eng": "Ratio of Grade 4",
+	},
+
+	"grade_3_ratio": {
+	"alias": "grade_3_ratio",
+	"type": "어휘 등급",
+	"type_eng": "Vocab Grade",
+	"desc": "3등급 비율",
+	"desc_eng": "Ratio of Grade 3",
+	},
+
+	"grade_2_ratio": {
+	"alias": "grade_2_ratio",
+	"type": "어휘 등급",
+	"type_eng": "Vocab Grade",
+	"desc": "2등급 비율",
+	"desc_eng": "Ratio of Grade 2",
+	},
+
+	"grade_m1_ratio": {
+	"alias": "grade_m1_ratio",
+	"type": "어휘 등급",
+	"type_eng": "Vocab Grade",
+	"desc": "NA 등급 비율",
+	"desc_eng": "Ratio of Grade NA",
+	},
 }
 
 export const EssayTags = {
@@ -658,25 +699,25 @@ export const EssayTags = {
 		"desc_eng": "Sentence Expression",
 	},
 	"intra_paragraph_structure": {
-		"type": "구조",
+		"type": "조직",
 		"type_eng": "Organization",
 		"desc": "문단 내 구조",
 		"desc_eng": "In-paragraph Structure",
 	},
 	"inter_paragraph_structure": {
-		"type": "구조",
+		"type": "조직",
 		"type_eng": "Organization",
 		"desc": "문단 간 구조",
 		"desc_eng": "Inter-paragraph Structure",
 	},
 	"structural_consistency": {
-		"type": "구조",
+		"type": "조직",
 		"type_eng": "Organization",
 		"desc": "구조적 일관성",
 		"desc_eng": "Structural Consistency",
 	},
 	"length": {
-		"type": "구조",
+		"type": "조직",
 		"type_eng": "Organization",
 		"desc": "길이",
 		"desc_eng": "Length",
@@ -684,23 +725,31 @@ export const EssayTags = {
 	"topic_clarity": {
 		"type": "내용",
 		"type_eng": "Content",
-		"desc": "주제 명확성",
+		"desc": "주제 명료성",
 		"desc_eng": "Topic Clarity",
 	},
 	"originality": {
 		"type": "내용",
 		"type_eng": "Content",
-		"desc": "독창성",
+		"desc": "사고 창의성",
 		"desc_eng": "Originality",
 	},
 	// "prompt_comprehension": {
 	// 	"type": "내용 Content",
 	// 	"desc": "주제 이해 Prompt Comprehension",
 	// },
+
+	// "narrative": {
+	// 	"type": "내용",
+	// 	"type_eng": "Content",
+	// 	"desc": "서사",
+	// 	"desc_eng": "Narrative",
+	// },
+
 	"narrative": {
 		"type": "내용",
 		"type_eng": "Content",
-		"desc": "서사",
+		"desc": "근거 적절성",
 		"desc_eng": "Narrative",
 	},
 }
