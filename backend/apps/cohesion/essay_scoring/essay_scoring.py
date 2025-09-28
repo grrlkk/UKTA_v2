@@ -171,7 +171,7 @@ def scoring(bert_model, gru_model, extracted_features, tokenizer):
     feature_list_for_attn = np.array(scaler_feats)  # 주의: attn과 동일 차원
 
     # 5) KoBERT 임베딩 ([CLS])
-    max_length = 400                       ## 400으로 KoBERT 입력 토큰 증가
+    max_length = 256                       ## 400으로 KoBERT 입력 토큰 증가 -> 메모리 터져서 256으로 줄여버림
     inputs = tokenizer.batch_encode_plus(
         sentences, max_length=max_length, padding="max_length", truncation=True
     )
