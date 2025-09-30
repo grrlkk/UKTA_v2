@@ -1,7 +1,7 @@
 # selector.py
 from __future__ import annotations
 from pathlib import Path
-from typing import Dict, List, Any, Tuple
+from typing import Dict, List, Any
 import json, re
 
 BASE = Path(__file__).resolve().parent
@@ -13,9 +13,9 @@ RUBRIC_KEYS = [
     "grammar", "vocabulary", "sentence_expression",
 ]
 
-TOPK_BONUS = 0.25       # 힌트 가산점
-ACTION_BONUS = 0.20     # 부족/과다 가산점
-RESERVE_FROM_TOPK = 2   # 결과 K개 중 힌트에서 최소 예약
+TOPK_BONUS = 0.25
+ACTION_BONUS = 0.20
+RESERVE_FROM_TOPK = 2
 GRADE_RE = re.compile(r"^grade_", re.I)
 
 def _load_elite() -> dict:

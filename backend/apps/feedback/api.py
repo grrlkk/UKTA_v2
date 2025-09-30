@@ -1,218 +1,175 @@
-# backend/apps/feedback/api.py
 from __future__ import annotations
-
 import json
-import os
-import re
-import traceback
-from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
-from .prompt_feedback import create_generator_prompt, create_verifier_prompt, _safe_json
+from .prompt_feedback import (
+    create_generator_prompt,
+    create_verifier_prompt,
+    extract_text,
+    safe_json,
+    ensure_json_string,
+)
+# ✅ selector에서 서버 측으로 rubrics/gaps 산출
 from .selector import prepare_feedback_inputs
 
-# ---------------- OpenAI ----------------
-try:
-    from openai import OpenAI
-except Exception:
-    OpenAI = None  # 라이브러리 미설치/오프라인 대비
+# ==== OpenAI 호출 (Chat Completions) ====
+# - 백엔드 .env (루트 .env) 의 OPENAI_API_KEY 사용
+import os
+import requests
 
-# ---------------- Router ----------------
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_BASE = os.getenv("OPENAI_BASE", "https://api.openai.com/v1")
+DEFAULT_GEN_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+DEFAULT_GEN_TEMP = float(os.getenv("OPENAI_TEMPERATURE", "0.2"))
+
+def call_llm(prompt: str, model: str = DEFAULT_GEN_MODEL, temperature: float = DEFAULT_GEN_TEMP) -> Dict[str, Any]:
+    """
+    OpenAI Chat Completions 엔드포인트 호출.
+    prompt는 user에 통째로 넣고, system에는 'JSON만 출력' 규칙만 간단히 명시.
+    """
+    if not OPENAI_API_KEY:
+        raise RuntimeError("OPENAI_API_KEY가 환경변수로 설정되지 않았습니다.")
+
+    url = f"{OPENAI_BASE}/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {OPENAI_API_KEY}",
+        "Content-Type": "application/json",
+    }
+    body = {
+        "model": model,
+        "temperature": temperature,
+        "messages": [
+            {"role": "system", "content": "너는 국어학 기반 한국어 글쓰기 컨설턴트다. 오직 JSON만 출력하고, 코드펜스/서문/마크다운 금지."},
+            {"role": "user", "content": prompt},
+        ],
+    }
+    r = requests.post(url, headers=headers, json=body, timeout=30)
+    r.raise_for_status()
+    return r.json()
+
 router = APIRouter(prefix="/feedback", tags=["feedback"])
 
-# ---------------- Config ----------------
-RUBRIC_KEYS = [
-    "topic_clarity", "narrative", "originality",
-    "intra_paragraph_structure", "inter_paragraph_structure",
-    "grammar", "vocabulary", "sentence_expression",
-]
+# -------- 요청/응답 모델 --------
 
-DEFAULT_GEN_MODEL = os.getenv("OPENAI_MODEL_GEN", os.getenv("OPENAI_MODEL", "gpt-4o-mini"))
-DEFAULT_VER_MODEL = os.getenv("OPENAI_MODEL_VER", os.getenv("OPENAI_MODEL", "gpt-4o-mini"))
-DEFAULT_GEN_TEMP = float(os.getenv("OPENAI_TEMP_GEN", "0.2"))
-DEFAULT_VER_TEMP = float(os.getenv("OPENAI_TEMP_VER", "0.2"))
-
-SAVE_DIR = os.path.join(
-    os.getenv("KORCAT_ROOT", "/home/ukta/KorCAT-web_v2"),
-    "backend", "apps", "feedback", "fb_result"
-)
-os.makedirs(SAVE_DIR, exist_ok=True)
-
-ENABLE_DEBUG_RETURN = os.getenv("FEEDBACK_DEBUG_RETURN", "0") == "1"  # 응답에 디버그 포함 여부
-
-# -------------- Schemas -----------------
 class GenerateRequest(BaseModel):
-    original_text: str
-    feat29: Dict[str, float] = Field(default_factory=dict)
-    rubric_scores: Dict[str, float] = Field(default_factory=dict)
-    top_k_features: List[str] = Field(default_factory=list)
+    # 공통
+    original_text: str = ""
+
+    # (A) 프론트가 직접 넘기는 원시 점수/자질 입력
+    feat29: Dict[str, float] | None = None
+    rubric_scores: Dict[str, float] | None = None
+    top_k_features: List[str] | None = None
+
+    # (B) 이미 계산된 값(우선 사용)
+    target_rubrics: List[str] = Field(default_factory=list)
+    elite_gaps: List[Dict[str, Any]] = Field(default_factory=list)
+
+    # 기타 메타 (그대로 에코)
+    meta: Dict[str, Any] = Field(default_factory=dict)
 
 class GenerateResponse(BaseModel):
+    # 프론트 기본 렌더용
     final_md: str
+    # ✅ 프론트 호환: Feedback.jsx는 final_markdown를 읽음
+    final_markdown: Optional[str] = None
+
+    # 레거시/호환 키
+    ai_md: Optional[str] = None
+    ai_json: Optional[Dict[str, Any]] = None
+
+    # 부가 정보
     meta: Dict[str, Any] = Field(default_factory=dict)
-    saved_path: Optional[str] = None
-    # 디버그는 옵션
+
+    # 디버그/확인용(옵션)
     draft: Optional[str] = None
     target_rubrics: Optional[List[str]] = None
     elite_gaps_preview: Optional[List[Dict[str, Any]]] = None
 
-# -------------- Helpers -----------------
-def _get_openai_client() -> Optional[OpenAI]:
-    api_key = os.getenv("OPENAI_API_KEY", "")
-    if not api_key or OpenAI is None:
-        return None
-    return OpenAI(api_key=api_key)
+# -------- 엔드포인트 --------
 
-def call_llm(prompt: str, model: str, temperature: float) -> str:
-    """
-    OpenAI Responses API로 단일 턴 호출. 오프라인/키없음 시 안전 폴백 문자열 반환.
-    """
-    client = _get_openai_client()
-    if client is None:
-        return "OFFLINE_MODE: LLM disabled. Set OPENAI_API_KEY to enable."
-    resp = client.responses.create(
-        model=model,
-        temperature=temperature,
-        input=[{"role": "user", "content": prompt}],
-    )
-    return getattr(resp, "output_text", "").strip()
-
-GRADE_RE = re.compile(r"^grade_", re.I)
-
-def _sanitize_metric_links(draft_json_str: str, elite_gaps: List[Dict[str, Any]], feat29: Dict[str, Any]) -> str:
-    """
-    허용 집합: elite_gaps.features ∪ feat29.keys  (grade_* 제외)
-    허용 밖 지표는 |z| 최상위 feature로 대체.
-    """
-    # draft 복구 (코드블록/마크다운 보호)
-    try:
-        draft = json.loads(draft_json_str)
-    except Exception:
-        try:
-            draft = _safe_json(draft_json_str)
-        except Exception:
-            return draft_json_str
-
-    allow = {g.get("feature") for g in elite_gaps if isinstance(g.get("feature"), str)}
-    allow |= {k for k in feat29.keys() if isinstance(k, str)}
-    allow = {a for a in allow if a and not GRADE_RE.match(a)}
-
-    sorted_feats = sorted(elite_gaps, key=lambda r: abs(r.get("z_like", 0.0)), reverse=True)
-    best_feat = (sorted_feats[0]["feature"] if sorted_feats else None)
-
-    for it in draft.get("issues", []):
-        raw = (it.get("metric_link") or "").strip()
-        items = [x.strip() for x in raw.split(",")] if raw else []
-        items = [m for m in items if m in allow]
-        if not items and best_feat:
-            items = [best_feat]
-        it["metric_link"] = ", ".join(items) if items else ""
-
-    return json.dumps(draft, ensure_ascii=False)
-
-def _save_result(payload: Dict[str, Any]) -> str:
-    fname = f"fb_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-    fpath = os.path.join(SAVE_DIR, fname)
-    with open(fpath, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2)
-    return fpath
-
-# -------------- Health ------------------
-@router.get("/health")
-def health():
-    return {
-        "ok": True,
-        "gen_model": DEFAULT_GEN_MODEL,
-        "ver_model": DEFAULT_VER_MODEL,
-        "save_dir": SAVE_DIR,
-        "openai_ready": _get_openai_client() is not None,
-    }
-
-# -------------- Main Route --------------
 @router.post("/generate", response_model=GenerateResponse)
-def generate_feedback(req: GenerateRequest):
+def generate_feedback(req: GenerateRequest) -> GenerateResponse:
+    """
+    파이프라인:
+    0) 입력 검증 + 필요 시 selector로 target_rubrics/elite_gaps 산출
+    1) Generator 프롬프트 → LLM 호출 → 안전 텍스트 추출 → JSON 파싱
+    2) Verifier 단계는 **LLM 재호출하지 않고** 서버에서 MD 조립
+    3) ai_md/ai_json/final_markdown 키를 항상 채워서 프론트 호환 보장
+    """
+
+    original_text = (req.original_text or "").strip()
+    if not original_text:
+        # 프론트가 essay_score.text를 original_text로 안 채워준 경우가 있어, 방어.
+        raise HTTPException(status_code=400, detail="original_text가 비어 있습니다.")
+
+    # 0) 서버에서 rubrics/gaps 보정
+    target_rubrics = list(req.target_rubrics or [])
+    elite_gaps = list(req.elite_gaps or [])
+
+    # 만약 프론트에서 원시 입력(feat29/rubric_scores)을 보냈고 rubrics/gaps가 비어있다면 서버에서 계산
+    if (not target_rubrics or not elite_gaps) and req.feat29 and req.rubric_scores:
+        try:
+            t_rubrics, e_gaps = prepare_feedback_inputs(
+                feat29=req.feat29,
+                rubric_scores=req.rubric_scores,
+                client_topk=req.top_k_features or [],
+                top_k=6,
+            )
+            if not target_rubrics:
+                target_rubrics = t_rubrics
+            if not elite_gaps:
+                elite_gaps = e_gaps
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"selector 계산 실패: {e}")
+
+    # 1) Generator 프롬프트 생성 및 LLM 호출
+    gen_prompt = create_generator_prompt(
+        original_text=original_text,
+        target_rubrics=target_rubrics,
+        elite_gaps=elite_gaps,
+    )
+
     try:
-        # --- 0) 선정 단계 ---
-        target_rubrics, elite_gaps = prepare_feedback_inputs(
-            feat29=req.feat29 or {},
-            rubric_scores=req.rubric_scores or {},
-            client_topk=req.top_k_features or [],
-            top_k=6,
-        )
-
-        # 미리보기(응답/저장용 간단 스니펫)
-        elite_gaps_preview = [
-            {
-                "feature": r.get("feature"),
-                "label_ko": r.get("label_ko"),
-                "z_like": r.get("z_like"),
-                "status": r.get("status"),
-                "suggest": r.get("suggest"),
-                "strength": r.get("strength"),
-            }
-            for r in elite_gaps
-        ]
-
-        # --- 1) Generator ---
-        gen_prompt = create_generator_prompt(
-            original_text=req.original_text,
-            feat29=req.feat29 or {},
-            rubric_scores=req.rubric_scores or {},
-            top_k_features=req.top_k_features or [],
-            target_rubrics=target_rubrics,
-            elite_gaps_table=elite_gaps,  # label_ko/desc_ko_llm 포함
-        )
-        draft_json = call_llm(gen_prompt, model=DEFAULT_GEN_MODEL, temperature=DEFAULT_GEN_TEMP)
-
-        # --- 2) metric_link 안전장치 ---
-        draft_json = _sanitize_metric_links(draft_json, elite_gaps, req.feat29 or {})
-
-        # --- 3) Verifier ---
-        ver_prompt = create_verifier_prompt(req.original_text, draft_json)
-        final_md = call_llm(ver_prompt, model=DEFAULT_VER_MODEL, temperature=DEFAULT_VER_TEMP)
-
-        # --- 4) 저장 페이로드 구성 ---
-        payload_for_save = {
-            "final_md": final_md,
-            "draft": draft_json if ENABLE_DEBUG_RETURN else None,
-            "target_rubrics": target_rubrics,
-            "elite_gaps_preview": elite_gaps_preview,
-            "meta": {
-                "gen_model": DEFAULT_GEN_MODEL,
-                "ver_model": DEFAULT_VER_MODEL,
-                "gen_temp": DEFAULT_GEN_TEMP,
-                "ver_temp": DEFAULT_VER_TEMP,
-                "created_at": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
-                "allow_client_override": False,
-            },
-            "input": {
-                "rubric_scores": req.rubric_scores,
-                "top_k_features": req.top_k_features,
-                "feat_keys": list(req.feat29.keys())[:5] + (["..."] if len(req.feat29) > 5 else []),
-            },
+        raw_resp = call_llm(gen_prompt, model=DEFAULT_GEN_MODEL, temperature=DEFAULT_GEN_TEMP)
+    except Exception as e:
+        # 방어적 디폴트 (LLM 에러 시에도 UI가 깨지지 않도록)
+        raw_resp = {
+            "content": json.dumps({
+                "summary": "생성 실패로 간단 요약만 제공합니다.",
+                "issues": [],
+                "action_plan": [],
+                "sample_edits": [],
+                "reasoning_brief": [],
+                "one_liner": "요청 처리 중 오류 발생.",
+            }, ensure_ascii=False)
         }
 
-        saved_path = _save_result(payload_for_save)
+    # 1-1) 텍스트 안전 추출
+    gen_text = extract_text(raw_resp)
+    # 1-2) JSON 파싱(코드펜스/주석 복구 포함)
+    gen_json = safe_json(gen_text)
+    # 1-3) 유효 JSON 문자열 확보 (저장/검증용)
+    draft_json_str = ensure_json_string(gen_json if gen_json else gen_text)
 
-        # --- 5) 응답 ---
-        return GenerateResponse(
-            final_md=final_md,
-            meta=payload_for_save["meta"],
-            saved_path=saved_path,
-            draft=draft_json if ENABLE_DEBUG_RETURN else None,
-            target_rubrics=target_rubrics if ENABLE_DEBUG_RETURN else None,
-            elite_gaps_preview=elite_gaps_preview if ENABLE_DEBUG_RETURN else None,
-        )
+    # 2) Verifier 단계: LLM 재호출 금지 — 서버에서 최종 MD 조립
+    final_md = create_verifier_prompt(original_text, draft_json_str)
 
-    except Exception as e:
-        tb = traceback.format_exc(limit=2)
-        raise HTTPException(
-            status_code=500,
-            detail={
-                "error": str(e),
-                "trace": tb,
-            },
-        )
+    # 3) 응답 구성 (프론트 호환 키 ai_md/ai_json/final_markdown 항상 포함)
+    try:
+        parsed_for_front = json.loads(draft_json_str) if draft_json_str else {}
+    except Exception:
+        parsed_for_front = {}
+
+    return GenerateResponse(
+        final_md=final_md,
+        final_markdown=final_md,         # ✅ 프론트 Feedback.jsx 호환
+        ai_md=final_md,                  # (레거시) 프론트가 aiMd만 읽어도 보임
+        ai_json=parsed_for_front,        # JSON 뷰가 필요하면 여기 사용s
+        meta=req.meta or {},
+        draft=draft_json_str,
+        target_rubrics=target_rubrics or None,
+        elite_gaps_preview=elite_gaps or None,
+    )

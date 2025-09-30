@@ -1,163 +1,208 @@
-# backend/apps/feedback/prompt_feedback.py
 from __future__ import annotations
-import json
-from textwrap import dedent
-from typing import Dict, List, Optional, Any
+import json, re
+from typing import Any, Dict, List, Optional, Tuple
 
-# ------------------------------------------------------------
-#  피드백 설계 철학 (요약)
-#  - Summary: 2~3문장, 지표 연결된 강점/개선 핵심만.
-#  - Issues: 국어학 축(lexicon/morphology/syntax/cohesion/discourse/readability),
-#            각 항목에 현상명·국어학 근거·지표연결(metric_link)·효과·전→후 수정안.
-#  - Evidence/Plan 숫자표는 미노출. hidden_data는 출력 금지.
-# ------------------------------------------------------------
+def extract_text(resp: Dict[str, Any]) -> str:
+    if not isinstance(resp, dict):
+        return ""
+    if resp.get("output_text"):
+        return resp["output_text"]
+    if resp.get("output"):
+        for blk in resp["output"]:
+            for c in blk.get("content", []):
+                if isinstance(c, dict) and "text" in c:
+                    return c["text"]
+    if resp.get("choices"):
+        msg = resp["choices"][0].get("message", {})
+        if "content" in msg and isinstance(msg["content"], str):
+            return msg["content"]
+    if isinstance(resp.get("content"), str):
+        return resp["content"]
+    return ""
 
-# =========================
-#  Generator Prompt
-# =========================
-def create_generator_prompt(
-    original_text: str,
-    feat29: Optional[Dict[str, float]] = None,
-    rubric_scores: Optional[Dict[str, float]] = None,
-    top_k_features: Optional[List[str]] = None,
-    target_rubrics: Optional[List[str]] = None,
-    elite_gaps_table: Optional[List[Dict[str, Any]]] = None,
-) -> str:
-    feat_json   = json.dumps(feat29 or {}, ensure_ascii=False, indent=2)
-    rubric_json = json.dumps(rubric_scores or {}, ensure_ascii=False, indent=2)
-    topk_json   = json.dumps(top_k_features or [], ensure_ascii=False, indent=2)
-    target_json = json.dumps(target_rubrics or [], ensure_ascii=False, indent=2)
-    gaps_json   = json.dumps(elite_gaps_table or [], ensure_ascii=False, indent=2)
-
-    return dedent(f"""
-    너는 **국어학 기반 한국어 글쓰기 컨설턴트**다. 아래 **JSON 템플릿의 빈 값만** 채워서 **JSON만** 반환한다.
-    (서문/마크다운/코드블록/자유문 금지)
-
-    [hidden_data]
-    target_rubrics: {target_json}
-    elite_gaps: {gaps_json}
-    // 각 row: feature, label_ko, desc_ko_llm, value, elite_center, z_like, status, suggest, strength
-
-    [절대 규칙]
-    1) 출력은 아래 섹션들만 포함한다: summary / issues[] / action_plan[] / sample_edits[] / reasoning_brief[] / one_liner
-    2) **metric_link는 hidden_data.elite_gaps[].feature 중에서만 선택**한다. **grade_* 지표 사용 금지.**
-    3) 각 이슈는 반드시 **target_rubrics** 중 하나에 귀속한다(두 루브릭 이외 금지).
-    4) 지표 의미 설명은 **label_ko / desc_ko_llm**을 참고하되, 수치/표는 노출하지 않는다.
-    5) 수정안은 규칙 기반 **전→후** 한 줄로, 과도한 재창작 금지. 모호어(어색/자연스럽게 등) 금지.
-
-    [원문]
-    {original_text}
-
-    [참고 블록(출력에 노출 금지)]
-    features: {feat_json}
-    rubric: {rubric_json}
-    top_k_features: {topk_json}
-
-    [템플릿]
-    {{
-      "summary": "",   // 2~3문장: 강점 1~2 + 개선 1~2 (지표 연결)
-      "issues": [
-        {{
-          "rubric": "",                // target_rubrics 중 하나 (영문 키)
-          "type": "lexicon|morphology|syntax|cohesion|discourse|readability",
-          "phenomenon": "",
-          "metric_link": "",           // ← hidden_data.elite_gaps.feature 중에서만
-          "why": "",                   // 독해/논증/톤 영향
-          "suggestion": ""             // 전: …  후: …
-        }}
-      ],
-      "action_plan": [],               // 2~4개: 규칙·행동 중심
-      "sample_edits": [],              // 전→후 예시 1~3개
-      "reasoning_brief": [],           // 2~4줄: 지표-루브릭 연결 근거 요약
-      "one_liner": ""                  // 한 줄 요약
-    }}
-    """).strip()
-
-
-# =========================
-#  Verifier Prompt
-# =========================
-def create_verifier_prompt(original_text: str, draft_json: str) -> str:
-    """
-    초안(JSON 문자열)을 검토해 **최종 Markdown**만 출력한다.
-    - features/rubric/top_k_features 등은 최종 출력에 포함하지 않는다.
-    - 섹션 6개(순서 고정):
-      ## 타깃 루브릭 요약
-      ## 핵심 이슈
-      ## 수정 지침 (액션 플랜)
-      ## 샘플 문장 수정
-      ## 간결 근거 (Reasoning – brief)
-      ## 한 줄 요약
-    - metric_link는 draft의 값을 유지하되, 포맷/간결성만 정돈한다.
-    """
-    obj = _safe_json(draft_json)
-    issues = obj.get("issues", [])
-    summary = obj.get("summary", "")
-    action_plan = obj.get("action_plan", [])
-    sample_edits = obj.get("sample_edits", [])
-    reasoning_brief = obj.get("reasoning_brief", [])
-    one_liner = obj.get("one_liner", "")
-
-    # 타깃 루브릭 추출(issues에서 수집)
-    target_rubrics = []
-    for it in issues:
-        r = it.get("rubric")
-        if r and r not in target_rubrics:
-            target_rubrics.append(r)
-
-    # Markdown 조립
-    lines = []
-    lines.append("## 타깃 루브릭 요약")
-    if summary:
-        lines.append(summary.strip())
-
-    lines.append("\n## 핵심 이슈")
-    for it in issues:
-        rubric = it.get("rubric", "")
-        tp = it.get("type", "")
-        ph = it.get("phenomenon", "")
-        ml = it.get("metric_link", "")
-        why = it.get("why", "")
-        sug = it.get("suggestion", "")
-        lines.append(f"- **rubric**: {rubric} / **type**: {tp} / **phenomenon**: {ph} / **metric_link**: {ml} / **why**: {why} / **suggestion**: {sug}")
-
-    lines.append("\n## 수정 지침 (액션 플랜)")
-    for i, step in enumerate(action_plan, 1):
-        lines.append(f"{i}) {step}")
-
-    lines.append("\n## 샘플 문장 수정")
-    for s in sample_edits:
-        lines.append(f"- {s}")
-
-    lines.append("\n## 간결 근거 (Reasoning – brief)")
-    for s in reasoning_brief:
-        lines.append(f"- {s}")
-
-    lines.append("\n## 한 줄 요약")
-    lines.append(one_liner.strip())
-
-    return "\n".join(lines).strip()
-
-
-# =========================
-#  JSON 복구 유틸
-# =========================
-def _safe_json(obj_or_str: str) -> dict:
-    s = (obj_or_str or "").strip()
-    if not s:
+def safe_json(text: str) -> Dict[str, Any]:
+    if not text:
         return {}
-    if s.startswith("```"):
-        # 코드블록 탈피
-        s = s.strip("`")
-        nl = s.find("\n")
-        if nl != -1:
-            s = s[nl + 1 :].strip()
-    l = s.find("{")
-    r = s.rfind("}")
-    if l != -1 and r != -1 and r > l:
-        s = s[l : r + 1]
+    t = text.strip()
+    t = re.sub(r"^```(?:json)?\s*|\s*```$", "", t, flags=re.S)
+    m = re.search(r"\{.*\}", t, flags=re.S)
+    if m:
+        t = m.group(0)
+    t = re.sub(r"//.*?$", "", t, flags=re.M)
     try:
-        return json.loads(s)
+        return json.loads(t)
     except Exception:
-        # 간이 복구 실패 시 빈 객체
         return {}
+
+def ensure_json_string(obj_or_str: Any) -> str:
+    if isinstance(obj_or_str, dict):
+        return json.dumps(obj_or_str, ensure_ascii=False)
+    if isinstance(obj_or_str, str):
+        js = safe_json(obj_or_str)
+        if js:
+            return json.dumps(js, ensure_ascii=False)
+        return "{}"
+    return "{}"
+
+TEMPLATE_JSON_ONLY = """너는 **국어학 기반 한국어 글쓰기 컨설턴트**다. 오직 JSON만 출력한다(마크다운/서문/코드블록 금지).
+
+[hidden_data]
+target_rubrics: {target_rubrics}
+elite_gaps: {elite_gaps}
+original_text: {original_text}
+
+[절대 규칙]
+1) 출력 필드: summary, issues[], action_plan[], sample_edits[], reasoning_brief[], one_liner (필수)
+2) issues[].metric_link는 elite_gaps[].feature 중 하나여야 한다(철자 정확히 일치).
+3) 각 issue는 반드시 original_text에서 **증거 문장**을 최소 1개 지정한다
+   - evidence.sent_idx: 0부터 시작하는 문장 인덱스
+   - evidence.span: 해당 문장 내 수정 대상 원문 구절(정확한 서브스트링)
+4) 각 issue는 다음을 모두 포함: rubric, type, phenomenon, metric_link, why, suggestion,
+   metric_current, metric_target, expected_effect
+   - metric_current = elite_gaps.value
+   - metric_target: direction이 higher_is_better면 elite_center 이상(필요시 +5~10% 여유),
+                    lower_is_better면 elite_center 이하(필요시 -5~10% 여유)
+5) sample_edits[]는 최소 2개. 각 항목은 반드시:
+   - metric_link를 1개 명시
+   - sent_idx, before(원문 그대로), after(수정안), edit_ops[치환/삽입/삭제/분할/결합 등] 포함
+6) 금지어: "자연스럽게", "어색함", "좀 더", "등등", "전반적으로" 같은 모호어 사용 금지.
+   수정안은 **구체 명사/동사**로 작성하고, 불필요한 재창작 금지(원문의 화법과 정보 보존).
+7) issues는 최소 4개. 서로 다른 metric_link를 **최소 3개 이상** 포함.
+8) one_liner는 20자 내외의 한국어 명령형 한 줄.
+9) 오직 JSON만 출력. 주석/여분 텍스트/코드펜스 금지.
+
+[템플릿]
+{json_template}
+"""
+
+JSON_TEMPLATE_OBJ = {
+  "summary": "",
+  "issues": [
+    {
+      "rubric": "",   # target_rubrics 중 하나
+      "type": "lexicon|morphology|syntax|cohesion|discourse|readability",
+      "phenomenon": "",
+      "metric_link": "",         # elite_gaps.feature
+      "metric_current": 0.0,     # elite_gaps.value
+      "metric_target": 0.0,      # 규칙 4에 따라 산정
+      "evidence": { "sent_idx": 0, "span": "" },
+      "why": "",
+      "suggestion": "",          # ‘무엇을 어떻게’ (금지어 금지)
+      "expected_effect": ""      # 수정이 metric과 rubric에 주는 효과 1문장
+    }
+  ],
+  "action_plan": [
+    # 예: "문장 3에서 '초딩'을 '초등학생'으로 치환(lexicon), 동일 문단에서 동의어 1개 추가"
+  ],
+  "sample_edits": [
+    {
+      "metric_link": "",
+      "sent_idx": 0,
+      "before": "",
+      "after": "",
+      "edit_ops": ["치환","삽입"]  # 편집 연산 명시
+    }
+  ],
+  "reasoning_brief": [],
+  "one_liner": ""
+}
+
+def create_generator_prompt(original_text: str,
+                            target_rubrics: List[str],
+                            elite_gaps: List[Dict[str, Any]]) -> str:
+    prompt = TEMPLATE_JSON_ONLY.format(
+        target_rubrics=target_rubrics,
+        elite_gaps=elite_gaps,
+        original_text=original_text,
+        json_template=json.dumps(JSON_TEMPLATE_OBJ, ensure_ascii=False, indent=2)
+    )
+    return prompt
+
+def create_verifier_prompt(original_text: str, draft_json_str: str) -> str:
+    try:
+        data = json.loads(draft_json_str) if draft_json_str else {}
+    except Exception:
+        data = {}
+
+    summary = data.get("summary") or ""
+    issues: List[Dict[str, Any]] = data.get("issues") or []
+    action_plan: List[str] = data.get("action_plan") or []
+    sample_edits: List[str] = data.get("sample_edits") or []
+    reasoning_brief: List[str] = data.get("reasoning_brief") or []
+    one_liner = data.get("one_liner") or ""
+
+    lines: List[str] = []
+
+    lines.append("## 📝 요약")
+    lines.append(summary or "요약 없음.")
+    lines.append("\n---")
+
+    lines.append("\n## 🔍 핵심 이슈")
+    if issues:
+        for it in issues:
+            mc = it.get("metric_current", 0.0)
+            mt = it.get("metric_target", 0.0)
+            mc_str = f"{mc:.4f}" if isinstance(mc, float) else str(mc)
+            mt_str = f"{mt:.4f}" if isinstance(mt, float) else str(mt)
+            
+            ev = it.get("evidence", {}) or {}
+            sidx = ev.get("sent_idx", "N/A")
+            span = ev.get("span", "N/A")
+            issue_type = it.get("type", "N/A")
+
+            issue_card = f"""
+### 🧐 현상: {it.get('phenomenon', 'N/A')}
+
+* **관련 평가항목**: `{it.get('rubric', 'N/A')}` (유형: `{issue_type}`)
+* **관련 지표**: `{it.get('metric_link', 'N/A')}` (`{mc_str}` → `{mt_str}` 목표)
+* **문제 지점(Evidence)**: 문장 #{sidx}, "{span}"
+
+> **문제 원인**
+> {it.get('why', '내용 없음.')}
+>
+> **개선 제안 💡**
+> {it.get('suggestion', '내용 없음.')}
+>
+> **기대 효과 🎯**
+> {it.get('expected_effect', '내용 없음.')}
+"""
+            lines.append(issue_card)
+            lines.append("\n---")
+    else:
+        lines.append("- (이슈 없음)")
+
+    lines.append("\n## 📋 수정 지침 (액션 플랜)")
+    if action_plan:
+        for i, s in enumerate(action_plan, 1):
+            lines.append(f"{i}. {s}")
+    else:
+        lines.append("- (없음)")
+    lines.append("\n---")
+
+    lines.append("\n## ✍️ 샘플 문장 수정")
+    if sample_edits:
+        for s in sample_edits:
+            ops = ", ".join(s.get("edit_ops", []) or [])
+            sample_card = f"""
+**[관련 지표: `{s.get('metric_link', 'N/A')}`]** (문장 #{s.get('sent_idx', 'N/A')} | 수정 방식: {ops})
+> **Before:** {s.get('before', '')}
+>
+> **After:** {s.get('after', '')}
+"""
+            lines.append(sample_card)
+    else:
+        lines.append("- (없음)")
+    lines.append("\n---")
+    
+    lines.append("\n## 🧠 간결 근거 (Reasoning – brief)")
+    if reasoning_brief:
+        for s in reasoning_brief:
+            lines.append(f"- {s}")
+    else:
+        lines.append("- (없음)")
+    lines.append("\n---")
+
+    lines.append("\n## 💬 한 줄 요약")
+    lines.append(one_liner or "(없음)")
+
+    return "\n".join(lines)
