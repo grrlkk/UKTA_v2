@@ -1,9 +1,10 @@
+# /home/ukta/KorCAT-web_v2/backend/apps/routers.py
+
 import datetime
 from typing import List
 
 import apps.cohesion.textpreprocess as tp
 from apps.cohesion.process import process
-from apps.cohesion.essay_scoring.essay_scoring import score_results
 import torch
 from apps.morph.morph import mecab
 from apps.morph.bareun import bareun
@@ -13,7 +14,17 @@ from pathlib import Path
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from openai import OpenAI
+import logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
+# >>> 채점 기능을 위해 필요한 임포트
+from apps.cohesion.essay_scoring.essay_scoring import (
+    load_essay_model,
+    score_results_with_feats,
+)
+# ❌ 자동 피드백 호출을 제거했으므로 아래 임포트는 더 이상 필요 없습니다.
+# from apps.feedback.api import generate_feedback, FeedbackReq
 
 # pydantic.json.ENCODERS_BY_TYPE[ObjectId] = str
 router = APIRouter()
@@ -28,6 +39,9 @@ client = OpenAI(api_key=OPENAI_KEY) if OPENAI_KEY else None
 
 morph = bareun()
 
+# >>> KoBERT/GRU 모델은 서버 기동 시 1회 로드(속도 ↑)
+_DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+_BERT, _GRU, _TOK = load_essay_model(_DEVICE)
 
 # POST: upload multiple .txt files =============================
 @router.post("/cohesion", tags=["cohesion"])
@@ -42,25 +56,45 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 
         now = datetime.datetime.now()
 
-        results = process(contents.decode("UTF8"))
+        # 1) 형태소/자질 추출
+        results = process(contents.decode("UTF8"))  # ← extracted_features 구조
 
+        # 2) (선택) CUDA 캐시 정리
         # try:
         #     torch.cuda.empty_cache()
-        #     essay_score = score_results(results)
-        #     results["essay_score"] = essay_score
-        # except Exception as e:
-        #     print(f"Error scoring essay: {e}")
-        #     results["essay_score"] = "error"
+        # except Exception:
+        #     pass
 
+        # 3) 채점 + 원문/feat29까지 얻기
+        try:
+            rs = score_results_with_feats(results, _BERT, _GRU, _TOK)
+            f29 = rs.get("feat29")
+            logger.info("[essay_score OK] keys=%s", list(rs.keys()))
+            logger.info("[feat29 exist=%s size=%s sample_keys=%s]",
+                        isinstance(f29, dict), len(f29 or {}), list((f29 or {}).keys())[:5])
+        except Exception as e:
+            # 문제 생겨도 저장은 하되, 에러 표시
+            rs = {"error": str(e)}
+            logger.exception("[essay_score ERROR] %s", e)
+
+        
         process_time = datetime.datetime.now() - now
 
+        rs.pop("text", None)
+        
+        # results 내부로 병합
+        results = results or {}
+        results["essay_score"] = rs
+        logger.info("[merge] results.has essay_score=%s", "essay_score" in results)
+        
+        
         upload = {
             "_id": now.strftime("%Y-%m-%d-%H:%M:%S") + "-C" + str(cnt),
             "upload_date": now,
             "process_time": process_time.total_seconds(),
             "filename": file.filename,
             "contents": contents.decode("UTF8"),
-            "results": results,
+            "results": results,  # ← 이제 results.essay_score 로 접근 가능
         }
         cnt += 1
 
@@ -70,7 +104,6 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
         )
 
     return {"filenames": [file.filename for file in files]}
-
 
 @router.post("/morpheme", tags=["morpheme"])
 async def upload_files(request: Request, files: List[UploadFile] = File(...)):
@@ -110,23 +143,19 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
 
     return {"filenames": [file.filename for file in files]}
 
-
 # GET: list all files; list file by ID =========================
 @router.get("/cohesion", response_description="List all files", tags=["cohesion"])
 async def list_files(request: Request):
     files = []
-
     for doc in await request.app.mongodb["cohesion"].find().to_list(length=100):
         files.append(doc)
     return files
-
 
 @router.get(
     "/cohesion/simple", response_description="List all files", tags=["cohesion"]
 )
 async def list_files(request: Request):
     files = []
-
     for doc in (
         await request.app.mongodb["cohesion"]
         .find(
@@ -144,15 +173,12 @@ async def list_files(request: Request):
         files.append(doc)
     return files
 
-
 @router.get("/morpheme", response_description="List all files", tags=["morpheme"])
 async def list_files(request: Request):
     files = []
-
     for doc in await request.app.mongodb["morpheme"].find().to_list(length=100):
         files.append(doc)
     return files
-
 
 @router.get(
     "/cohesion/{id}", response_description="Get a single file", tags=["cohesion"]
@@ -162,9 +188,7 @@ async def show_file(id: str, request: Request):
         file := await request.app.mongodb["cohesion"].find_one({"_id": id})
     ) is not None:
         return file
-
     raise HTTPException(status_code=404, detail=f"File {id} not found")
-
 
 @router.get(
     "/morpheme/{id}", response_description="Get a single file", tags=["morpheme"]
@@ -174,25 +198,20 @@ async def show_file(id: str, request: Request):
         file := await request.app.mongodb["morpheme"].find_one({"_id": id})
     ) is not None:
         return file
-
     raise HTTPException(status_code=404, detail=f"File {id} not found")
-
 
 # delete file by ID ============================================
 @router.delete("/cohesion/{id}", response_description="Delete file", tags=["cohesion"])
 async def delete_file_cohesion(id: str, request: Request):
     delete_result = await request.app.mongodb["cohesion"].delete_one({"_id": id})
-
     if delete_result.deleted_count == 1:
         return Response(status_code=204)
     raise HTTPException(status_code=404, detail=f"Task {id} not found")
-
 
 # delete file by ID ============================================
 @router.delete("/morpheme/{id}", response_description="Delete file", tags=["morpheme"])
 async def delete_file_morpheme(id: str, request: Request):
     delete_result = await request.app.mongodb["morpheme"].delete_one({"_id": id})
-
     if delete_result.deleted_count == 1:
         return Response(status_code=204)
     raise HTTPException(status_code=404, detail=f"Task {id} not found")
