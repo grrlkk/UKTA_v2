@@ -1,4 +1,5 @@
 # /home/ukta/KorCAT-web_v2/backend/apps/cohesion/essay_scoring/essay_scoring.py
+# -*- coding: utf-8 -*-
 
 import json
 import pandas as pd
@@ -10,11 +11,9 @@ from pathlib import Path
 import collections
 import torch.nn.functional as F
 
-
 import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-
 
 # ------------------------ 경로/스케일러 공통 ------------------------
 BASE = Path(__file__).parent
@@ -72,7 +71,6 @@ class GRUScoreModuleWithLNUKTAAttention(nn.Module):
         out = self.sigmoid(out)
         return out, attn
 
-
 # ------------------------- voc_grades → ratio --------------------------
 def extract_grade_ratios(voc_grades):
     """
@@ -113,7 +111,6 @@ def extract_grade_ratios(voc_grades):
 
     return ratios
 
-
 # ----------------------------- 스코어링 ------------------------------
 def scoring(bert_model, gru_model, extracted_features, tokenizer):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -148,30 +145,35 @@ def scoring(bert_model, gru_model, extracted_features, tokenizer):
     scaler_feats = scaler["feature"].tolist()
     src_map = {k: v for k, v in zip(feature_list, sample_essay_features)}
 
-    # === 여기부터 추가: 스케일러에 있지만 입력에 없는 자질 찾기 ===
+    # === 추가: 스케일러에 있지만 입력에 없는 자질 찾기 ===
     missing = [feat for feat in scaler_feats if feat not in src_map]
     if missing:
-        logger.warning("[essay_score] 누락 자질 %d개(스케일러에는 있으나 입력에서 없음). 예시: %s",
-                    len(missing), missing[:10])  # 길면 앞 10개만
-        # 전부 보고 싶으면 다음 줄 주석 해제
+        logger.warning(
+            "[essay_score] 누락 자질 %d개(스케일러에는 있으나 입력에서 없음). 예시: %s",
+            len(missing), missing[:10]
+        )
         logger.debug("[essay_score] 전체 누락 자질: %s", missing)
     else:
         logger.info("[essay_score] 누락 자질 없음. (입력 자질이 스케일러를 모두 커버)")
-# === 추가 끝 ===
+    # === 추가 끝 ===
 
     # 4) 표준화 — 스케일러 순서대로 값 채우기(없으면 0.0 임퓨트)
     ordered_scaled = []
     for feat in scaler_feats:
         row = scaler.loc[scaler["feature"] == feat].iloc[0]
         mean, scale = float(row["mean"]), float(row["scale"] or 1.0)
-        val = src_map.get(feat, row['mean'])
+        val = src_map.get(feat, row["mean"])
         ordered_scaled.append((val - mean) / (scale if scale != 0 else 1.0))
 
     scaled_features = torch.tensor([ordered_scaled], dtype=torch.float32, device=device)
+
+    assert len(scaler_feats) == scaled_features.shape[1], \
+        f"ukt_a_dim mismatch: scaler={len(scaler_feats)} vs tensor={scaled_features.shape[1]}"
+
     feature_list_for_attn = np.array(scaler_feats)  # 주의: attn과 동일 차원
 
     # 5) KoBERT 임베딩 ([CLS])
-    max_length = 256                       ## 400으로 KoBERT 입력 토큰 증가 -> 메모리 터져서 256으로 줄여버림
+    max_length = 256  # 400→메모리 이슈로 256
     inputs = tokenizer.batch_encode_plus(
         sentences, max_length=max_length, padding="max_length", truncation=True
     )
@@ -199,11 +201,9 @@ def scoring(bert_model, gru_model, extracted_features, tokenizer):
     top_k_features = get_topK_features(attn, feature_list_for_attn)
     return output, top_k_features
 
-
 def get_topK_features(attention, feature_list, k=10):
     idx = np.argsort(attention)[::-1]
     return feature_list[idx[:k]]
-
 
 # --------------------------- 로딩/외부 API ---------------------------
 def load_essay_model(device):
@@ -215,18 +215,17 @@ def load_essay_model(device):
     ukt_a_dim = len(scaler["feature"])  # 스케일러 feature 개수와 일치
 
     gru_model = GRUScoreModuleWithLNUKTAAttention(
-        output_dim=11,          # 루브릭 11개
-        hidden_dim=256,          # 학습 시 사용한 값에 맞춤
-        ukt_a_dim=ukt_a_dim,    # 스케일러 feature 개수와 일치
+        output_dim=11,         # 루브릭 11개
+        hidden_dim=256,        # 학습 시 사용한 값에 맞춤
+        ukt_a_dim=ukt_a_dim,   # 스케일러 feature 개수와 일치
         dropout=0.5,
     ).to(device)
 
-    weight_path = BASE / "model" / "not_topic_model.pth"  ### 프롬프트 사용 안한 최신 모델
+    weight_path = BASE / "model" / "not_topic_model.pth"  # 프롬프트 사용 안한 최신 모델
     state = torch.load(weight_path, map_location=device)
     gru_model.load_state_dict(state)
     gru_model.eval()
     return bert_model, gru_model, tokenizer
-
 
 # ------------------------- JSON 직렬화 유틸 --------------------------
 def _to_jsonable(x):
@@ -236,6 +235,66 @@ def _to_jsonable(x):
         return x.item()
     return x
 
+# ===================== [추가] 원문 + 29자질 추출 헬퍼 =====================
+def _collect_feat29_and_text(extracted_features):
+    """
+    반환:
+      - feat29_raw: {feature_name: float}  # 스케일러(feature/scaler_notlabel.csv) 순서 기준으로 채움
+      - essay_text: str                    # 문장들을 합쳐 원문
+    """
+    # 1) 원문 텍스트
+    sentences = [s["text"]["content"] for s in extracted_features["morpheme"]["sentences"]]
+    essay_text = "\n".join(sentences)
+
+    # 2) 자질 수집(숫자형만)
+    keys = [
+        "ttr", "similarity", "adjacency", "basic_count", "basic_density",
+        "NDW", "readability", "sentenceLvl", "sentenceLvlRep", "basic_level",
+    ]
+    raw_map = {}
+    for key in keys:
+        payload = extracted_features.get(key, {})
+        if isinstance(payload, dict):
+            for k, v in payload.items():
+                if isinstance(v, (int, float)):
+                    raw_map[k] = float(v)
+
+    # 3) voc_grades → 4개 비율 추가
+    vg = extract_grade_ratios(extracted_features.get("voc_grades"))
+    for k, v in vg.items():
+        raw_map[k] = float(v)
+
+    # 4) 스케일러 기준으로 순서/누락 처리(없으면 스케일러 평균으로 임퓨트)
+    scaler = _read_scaler(SCALER_CSV)
+    feat29_raw = {}
+    for feat in scaler["feature"].tolist():
+        if feat in raw_map:
+            feat29_raw[feat] = raw_map[feat]
+        else:
+            mean_val = float(scaler.loc[scaler["feature"] == feat, "mean"].iloc[0])
+            feat29_raw[feat] = mean_val
+
+    return feat29_raw, essay_text
+
+def score_results_with_feats(extracted_features, bert_model, gru_model, tokenizer):
+    """
+    기존 score_results와 동일 + feat29, text까지 함께 반환
+    """
+    output, top_k_features = scoring(bert_model, gru_model, extracted_features, tokenizer)
+
+    rubric = [
+        "grammar","vocabulary","sentence_expression","inter_paragraph_structure",
+        "intra_paragraph_structure","structural_consistency","length",
+        "topic_clarity","originality","prompt_comprehension","narrative",
+    ]
+    result = {rubric[i]: int(output[i]) for i in range(11)}
+    result["top_k_features"] = _to_jsonable(top_k_features)
+
+    # ✨ 추가: 29자질 원시값 + 원문
+    feat29_raw, essay_text = _collect_feat29_and_text(extracted_features)
+    result["feat29"] = feat29_raw
+    result["text"] = essay_text
+    return result
 
 # ----------------------------- 외부 호출 -----------------------------
 def score_results(extracted_features, bert_model, gru_model, tokenizer):
@@ -263,7 +322,6 @@ def score_results(extracted_features, bert_model, gru_model, tokenizer):
 
     return result
 
-
 # ----------------------------- 단독 테스트 -----------------------------
 if __name__ == "__main__":
     # 예제 입력 로드
@@ -273,9 +331,8 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     bert_model, gru_model, tokenizer = load_essay_model(device)
 
+    # 기존 결과
     result = score_results(extracted_features, bert_model, gru_model, tokenizer)
-
-    # 콘솔 확인
     rubric_ko = [
         "문법","단어","문장 표현","문단 내 구조의 적절성","문단 간 구조의 적절성",
         "구조의 일관성","분량","주제의 명료성","참신성","프롬프트 독해력","서술력",
@@ -286,3 +343,8 @@ if __name__ == "__main__":
         "topic_clarity","originality","prompt_comprehension","narrative",
     ])})
     print("top_k_features:", result["top_k_features"])
+
+    # 추가된 결과(원문+feat29 포함)
+    result2 = score_results_with_feats(extracted_features, bert_model, gru_model, tokenizer)
+    print("text (head):", result2["text"][:120].replace("\n"," ") + "...")
+    print("feat29 keys:", list(result2["feat29"].keys())[:10], " ... (total:", len(result2["feat29"]), ")")
