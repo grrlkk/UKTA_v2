@@ -15,7 +15,6 @@ export default function Feedback() {
   const rootRef = useRef(null);
   const location = useLocation();
 
-  // 🔻 로컬 loading state 제거 (전역 isLoading 사용)
   const [error, setError] = useState("");
   const [aiMd, setAiMd] = useState("");
   const [payload, setPayload] = useState(null);
@@ -62,6 +61,7 @@ export default function Feedback() {
     const mainInput = root.querySelector("#mainText");
     if (!mainInput) return;
 
+    // 1. 이전 페이지에서 넘어온 전체 분석 결과(payload)를 가져옵니다.
     let p = location.state?.payload;
     if (!p) {
       try {
@@ -71,31 +71,65 @@ export default function Feedback() {
     }
     setPayload(p || null);
 
-    const original = p?.results?.correction?.origin ?? p?.contents ?? "";
+    // 2. payload에서 원문을 추출하여 화면에 표시합니다.
+    const original = p?.essay_score?.text ?? p?.contents ?? "";
     mainInput.value = original || "";
 
-    async function run() {
+    // 3. 피드백 생성 함수 정의
+    async function runFeedbackGeneration(payloadData) {
+      if (!payloadData?.essay_score) {
+        setError("채점 데이터가 없어 피드백을 생성할 수 없습니다.");
+        return;
+      }
+
       setError("");
-      setIsLoading(true);      // 🔹 전역 로딩 ON
+      setIsLoading(true);
       setAiMd("");
       try {
+        const rs = payloadData.essay_score; // 채점 결과 전체를 사용
+
+        //  API 요청 본문(body)에 원문, 자질, 루브릭 점수를 모두 담습니다.
+        const requestBody = {
+          original_text: rs.text,
+          feat29: rs.feat29,
+          rubric_scores: {
+            grammar: rs.grammar,
+            vocabulary: rs.vocabulary,
+            sentence_expression: rs.sentence_expression,
+            inter_paragraph_structure: rs.inter_paragraph_structure,
+            intra_paragraph_structure: rs.intra_paragraph_structure,
+            structural_consistency: rs.structural_consistency,
+            length: rs.length,
+            topic_clarity: rs.topic_clarity,
+            originality: rs.originality,
+            prompt_comprehension: rs.prompt_comprehension,
+            narrative: rs.narrative,
+          },
+          top_k_features: rs.top_k_features || [],
+        };
+        
         const base = process.env.REACT_APP_API_URI || "";
         const res = await fetch(`${base}/feedback/generate`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ original_text: original }),
+          body: JSON.stringify(requestBody), // 모든 정보가 담긴 body 사용
         });
+
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         setAiMd(data.final_markdown || "");
       } catch (e) {
         setError(String(e?.message || e));
       } finally {
-        setIsLoading(false);   // 🔹 전역 로딩 OFF
+        setIsLoading(false);
       }
     }
+    
+    // 4. payload 데이터가 있으면 자동으로 피드백 생성을 실행합니다.
+    if (p) {
+        runFeedbackGeneration(p);
+    }
 
-    if (original?.trim()) run();
   }, [location.state, setIsLoading]);
 
   // === 어휘 등급 분포: 1~5 + NA (등장빈도 cnt 가중) ===
@@ -107,7 +141,7 @@ export default function Feedback() {
     let total = 0;
     for (const [gradeRaw, entries] of vg) {
       const grade = String(gradeRaw);
-      if (!["1","2","3","4","5"].includes(grade)) continue; // ✅ NA(-1/0 등) 제외
+      if (!["1","2","3","4","5"].includes(grade)) continue;
       if (!Array.isArray(entries)) continue;
       for (const e of entries) {
         const cnt = Number(e?.cnt) || 0;
