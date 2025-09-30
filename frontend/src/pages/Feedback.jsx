@@ -43,7 +43,7 @@ export default function Feedback() {
       $("#avglen").textContent = `${Math.round(words / sents) || 0} ${T("words_unit")}`;
 
       const quota = $("#quota");
-      if (noSpace.length >= 600) {
+      if (noSpace.length >= 1996) {
         quota.textContent = T("quota_ok");
         quota.className = "fb-badge fb-ok";
       } else {
@@ -290,7 +290,6 @@ export default function Feedback() {
             <div className="fb-stat-row"><span>{LABELS.paragraphs[language]}</span> <span id="paras">—</span></div>
             <div className="fb-stat-row"><span>{LABELS.avg_sentence_len[language]}</span> <span id="avglen">—</span></div>
             <div className="fb-stat-row"><span>{LABELS.quota_requirement[language]}</span> <span id="quota" className="fb-badge">—</span></div>
-            <div className="fb-stat-row"><span>{LABELS.estimated_score_title[language]}</span> <span className="fb-badge fb-ok">78~84</span></div>
 
             <div className="fb-section-title" style={{ marginTop: 16 }}>
               {LABELS.lex_dist_title[language]}
