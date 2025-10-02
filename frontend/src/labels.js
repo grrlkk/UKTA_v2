@@ -77,9 +77,10 @@ export const LABELS = {
     sentences: { ko: "문장 수", en: "Sentences" },
     paragraphs: { ko: "문단 수", en: "Paragraphs" },
     avg_sentence_len: { ko: "평균 문장 길이", en: "Avg. sentence length" },
-    quota_requirement: { ko: "과제 기준(≥600자)", en: "Requirement (≥600 chars)" },
+    quota_requirement: { ko: "과제 기준(≥1996자)", en: "Requirement (≥1996 chars)" },
     estimated_score_title: { ko: "예상 점수", en: "Estimated score" },
-
+    rubric_visual: {ko:"시각화", en:"Visualization"},
+    
     // 통계 값 단위/표현
     chars_unit: { ko: "자(공백 제외)", en: " chars (no spaces)" },
     count_unit: { ko: "개", en: "" }, // 영어는 보통 단위 생략
