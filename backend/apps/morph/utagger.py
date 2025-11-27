@@ -1,10 +1,22 @@
 ## /home/ukta/KorCAT-web_v2/backend/apps/morph/utagger.py
 import apps.morph.bareun as br
 import pandas as pd
+from pathlib import Path
+import sys
 
 # import pyutagger.downloader as ud
-import pyutagger.utagger as ut
-from pathlib import Path
+try:
+    import pyutagger.utagger as ut
+    PYUTAGGER_AVAILABLE = True
+except SystemExit as e:
+    # pyutagger는 설정 파일이 없으면 sys.exit(1)을 호출하므로 여기서 삼킨다.
+    print(f"Warning: pyutagger not available (config load failed): {e}", file=sys.stderr)
+    PYUTAGGER_AVAILABLE = False
+    ut = None
+except Exception as e:
+    print(f"Warning: pyutagger not available (macOS not supported): {e}", file=sys.stderr)
+    PYUTAGGER_AVAILABLE = False
+    ut = None
 
 # ud.install_utagger("utagger3")  # 유태거 3
 # ud.install_utagger("utagger4")  # 유태거 4
@@ -13,11 +25,13 @@ from pathlib import Path
 
 class utagger:
     def __init__(self):
+        if not PYUTAGGER_AVAILABLE or ut is None:
+            raise RuntimeError("pyutagger is not available on this system (macOS not supported)")
+
         self.utg4 = ut.utagger_loader("utagger4")
         self.utg4.load()
         if not self.utg4:
-            print("로드 실패")
-            print("failed to load")
+            raise RuntimeError("Failed to load utagger4 model")
 
         WORD_GRADES = Path(__file__).parent / "word_grades.csv"
         self.word_grades = pd.read_csv(WORD_GRADES)

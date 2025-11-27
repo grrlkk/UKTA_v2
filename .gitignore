@@ -8,6 +8,7 @@
 *_api.txt
 *.log* 
 *.env
+/.env.docker
 backend/train.csv
 backend/apps/feedback/fb_result/
 backend/apps/feedback/top_user_dist

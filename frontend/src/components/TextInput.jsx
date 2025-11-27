@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLoadingContext } from "../contexts/LoadingContext";
 import { LABELS } from "../labels";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
+    const navigate = useNavigate();
     const [inputValue, setInputValue] = useState('');
     // 'selectedFile'과 'files'를 'files' 하나로 통합하여 관리합니다.
-    const [files, setFiles] = useState([]); 
+    const [files, setFiles] = useState([]);
     const { loading } = useLoadingContext();
     const { language } = useLanguage();
 
@@ -38,6 +40,8 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
         } finally {
             setUploadInProgress(false);
             handleClearInput();
+            // 분석 완료 후 자동으로 분석 결과 페이지로 이동
+            navigate('/analysis');
         }
     };
 
