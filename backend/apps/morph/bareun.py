@@ -9,11 +9,15 @@ class bareun:
 
     def __init__(self):
         api_key = os.getenv("BAREUN_API_KEY", "koba-QUS4QWA-2ASEQVQ-U55HLPY-R2E5UOA")
-        host = os.getenv("BAREUN_HOST", "localhost")
-        port = int(os.getenv("BAREUN_PORT", "5656"))
+        # 형태소 분석용 로컬 서버
+        tagger_host = os.getenv("BAREUN_HOST", "localhost")
+        tagger_port = int(os.getenv("BAREUN_PORT", "5656"))
+        # 맞춤법 교정용 클라우드 서버 (TLS, 포트 443)
+        corrector_host = os.getenv("BAREUN_CORRECTOR_HOST", "api.bareun.ai")
+        corrector_port = int(os.getenv("BAREUN_CORRECTOR_PORT", "443"))
         try:
-            self._tagger: Optional[Tagger] = Tagger(api_key, host, port)
-            self._corrector: Optional[Corrector] = Corrector(api_key, host, port)
+            self._tagger: Optional[Tagger] = Tagger(api_key, tagger_host, tagger_port)
+            self._corrector: Optional[Corrector] = Corrector(api_key, corrector_host, corrector_port)
         except Exception as exc:  # noqa: BLE001
             # 사용 시점에 명확히 실패시키기 위해 None으로 보관
             self._tagger = None
