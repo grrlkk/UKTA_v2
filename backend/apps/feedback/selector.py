@@ -3,6 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Dict, List, Any
 import json, re
+import logging
+
+logger = logging.getLogger(__name__)
 
 BASE = Path(__file__).resolve().parent
 ELITE_JSON = BASE / "top_user_dist" / "unified_feature_stats_v1.json"
@@ -19,8 +22,19 @@ RESERVE_FROM_TOPK = 2
 GRADE_RE = re.compile(r"^grade_", re.I)
 
 def _load_elite() -> dict:
-    with open(ELITE_JSON, "r", encoding="utf-8") as f:
-        return json.load(f)
+    """Load elite feature statistics. Returns empty dict if file not found."""
+    try:
+        with open(ELITE_JSON, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        logger.warning(
+            f"Elite statistics file not found: {ELITE_JSON}\n"
+            "Feedback generation will work with limited comparison features."
+        )
+        return {}
+    except Exception as e:
+        logger.error(f"Failed to load elite statistics: {e}")
+        return {}
 
 _ELITE = _load_elite()
 _FEATS_META: Dict[str, Any] = _ELITE.get("features", {}) or {}

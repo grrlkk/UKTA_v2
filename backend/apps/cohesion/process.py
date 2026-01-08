@@ -10,7 +10,13 @@ from concurrent.futures import ThreadPoolExecutor
 import torch
 from apps.cohesion.essay_scoring.essay_scoring import load_essay_model, score_results
 from apps.morph.bareun import bareun
-from apps.morph.utagger import utagger
+try:
+    from apps.morph.utagger import utagger
+    UTAGGER_AVAILABLE = True
+except Exception as e:
+    logging.warning(f"utagger module not available (macOS not supported): {e}")
+    UTAGGER_AVAILABLE = False
+    utagger = None
 from google.protobuf.json_format import MessageToDict
 from keybert import KeyBERT
 from transformers import BertModel
@@ -23,7 +29,7 @@ logging.basicConfig(level=logging.INFO)
 def initialize_models():
     with torch.no_grad():
         global key_model, kw_model, simil_model, device, morph, morph2, bert_model, gru_model, tokenizer
-        device = "cuda"
+        device = "cuda" if torch.cuda.is_available() else "cpu"
 
         key_model = BertModel.from_pretrained("skt/kobert-base-v1")
         kw_model = KeyBERT(model=key_model)
@@ -32,7 +38,15 @@ def initialize_models():
         simil_model.to(device)
 
         morph = bareun()
-        morph2 = utagger()
+        if UTAGGER_AVAILABLE and utagger is not None:
+            try:
+                morph2 = utagger()
+            except Exception as e:
+                logging.warning(f"utagger initialization failed: {e}")
+                morph2 = None
+        else:
+            logging.warning("utagger not available, vocabulary grading will be limited")
+            morph2 = None
 
         # kkma = inference.inf(text)
 
@@ -620,8 +634,12 @@ def process(
     voc_grades = []
 
     result["morpheme"] = morph.tags(sentences).as_json()
-    corrections = morph.correction(text)
-    result["correction"] = MessageToDict(corrections)
+    try:
+        corrections = morph.correction(text)
+        result["correction"] = MessageToDict(corrections)
+    except Exception as e:
+        logging.warning(f"Correction service not available: {e}")
+        result["correction"] = {}
 
     for idx, sentence in enumerate(sentences):
         inf = morph.pos(sentence)
@@ -632,7 +650,8 @@ def process(
         kkma_simple += inf_simple
         kkma_by_sent.append(inf)
 
-        voc_grades += morph2.grade(sentence)
+        if morph2 is not None:
+            voc_grades += morph2.grade(sentence)
 
     grade = []
     grade_dict = collections.defaultdict(list)

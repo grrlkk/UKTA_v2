@@ -31,7 +31,10 @@ origins = [
     "http://165.246.44.231:3030",
     "http://localhost",
     "http://localhost:3000",
+    "http://localhost:3800",
     "http://localhost:8000",
+    "http://ai.withrun.co.kr:3800",
+    "http://ai.withrun.co.kr:8000",
 ]
 
 app.add_middleware(
