@@ -90,7 +90,8 @@ const adjustScore = (key, value) => {
 const weightedMax = (key) => MAX_SCORES[key] ?? 0;
 
 // 최대 점수 총합(제외 항목 제외, 가중치 반영 전 상한 합)
-const TOTAL_MAX_INCLUDED = ORDERED_KEYS.reduce((acc, k) => acc + (MAX_SCORES[k] || 0), 0); // 93 (창의성 15 반영)
+const TOTAL_MAX_INCLUDED = ORDERED_KEYS.filter(k => k !== "Topic_relevance") 
+.reduce((acc, k) => acc + (MAX_SCORES[k] || 0), 0); // 93 (창의성 15 반영)
 
 // 기본점수: 내용 +5, 표현 +2
 const TOTAL_BONUS = 7;
@@ -110,7 +111,8 @@ const normalizedRadarArray = (essayScore) => ([
 
 // 총점: 제외 키 빼고 가중합 + 보너스
 const computeTotalAdjustedScore = (essayScore) =>
-  ORDERED_KEYS.reduce((a, k) => a + adjustScore(k, essayScore[k]), 0) + TOTAL_BONUS;
+  ORDERED_KEYS.filter(k => k !== "Topic_relevance")
+.reduce((a, k) => a + adjustScore(k, essayScore[k]), 0) + TOTAL_BONUS;
 
 const buildGroupMeta = () => {
   const meta = [];
