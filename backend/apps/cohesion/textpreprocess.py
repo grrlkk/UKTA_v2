@@ -4,23 +4,41 @@ from konlpy.tag import Kkma
 
 
 # text 문장 단위 분할하기
+# def splitText(text):
+#     sens = collections.deque()
+#     sentences = re.split("(?<=\. )|(?<=\? )|(?<=\! )|(?<=\n)", text)
+#     for item in sentences:
+#         if len(item) > 0 and item[0] != "\n" and item[0] != " " and item[0] != "\t" and item[0] != "\r":
+#             sens.append(item)
+#     return sens
+
+
+# # 단어 단위 분할
+# def splitSen(sentences):
+#     words = []
+#     for sen in sentences:
+#         tmp = sen.split(" ")
+#         for item in tmp:
+#             words.append(item)
+
+#     return words
+
+
 def splitText(text):
+    text = re.sub(r'V+', lambda m: ' ' * len(m.group()), text)  # V를 space로 변환
     sens = collections.deque()
-    sentences = re.split("(?<=\. )|(?<=\? )|(?<=\! )|(?<=\n)", text)
+    sentences = re.split(r"(?<=\.)\s+|(?<=\?)\s+|(?<=\!)\s+|(?<=\n)", text)
     for item in sentences:
         if len(item) > 0 and item[0] != "\n" and item[0] != " " and item[0] != "\t" and item[0] != "\r":
             sens.append(item)
     return sens
 
-
-# 단어 단위 분할
 def splitSen(sentences):
     words = []
     for sen in sentences:
-        tmp = sen.split(" ")
+        tmp = re.split(r'\s+', sen)  # 수정: 빈 문자열 방지
         for item in tmp:
             words.append(item)
-
     return words
 
 

@@ -283,14 +283,14 @@ def score_results_with_feats(extracted_features, bert_model, gru_model, tokenize
     output, top_k_features = scoring(bert_model, gru_model, extracted_features, tokenizer)
 
     rubric = [
-        "grammar","vocabulary","sentence_expression","inter_paragraph_structure",
-        "intra_paragraph_structure","structural_consistency","length",
+        "grammar","vocabulary","sentence_expression","intra_paragraph_structure",
+        "inter_paragraph_structure","structural_consistency","length",
         "topic_clarity","originality","prompt_comprehension","narrative",
     ]
     result = {rubric[i]: int(output[i]) for i in range(11)}
     result["top_k_features"] = _to_jsonable(top_k_features)
 
-    # ✨ 추가: 29자질 원시값 + 원문
+    # 추가: 29자질 원시값 + 원문
     feat29_raw, essay_text = _collect_feat29_and_text(extracted_features)
     result["feat29"] = feat29_raw
     result["text"] = essay_text
@@ -305,8 +305,8 @@ def score_results(extracted_features, bert_model, gru_model, tokenizer):
     """
     output, top_k_features = scoring(bert_model, gru_model, extracted_features, tokenizer)
     rubric = [
-        "grammar","vocabulary","sentence_expression","inter_paragraph_structure",
-        "intra_paragraph_structure","structural_consistency","length",
+        "grammar","vocabulary","sentence_expression","intra_paragraph_structure",
+        "inter_paragraph_structure","structural_consistency","length",
         "topic_clarity","originality","prompt_comprehension","narrative",
     ]
     result = {}
