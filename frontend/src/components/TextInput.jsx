@@ -6,6 +6,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
     const [inputValue, setInputValue] = useState('');
     // 'selectedFile'과 'files'를 'files' 하나로 통합하여 관리합니다.
+    const [topicValue, setTopicValue] = useState(''); // (2601) 주제 인풋 const 추가 
     const [files, setFiles] = useState([]); 
     const { loading } = useLoadingContext();
     const { language } = useLanguage();
@@ -15,6 +16,9 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
         setUploadInProgress(true);
         await new Promise(resolve => setTimeout(resolve, 500));
         const formData = new FormData();
+
+        // 2. 주제 텍스트를 formData에 추가 (서버에서 'topic'으로 받을 수 있게 함)
+        formData.append("topic", topicValue);
 
         // Append input text or files to formData
         if (inputValue.length > 0 && files.length <= 1) {
@@ -67,6 +71,7 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
     // Function to clear the input and reset states
     const handleClearInput = () => {
         setInputValue('');
+        setTopicValue('');
         setFiles([]); // Clear the files state
         // Reset the file input's value to allow selecting the same file again
         document.getElementById('fileInput').value = '';
@@ -74,9 +79,20 @@ const TextInput = ({ uploadInProgress, setUploadInProgress }) => {
 
     return (
         <div className='grid grid-cols-1 gap-4'>
-            {/* Defensive coding: Check if LABELS.input exists before accessing language property */}
-            <h2 className="text-2xl font-bold py-2">{LABELS.input?.[language] || 'Text Input'}</h2>
-
+        {/* 제목과 주제 입력창을 한 줄로 배치 */}
+        <div className="flex justify-between items-center py-2 gap-4">
+            <h2 className="text-2xl font-bold whitespace-nowrap">
+                {LABELS.input?.[language] || 'Text Input'}
+            </h2>
+            
+            <input 
+                type="text"
+                value={topicValue}
+                onChange={(e) => setTopicValue(e.target.value)}
+                placeholder="글의 주제를 입력하세요 (예: 환경 보호에 대한 찬성/반대 글을 작성하세요.)"
+                className="p-2 border rounded-xl w-1/2 dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 outline-none text-sm shadow-sm"
+            />
+        </div>
             {/* Input text area */}
             <div className='grid grid-cols-1 gap-4 p-4 rounded-3xl bg-slate-100 dark:bg-slate-900 shadow'>
                 <div className='flex justify-between gap-2 text-sm shrink'>
