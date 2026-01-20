@@ -11,17 +11,31 @@ ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, 
 // 레이더 축: 내용(3) → 조직(2) → 표현(3)
 const initialRadarData = {
   labels: [
-    "Clarity",           // topic_clarity
-    "Originality",       // originality
-    "Narrative",         // narrative
-    "In-Paragraph",      // intra_paragraph_structure
-    "Inter-Paragraph",   // inter_paragraph_structure
-    "Grammar",           // grammar
-    "Vocabulary",        // vocabulary
-    "Sentence",          // sentence_expression
+    "주장의 명료성",           // topic_clarity
+    "근거의 적절성",       // originality
+    "사고의 창의성",         // narrative
+    "문단 내 구조",      // intra_paragraph_structure
+    "문단 간 구조",   // inter_paragraph_structure
+    "문법",           // grammar
+    "어휘",        // vocabulary
+    "문장 표현",          // sentence_expression
   ],
   datasets: [],
 };
+
+// const initialRadarData = {
+//   labels: [
+//     "Clarity",           // topic_clarity
+//     "Originality",       // originality
+//     "Narrative",         // narrative
+//     "In-Paragraph",      // intra_paragraph_structure
+//     "Inter-Paragraph",   // inter_paragraph_structure
+//     "Grammar",           // grammar
+//     "Vocabulary",        // vocabulary
+//     "Sentence",          // sentence_expression
+//   ],
+//   datasets: [],
+// };
 
 // ▶ 새 점수 규칙(원점수 상한)
 const MAX_SCORES = {
@@ -33,8 +47,9 @@ const MAX_SCORES = {
   structural_consistency: 15, // 제외
   length: 15,                 // 제외
   topic_clarity: 15,
-  originality: 15,            // 👈 변경: 창의성 총점 15점
+  originality: 15,            // 변경: 창의성 총점 15점
   narrative: 15,
+  Topic_relevance: 3
 };
 
 // 총점에서 제외할 키(표에도 숨김)
@@ -44,13 +59,15 @@ const EXCLUDED_KEYS = ["structural_consistency", "length"];
 const GROUPS = [
   { keys: ["topic_clarity", "narrative", "originality"] },                    // 내용 (이제 15 + 15 + 15 + 기본5 = 50)
   { keys: ["intra_paragraph_structure", "inter_paragraph_structure"] },       // 조직 (30 = 15*2)
-  { keys: ["grammar", "vocabulary", "sentence_expression"] },                 // 표현 (20 = 6*3 + 기본2)
+  { keys: ["grammar", "vocabulary", "sentence_expression"] },
+  { keys: ["Topic_relevance"] } // 9번째 행으로 배치                 // 표현 (20 = 6*3 + 기본2)
 ];
 const ORDERED_KEYS = GROUPS.flatMap(g => g.keys);
 
 // 가중 변환(원점수 → 가중점수)
 const adjustScore = (key, value) => {
   const v = typeof value === "number" ? value : 0;
+  if (key === "Topic_relevance") return v; // 일단 가중치 없이 원점수 사용
   switch (key) {
     case "grammar":
     case "vocabulary":
@@ -334,11 +351,16 @@ const EvalFormat = ({ result, title, darkMode }) => {
                                       <span>{EssayTags[key].desc_eng}</span>
                                     </div>
                                   </td>
-                                  <td className='p-2 text-right'>
-                                    {adjustScore(key, essayScore[key])} / {MAX_SCORES[key]}
+                                  <td className='p-2 text-right font-bold'>
+                                      {essayScore[key] === "Error" ? (
+                                          <span className="text-red-500 text-xs italic">평가 불가</span>
+                                      ) : (
+                                          /* 기존 점수 출력 로직 */
+                                          `${adjustScore(key, essayScore[key])} / ${MAX_SCORES[key]}`
+                                      )}
                                   </td>
                                 </tr>
-                                {index === 7 && (
+                                {index === 8 && (
                                   <tr>
                                     <td colSpan={4} className='p-2 text-center text-red-600 font-semibold'>
                                       내용(Content)와 표현(Expression) 항목에 각각 기본 점수(default score) +5점 +2점이 부여됨
@@ -500,14 +522,14 @@ const EvalFormatCompare = ({ result, darkMode }) => {
                                   style={{ backgroundColor: `hsla(${idx * 360 / result.length}, 100%, 50%, 20%)` }}
                                   title={`${adj} / ${maxAdjRef}`}
                                 >
-                                  {adj}
+                                  {essayScore[key] === "Error" ? "N/A" : adj}
                                 </span>
                               );
                             })}
                             </div>
                           </td>
                         </tr>
-                        {index === 7 && (
+                        {index === 8 && (
                           <tr>
                             <td colSpan={4} className='p-2 text-center text-red-600 font-semibold'>
                               내용(Content)와 표현(Expression) 항목에 각각 기본 점수(default score) +5점 +2점이 부여됨

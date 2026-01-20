@@ -69,7 +69,7 @@ export const MorphTags = [
 
 	{ "tag": "lemma", "desc": "렘마", "desc_eng": "Lemma", "color": "#000000" },
 	{ "tag": "morph", "desc": "형태소", "desc_eng": "Morpheme", "color": "#000000" },
-	{ "tag": "word", "desc": "단어", "desc_eng": "Word", "color": "#000000" },
+	{ "tag": "word", "desc": "어절", "desc_eng": "Word", "color": "#000000" },
 	{ "tag": "para", "desc": "문단", "desc_eng": "Paragraph", "color": "#000000" },
 	{ "tag": "sentence", "desc": "문장", "desc_eng": "Sentence", "color": "#000000" },
 	{ "tag": "sent", "desc": "문장", "desc_eng": "Sentence", "color": "#000000" },
@@ -129,25 +129,25 @@ export const CohTags = {
 	"NDW": {
 		"type": "어휘 다양성",
 		"type_eng": "Lexical Diversity",
-		"desc": "단어 다양성",
+		"desc": "어절 다양성",
 		"desc_eng": "Number of Different Words",
 	},
 	"Den": {
 		"type": "어휘 밀도",
 		"type_eng": "Basic",
-		"desc": "형태소/단어 밀도",
+		"desc": "형태소/어절 밀도",
 		"desc_eng": "Density",
 	},
 	"C_Den": {
 		"type": "어휘 밀도",
 		"type_eng": "Basic",
-		"desc": "형태소/단어 실질 밀도",
+		"desc": "형태소/어절 실질 밀도",
 		"desc_eng": "Density",
 	},
 	"F_Den": {
 		"type": "어휘 밀도",
 		"type_eng": "Basic",
-		"desc": "형태소/단어 형식 밀도",
+		"desc": "형태소/어절 형식 밀도",
 		"desc_eng": "Density",
 	},
 	"Cnt": {
@@ -733,6 +733,13 @@ export const EssayTags = {
 		"type_eng": "Content",
 		"desc": "사고 창의성",
 		"desc_eng": "Originality",
+	},
+
+	"Topic_relevance": {
+		"type": "주제 적합성",
+		"type_eng": "Topic relevance",
+		"desc": "제시된 주제와의 관련성",
+		"desc_eng": "Relevance to the given topic"
 	},
 	// "prompt_comprehension": {
 	// 	"type": "내용 Content",

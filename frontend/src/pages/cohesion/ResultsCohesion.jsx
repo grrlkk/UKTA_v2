@@ -273,7 +273,7 @@ const ResultsCoh = ({ darkMode }) => {
                   onClick={handleSelectFile(index)}
                 >
                   <h3 className='pb-4 text-lg font-bold truncate'>{index + 1}. {item.filename}</h3>
-                  <OriginalText content={item.contents} trunc={selectedFile !== index} date={item.upload_date} procTime={item.process_time} />
+                  <OriginalText content={item.contents} topic={item.topic} trunc={selectedFile !== index} date={item.upload_date} procTime={item.process_time} />
 
                   <div key={index} className={`flex flex-col gap-4 ${selectedFile === index ? 'mt-4' : 'h-0 overflow-hidden'} transition-all ease-in-out`}>
                     <hr className='' />

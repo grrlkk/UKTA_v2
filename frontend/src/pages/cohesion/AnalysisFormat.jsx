@@ -140,6 +140,7 @@ const ResultsNumeric = ({ result, title }) => {
 	const [selectedAll, setSelectedAll] = useState(false);
 	const [selectedProperty, setSelectedProperty] = useState([]);
 	const [hidden, setHidden] = useState(true);
+	const [expandedOverlaps, setExpandedOverlaps] = useState({});
 	const { language } = useLanguage();
 
 	const handleSelectProperty = (property) => {
@@ -165,6 +166,29 @@ const ResultsNumeric = ({ result, title }) => {
 		};
 	};
 
+	const renderOverlapDetails = (key) => {
+		const overlapData = result[key]?.overlaps || []; // 가정: overlaps 필드
+		return (
+			<tr key={key + '_expanded'}>
+				<td colSpan={6} className="p-4 bg-slate-100 dark:bg-slate-800">
+					<div className="text-sm">
+						<h4 className="font-bold mb-2">중첩 목록</h4>
+						{overlapData.length > 0 ? (
+							overlapData.map((overlap, idx) => (
+								<div key={idx} className="mb-2 border-b pb-2">
+									<div><strong>중첩 형태소:</strong> {overlap.morphemes?.join(', ') || 'N/A'}</div>
+									<div><strong>중첩 문장:</strong> {overlap.sentences?.join('-') || 'N/A'}</div>
+								</div>
+							))
+						) : (
+							<div>중첩 데이터가 없습니다.</div>
+						)}
+					</div>
+				</td>
+			</tr>
+		);
+	};
+
 	const handleFileDownload = (type) => {
 		if (type === 'csv') {
 			if (selectedProperty.length === 0) {
@@ -172,8 +196,9 @@ const ResultsNumeric = ({ result, title }) => {
 				return;
 			}
 
-			const csvData = selectedProperty.map(p => p.split('\t').join('\t')).join('\n');
-			const blob = new Blob([csvData], { type: 'text/csv' });
+			const csvData = selectedProperty.map(p => p.split('\t').join(',')).join('\n');
+			const BOM = "\uFEFF";
+			const blob = new Blob([BOM + csvData], { type: 'text/csv;charset=utf-8;' });
 			const url = URL.createObjectURL(blob);
 			const link = document.createElement('a');
 			link.href = url;
@@ -283,10 +308,23 @@ const ResultsNumeric = ({ result, title }) => {
 										</div>
 									</td>
 									<td className='p-1 pr-4 w-32 text-right font-mono italic'>
-										{value.toFixed(4)}
+										{CohTags[key] && CohTags[key].desc.endsWith('중첩') ? (
+											<button 
+												onClick={(e) => {
+													e.stopPropagation();
+													setExpandedOverlaps(prev => ({...prev, [key]: !prev[key]}));
+												}} 
+												className="btn-primary text-xs px-2 py-1"
+											>
+												중첩 목록 보기
+											</button>
+										) : (
+											value.toFixed(4)
+										)}
 									</td>
 								</tr>
 							))}
+							{Object.keys(result).map(key => expandedOverlaps[key] && renderOverlapDetails(key))}
 						</tbody>
 					</table>
 				</div>
