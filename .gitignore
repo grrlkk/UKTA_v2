@@ -12,3 +12,9 @@ backend/train.csv
 backend/apps/feedback/fb_result/
 backend/apps/feedback/top_user_dist
 *.xlsx
+
+
+run_final_scoring.py
+run_scoring_gpt.py
+run_topic_class.py
+school.crt
