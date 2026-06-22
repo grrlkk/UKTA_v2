@@ -77,9 +77,10 @@ async def upload_files(
             # 추가: 주제 적합성 0 또는 1점이면 모든 점수 0점 처리
             if topic_score in [0, 1]:
                 rubric_keys = [
-                    "grammar","vocabulary","sentence_expression","intra_paragraph_structure",
-                    "inter_paragraph_structure","structural_consistency","length",
-                    "topic_clarity","originality","prompt_comprehension","narrative",
+                    "topic_clarity", "narrative", "originality", "intra_paragraph_structure",
+                    "inter_paragraph_structure", "grammar", "vocab_sentence",
+                    "vocabulary", "sentence_expression", "structural_consistency",
+                    "length", "prompt_comprehension",
                 ]
                 for key in rubric_keys:
                     if key in rs:

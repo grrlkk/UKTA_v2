@@ -24,12 +24,14 @@ def score_essay(req: ScoreReq):
     """
     try:
         rs = score_results_with_feats(req.extracted_features, _bert, _gru, _tok)
+        score_keys = [
+            "topic_clarity", "narrative", "originality", "intra_paragraph_structure",
+            "inter_paragraph_structure", "grammar", "vocab_sentence",
+            "vocabulary", "sentence_expression", "structural_consistency",
+            "length", "prompt_comprehension",
+        ]
         return {
-            "scoring": {k: rs[k] for k in [
-                "grammar","vocabulary","sentence_expression","inter_paragraph_structure",
-                "intra_paragraph_structure","structural_consistency","length",
-                "topic_clarity","originality","prompt_comprehension","narrative",
-            ]},
+            "scoring": {k: rs[k] for k in score_keys if k in rs},
             "original_text": rs["text"],
             "feat29": rs["feat29"],
             "top_k_features": rs.get("top_k_features", []),

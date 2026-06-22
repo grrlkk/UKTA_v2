@@ -76,6 +76,8 @@ const adjustScore = (key, value) => {
   switch (key) {
     case "grammar":
       return v * 3; // 0/3/6/9
+    case "vocab_sentence":
+      return v * 3; // 7개 모델 직접 출력: 0~3 → 0/3/6/9
     case "vocabulary":
     case "sentence_expression":
       return v * 2; // 내부 계산용 유지
@@ -98,6 +100,11 @@ const getAdjustedScore = (essayScore, key) => {
   if (key === "vocab_sentence") {
     const vRaw = essayScore.vocabulary;
     const sRaw = essayScore.sentence_expression;
+
+    if (vRaw === undefined && sRaw === undefined && essayScore.vocab_sentence !== undefined) {
+      if (essayScore.vocab_sentence === "Error") return "Error";
+      return adjustScore("vocab_sentence", essayScore.vocab_sentence);
+    }
 
     if (vRaw === "Error" || sRaw === "Error") return "Error";
 
@@ -545,6 +552,7 @@ export default function Feedback() {
           feat29: rs.feat29 ?? {},
           rubric_scores: {
             grammar: rs.grammar,
+            vocab_sentence: rs.vocab_sentence,
             vocabulary: rs.vocabulary,
             sentence_expression: rs.sentence_expression,
             inter_paragraph_structure: rs.inter_paragraph_structure,

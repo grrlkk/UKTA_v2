@@ -19,6 +19,27 @@ logger.setLevel(logging.INFO)
 BASE = Path(__file__).parent
 SCALER_CSV = BASE / "features" / "scaler_notlabel.csv"
 
+RUBRIC_NAMES_11 = [
+    "grammar", "vocabulary", "sentence_expression", "intra_paragraph_structure",
+    "inter_paragraph_structure", "structural_consistency", "length",
+    "topic_clarity", "originality", "prompt_comprehension", "narrative",
+]
+RUBRIC_NAMES_7 = [
+    "topic_clarity", "narrative", "originality", "intra_paragraph_structure",
+    "inter_paragraph_structure", "grammar", "vocab_sentence",
+]
+
+def _rubric_names_for_model(gru_model):
+    names = getattr(gru_model, "rubric_names", None)
+    if names:
+        return list(names)
+    output_dim = getattr(getattr(gru_model, "fc", None), "out_features", 11)
+    if output_dim == 7:
+        return RUBRIC_NAMES_7
+    if output_dim == 11:
+        return RUBRIC_NAMES_11
+    raise RuntimeError(f"지원하지 않는 루브릭 출력 차원: {output_dim}")
+
 def _read_scaler(path: Path) -> pd.DataFrame:
     """scaler.csv (feature,mean,scale) 로드 + 안전장치"""
     try:
@@ -134,7 +155,7 @@ def scoring(bert_model, gru_model, extracted_features, tokenizer):
                     feature_list.append(k)
                     sample_essay_features.append(v)
 
-    # ✅ voc_grades에서 ratio 4개를 계산해 합치기
+    # voc_grades에서 ratio 4개를 계산해 합치기
     vg_ratios = extract_grade_ratios(extracted_features.get("voc_grades"))
     for k, v in vg_ratios.items():
         feature_list.append(k)
@@ -214,16 +235,36 @@ def load_essay_model(device):
     scaler = _read_scaler(SCALER_CSV)
     ukt_a_dim = len(scaler["feature"])  # 스케일러 feature 개수와 일치
 
+    deploy_path = BASE / "model" / "not_topic_deploy_model.pth"
+    raw_path = BASE / "model" / "not_topic_model.pth"
+    weight_path = deploy_path if deploy_path.exists() else raw_path
+    loaded = torch.load(weight_path, map_location=device)
+    if isinstance(loaded, dict) and "state_dict" in loaded:
+        state = loaded["state_dict"]
+        arch = loaded.get("arch", {})
+        preprocess = loaded.get("preprocess", {})
+        output_dim = int(arch.get("output_dim", state["fc.weight"].shape[0]))
+        hidden_dim = int(arch.get("hidden_dim", state["fc.weight"].shape[1] // 3))
+        dropout = float(arch.get("dropout", 0.5))
+        rubric_names = preprocess.get("rubric_names")
+    else:
+        state = loaded
+        output_dim = int(state["fc.weight"].shape[0])
+        hidden_dim = int(state["fc.weight"].shape[1] // 3)
+        dropout = 0.5
+        rubric_names = None
+
     gru_model = GRUScoreModuleWithLNUKTAAttention(
-        output_dim=11,         # 루브릭 11개
-        hidden_dim=256,        # 학습 시 사용한 값에 맞춤
+        output_dim=output_dim,
+        hidden_dim=hidden_dim,
         ukt_a_dim=ukt_a_dim,   # 스케일러 feature 개수와 일치
-        dropout=0.5,
+        dropout=dropout,
     ).to(device)
 
-    weight_path = BASE / "model" / "not_topic_model.pth"  # 프롬프트 사용 안한 최신 모델
-    state = torch.load(weight_path, map_location=device)
     gru_model.load_state_dict(state)
+    gru_model.rubric_names = list(rubric_names) if rubric_names else (
+        RUBRIC_NAMES_7 if output_dim == 7 else RUBRIC_NAMES_11
+    )
     gru_model.eval()
     return bert_model, gru_model, tokenizer
 
@@ -282,12 +323,8 @@ def score_results_with_feats(extracted_features, bert_model, gru_model, tokenize
     """
     output, top_k_features = scoring(bert_model, gru_model, extracted_features, tokenizer)
 
-    rubric = [
-        "grammar","vocabulary","sentence_expression","intra_paragraph_structure",
-        "inter_paragraph_structure","structural_consistency","length",
-        "topic_clarity","originality","prompt_comprehension","narrative",
-    ]
-    result = {rubric[i]: int(output[i]) for i in range(11)}
+    rubric = _rubric_names_for_model(gru_model)
+    result = {rubric[i]: int(output[i]) for i in range(len(rubric))}
     result["top_k_features"] = _to_jsonable(top_k_features)
 
     # 추가: 29자질 원시값 + 원문
@@ -304,13 +341,9 @@ def score_results(extracted_features, bert_model, gru_model, tokenizer):
       - top_k_features: list (np.ndarray → list 변환)
     """
     output, top_k_features = scoring(bert_model, gru_model, extracted_features, tokenizer)
-    rubric = [
-        "grammar","vocabulary","sentence_expression","intra_paragraph_structure",
-        "inter_paragraph_structure","structural_consistency","length",
-        "topic_clarity","originality","prompt_comprehension","narrative",
-    ]
     result = {}
-    for i in range(11):
+    rubric = _rubric_names_for_model(gru_model)
+    for i in range(len(rubric)):
         result[rubric[i]] = int(output[i])
 
     # 핵심: ndarray -> list (기준 코드 호환)
