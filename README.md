@@ -1,6 +1,6 @@
 # FEAK
 
-## Feature-based Evaluation and AI feedback for Korean writing
+## From Evaluation to Feedback: A Feature-Based and LLM-Constrained Tool for Korean Writing Assessment
 
 ACM/SIGAPP SAC 2026 AIED (Oral) | [Paper](docs/SAC26_AIED_for_arXiv.pdf) | [DOI](https://doi.org/10.1145/3748522.3780021)
 
